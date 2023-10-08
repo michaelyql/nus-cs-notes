@@ -1,0 +1,522 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{multicol}
+\usepackage{geometry}
+\usepackage{amsfonts} % Required for \mathbb{} commands
+\usepackage{amsmath} % So that I can embed text inside math mode using \text{} command
+\usepackage[table]{xcolor} % For table colours
+\usepackage{float} % To enable [H] exact placement of table position
+\usepackage{amssymb} % Allow me to use \therefore command in conclusion statements
+\usepackage[mathscr]{euscript} % For curly C (set partition) symbol
+\usepackage{xcolor, soul} % For text highlighting
+
+\title{Important Definitions for CS1231S}
+\author{Michael Yang}
+\date{Semester 1, AY23/24 (Prof Aaron Tan)}
+\begin{document}
+\maketitle
+\newpage
+
+% =================================== APPENDIX A ====================================== %
+
+% Margins
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=2cm}
+\section*{Appendix A (Properties of Real Numbers)}
+\hrule
+\begin{multicols*}{2}
+    \begin{description}
+        \item[F1. Commutative Laws]For all real numbers $a$ and $b$, $a + b = b + a$ and $ab = ba$.
+        \item[F2. Associative Laws]For all real numbers $a$, $b$ and $c$, $(a+b) + c = a + (b + c)$ and $(ab)c = a(bc)$.
+        \item[F3. Distributive Laws]For all real numbers $a$, $b$ and $c$, $a(b + c) = ab + ac$ and $(b+c)a = ba + bc$.
+        \item[F4. Existence of Identity Elements]There exists two distinct real numbers, denoted $0$ and $1$, such that for every real number $a$, $0 + a = a + 0$ and $1 \cdot a = a \cdot 1$.
+        \item[F5. Existence of Additive Inverses]For every real number $a$, there is a real number, denoted $-a$ and called the \textbf{additive inverse} of $a$, such that $a + (-a) = (-a) + a = 0$.
+        \item[F6. Existence of Reciprocals]For every real number $a\neq0$, there is a real number, denoted $1/a$ or $a^{-1}$, called the \textbf{reciprocal} of $a$, such that $a \cdot (\frac{1}{a}) = (\frac{1}{a})\cdot a = 1$.
+        \item[T1. Cancellation Law for Addition]If $a + b = a + c$ , then $b = c$. (In particular, this shows that the number 0 of Axiom F4 is unique.)
+        \item[T2. Possibility of Subtraction]Given $a$ and $b$, there is exactly one $x$ such that $a+x=b$. This $x$ is denoted by $b-a$. In particular, $0-a$ is the additive inverse of $a$, $-a$.
+        \item[T3.]$b-a=b+(-a)$.
+        \item[T4.]$-(-a)=a$.
+        \item[T5.]$a(b-c)=ab-ac$.
+        \item[T6.]$0\cdot a=a\cdot0=0$.
+        \item[T7. Cancellation Law for Multiplication] If $ab=bc$ and $a\neq0$, then $b=c$. (In particular, this shows that the number 1 of Axiom F4 is unique.)
+        \item[T8. Possibility of Division]Given $a$ and $b$ with $a\neq0$, there is exactly one $x$ such that $ax=b$. This $x$ is denoted by $b/a$ and is called the \textbf{quotient} of $b$ and $a$. In particular, $1/a$ is the reciprocal of $a$.
+        \item[T9.]If $a\neq0$, then $b/a=b\cdot a^{-1}$.
+        \item[T10.]If $a\neq0$, then $(a^{-1})^{-1}=a$.
+        \item[T11. Zero Product Property]If $ab=0$, then $a=0$ or $b=0$. 
+        \item[T12. Rule for Multiplication with Negative Signs]$(-a)b=a(-b)=-(ab)$, and $-\frac{a}{b}=\frac{-a}{b}=\frac{a}{-b}$.
+        \item[T13. Equivalent Fractions Property]$\frac{a}{b}=\frac{ac}{bc}$, if $b\neq0$ and $c\neq0$.
+        \item[T14. Rule for Addition of Fractions]$\frac{a}{b}+\frac{c}{d}=\frac{ad+bc}{bd}$, if $b\neq0$ and $d\neq0$.
+        \item[T15. Rule for Multiplication of Fractions]$\frac{a}{b}\cdot\frac{c}{d}=\frac{ac}{bd}$, if $b\neq0$ and $d\neq0$.
+        \item[T16. Rule for Division of Fractions]$\frac{a}{b}\div\frac{c}{d}=\frac{ad}{bc}$, if $b\neq0$, $c\neq0$ and $d\neq0$.
+        \item[T17. Trichotomy Law]For arbitrary real numbers $a$ and $b$, exactly one of these three relations $a<b$, $b>a$ or $a=b$ holds. 
+        \item[T18. Transitive Law]If $a<b$ and $b<c$, then $a<c$.
+        \item[T19.]If $a<b$, then $a+c<b+c$.
+        \item[T20.]If $a<b$ and $c>0$, then $ac<bc$.
+        \item[T21.]If $a\neq0$, then $a^2>0$.
+        \item[T22.]$1>0$.
+        \item[T23.]If $a<b$ and $c<0$, then $ac>bc$.
+        \item[T24.]If $a<b$, then $-a>-b$. In particular, if $a<0$, then $-a>0$.
+        \item[T25.]If $ab>0$, then both $a$ and $b$ are positive or both are negative.
+        \item[T26.]If $a<c$ and $b<d$, then $a+b<c+d$.
+        \item[T27.]If $0<a<c$ and $0<b<d$, then $0<ab<cd$.
+        \item[Ord1.]For any real numbers $a$ and $b$, if $a$ and $b$ are positive, so are $a+b$ and $ab$. 
+        \item[Ord2.]For every real number $a\neq 0$, either $a$ is positive or $-a$ is positive but not both.
+        \item[Ord3.]The number 0 is not positive. 
+        \item[Definition]Given real numbers $a$ and $b$, $a < b$ means $b + (-a)$ is positive. $b > a$ means $a < b$. $a\leq b$ means $a < b$ or $a=b$. $b\geq a$ means $a\leq b$. If $a < 0$, we say that $a$ is \textbf{negative}. If $a \geq 0$, we say that $a$ is \textbf{non-negative}.
+    \end{description}
+    \hrule
+
+    \paragraph{Note:} Whenever you are proving a universal statement using an arbitrary particular, you should quote \textbf{WLOG} (Without Loss Of Generality). This means that the proof for the special case can be easily applied to all other cases. 
+\end{multicols*}
+
+% ==================================== DEFINITIONS =====================================
+
+\newpage
+\section*{Definitions}
+\hrule
+\vspace{0.3cm}
+\begin{description}
+    \item[Divisibility] If $n,d\in\mathbb{Z}$ and $d\neq0$, $d\vert{n}\Leftrightarrow \exists{k} \in \mathbb{Z}$ such that $n=dk$.
+    \item[Rational Numbers]$r$ is rational $\leftrightarrow \exists a,b\in\mathbb{Z}$ s.t. $r=\frac{a}{b}$ and $b\neq0$.
+    \item[Fraction in lowest term]A fraction $\frac{a}{b}$ where $b\neq0$ is said to be in \textbf{lowest terms} if the largest integer that divides both $a$ and $b$ is 1. 
+    \item[Prime and Composite] An integer $n$ is \textbf{prime} iff $n > 1$ and for all positive integers $r$ and $s$, if $n=rs$, then either $r$ or $s$ equals $n$. An integer $n$ is \textbf{composite} iff $n >  1$ and $n=rs$ for some integers $r$ and $s$ with $1 < r < n$ and $1 < s < n$. In symbols, 
+    \begin{description}
+		\item[$n$ is prime:] $(n > 1) \land \forall r, s\in \mathbb{Z}^{+}$, $(n=rs\to (r=1\land s=n) \lor (r=n\land s=1))$. 
+		\item[$n$ is composite:] $\exists r, s\in \mathbb{Z}^{+} (n=rs\land (1 < r < n) \land (1 < s < n))$.
+    \end{description}
+        
+    % 2 - Compound Statements
+    \vspace{0.2cm}
+    \item[\large Compound Statements]
+    \item[2.1.1 Statement]A \textbf{statement} (or \textbf{proposition}) is a sentence that is true or false, but not both.
+    \item[2.1.2 Negation]If $p$ is a variable, the \textbf{negation} of $p$ is "not $p$" or it is not the case that $p$" and is denoted ${\sim}p$. 
+    \item[2.1.3 Conjunction]If $p$ and $q$ are statement variables, the conjunction of $p$ and $q$ is “$p$ and $q$”, denoted $p \wedge q$.
+    \item[2.1.4 Disjunction]If $p$ and $q$ are statement variables, the disjunction of $p$ and $q$ is “$p$ or $q$”, denoted $p \vee q$.
+    \item[2.1.5 Statement Form]A statement form (or propositional form) is an expression made up of statement variables and logical connectives that becomes a statement when actual statements are substituted for the component statement variables.
+    \item[2.1.6 Logical Equivalence]Two statement forms are called logically equivalent if, and only if, they have identical truth values for each possible substitution of statements for their statement variables. The logical equivalence of statement forms $P$ and $Q$ is denoted by $P \equiv Q$.
+    \item[2.1.7 Tautology]A tautology is a statement form that is \textbf{always true} regardless of the truth values of the individual statements substituted for its statement variables. A statement whose form is a tautology is a \textbf{tautological statement}.
+    \item[2.1.8 Contradiction]A contradiction is a statement form that is \textbf{always false} regardless of the truth values of the individual statements substituted for its statement variables. A statement whose form is a contradiction is a \textbf{contradictory statement}. 
+    \item[2.2.1 Conditional]If $p$ and $q$ are statement variables, the conditional of $q$ by $p$ is “if $p$ then $q$” or “$p$ implies $q$”, denoted $p\to q$. It is false when p is true and q is false; otherwise it is true. We called $p$ the \textbf{hypothesis} (or \textbf{antecedent}) of the conditional and $q$ the \textbf{conclusion} (or \textbf{consequent}).
+    \item[2.2.2 Contrapositive] The contrapositive of a conditional statement of the form “if $p$ then $q$” is "if ${\sim} q$ then ${\sim} p$". Symbolically, the contrapositive of $p\to q$ is ${\sim} q\to {\sim} p$.
+    \item[2.2.3 Converse]The \textbf{converse} of a conditional statement ``if $p$ then $q$'' is ``if $q$ then $p$''. Symbolically, the converse of $p\to q$ is $q\to p$. 
+    \item[2.2.4 Inverse]The \textbf{inverse} of a conditional  statement ``if $p$ then $q$'' is ``if ${\sim} p$ then ${\sim} q$''. Symbolically, the inverse of $p\to q$ is ${\sim} p\to {\sim} q$.
+    \item Note that $p\to q\not\equiv q\to p$. 
+    \item[2.2.5 Only If]If $p$ and $q$ are statements, ``$p$ only if $q$'' means ``if not $q$ then not $p$'' or ${\sim} q\to{\sim} p$. Or, equivalently, ``if $p$ then $q$'' or ``$p\to q$''.
+    \item[2.2.6 Biconditional]Given statement variables p and q, the \textbf{biconditional} of $p$ and $q$ is “$p$ if, and only if, $q$” and is denoted $p\leftrightarrow q$. It is true if both $p$ and $q$ have the same truth values and is false if $p$ and $q$ have opposite truth values. The words \emph{if and only if} are sometimes abbreviated as \emph{iff}. 
+    \item[2.2.7 Necessary and Sufficient Conditions]If $r$ and $s$ are statements, $r$ is a sufficient condition for s means ``if $r$ then $s$'' or $r\to s$, and ``$r$ is a necessary condition for $s$'' means ``if $s$ then $r$'' or $s\to r$. $r$ is a necessary and sufficient condition for $s$ means ``$r$ if and only if $s$'' or $r\leftrightarrow s$.
+    \item[2.3.1 Argument]An \textbf{argument} (\textbf{argument form}) is a sequence of statements (statement forms). All statements in an argument (argument form), except for the final one, are called \textbf{premises} (or \textbf{assumptions} or \textbf{hypothesis}). The final statement (statement form) is called the \textbf{conclusion}. The symbol $\bullet$, which is read “therefore”, is normally placed just before the conclusion. To say that an argument form is valid means that no matter what particular statements are substituted for the statement variables in its premises, if the resulting premises are all true, then the conclusion is also true.
+    \item[2.3.2 Sound and Unsound Argument] An argument is called \textbf{sound} if, and only if, it is valid and all its premises are true. An argument that is not sound is called \textbf{unsound}.
+    
+    % 3 - Quantified Statements
+    \vspace{0.2cm}
+    \item[\large Quantified Statements]
+    \item[3.1.1 Predicate]A \textbf{predicate} is a sentence that contains a finite number of variables and becomes a statement when specific values are substituted for the variables. The \textbf{domain} of a predicate variable is the set of all values that may be substituted in place of the variable.
+    \item ``Domain'' may also be known as ``domain of discourse'', ``universe of discourse'', ``universal set'', or simply ``universe''.
+    \item[3.1.2 Truth Set] If $P(x)$ is a predicate and $x$ has a domain $D$, the \textbf{truth set} is the set of all elements of $D$ that make $P(x)$ true when they are substituted for $x$. The truth set for $P(x)$ is denoted as $\{x\in D | P(x)\}$.
+    \item[3.1.3 Universal Statement] Let $Q(x)$ be a predicate and $D$ the domain of $x$. A \textbf{universal statement} is a statement of the form ``$\forall x\in D, Q(x)$''. It is defined to be true iff $Q(x)$ is \textbf{true for every $x$} in $D$. It is defined false iff $Q(x)$ is \textbf{false for at least one $x$} in $D$. A value for $x$ for which $Q(x)$ is false is called a \textbf{counterexample}. 
+    \item[3.1.4 Existential Statement] Let $Q(x)$ be a predicate and $D$ the domain of $x$. An \textbf{existential statement} is a statement of the form ``$\exists x\in D, Q(x)$''. It is defined to be true iff $Q(x)$ is \textbf{true for at least one $x$} in $D$. It is defined false iff $Q(x)$ is \textbf{false for all $x$} in $D$. 
+    \item The $\exists!$ is used to denote ``there exists a unique'' or ``there is one and only one''. 
+    \item[3.2.1 Contrapositive, converse, inverse] Consider a statement of the form: $\forall x\in D(P(x)\to Q(x))$. 
+    \begin{description}
+    	\item[1.] It's \textbf{contrapositive} is: $\forall x\in D ({\sim} Q(x)\to {\sim} P(x))$.
+    		\item[2.] It's \textbf{converse} is: $\forall x\in D (Q(x)\to P(x))$.
+    		\item[3.] It's \textbf{inverse} is: $\forall x\in D ({\sim} P(x)\to {\sim} Q(x))$.
+    \end{description}
+    \item[3.2.2 Necessary and Sufficient conditions, Only if]
+    \begin{description}
+    	\item ``$\forall x, r(x)$ is a \textbf{sufficient condition} for $s(x)$'' means $\forall x(r(x)\to s(x))$.
+    		\item ``$\forall x, r(x)$ is a \textbf{necessary condition} for $s(x)$'' means $\forall x({\sim} r(x)\to {\sim} s(x))$ or equivalently, ``$\forall x(s(x)\to r(x))$''.
+    		\item ``$\forall x, r(x)$ \textbf{only if} $s(x)$'' means $\forall x({\sim} s(x)\to {\sim} r(x))$ or equivalently, ``$\forall x(r(x)\to s(x))$''.
+    \end{description}
+    \item[Universal Modus Ponens] $\forall x (P(x)\to Q(x))$.\quad $P(a)$ for a particular $a$.\quad $\bullet\; Q(a)$. 
+    \item[Universal Modus Tollens] $\forall x(P(x)\to Q(x))$.\quad ${\sim} Q(a)$ for a particular $a$.\quad $\bullet\; {\sim} P(a)$.
+   	\item[3.4.1 Valid Argument Form]To say that \textbf{an argument form is valid} means the following: No matter what particular predicates are substituted for the predicate symbols in its premises, if the resulting premise statements are all true, then the conclusion is also true. An argument is called \textbf{valid} if, and only if, its form is valid.
+	\item[Converse Error (Quantified Form)] $\forall x(P(x)\to Q(x))$.\quad $Q(a)$ for a particular $a$.\quad $\bullet\; P(a)$. 
+	\item[Inverse Error (Quantified Form)] $\forall x(P(x)\to Q(x))$.\quad ${\sim} P(a)$ for a particular $a$.\quad $\bullet\; {\sim} Q(a)$. 
+	\item[Universal Transitivity] $\forall x(P(x)\to Q(x))$.\quad $\forall x(Q(x)\to R(x))$.\quad $\bullet\; \forall x(P(x)\to R(x))$.
+	\item[Additional Notes](from Tutorial 2)
+	\item \qquad Equivalent expressions: $\forall x\in D, P(X)\equiv \forall x((x\in D)\land P(X))$.
+	\item \qquad Well-formed formulas (wff): \textbf{true} and \textbf{false} are wffs. A propositional variable (e.g. $x$, $p$) is a wff. A predicate name followed by a list of variables (e.g. $P(x), Q(x,y)$), which is called an \emph{atomic formula}, is a wff. If $A$, $B$ and $C$ are wffs, then so are ${\sim}A$, $(A\land B)$, $(A\lor B)$, $(A\to B)$ and $(A\leftrightarrow B)$. If $x$ is a propositional variable and $A$ is a wff, then so are $\forall x A$ and $\exists x A$.
+	\item \qquad Scope of quantifiers / bound variables / use of parentheses: 
+	\begin{description}
+		\item \qquad The \emph{scope} of a quantifier is the range in the formula where the quantifier ``engages in''. It is put right after the quantifier and is usually in parentheses.
+		\item \qquad Example: $\forall x\; \exists y\; P(x,y)$ - both $x$ and $y$ are bound. However,
+		\item \qquad $\forall x(\exists y\; P(x,y) \lor Q(x,y))$ - in $Q(x,y)$, $x$ is bound but $y$ is free as the $\exists y$ quantifier applies only to $P(x, y)$. 
+		\item \qquad If you want the $y$ in $Q(x,y)$ to be bound as well, you have to put parentheses over the entire formula, i.e. $\exists y(P(x,y) \lor Q(x, y))$, in which case you can just remove the outermost parentheses and it just becomes $\forall x\; \exists y(P(x,y) \lor Q(x,y))$.
+	\end{description}
+	\definecolor{lightlightgray}{rgb}{0.93, 0.93, 0.93}
+	\sethlcolor{lightlightgray}
+	\item \hl{Tip for negating quantified statements: if you need to negate nested quantifiers, just flip each of the quantifier symbols ($\forall$ to $\exists$ and vice versa) and apply the negation to the inner predicate, then apply De Morgan's laws from there}
+
+	% 5 - Sets
+	\vspace{0.2cm}
+    \item[\large Sets]
+    \item[Set-Roster Notation] A set may be specified by writing all of its elements between braces. Examples: \{1, 2, 3\}, \{1, 2, 3, ..., 100\}, \{1, 2, 3, ...\}. (The symbol ... is called an ellipsis and is read “and so forth”.)
+    \item[Membership of a Set (Notation: $\in$)]If $S$ is a set, the notation $x\in S$ means that $s$ is an element of $S$. ($x\not\in S$ means $x$ is not an element of $S$.)
+    \item[Cardinality of a Set (Notation: $|S|$)]The cardinality of a set $S$, denoted as $|S|$, is the size of the set, that is, the number of elements in $S$.
+    \item[Set Builder Notation]Let $U$ be a set and $P(x)$ be a predicate over $U$. Then  the set of all elements $x\in U$ such that $P(x)$ is true is denoted as $\{x\in U:P(x)\}$ or $\{x\in U|P(x)\}$ which reads as ``the set of all $x$ in $U$ such that $P(x)$ is true''. 
+    \item[Replacement Notation]Let $A$ be a set and $t(x)$ be a term in a variable $x$. Then the set of all objects of the form $t(x)$ where $x$ ranges over the elements of $A$ is denoted $\{t(x):x\in A\}$ or $\{t(x)|x\in A\}$ which is read as ``the set of all $t(x)$'' where $x\in A$. 
+    \item[Subset and superset]Let $A$ and $B$ be sets. $A$ is a \textbf{subset} of $B$, written $A\subseteq B$, iff every element of $A$ is also an element of $B$. Symbolically, $A\subseteq B$ iff $\forall x(x\in A\Rightarrow x\in B)$. Another way of saying ``$A$ is a subset of $B$'' is ``$A$ is contained in $B$''. If $A\subseteq B$, we may also write $B\supseteq A$ which reads as 	``$B$ is contained in $A$'' or ``$B$ includes $A$'' or ``$B$ is a superset of $A$''. 
+    \item[Proper Subset]Let $A$ and $B$ be sets. $A$ is a \textbf{proper subset} of $B$, denoted $A \subset B$, iff $A\subseteq B$ and $A\neq B$. In this case, we may say that the inclusion of $A$ in $B$ is proper or strict.
+    \item[Ordered Pair]An \textbf{ordered pair} is an expression of the form $(x, y)$. Two ordered pairs $(a, b)$ and $(c,d)$ are equal iff $a=c$ and $b=d$. Symbolically, $(a,b)=(c,d) \Rightarrow (a=c)\land (b=d)$.
+    \item[Cartesian Product]Given sets $A$ and $B$, the \textbf{Cartesian product} of $A$ and $B$, denoted $\mathbf{A}\times \mathbf{B}$ and read ``$A$ cross $B$'', is the set of all ordered pairs $(a, b)$ where $a$ is in $A$ and $b$ is in $B$. Symbolically, $A\times B=\{(a,b):a\in A\land b\in B\}$.    
+    \item[Set Equality]Given sets $A$ and $B$, $A$ equals $B$, written $A=B$ iff every element of $A$ is in $B$ and every element of $B$ is in $A$. Symbolically, $A=B\Leftrightarrow A\subseteq B\land B\subseteq A$. (Alternative definition: $A=B \Leftrightarrow\forall x(x\in A\Leftrightarrow x\in B)$).
+    \item[Universal set / Universe of Discourse] The 'context' or domain of the problem.
+    \item[Union] The \textbf{union} of $A$ and $B$, denoted $\mathbf{A}\cup\mathbf{B}$, is the set of all elements that are in at least one of $A$ or $B$. Symbolically, $A\cup B=\{x\in U: x\in A \lor x\in B\}$.
+    \item[Intersection] The \textbf{intersection} of $A$ and $B$, denoted $\mathbf{A}\cap\mathbf{B}$, is the set of all elements that are common to both $A$ and $B$. Symbolically, $A\cap B=\{x\in U:x\in A \land x\in B\}$.
+    \item[Difference]The \textbf{difference} of $B$ minus $A$ (or \textbf{relative complement} of $A$ in $B$), denoted $\mathbf{B}-\mathbf{A}$, or $\mathbf{B}\setminus\mathbf{A}$, is the set of all elements that are in $B$ and not $A$. Symbolically, $B\setminus A=\{x\in U:x\in B\land x\not\in A\}$.
+    \item[Complement]The complement of $A$, denoted $\overline{A}$, is the set of all elements in $U$ that are not in $A$. Symbolically, $\overline{A}=\{x\in U\;|\;x\not\in A\}$.
+    \item[Unions and Intersections of an Indexed Collection of Sets] Given sets $A_{0}$, $A_{1}$, $A_{2}$... that are subsets of a universal set $U$ and a given nonnegative integer $n$, 
+    \begin{description}
+    	\item \[\bigcup_{i=0}^{n} A_{i}=\{x\in U\;|\;x\in A_{i} \text{ for at least one }i=0,1,2,\dots,n \}\]
+		\item \[\bigcup_{i=0}^{\infty}A_{i}=\{x\in U\; |\;x\in A_{i} \text{ for at least one nonnegative integer }i\}  \]
+		\item \[\bigcap_{i=0}^{n}A_{i}=\{x\in U\;|\;x\in A_{i} \text{ for all }i=0,1,2,\dots,n\}\]
+		\item \[\bigcap_{i=0}^{\infty}A_{i}=\{x\in U\;|\;x\in A_{i} \text{ for all nonnegative integers }i\}\]
+    \end{description}
+    \vspace{0.1cm}
+    \item[Disjoint]Two sets are \textbf{disjoint} iff they have no elements in common. Symbolically: $A$ and $B$ are disjoint iff $A\cap B=\emptyset$.
+    \item[Mutually disjoint]Sets $A1,A2,A3\dots$ are \textbf{mutually disjoint} (or \textbf{pairwise disjoint} or \textbf{nonoverlapping}) iff no two sets $A_{i}$ and $A_{j}$ with distinct subscripts have any elements in common, i.e. for all $i,j=1,2,3,\dots$ $A_{i}\cap A_{j} =\emptyset$ wherever $i\neq j$.  
+    \item[Power Set]Given a set $A$, the \textbf{power set} of $A$, denoted $P(A)$, is the set of all subsets of $A$. (symbol for power set is $\wp$)
+    \item[Ordered $n$-tuples]Let $n\in\mathbb{Z}^{+}$ and let $x_{1},x_{2},\dots,x_{n}$ be (not necessarily distinct) elements. An \textbf{ordered $\mathbf{n}$-tuple} is an expression of the form ($x_{1},x_{2},\dots,x_{n}$). Equality of two ordered $n$-tuples: $(x_{1},x_{2},\dots,x_{n})=(y_{1},y_{2},\dots,y_{n})\Leftrightarrow x_{1}=y_{1},x_{2}=y_{2},\dots x_{n}=y_{n}$.
+    \item[Cartesian product]Given sets $A_{1},A_{2},\dots,A_{n}$, the \textbf{Cartesian product} of $x_{1},x_{2},\dots,x_{n}$, denoted $A_{1}\times A_{2}\times\dots\times A_{n}$, is the set of all ordered $n$-tuples ($a_{1},a_{2},\dots,a_{n}$) where $a_{1}\in A_{1}, a_{2}\in A_{2},\dots,a_{n}\in A_{n}$.
+    \item \qquad $A_{1}\times A_{2}\times\dots\times A_{n}=\{(a_{1},a_{2},\dots,a_{n}):a_{1}\in A_{1}\land  a_{2}\in A_{2}\land\dots\land a_{n}\in A_{n}\}$. If $A$ is a set, then $A^{n}=A\times A \times \dots \times A$.
+    \item[Procedural Versions of Set Definitions] Let $X$ and $Y$ be subsets of a universal set $U$ and suppose $a$ and $b$ are elements of $U$. 
+    \begin{enumerate}
+    	\item $a\in X\cup Y\Leftrightarrow a\in X \lor a\in Y$.
+		\item $a\in X\cap Y\Leftrightarrow a\in X \land a\in Y$.
+		\item $a\in X - Y\Leftrightarrow a\in X \land a\not\in Y$.
+		\item $a\in \overline{X} \Leftrightarrow a\not\in X$.
+		\item $(a,b)\in X \times Y\Leftrightarrow a\in X \land b\in Y$.
+    \end{enumerate}
+	\item Note: In a context where where $U$ is the universal set (so that implicitly means $U \supseteq X$), the complement of $X$, denoted $\overline{X}$ or $X^{c}$, is defined by $\overline{X} = U \setminus X$.
+    
+    % Relation Definitions
+    \vspace{0.2cm}
+    \item[\large Relations]
+    \item[Relation]Let $A$ and $B$ be sets. A (binary) \textbf{relation from $\mathbf{A}$ to $\mathbf{B}$} is a subset of $\mathbf{A}\times\mathbf{B}$. Given an ordered pair $(x, y)$ in $A \times B$, $\mathbf{x}$ \textbf{is related to} $\mathbf{y}$ by $\mathbf{R}$, or $\mathbf{x}$ \textbf{is related to} $\mathbf{y}$, written $\mathbf{x}\;\mathbf{R}\;\mathbf{y}$, iff $(\mathbf{x}, \mathbf{y})$ $\in \mathbf{R}$. 
+    \item[Domain, Co-Domain, Range]Let $A$ and $B$ be sets and $R$ be a relation from $A$ to $B$. The \textbf{domain of} $R$, $Dom(R)$, is the set $\{a\in A: a\;R\;b\text{ for some }b\in B\}$. The \textbf{co-domain} of $R$, $coDom(R)$, is the set $B$. The \textbf{range} of $R$, $Range(R)$, is the set $\{b \in B: a\;R\;b \text{ for some }a\in A\}$.
+    \item[Inverse of a Relation]Let $R$ be a relation from $A$ to $B$. Define the \textbf{inverse relation} $R^{-1}$ from $B$ to $A$ as follows: $R^{-1}=\{(y,x)\in B\times A: (x,y) \in R\}$. 
+    \item[Relation on a Set]A \textbf{relation on a set $A$} is a relation from $A$ to $A$. In other words, a relation on set $A$ is a subset of $A \times A$. (The arrow diagram can be modified such that it becomes a \textbf{directed graph}).
+    \item[Composition of Relations]Let $A$, $B$ and $C$ be sets. Let $R \subseteq A \times B$ be a relation. Let $S \subseteq B \times C$ be a relation. The \textbf{composition of} $R$ \textbf{with} $S$, denoted $S \circ R$, is the relation from $A$ to $C$ such that: $\forall x\in A , \forall z\in C (x\;S\circ R\;z \Leftrightarrow (\exists y\in B(x\;R\;y \land y\;S\;z)))$.
+    \begin{description}
+    	\item[Proposition: Composition is Associative (Lecture 6 Slide 18)]Let $A$, $B$, $C$, $D$ be sets. Let $R \subseteq A \times B$, $S\subseteq B \times C$ and $T \subseteq C \times D$ be relations. $T \circ (S \circ R) = (T \circ S) \circ R = T \circ S \circ R$.
+		\item[Proposition: Inverse of Composition (Lecture 6 Slide 18)]Let $A$, $B$ and $C$ be sets. Let $R\subseteq A \times B$ and $S\subseteq B \times C$ be relations. Then $(S\circ R)^{-1} = R^{-1} \circ S^{-1}$.
+    \end{description}
+    \item[$n$-ary Relation] Given $n$ sets $A_{1}, A_{2}, \ldots, A_{n}$, an \textbf{$n$-ary relation $R$} on $A_{1} \times A_{2} \times \ldots, A_{n}$ is a subset of $A_{1} \times A_{2} \times \ldots \times A_{n}$. The special cases of 2-ary, 3-ary, and 4-ary relations are called \textbf{binary}, \textbf{ternary} and \textbf{quaternary relations} respectively. 
+    \item[Reflexivity, Symmetry, Transitivity] Let $R$ be a relation on a set $A$. 
+	\begin{enumerate}
+		\item $R$ is \textbf{reflexive} iff $\forall x, y\in A(xRx)$. 
+		\item $R$ is \textbf{symmetric} iff $\forall x, y\in A(xRy \to yRx)$. 
+		\item $R$ is \textbf{transitive} iff $\forall x,y,z \in A(xRy \land yRz\to xRz)$.
+	\end{enumerate}
+	\item Note: for transitivity, if either of the premises are false, R is transitive as the argument is vacuously true. Reflexivity, symmetry and transitivity are \textbf{properties of a relation}, not properties of members of the set. You say that a relation is reflexive or not reflexive, while an element	is related or not related to itself. 
+	\item[Transitive Closure]Let $A$ be a set and $R$ a relation on $A$. The transitive closure of $R$ is the relation $R^{t}$ on $A$ that satisfies the following three properties:	
+	\begin{enumerate}
+		\item $R^{t}$ is transitive.
+		\item $R\subseteq R^{t}$.
+		\item If $S$ is any other transitive relation that contains $R$ then $R^{t} \subseteq S$.
+	\end{enumerate}
+	\item \qquad \textbf{Reflexive Closure (Tutorial 5 Q5)} The reflexive closure $S$ of a relation $R$ on a set $A$ is obtained by adding $(a, a)$ to $R$ for each $a \in A$. Symbolically, $S = R\cup \{(x, x):x\in X\}$.
+	\item[Partition] $\mathscr{C}$ is a \textbf{partition} of a set $A$ if the following hold: 
+	\begin{enumerate}
+		\item $\mathscr{C}$ is a set of which all elements are non-empty subsets of $A$, i.e., $\emptyset \neq S \subset A$ for all $S\in \mathscr{C}$. 
+		\item Every element of $A$ is in exactly one element of $\mathscr{C}$, i.e., $\forall x\in A \exists S \in \mathscr{C} (x\in S)$ and $\forall x\in A \exists S_{1}, S_{2},\in \mathscr{C} (x \in S_{1} \land x\in S_{2} \to S_{1} = S_{2})$.
+	\end{enumerate}
+	\item \qquad (In simpler terms: $\mathscr{C}$ is a partition of set $A$ if $\mathscr{C}$ is a set of all elements which are nonempty subsets of $A$, and every element of $A$ is in exactly one component of $\mathscr{C}$).
+	\item \qquad Elements of a partition are called \textbf{components} of the partition. 
+	\item[Partition (shorter definition)] A \textbf{partition} of set $A$ is a set $\mathscr{C}$ of non-empty subsets of $A$ such that $\forall x\in A\; \exists !\;S\in \mathscr{C}(x \in S)$.
+	\item[Relation Induced by a Partition] Given a partition $\mathscr{C}$ of a set $A$, the relation $R$ \textbf{induced by the partition} is defined on $A$ as follows: $\forall x,y \in A$, $xRy \Leftrightarrow \exists$ a component $S$ of $\mathscr{C}$ s.t. $x, y\in S$.
+	\item[Equivalence Relation]Let $A$ be a set and $R$ a relation on $A$. $R$ is an \textbf{equivalence relation} iff $R$ is reflexive, symmetric and transitive. Note: the symbol $\sim$ is commonly used to denote an equivalence relation.
+	\item[Equivalence Class]Suppose $A$ is a set and $\sim$ is an equivalence relation on $A$. For each $a \in A$, the \textbf{equivalence class} of $a$, denoted $[a]$ and called the \textbf{class of} $\mathbf{a}$ for short, is the set of all elements $x \in A$ s.t. $a$ is $\sim$-related to $x$. Symbolically, $[a]_{\sim} = \{x \in A : a\sim x\}$. The procedural definition is: $\forall x\in A (x\in [a]_{\sim} \Leftrightarrow a\sim x)$.
+	\item \qquad \textbf{Proof (Tutorial 4 Q9(a)):} If $x\in S\in \mathscr{C}$, then $[x]=S$. (If $x$ is an element of a component $S$ which is an element of a partition, then the equivalence class of $x$ is $S$.)
+	\item Tip: think of classes as ``school buses'' - two students are in the same equivalence class if they are in the same ``school bus''.
+	\item[Congruence] Let $a, b\in \mathbb{Z}$ and $n\in\mathbb{Z}^{+}$. Then $a$ is congruent to $b$ modulo $n$ iff $a-b=nk$ for some $k\in Z$. In other words, $n|(a-b)$. In this case, we write $a\equiv b\;(\text{mod } n)$.
+	\item \qquad \textbf{Proposition (Lecture 6 Slide 54)} Congruence-mod $n$ is an equivalence relation on $\mathbb{Z}$ for every $n\in \mathbb{Z}^{+}$.
+	\item[Set of equivalence classes]Let $A$ be a set and $\sim$ be an equivalence relation on $A$. Denote by $A/{\sim}$ the set of all equivalence classes with respect to $\sim$, i.e., $A/{\sim}=\{x_{\sim}:x\in A\}$. We may read $A/{\sim}$ as “the quotient of $A$ by $\sim$”.
+	\item \qquad \textbf{Proof (Tutorial 4 Q9(b)): $A/{\sim} = \mathscr{C}$} (The set of equivalence classes of $A$ is a partition of $A$.)
+	\item[Antisymmetry] Let $R$ be a relation on a set $A$. $R$ is \textbf{antisymmetric} iff $\forall x,y\in A(x\;R\;y\land y\;R\;x \to x=y)$.
+	\item[Asymmetry (Tutorial 5 Q6)] Let $R$ be a binary relation on a set $A$. $R$ is \textbf{asymmetric} iff $\forall x, y\in A (x\;R\;y \to y\;{\not}R\; x)$.
+	\item \qquad \textbf{Tutorial 5 Q6(c)} All asymmetric relations are antisymmetric.
+	\item[Partial Order Relations] Let $R$ be a relation on a set $A$. Then $R$ is a \textbf{partial order relation} (or simply \textbf{partial order}) iff $R$ is reflexive, antisymmetric and transitive.
+	\item \qquad Note: the symbol $\preceq$ is often used to refer to a general partial order, and the notation $x\preceq y$ is read as ``x is curly less than or equal to y''.
+	\item \qquad \textbf{Proof (Tutorial 5 Q3):} Binary relation $\subseteq$ on $P(A)$ is a partial order.
+	\item[Partially Ordered Sets]A set $A$ is called a \textbf{partially ordered set} (or \textbf{poset}) with respect to a partial order relation $R$ on $A$, denoted by ($A$, $R$).
+	\item[Hasse Diagram]Let $\preceq$ be a partial order on a set $A$. A \textbf{Hasse diagram} of $\preceq$ satisfies the following condition for all \underline{distinct} $x,y,m\in A$: If $x\preceq y$ and no $m \in A$ is such that $x\preceq m\preceq y$, then $x$ is placed below $y$ with a line joining them, else no line joins $x$ and $y$.
+	\item \qquad (Tip: to obtain a Hasse Diagram, start with a directed graph of the relation, placing vertices on the page so that all arrows point upwards. Then \textbf{eliminate} 1. the loops at all the vertices, 2. all arrows whose existence is implied by the transitive property, and 3. the direction indicators on the arrows.)
+	\item[Comparability]Suppose $\preceq$ is a partial order relation on a set $A$. Elements $a$ and $b$ of $A$ are said to be \textbf{comparable} iff either $a\preceq b$ or $b\preceq a$. Otherwise, $a$ and $b$ are \textbf{noncomparable}.
+	\item[Compatible (Tutorial 5 Q7)]Elements $a, b$ are \textbf{compatible} iff there exists $c\in A$ such that $a\preceq c$ and $b \preceq c$. 
+	\item[Maximal/Minimal/Largest/Smallest Element] \
+	\begin{enumerate}
+		\item $c$ is a \textbf{maximal element} of $A$ iff $\forall x\in A$, either $x\preceq c$, or $x$ and $c$ are not comparable. Alternatively, $c$ is a maximal element of $A$ iff $\forall x\in A(c\preceq x\to c=x)$.
+		\item $c$ is a \textbf{minimal element} of $A$ iff $\forall x\in A$, either $c\preceq x$, or $x$ and $c$ are not comparable. Alternatively, $c$ is a minimal element of $A$ iff $\forall x\in A(x\preceq c\to c=x)$.
+		\item $c$ is the \textbf{largest element} of $A$ iff $\forall x\in A(x\preceq c)$.
+		\item $c$ is the \textbf{smallest element} of $A$ iff $\forall x\in A(c\preceq x)$.
+	\end{enumerate}
+	\item \qquad Note: Alternative terms: Largest element = greatest element = maximum; smallest element = least element = minimum.
+	\item \qquad \textbf{Proposition (Lecture 6 Slide 83)} Consider a partial order $\preceq$ on a set $A$. Any smallest element is minimal. (Likewise, any largest element is maximal.)
+	\item[Total Order Relations]If $R$ is a partial order relation on a set $A$, and for any two elements $x$ and $y$ in $A$, either $xRy$ or $yRx$, then $R$ is a \textbf{total order relation} (or simply \textbf{total order}) on $A$. In other words, $R$ is a total order iff $R$ is a partial order and $\forall x,y\in A(xRy\lor yRx)$.
+	\item[Linearization of a partial order]Let $\preceq$ be a partial order on a set $A$. A \textbf{linearization} of $\preceq$ is a total order $\preceq^{*}$ on $A$ such that $\forall x,y\in A(x\preceq y \to x\preceq^{*} y)$.
+	\item[Well-Ordered Set] Let $\preceq$ be a total order on a set $A$. $A$ is \textbf{well-ordered} iff every non-empty subset of $A$ contains a smallest element. Symbolically, $\forall S\in P(A), S\neq 0\to (\exists x\in S\;\forall y\in S(x\preceq y))$.
+	\item[Tutorial 5 Discussion Q1] Let $R$ be a binary relation on a non-empty set $A$. If $R=\emptyset$, then $R$ is not reflexive, but it is symmetric and transitive (vacuously true).
+	
+	% 7 - Functions
+	\vspace{0.2cm}
+    \item[\large Functions]
+    \item[Function]A function $f$ from a set $X$ to a set $Y$, denoted $f:X\to Y$, is a relation satisfying the following properties: 
+    \begin{description}
+    	\item[(F1)]$\forall x\in X\; \exists y\in Y (x,y)\in f$
+		\item[(F2)]$\forall x\in X\; \forall y_{1}, y_{2}\in Y(((x, y_{1})\in f \land (x, y_{2})\in f)\to y_{1} = y_{2})$.
+    \end{description}
+    \item[Function (alternative definition)] Let $f$ be a relation on sets $X$ and $Y$, i.e. $f\subseteq X\times Y$. Then $f$ is a function from $X$ to $Y$, denoted $f:X\to Y$, iff $\forall x\in X \; \exists!\; y\in Y (x,y) \in f$. Informally, a function from $X$ and $Y$ is an assignment of each element of $X$ to \textbf{exactly one element} of $Y$.
+    \item[Another view of function]Let $f:X\to Y$ be the type signature of function. $\forall x\in X \; \exists y\in Y, \{y\} = \{b\;|\;(x, b)\in f\}$.
+    \item[Argument, image, preimage, input, output]Let $f:X\to Y$ be a function. We write $f(x)=y$ iff $(x, y)\in f$. We say that ``$f$ sends/maps $x$ to $y$'' and we may also write $x\to y$ or $f:x\longmapsto y$. Also, $x$ is called the \textbf{argument} of $f$. $f(x)$ is read ``$f$ of $x$'' or ``the \textbf{output} of $f$ for the \textbf{input} $x$'', or ``the value of $f$ at $x$'', or ``the \textbf{image} of $x$ under $f$''. If $f(x) = y$, then $x$ is a \textbf{preimage} of $y$. 
+    \item[Setwise image and preimage]Let $f:X\to Y$ be a function from set $X$ and set $Y$ and $f:P(X)\to P(Y)$
+    \begin{description}
+    	\item $\bullet$ If $A\subseteq X$, then let $f(A) = \{f(x):x\in A\}$.
+		\item $\bullet$ If $B\subseteq Y$, then let $f^{-1}(B) = \{x\in X:f(X) \in B\}$.
+    \end{description}
+    \item We call $f(A)$ the \textbf{(setwise) image} of $A$, and $f^{-1}(B)$ the \textbf{(setwise) preimage} of $B$ under $f$. 
+    \item[Domain, Co-domain, Range]Let $f:X\to Y$ be a function from set $A$ to set $B$. 
+    \begin{description}
+    	\item $\bullet$ $A$ is the \textbf{domain} of $f$ and $B$ the \textbf{co-domain} of $f$.
+    	\item $\bullet$ The \textbf{range} of $f$ is the (setwise) image of $A$ under $f$: $\{b \in B:b = f(x) \text{ for some }a\in A\}$.    	
+    \end{description}
+    \item[Sequence (of infinite length)] A sequence $a_{0}, a_{1}, a_{2} \dots$ can be represented by a function $a$ whose domain is $\mathbb{Z}_{\geq 0}$ that satisfies $a(n)=a_{n}$ for every $n\in \mathbb{Z}_{\geq 0}$.
+    \item[Fibonacci Sequence] The \textbf{Fibonacci Sequence} $F_{0}, F_{1}, F_{2}, \dots$ is defined by setting, for each $n \in \mathbb{Z}_{\geq 0}, F_{0}=0$ and $F_{1}=1$ and $F_{n+2}=F_{n+1}+F_{n}$.
+    \item 
+	    
+\end{description}
+
+% ================================ THEOREMS AND LEMMAS ===================================
+
+\newpage
+\section*{Theorems, Lemmas \& Corollaries}
+\hrule
+\vspace{0.3cm}
+\begin{description}
+
+	% 2 - Compound Statements 
+    \item[Theorem 2.1.1 Logical Equivalences]Given any statement variables $p$, $q$ and $r$, a tautology is \textbf{true} and a contradiction is \textbf{false}: 
+    \begin{table}[h]
+        \centering
+        {\rowcolors{1}{white}{lightgray!20}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+             1 & Commutative Laws & $p \wedge q\equiv q\wedge p$ & $p \vee q\equiv q\vee p$ \\
+             2 & Associative Laws & $p\wedge q\wedge r\equiv (p\wedge q)\wedge r\equiv p\wedge(q\wedge r)$ & $p\vee q\vee r\equiv (p\vee q)\vee r\equiv p\vee(q\vee r)$ \\
+             3 & Distributive Laws & $p\wedge (q\vee r)\equiv(p\wedge q)\vee(p\wedge r)$ & $p\vee (q\wedge r)\equiv(p\vee q)\wedge(p\vee r)$ \\ 
+             4 & Identity Laws & $p\wedge\text{\textbf{true}}\equiv p$ & $p\vee\text{\textbf{false}}\equiv p$ \\
+             5 & Negation Laws & $p\vee{\sim} p\equiv\text{\textbf{true}}$ & $p\wedge{\sim} p\equiv\text{\textbf{false}}$ \\
+             6 & Double Negation Law & ${\sim}({\sim} p)\equiv p$ &  \\
+             7 & Idempotent laws & $p\wedge p\equiv p$ & $p\vee p\equiv p$ \\
+             8 & Universal bound laws & $p\vee\text{\textbf{true}}\equiv\text{\textbf{true}}$ & $p\wedge\text{\textbf{false}}\equiv\text{\textbf{false}}$ \\
+             9 & De Morgan's laws & ${\sim}(p\wedge q)\equiv{\sim} p\vee{\sim} q$ & ${\sim}(p\vee q)\equiv{\sim} p\wedge{\sim} q$ \\
+             10 & Absorption laws & $p\vee(p\wedge q)\equiv p$ & $p\wedge(p\vee q)\equiv p$ \\
+             11 & Negation of \textbf{true} and \textbf{false} & ${\sim}\text{\textbf{true}}\equiv\text{\textbf{false}}$ & ${\sim}\text{\textbf{false}}\equiv\text{\textbf{true}}$ \\
+            \hline
+        \end{tabular}}
+        \label{tab:1}
+    \end{table}
+    \item[Table 2.3.1 Rules of Inference] (Quote the rules if you use them in proofs)
+    \begin{table}[h]
+    	\centering
+		{\rowcolors{1}{white}{lightgray!20}
+		\begin{tabular}{|c|c|c|c|} 
+			\hline
+			Rule of Inference & & Rule of Inference & \\
+			\hline
+			Modus Ponens & $p\to q$ \quad $p$ \quad $\bullet$q & Elimination & $p\lor q$ \quad ${\sim} q$ \quad $\bullet p$ \\
+			Modus Tollens & $p\to q$ \quad ${\sim} q$ \quad $\bullet{\sim} p$ & Transitivity & $p\to q$ \quad $q\to r$ \quad $\bullet p\to r$ \\
+			Generalization &  $p$ \quad $\bullet p\lor q$ & Proof by Division into Cases  & $p\lor q$ \quad $p\to r$ \quad $q\to r$ \quad $\bullet r$ \\
+			Specialization &  $p\land q$ \quad $\bullet p$ & Contradiction Rule & ${\sim}{p}\to\text{\textbf{false}}$ \quad $\bullet p$ \\
+			Conjuction & $p$ \quad $q$ \quad $\bullet p\land q$ & \ & \\
+			\hline
+		\end{tabular}}
+		\label{tab:2}
+    \end{table}
+    
+	% 3 - Quantified Statements
+    \item[Theorem 3.2.1 Negation of Universal Statement] The \textbf{negation} of a statement of the form $\forall x\in D, P(x)$ is logically equivalent to a statement of the form $\exists x\in D$ such that ${\sim} P(x)$. Symbolically, ${\sim}(\forall x\in D, P(x)) \equiv \exists x\in D \text{ such that } {\sim} P(x)$.
+    \item[Theorem 3.2.2 Negation of an Existential Statement] The \textbf{negation} of a statement of the form $\exists x\in D, P(x)$ is logically equivalent to a statement of the form $\forall x\in D$ such that ${\sim} P(x)$. Symbolically, ${\sim}(\exists x\in D, P(x)) \equiv \forall x\in D \text{ such that } {\sim} P(x)$.
+    \item[Rules of Inference (Quantified Statements)] \
+    \begin{table}[h]
+        \centering
+        {\rowcolors{1}{white}{lightgray!20}
+        \begin{tabular}{|c|c|}
+            \hline
+             Rule of Inference & Name \\
+             \hline
+             $\forall x\in D P(x)$ \quad $\therefore P(a)$ if $a\in D$ & Universal instantiation \\
+             $P(a)$ for every $a\in D$ \quad $\therefore \forall x\in D P(x)$ & Universal generalization \\
+             $\exists x\in D P(x)$ \quad $\therefore P(a)$ for some $a\in D$ & Existential instantiation \\
+             $P(a)$ for some $a\in D$ \quad  $\therefore \exists x\in D P(x)$ & 	Existential generalization \\
+            \hline
+        \end{tabular}}
+        \label{tab:1}
+    \end{table}
+
+	% 4 - Methods of Proofs 
+    \item[Theorem 4.2.1 (5th: 4.3.1)] Every integer is a rational number.
+    \item[Theorem 4.2.2 (5th: 4.3.2)] The sum of any two rational numbers is rational.
+    \item[Corollary 4.2.3 (5th: 4.2.3)] The double of a rational number is rational.
+    \item[Theorem 4.3.1 (5th: 4.4.1) A Positive Divisor of a Positive Integer:] For all positive integers $a$ and $b$, if $a|b$, then $a\leq b$. 
+    \item[Theorem 4.3.2 (5th: 4.4.2) Divisors of 1:] The only divisors of 1 are 1 and -1.
+    \item[Theorem 4.3.3 (5th: 4.4.3) Transitivity of Divisibility:] For all integers $a$, $b$ and $c$, if $a|b$ and $b|c$, then $a|c$. 
+    \item[Theorem 4.4.1 The Quotient-Remainder Theorem]Given any integer $n$ and a positive integer $d$, there exists unique integers $q$ and $r$ such that $n=dq+r$ and $0\leq r\leq d$.
+    \item[Theorem 4.6.1 (5th: 4.7.1)] There is no greatest integer.
+    \item[Theorem 4.6.4 (5th: 4.7.4)] For all integers $n$, if $n^{2}$ is even then $n$ is even.
+    \item[Proof (Tutorial 1 Q10)] The product of any two odd integers is an odd integer.
+    \item[Proof (Tutorial 1 Q11)] $n^{2}$ is odd if and only if $n$ is odd.
+    \item[Proof (Tutorial 2 Q4(a))]Integers are not closed under division.
+    \item[Proof (Tutorial 2 Q4(b))]Rational numbers are closed under addition.
+    \item[Proof (Tutorial 2 Q4(c))]Rational numbers are not closed under division.
+    \item[Proof (Tutorial 2 Q8)]$\forall x\in \mathbb{R} ((x^{2}>x)\to (x<0)\lor(x>1))$.
+    \item[Proof (Tutorial 2 Q11)]If $n$ is a product of two positive integers $a$ and $b$, then $a\leq n^{1/2}$ or $b\leq n^{1/2}$.
+    \item[Theorem 4.7.1 (5th: 4.8.1)] $\sqrt{2}$ is irrational.
+        
+    % 5 - Sets
+    \item[Theorem 6.2.1 Subset Relations] \
+    \begin{description}
+    	\item[1. Inclusion of Intersection:] For all sets $A$ and $B$, (a) $A\cap B\subseteq A$ \qquad (b) $A\cap B \subseteq B$.
+		\item[2. Inclusion in Union:] For all sets $A$ and $B$, (a) $A\subseteq A\cup B$ \qquad (b) $B\subseteq A\cup B$.
+		\item[3. Transitive Property Of Subsets:] For all sets $A$, $B$ and $C$, $A\subseteq B\land B\subseteq C\to A\subseteq C$.
+    \end{description}
+	\item[Theorem 6.2.2 Set Identities] Let all sets referred to below be subsets of a universal set $U$. 
+	\begin{description}
+		\item[1. Commutative Laws:]For all sets $A$ and $B$, (a) $A \cup B = B\cup A$ \qquad and \qquad (b) $A \cap B=B\cap A$. 
+		\item[2. Associative Laws:]For all sets $A$, $B$ and $C$, (a) $(A\cup B)\cup C=A\cup(B\cup C)$ \qquad and \qquad (b) $(A\cap B)\cap C=A\cap(B\cap C)$.
+		\item[3. Distributive Laws:] For all sets $A$, $B$ and $C$, (a) $A\cup (B\cap C)=(A\cup B) \cap (A\cup C)$ \qquad and \qquad (b) $A\cap (B\cup C)=(A\cap B)\cup (A\cap C)$.
+		\item[4. Identity Laws:]For all sets $A$, (a) $A\cup\emptyset = A$ \qquad and \qquad (b) $A\cap U=A$.
+		\item[5. Complement Laws:]For all sets $A$, (a) $A\cup \overline{\rm A}=U$ \qquad and \qquad (b) $A\cap \overline{A} = \emptyset$.
+		\item[6. Double Complement Law:]For alls sets $A$, $\overline{\overline{A}} = A$.
+		\item[7. Idempotent Laws:] For all sets $A$, (a) $A\cup A = A$ \qquad and \qquad (b) $A\cap A = A$.
+		\item[8. Universal Bound Laws:] For all sets $A$, (a) $A\cup U=U$ \qquad and \qquad (b) $A\cap \emptyset = \emptyset$.
+		\item[9. De Morgan's Laws:] For all sets $A$ and $B$, (a) $\overline{A\cup B} = \overline{A} \cap \overline{B}$ \qquad and \qquad (b) $\overline{A\cap B} = \overline{A} \cup \overline{B}$.
+		\item[10. Absorption Laws:] For all sets $A$, (a) $A\cup (A\cap B)=A$ \qquad and \qquad (b) $A\cap(A\cup B)=A$.
+		\item[11. Complements of $U$ and $\emptyset$:] (a) $\overline{U} = \emptyset$ \qquad and \qquad (b) $\overline{\emptyset} = U$.
+		\item[12. Set Difference Law:] For all sets $A$, $A\setminus B=A\cap \overline{B}$.
+	\end{description}
+    \item[Theorem 6.2.4] An empty set is a \textbf{subset} of every set, i.e. $\emptyset\subseteq A$ for all sets $A$.
+    \item Note: a set with exactly one element is called a \textbf{singleton}.
+    \item[Theorem: Cardinality of a Power Set of a Finite Set]Let $A$ be a finite set where $|A|=n$, then $|P(A)|=2^{n}$. 
+    \item[Theorem 6.3.1] Suppose A is a finite set with $n$ elements, then $P(A)$ has $2^{n}$ elements. In other words, $|P(A)|=2^{|A|}$.
+    
+	 % 6 - Relations
+	 \item[Theorem 8.3.1 Relation Induced by a Partition]Let $A$ be a set with a partition and let $R$ be the relation induced by the partition. Then $R$ is reflexive, symmetric, and transitive.
+	 \item[Lemma Rel.1 Equivalence Classes]Let $\sim$ be an equivalence relation on a set $A$. The following are equivalent for all $x, y\in A$. (i)$x\sim y$ \qquad (ii) $[x]=[y]$ \qquad (iii) $[x]\cap[y]\neq \emptyset$.
+	 \item[Theorem 8.3.4 The Partition Induced by an Equivalence Relation] If $A$ is a set and $R$ is an equivalence relation on $A$, then the distinct equivalence classes of $R$ form a partition of $A$; that is, the union of the equivalence classes is all of $A$, and the intersection of any two distinct classes is empty.
+	 \item[Theorem Rel.2 Equivalence classes form a partition]Let $\sim$ be an equivalence relation on a set $A$. Then $A/{\sim}$ is a partition of $A$.
+
+\end{description}
+
+% ====================================== PROOFS =======================================
+	 
+\newpage
+\begingroup
+
+% set new style
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+\section*{Examples of Proofs (For reference)}
+\hrule
+\vspace{0.5cm}
+
+\subsection*{Prove that the product of two consecutive odd numbers is always odd.}
+\begin{enumerate}
+    \item Let $a$ and $b$ be the two consecutive odd numbers. 
+    \begin{enumerate}
+        \item WLOG, assume that $a<b$, hence $b=a+2$.
+        \item Now, $a=2k+1$ for some integer $k$ (by definition of odd numbers).
+        \item Similarly, $b=a+2=2k+3$.
+        \item Therefore, $ab=(2k+1)(2k+3)=(4k^2+6k)+(2k+3)=4k^2+8k+3=2(2k^2+4k+1)+1$ (by basic algebra).
+        \item Let $m=(2k^2+4k+1)$, which is an integer (by closure of integers under $\times$ and +. 
+        \item Then $ab=2m+1$, which is odd (by definition of odd numbers).
+    \end{enumerate}
+    \item Therefore, the product of two consecutive odd numbers is always odd.
+\end{enumerate}
+\vspace{0.1cm}
+
+\subsection*{Prove that the following statement is false: The product of two irrational numbers is always irrational.}
+\begin{enumerate}
+    \item Let them two irrational numbers be $\sqrt{2}$ and $\sqrt{8}$. 
+    \begin{enumerate}
+        \item Then $\sqrt{2}\times\sqrt{8}=\sqrt{16}=4$, which is a rational number (by basic algebra).
+    \end{enumerate}
+    \item Therefore, the statement "the product of two irrational numbers is always irrational" is false.
+\end{enumerate}
+\paragraph{Note:}One counter-example is sufficient. 
+\vspace{0.1cm}
+
+\subsection*{Prove that the difference of two consecutive squares between 30 and 100 is odd. (Proof by exhaustion / brute force)}
+\begin{enumerate}
+    \item The squares between 30 and 100 are 36, 49, 64 and 81.
+    \begin{enumerate}
+        \item Case 1: 49 – 36 = 13 which is odd.
+        \item Case 2: 64 – 49 = 15 which is odd.
+        \item Case 3: 81 – 64 = 17 which is odd.
+    \end{enumerate}
+    \item Therefore, the difference of two consecutive squares
+between 30 and 100 is odd.
+\end{enumerate}
+\vspace{0.1cm}
+
+\subsection*{Prove that the difference of two consecutive squares is always odd. (Proof by deduction / direct proof)}
+\begin{enumerate}
+    \item Let the numbers be $n$ and $n+1$.
+    \begin{enumerate}
+        \item $(n+1)^2-n^2=n^2+2n+1-n^2=2n+1$ (by basic algebra).
+        \item $2n+1$ is odd (by definition of odd numbers).
+    \end{enumerate}
+    \item Therefore, the difference of two consecutive squares is odd.
+\end{enumerate}
+\vspace{0.1cm}
+
+\subsection*{Prove Theorem 4.7.1(5th: 4.8.1) $\sqrt{2}$ is irrational. (Proof by contradiction)}
+\begin{description}
+    \item[Proposition 4.6.4(5th: 4.7.4)] For all integers $n$, if $n^2$ is even then $n$ is even.
+\end{description}
+\begin{enumerate}
+    \item Suppose not, that is, $\sqrt{2}$ is rational.
+    \begin{enumerate}
+        \item Then $\exists{a},b\in\mathbb{Z},b\neq0\text{ s.t. }\sqrt{2}=\frac{a}{b}$ (by definition of rational numbers).
+        \item Convert $\frac{a}{b}$ into its lowest term $\frac{m}{n}$.
+        \item $m^2=2n^2$ (by basic algebra).
+        \item Hence $m^2$ is even (by definition of even number, as $n^2$ is an integer by closure).
+        \item Hence $m$ is even (by Proposition 4.6.4).
+        \item Let $m=2k$; substituting into 1.3:$4k^2=2n^2$, or $n^2=2k^2$.
+        \item Hence $n^2$ is even (by definition of even number).
+        \item Hence $n$ is even (by Proposition 4.6.4).
+        \item So both $m$ and $n$ are even, but this contradicts that $\frac{m}{n}$ is in its lowest term.
+    \end{enumerate}
+    \item Therefore, the assumption that $\sqrt{2}$ is rational is false. 
+    \item Hence $\sqrt{2}$ is irrational. 
+\end{enumerate}
+\paragraph{Note:}To prove a statement $S$ by contradiction, you first assume that ${\sim}{S}$ is true. Based on this, you use known facts and theorems to arrive at a logical contradiction. Since every step of your argument thus far is logically correct, the problem must lie in your initial assumption (that ${\sim}{S}$ is true). Thus you conclude that ${\sim}{S}$ is false, that is, $S$ is true.
+\vspace{0.1cm}
+
+\subsection*{Prove that there exist irrational numbers $p$ and $q$ such that $p^q$ is rational.}
+\begin{enumerate}
+    \item From Theorem 4.7.1, $\sqrt{2}$ is irrational. 
+    \item Consider $\sqrt{2}^{\sqrt{2}}$. It is either rational or irrational. 
+    \item Case 1: $\sqrt{2}^{\sqrt{2}}$ is rational.
+    \begin{enumerate}
+        \item Let $p=q=\sqrt{2}$, and we are done. 
+    \end{enumerate}
+    \item Case 2: $\sqrt{2}^{\sqrt{2}}$ is irrational.
+    \begin{enumerate}
+        \item Let $p=\sqrt{2}^{\sqrt{2}}$, and $q={\sqrt{2}}$.
+        \item Now $p$ is irrational (by assumption), so is $q$ (by Theorem 4.7.1).
+        \item Consider $p^q=(\sqrt{2}^{\sqrt{2}})^{\sqrt{2}}=(\sqrt{2})^{\sqrt{2}\times\sqrt{2}}=(\sqrt{2})^2=2$ (by basic algebra).
+        \item Clearly 2 is rational. 
+    \end{enumerate}
+    \item In either case, we have found the required $p$ and $q$. 
+\end{enumerate}
+
+\vspace{0.1cm}
+
+\endgroup
+% I create a new group here for custom list styles for proofs so that it does not affect the other list styles
+
+\end{document}
+
