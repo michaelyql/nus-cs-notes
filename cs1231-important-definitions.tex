@@ -316,6 +316,7 @@
         \end{tabular}}
         \label{tab:1}
     \end{table}
+    \item[Implication Law]$p\to q\equiv {\sim} p\vee q $ 
     \item[Table 2.3.1 Rules of Inference] (Quote the rules if you use them in proofs)
     \begin{table}[h]
     	\centering
@@ -381,20 +382,44 @@
 		\item[3. Transitive Property Of Subsets:] For all sets $A$, $B$ and $C$, $A\subseteq B\land B\subseteq C\to A\subseteq C$.
     \end{description}
 	\item[Theorem 6.2.2 Set Identities] Let all sets referred to below be subsets of a universal set $U$. 
-	\begin{description}
-		\item[1. Commutative Laws:]For all sets $A$ and $B$, (a) $A \cup B = B\cup A$ \qquad and \qquad (b) $A \cap B=B\cap A$. 
-		\item[2. Associative Laws:]For all sets $A$, $B$ and $C$, (a) $(A\cup B)\cup C=A\cup(B\cup C)$ \qquad and \qquad (b) $(A\cap B)\cap C=A\cap(B\cap C)$.
-		\item[3. Distributive Laws:] For all sets $A$, $B$ and $C$, (a) $A\cup (B\cap C)=(A\cup B) \cap (A\cup C)$ \qquad and \qquad (b) $A\cap (B\cup C)=(A\cap B)\cup (A\cap C)$.
-		\item[4. Identity Laws:]For all sets $A$, (a) $A\cup\emptyset = A$ \qquad and \qquad (b) $A\cap U=A$.
-		\item[5. Complement Laws:]For all sets $A$, (a) $A\cup \overline{\rm A}=U$ \qquad and \qquad (b) $A\cap \overline{A} = \emptyset$.
-		\item[6. Double Complement Law:]For alls sets $A$, $\overline{\overline{A}} = A$.
-		\item[7. Idempotent Laws:] For all sets $A$, (a) $A\cup A = A$ \qquad and \qquad (b) $A\cap A = A$.
-		\item[8. Universal Bound Laws:] For all sets $A$, (a) $A\cup U=U$ \qquad and \qquad (b) $A\cap \emptyset = \emptyset$.
-		\item[9. De Morgan's Laws:] For all sets $A$ and $B$, (a) $\overline{A\cup B} = \overline{A} \cap \overline{B}$ \qquad and \qquad (b) $\overline{A\cap B} = \overline{A} \cup \overline{B}$.
-		\item[10. Absorption Laws:] For all sets $A$, (a) $A\cup (A\cap B)=A$ \qquad and \qquad (b) $A\cap(A\cup B)=A$.
-		\item[11. Complements of $U$ and $\emptyset$:] (a) $\overline{U} = \emptyset$ \qquad and \qquad (b) $\overline{\emptyset} = U$.
-		\item[12. Set Difference Law:] For all sets $A$, $A\setminus B=A\cap \overline{B}$.
-	\end{description}
+
+    \begin{table}[h]
+        \centering
+        {\rowcolors{1}{white}{lightgray!20}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+             1 & Commutative Laws & $A \cup B = B\cup A$ & $A \cap B=B\cap A$ \\
+             2 & Associative Laws & $(A\cup B)\cup C=A\cup(B\cup C)$ & $(A\cap B)\cap C=A\cap(B\cap C)$ \\
+             3 & Distributive Laws & $A\cup (B\cap C)=(A\cup B) \cap (A\cup C)$ & $A\cap (B\cup C)=(A\cap B)\cup (A\cap C)$ \\ 
+             4 & Identity Laws & $A\cup\emptyset = A$ & $A\cap U=A$ \\
+             5 & Complement Laws & $A\cup \overline{\rm A}=U$ & $A\cap \overline{A} = \emptyset$ \\
+             6 & Double Complement Law & $\overline{\overline{A}} = A$ &  \\
+             7 & Idempotent Laws & $A\cup A = A$ & $A\cap A = A$ \\
+             8 & Universal Bound Laws & $A\cup U=U$ & $A\cap \emptyset = \emptyset$ \\
+             9 & De Morgan's Laws & $\overline{A\cup B} = \overline{A} \cap \overline{B}$ & $\overline{A\cap B} = \overline{A} \cup \overline{B}$ \\
+             10 & Absorption Laws & $A\cup (A\cap B)=A$ & $A\cap(A\cup B)=A$ \\
+             11 & Complements of $U$ and $\emptyset$ & $\overline{U} = \emptyset$ & $\overline{\emptyset} = U$ \\
+             12 & Set Difference Law & $A\setminus B=A\cap \overline{B}$ & \\
+            \hline
+        \end{tabular}}
+        \label{tab:1}
+    \end{table}
+
+	% \begin{description}
+	% 	\item[1. Commutative Laws:]For all sets $A$ and $B$, (a) $A \cup B = B\cup A$ \qquad and \qquad (b) $A \cap B=B\cap A$. 
+	% 	\item[2. Associative Laws:]For all sets $A$, $B$ and $C$, (a) $(A\cup B)\cup C=A\cup(B\cup C)$ \qquad and \qquad (b) $(A\cap B)\cap C=A\cap(B\cap C)$.
+	% 	\item[3. Distributive Laws:] For all sets $A$, $B$ and $C$, (a) $A\cup (B\cap C)=(A\cup B) \cap (A\cup C)$ \qquad and \qquad (b) $A\cap (B\cup C)=(A\cap B)\cup (A\cap C)$.
+	% 	\item[4. Identity Laws:]For all sets $A$, (a) $A\cup\emptyset = A$ \qquad and \qquad (b) $A\cap U=A$.
+	% 	\item[5. Complement Laws:]For all sets $A$, (a) $A\cup \overline{\rm A}=U$ \qquad and \qquad (b) $A\cap \overline{A} = \emptyset$.
+	% 	\item[6. Double Complement Law:]For alls sets $A$, $\overline{\overline{A}} = A$.
+	% 	\item[7. Idempotent Laws:] For all sets $A$, (a) $A\cup A = A$ \qquad and \qquad (b) $A\cap A = A$.
+	% 	\item[8. Universal Bound Laws:] For all sets $A$, (a) $A\cup U=U$ \qquad and \qquad (b) $A\cap \emptyset = \emptyset$.
+	% 	\item[9. De Morgan's Laws:] For all sets $A$ and $B$, (a) $\overline{A\cup B} = \overline{A} \cap \overline{B}$ \qquad and \qquad (b) $\overline{A\cap B} = \overline{A} \cup \overline{B}$.
+	% 	\item[10. Absorption Laws:] For all sets $A$, (a) $A\cup (A\cap B)=A$ \qquad and \qquad (b) $A\cap(A\cup B)=A$.
+	% 	\item[11. Complements of $U$ and $\emptyset$:] (a) $\overline{U} = \emptyset$ \qquad and \qquad (b) $\overline{\emptyset} = U$.
+	% 	\item[12. Set Difference Law:] For all sets $A$, $A\setminus B=A\cap \overline{B}$.
+	% \end{description}
+
     \item[Theorem 6.2.4] An empty set is a \textbf{subset} of every set, i.e. $\emptyset\subseteq A$ for all sets $A$.
     \item Note: a set with exactly one element is called a \textbf{singleton}.
     \item[Theorem: Cardinality of a Power Set of a Finite Set]Let $A$ be a finite set where $|A|=n$, then $|P(A)|=2^{n}$. 
