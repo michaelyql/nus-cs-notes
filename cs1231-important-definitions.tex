@@ -264,7 +264,8 @@
     \item[Function]A function $f$ from a set $X$ to a set $Y$, denoted $f:X\to Y$, is a relation satisfying the following properties: 
     \begin{description}
     	\item[(F1)]$\forall x\in X\; \exists y\in Y (x,y)\in f$
-		\item[(F2)]$\forall x\in X\; \forall y_{1}, y_{2}\in Y(((x, y_{1})\in f \land (x, y_{2})\in f)\to y_{1} = y_{2})$.
+		\item[(F2)]$\forall x\in X\; \forall y_{1}, y_{2}\in Y(((x, y_{1})\in f \land (x, y_{2})\in f)\to y_{1} = y_{2})$
+		\item[(F3)]$\forall x_{1},x_{2}\in X(x_{1}=x_{2}\to f(x_{1})=f(x_{2}))$
     \end{description}
     \item[Function (alternative definition)] Let $f$ be a relation on sets $X$ and $Y$, i.e. $f\subseteq X\times Y$. Then $f$ is a function from $X$ to $Y$, denoted $f:X\to Y$, iff $\forall x\in X \; \exists!\; y\in Y (x,y) \in f$. Informally, a function from $X$ and $Y$ is an assignment of each element of $X$ to \textbf{exactly one element} of $Y$.
     \item[Another view of function]Let $f:X\to Y$ be the type signature of function. $\forall x\in X \; \exists y\in Y, \{y\} = \{b\;|\;(x, b)\in f\}$.
@@ -282,7 +283,20 @@
     \end{description}
     \item[Sequence (of infinite length)] A sequence $a_{0}, a_{1}, a_{2} \dots$ can be represented by a function $a$ whose domain is $\mathbb{Z}_{\geq 0}$ that satisfies $a(n)=a_{n}$ for every $n\in \mathbb{Z}_{\geq 0}$.
     \item[Fibonacci Sequence] The \textbf{Fibonacci Sequence} $F_{0}, F_{1}, F_{2}, \dots$ is defined by setting, for each $n \in \mathbb{Z}_{\geq 0}, F_{0}=0$ and $F_{1}=1$ and $F_{n+2}=F_{n+1}+F_{n}$.
-    \item 
+    \item[String (of finite length)]Let $A$ be a set. A \textbf{string} or word over $A$ is an expression of the form $a_{0}a_{1}a_{2}\dots a_{l-1}$ where $l\in\mathbb{Z}_{\geq0}$ and $a_{0}a_{1}a_{2}\dots a_{l-1}\in A$. Here $l$ is called the \textbf{length} of the string. The \textbf{empty string} $\varepsilon$ is the string of length 0. 
+    \item[Equality of Sequences] Given two sequences $a_{0},a_{1},a_{2},\dots$ and $b_{0},b_{1},b_{2},\dots$ defined by the functions $a(n)=a_{n}$ and $b(n)=b_{n}$ respectively for every $n\in\mathbb{Z}_{\geq0}$, we say that the two sequences are equal if and only if $a(n)=b(n)$ for every $n\in\mathbb{Z}_{\geq0}$.
+    \item[Equality of Strings] Given two strings $s_{1}=a_{0}a_{1}a_{2}\dots a_{l-1}$ and $s_{2}=b_{0}b_{1}b_{2}\dots b_{l-1}$ where $l\in\mathbb{Z}_{\geq0}$, we say that $s_{1}=s_{2}$ if and only if $a_{i}=b_{i}$ for all $i\in \{0, 1, 2,\dots,l-1\}$.
+    \item[Injection (one-to-one function)]A function $f:X\to Y$ is \textbf{injective} (or \textbf{one-to-one}) iff $\forall x_{1}, x_{2}\in X(f(x_{1})=f(x_{2})\to x_{1}=x_{2})$, or equivalently (contrapositive), $x_{1}\neq x_{2}\to f(x_{1})\neq f(x_{2})$. An injective function is called an \textbf{injection}. Informally, every element in the codomain must have \textbf{at most one arrow} going into it.
+    \item[Surjective (onto function)] A function $f:X\to Y$ is \textbf{surjective} (or \textbf{onto}) iff $\forall y\in Y\;\exists x\in X(y=f(x))$. Every element in the co-domain has at least one preimage. So, range = co-domain. A surjective function is called a \textbf{surjection}. Informally, every element in the codomain must have \textbf{at least one arrow} going into it. 
+    \item[Bijection (one-to-one correspondence)] A function $f:X\to Y$ is \textbf{bijective} iff $f$ is injective and surjective, i.e. $\forall y\in Y\;\exists x\in X(y=f(x))$. A bijective function is called a \textbf{bijection} or \textbf{one-to-one correspondence}. Informally, every element in the codomain must have \textbf{exactly one arrow} going into it. 
+    \item[Inverse Function] \
+    \item \qquad \textbf{Proposition (Lecture 7 Slide 39)} If $g_{1}$ and $g_{2}$ are inverses of $f:X\to Y$, then $g_{1}=g_{2}$.
+    \item[Composition of Functions] Let $f:X\to Y$ and $g:Y\to Z$ be functions. Define a new function $g\circ f:X\to Z$ as follows: $(g\circ f)(x)=g(f(x))\;\forall x\in X$, where $g\circ f$ is read ``$g$ circle $f$'' and $g(f(x))$ is read ``$g$ of $f$ of $x$''. The function $g\circ f$ is called the \textbf{composition} of $f$ and $g$.
+    \item[Addition and Multiplication on $\mathbb{Z}_{n}$]Define addition $+$ and multiplication $\cdot$ on $\mathbb{Z}_{n}$ as follows: whenever $[x],[y]\in\mathbb{Z}_{n}$, $[x]+[y]=[x+y]$ and $[x]\cdot[y]=[x\cdot y]$.
+    \item \qquad \textbf{Proposition: Addition on $\mathbb{Z}_{n}$ is well defined (Lecture 7 Slide 63)} For all $n\in\mathbb{Z}^{+}$ and all $[x_{1}],[y_{1}],[x_{2}],[y_{2}]\in\mathbb{Z}_{n}, ([x_{1}],[y_{1}])=([x_{2}],[y_{2}])\to [x_{1}]+[y_{1}]=[x_{2}]+[y_{2}]$.
+    \item \qquad \textbf{General Well-Defined Function Property}\quad\;\; $\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,x_{1}=x_{2}\to f(x_{1})=f(x_{2})$.
+    \item \qquad \textbf{Well-Defined Property w.r.t Equiv Relation ${\sim}$}\quad \;\;$\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,x_{1}{\sim}x_{2}\to f(x_{1}){\sim}f(x_{2})$.
+    \item \qquad \textbf{Well-Defined Property w.r.t Equiv Class [x]}\quad \;\;$\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,[x_{1}]=[x_{2}]\to [f(x_{1})]=[f(x_{2})]$.
 	    
 \end{description}
 
@@ -405,21 +419,6 @@
         \label{tab:1}
     \end{table}
 
-	% \begin{description}
-	% 	\item[1. Commutative Laws:]For all sets $A$ and $B$, (a) $A \cup B = B\cup A$ \qquad and \qquad (b) $A \cap B=B\cap A$. 
-	% 	\item[2. Associative Laws:]For all sets $A$, $B$ and $C$, (a) $(A\cup B)\cup C=A\cup(B\cup C)$ \qquad and \qquad (b) $(A\cap B)\cap C=A\cap(B\cap C)$.
-	% 	\item[3. Distributive Laws:] For all sets $A$, $B$ and $C$, (a) $A\cup (B\cap C)=(A\cup B) \cap (A\cup C)$ \qquad and \qquad (b) $A\cap (B\cup C)=(A\cap B)\cup (A\cap C)$.
-	% 	\item[4. Identity Laws:]For all sets $A$, (a) $A\cup\emptyset = A$ \qquad and \qquad (b) $A\cap U=A$.
-	% 	\item[5. Complement Laws:]For all sets $A$, (a) $A\cup \overline{\rm A}=U$ \qquad and \qquad (b) $A\cap \overline{A} = \emptyset$.
-	% 	\item[6. Double Complement Law:]For alls sets $A$, $\overline{\overline{A}} = A$.
-	% 	\item[7. Idempotent Laws:] For all sets $A$, (a) $A\cup A = A$ \qquad and \qquad (b) $A\cap A = A$.
-	% 	\item[8. Universal Bound Laws:] For all sets $A$, (a) $A\cup U=U$ \qquad and \qquad (b) $A\cap \emptyset = \emptyset$.
-	% 	\item[9. De Morgan's Laws:] For all sets $A$ and $B$, (a) $\overline{A\cup B} = \overline{A} \cap \overline{B}$ \qquad and \qquad (b) $\overline{A\cap B} = \overline{A} \cup \overline{B}$.
-	% 	\item[10. Absorption Laws:] For all sets $A$, (a) $A\cup (A\cap B)=A$ \qquad and \qquad (b) $A\cap(A\cup B)=A$.
-	% 	\item[11. Complements of $U$ and $\emptyset$:] (a) $\overline{U} = \emptyset$ \qquad and \qquad (b) $\overline{\emptyset} = U$.
-	% 	\item[12. Set Difference Law:] For all sets $A$, $A\setminus B=A\cap \overline{B}$.
-	% \end{description}
-
     \item[Theorem 6.2.4] An empty set is a \textbf{subset} of every set, i.e. $\emptyset\subseteq A$ for all sets $A$.
     \item Note: a set with exactly one element is called a \textbf{singleton}.
     \item[Theorem: Cardinality of a Power Set of a Finite Set]Let $A$ be a finite set where $|A|=n$, then $|P(A)|=2^{n}$. 
@@ -430,6 +429,15 @@
 	 \item[Lemma Rel.1 Equivalence Classes]Let $\sim$ be an equivalence relation on a set $A$. The following are equivalent for all $x, y\in A$. (i)$x\sim y$ \qquad (ii) $[x]=[y]$ \qquad (iii) $[x]\cap[y]\neq \emptyset$.
 	 \item[Theorem 8.3.4 The Partition Induced by an Equivalence Relation] If $A$ is a set and $R$ is an equivalence relation on $A$, then the distinct equivalence classes of $R$ form a partition of $A$; that is, the union of the equivalence classes is all of $A$, and the intersection of any two distinct classes is empty.
 	 \item[Theorem Rel.2 Equivalence classes form a partition]Let $\sim$ be an equivalence relation on a set $A$. Then $A/{\sim}$ is a partition of $A$.
+	 
+	 % 7 - Functions
+	 \item[Theorem 7.1.1 Function Equality]Two functions $f:A\to B$ and $g:C\to D$ are equal, i.e. $f=g$, iff (i)$A=C$, and (ii) $f(x)=g(x)\;\forall x\in A$.
+	 \item[Theorem 7.2.3] If $f:X\to Y$ is a bijection, then $f^{-1}:Y\to X$ is also a bijection. In other words, $f:X\to Y$ is bijective iff $f$ has an inverse.
+	 \item[Theorem 7.3.1 Composition with an Identity Function]If $f$ is a function from set $X$ to set $Y$, and $id_{x}$ is the identity function on $X$, and $id_{y}$ is the identity function on $Y$, then $f\circ id_{x}=f$ and $id_{y}\circ f=f$.
+	 \item[Theorem 7.3.2 Composition of a Function with its Inverse]If $f:X\to Y$ is a bijection with the inverse function $f^{-1}:Y\to X$, then $f^{-1}\circ f=id_{x}$ and $f\circ f^{-1}=id_{y}$.
+	 \item[Theorem: Associativity of Function Composition]Let $f:A\to B$, $g:B\to C$ and $h:C\to D$. Then $(h\circ g)\circ f = h\circ (g\circ f)$. Function composition is associative. 
+	 \item[Theorem 7.3.3] If $f:X\to Y$ and $g:Y\to Z$ are both injective, then $g\circ f$ is injective. 
+	 \item[Theorem 7.3.4] If $f:X\to Y$ and $g:Y\to Z$ are both surjective, then $g\circ f$ is surjective.
 
 \end{description}
 
