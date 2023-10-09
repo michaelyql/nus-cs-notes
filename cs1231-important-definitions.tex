@@ -204,7 +204,7 @@
     \item[$n$-ary Relation] Given $n$ sets $A_{1}, A_{2}, \ldots, A_{n}$, an \textbf{$n$-ary relation $R$} on $A_{1} \times A_{2} \times \ldots, A_{n}$ is a subset of $A_{1} \times A_{2} \times \ldots \times A_{n}$. The special cases of 2-ary, 3-ary, and 4-ary relations are called \textbf{binary}, \textbf{ternary} and \textbf{quaternary relations} respectively. 
     \item[Reflexivity, Symmetry, Transitivity] Let $R$ be a relation on a set $A$. 
 	\begin{enumerate}
-		\item $R$ is \textbf{reflexive} iff $\forall x, y\in A(xRx)$. 
+		\item $R$ is \textbf{reflexive} iff $\forall x\in A(xRx)$. 
 		\item $R$ is \textbf{symmetric} iff $\forall x, y\in A(xRy \to yRx)$. 
 		\item $R$ is \textbf{transitive} iff $\forall x,y,z \in A(xRy \land yRz\to xRz)$.
 	\end{enumerate}
@@ -218,7 +218,7 @@
 	\item \qquad \textbf{Reflexive Closure (Tutorial 5 Q5)} The reflexive closure $S$ of a relation $R$ on a set $A$ is obtained by adding $(a, a)$ to $R$ for each $a \in A$. Symbolically, $S = R\cup \{(x, x):x\in X\}$.
 	\item[Partition] $\mathscr{C}$ is a \textbf{partition} of a set $A$ if the following hold: 
 	\begin{enumerate}
-		\item $\mathscr{C}$ is a set of which all elements are non-empty subsets of $A$, i.e., $\emptyset \neq S \subset A$ for all $S\in \mathscr{C}$. 
+		\item $\mathscr{C}$ is a set of which all elements are non-empty subsets of $A$, i.e., $\emptyset \neq S \subseteq A$ for all $S\in \mathscr{C}$. 
 		\item Every element of $A$ is in exactly one element of $\mathscr{C}$, i.e., $\forall x\in A \exists S \in \mathscr{C} (x\in S)$ and $\forall x\in A \exists S_{1}, S_{2},\in \mathscr{C} (x \in S_{1} \land x\in S_{2} \to S_{1} = S_{2})$.
 	\end{enumerate}
 	\item \qquad (In simpler terms: $\mathscr{C}$ is a partition of set $A$ if $\mathscr{C}$ is a set of all elements which are nonempty subsets of $A$, and every element of $A$ is in exactly one component of $\mathscr{C}$).
