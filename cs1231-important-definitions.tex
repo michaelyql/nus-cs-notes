@@ -3,7 +3,7 @@
 \usepackage{multicol}
 \usepackage{geometry}
 \usepackage{amsfonts} % Required for \mathbb{} commands
-\usepackage{amsmath} % So that I can embed text inside math mode using \text{} command
+\usepackage{amsmath} % So that I can embed text inside math mode using \text{} command as well as use {flalign} environment
 \usepackage[table]{xcolor} % For table colours
 \usepackage{float} % To enable [H] exact placement of table position
 \usepackage{amssymb} % Allow me to use \therefore command in conclusion statements
@@ -289,7 +289,7 @@
     \item[Injection (one-to-one function)]A function $f:X\to Y$ is \textbf{injective} (or \textbf{one-to-one}) iff $\forall x_{1}, x_{2}\in X(f(x_{1})=f(x_{2})\to x_{1}=x_{2})$, or equivalently (contrapositive), $x_{1}\neq x_{2}\to f(x_{1})\neq f(x_{2})$. An injective function is called an \textbf{injection}. Informally, every element in the codomain must have \textbf{at most one arrow} going into it.
     \item[Surjective (onto function)] A function $f:X\to Y$ is \textbf{surjective} (or \textbf{onto}) iff $\forall y\in Y\;\exists x\in X(y=f(x))$. Every element in the co-domain has at least one preimage. So, range = co-domain. A surjective function is called a \textbf{surjection}. Informally, every element in the codomain must have \textbf{at least one arrow} going into it. 
     \item[Bijection (one-to-one correspondence)] A function $f:X\to Y$ is \textbf{bijective} iff $f$ is injective and surjective, i.e. $\forall y\in Y\;\exists x\in X(y=f(x))$. A bijective function is called a \textbf{bijection} or \textbf{one-to-one correspondence}. Informally, every element in the codomain must have \textbf{exactly one arrow} going into it. 
-    \item[Inverse Function] \
+    \item[Inverse Function] Let $f:X\to Y$. Then $g:Y\to X$ is an \textbf{inverse} of $f$ iff $\forall x\in X\;\forall y\in Y(y=f(x)\Leftrightarrow x=g(y))$.
     \item \qquad \textbf{Proposition (Lecture 7 Slide 39)} If $g_{1}$ and $g_{2}$ are inverses of $f:X\to Y$, then $g_{1}=g_{2}$.
     \item[Composition of Functions] Let $f:X\to Y$ and $g:Y\to Z$ be functions. Define a new function $g\circ f:X\to Z$ as follows: $(g\circ f)(x)=g(f(x))\;\forall x\in X$, where $g\circ f$ is read ``$g$ circle $f$'' and $g(f(x))$ is read ``$g$ of $f$ of $x$''. The function $g\circ f$ is called the \textbf{composition} of $f$ and $g$.
     \item[Addition and Multiplication on $\mathbb{Z}_{n}$]Define addition $+$ and multiplication $\cdot$ on $\mathbb{Z}_{n}$ as follows: whenever $[x],[y]\in\mathbb{Z}_{n}$, $[x]+[y]=[x+y]$ and $[x]\cdot[y]=[x\cdot y]$.
@@ -297,7 +297,22 @@
     \item \qquad \textbf{General Well-Defined Function Property}\quad\;\; $\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,x_{1}=x_{2}\to f(x_{1})=f(x_{2})$.
     \item \qquad \textbf{Well-Defined Property w.r.t Equiv Relation ${\sim}$}\quad \;\;$\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,x_{1}{\sim}x_{2}\to f(x_{1}){\sim}f(x_{2})$.
     \item \qquad \textbf{Well-Defined Property w.r.t Equiv Class [x]}\quad \;\;$\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,[x_{1}]=[x_{2}]\to [f(x_{1})]=[f(x_{2})]$.
-	    
+    
+    \vspace{0.2cm}
+    \item[\large Mathematical Induction]
+    \item[Sequences and Terms] A \textbf{sequence} is an ordered set with members called \textbf{terms}. Usually, the terms are numbers. A sequence may have infinite terms. General form: $a_{m}, a_{m+1},a_{m+2},\dots,a_{n}$ where $m\leq n$. The $k$ in $a_{k}$ is called a \textbf{subscript} or \textbf{index}. Infinite sequence: $a_{m}, a_{m+1},a_{m+2},\dots$. 
+    \item \qquad An \textbf{explicit} formula for a sequence is a rule that shows how the values of $a_{k}$ depend on $k$. E.g. $a_{k}=\frac{k}{k+1}$ for all integers $k\geq 1$. $a_{1}.a_{2}.a_{3}\dots$ \; Dots are element separators.
+    \item[Sequence Comprehension] \
+    \item \qquad $\{f(k):k\in S\}:P(B)$ \quad $f:S\to B$ \qquad \qquad \qquad \;\;Order not important, duplicates discarded 
+    \item \qquad $[f(k):k\in[n..m]\;]:Seq(B)$ \quad $f:Z \to B$ \qquad \qquad Order important, duplicates are kept
+    \item \qquad $[f(k):k\in[n..]\;]:Seq(B)$ \qquad \qquad \qquad \qquad \qquad \;\; Infinite sequences
+    \item[Summation] If $m$ and $n$ are integers, $m\leq n$, the symbol \[\sum_{k=m}^{n}a_{k}\] is the \textbf{sum} of all the terms $a_{m}, a_{m+1},a_{m+2},\dots,a_{n}$ (a.k.a summation notation). We say that $a_{m} +  a_{m+1} + a_{m+2} + \dots + a_{n}$ is the \textbf{expanded} form of the sum, and we write $\sum_{k=m}^{n}a_{k} = a_{m} + a_{m+1} + a_{m+2} + \dots + a_{n}$. We call $k$ the \textbf{index} of the summation, $m$ the \textbf{lower limit} of the summation and $n$ the \textbf{upper limit} of the summation.
+    \item \qquad Recursive definition of summation: If $m$ is any integer, then \[\sum_{k=m}^{m}a_{k}=a_{m} \text{ and } \sum_{k=m}^{n}a_{k} = (\sum_{k=m}^{n-1}a_{k})+a_{n}\]
+    \item \qquad By convention, an \textbf{empty} sum (e.g. $\sum_{k=m}^{n}a_{k}$ where $m>n$) is equal to the additive identity \textbf{0}.
+    \item \qquad \textbf{Telescoping sums} are finite sums in which pairs of consecutive terms \textbf{cancel each other out}, leaving only the \textbf{initial} and \textbf{final terms}. E.g. $\sum_{k=1}^{n}\frac{1}{k(k+1)}=1-\frac{1}{n+1}$. (Note that $\frac{1}{k(k+1)}=\frac{1}{k}-\frac{1}{k+1}$)
+    \item[Product Notation]If $m$ and $n$ are integers, $m\leq n$, the symbol \[\prod_{k=m}^{n}a_{k}\] is the \textbf{product} of all the terms $a_{m}, a_{m+1},a_{m+2},\dots,a_{n}$. We write $\prod_{k=m}^{n}a_{k}=a_{m} \cdot a_{m+1} \cdot a_{m+2} \cdot \dots \cdot a_{n}$.
+    \item \qquad Recursive definition for product notation: If $m$ is any integer, then \[\prod_{k=m}^{m}a_{k}=a_{m} \text{ and } \prod_{k=m}^{n}a_{k}=(\prod_{k=m}^{n-1}a_{k})\cdot a_{n} \]
+	     
 \end{description}
 
 % ================================ THEOREMS AND LEMMAS ===================================
@@ -376,7 +391,7 @@
     \item[Theorem 4.3.1 (5th: 4.4.1) A Positive Divisor of a Positive Integer:] For all positive integers $a$ and $b$, if $a|b$, then $a\leq b$. 
     \item[Theorem 4.3.2 (5th: 4.4.2) Divisors of 1:] The only divisors of 1 are 1 and -1.
     \item[Theorem 4.3.3 (5th: 4.4.3) Transitivity of Divisibility:] For all integers $a$, $b$ and $c$, if $a|b$ and $b|c$, then $a|c$. 
-    \item[Theorem 4.4.1 The Quotient-Remainder Theorem]Given any integer $n$ and a positive integer $d$, there exists unique integers $q$ and $r$ such that $n=dq+r$ and $0\leq r\leq d$.
+    \item[Theorem 4.4.1 The Quotient-Remainder Theorem]Given any integer $n$ and a positive integer $d$, there exists unique integers $q$ and $r$ such that $n=dq+r$ and $0\leq r < d$.
     \item[Theorem 4.6.1 (5th: 4.7.1)] There is no greatest integer.
     \item[Theorem 4.6.4 (5th: 4.7.4)] For all integers $n$, if $n^{2}$ is even then $n$ is even.
     \item[Proof (Tutorial 1 Q10)] The product of any two odd integers is an odd integer.
@@ -387,7 +402,14 @@
     \item[Proof (Tutorial 2 Q8)]$\forall x\in \mathbb{R} ((x^{2}>x)\to (x<0)\lor(x>1))$.
     \item[Proof (Tutorial 2 Q11)]If $n$ is a product of two positive integers $a$ and $b$, then $a\leq n^{1/2}$ or $b\leq n^{1/2}$.
     \item[Theorem 4.7.1 (5th: 4.8.1)] $\sqrt{2}$ is irrational.
-        
+    
+    \item[Theorem 5.1.1] If $a_{m}, a_{m+1},a_{m+2},\dots$ and $b_{m}, b_{m+1},b_{m+2},\dots$ are sequences of real numbers and $c$ is any real number, then the following equations hold for any integer $n\geq m$: 
+    \begin{flalign*}
+    &1.\quad \sum_{k=m}^{n}a_{k} + \sum_{k=m}^{n}b_{k} = \sum_{k=m}^{n}(a_{k}+b_{k}) &\\
+    &2.\quad c\cdot\sum_{k=m}^{n}a_{k}=\sum_{k=m}^{n}c\cdot a_{k} &\\
+    &3.\quad (\prod_{k=m}^{n}a_{k})\cdot(\prod_{k=m}^{n}b_{k})=(\prod_{k=m}^{n}(a_{k}\cdot b_{k})) &\\
+    \end{flalign*}
+    
     % 5 - Sets
     \item[Theorem 6.2.1 Subset Relations] \
     \begin{description}
