@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
-\usepackage{multicol}
-\usepackage{geometry}
+\usepackage{multicol} % For double column in Appendix A 
+\usepackage{geometry} 
 \usepackage{amsfonts} % Required for \mathbb{} commands
 \usepackage{amsmath} % So that I can embed text inside math mode using \text{} command as well as use {flalign} environment
 \usepackage[table]{xcolor} % For table colours
@@ -89,14 +89,14 @@
     \item[\large Compound Statements]
     \item[2.1.1 Statement]A \textbf{statement} (or \textbf{proposition}) is a sentence that is true or false, but not both.
     \item[2.1.2 Negation]If $p$ is a variable, the \textbf{negation} of $p$ is "not $p$" or it is not the case that $p$" and is denoted ${\sim}p$. 
-    \item[2.1.3 Conjunction]If $p$ and $q$ are statement variables, the conjunction of $p$ and $q$ is “$p$ and $q$”, denoted $p \wedge q$.
+    \item[2.1.3 Conjunction]If $p$ and $q$ are statement variables, the conjunction of $p$ and $q$ is ``$p$ and $q$'', denoted $p \wedge q$.
     \item[2.1.4 Disjunction]If $p$ and $q$ are statement variables, the disjunction of $p$ and $q$ is “$p$ or $q$”, denoted $p \vee q$.
     \item[2.1.5 Statement Form]A statement form (or propositional form) is an expression made up of statement variables and logical connectives that becomes a statement when actual statements are substituted for the component statement variables.
     \item[2.1.6 Logical Equivalence]Two statement forms are called logically equivalent if, and only if, they have identical truth values for each possible substitution of statements for their statement variables. The logical equivalence of statement forms $P$ and $Q$ is denoted by $P \equiv Q$.
     \item[2.1.7 Tautology]A tautology is a statement form that is \textbf{always true} regardless of the truth values of the individual statements substituted for its statement variables. A statement whose form is a tautology is a \textbf{tautological statement}.
     \item[2.1.8 Contradiction]A contradiction is a statement form that is \textbf{always false} regardless of the truth values of the individual statements substituted for its statement variables. A statement whose form is a contradiction is a \textbf{contradictory statement}. 
     \item[2.2.1 Conditional]If $p$ and $q$ are statement variables, the conditional of $q$ by $p$ is “if $p$ then $q$” or “$p$ implies $q$”, denoted $p\to q$. It is false when p is true and q is false; otherwise it is true. We called $p$ the \textbf{hypothesis} (or \textbf{antecedent}) of the conditional and $q$ the \textbf{conclusion} (or \textbf{consequent}).
-    \item[2.2.2 Contrapositive] The contrapositive of a conditional statement of the form “if $p$ then $q$” is "if ${\sim} q$ then ${\sim} p$". Symbolically, the contrapositive of $p\to q$ is ${\sim} q\to {\sim} p$.
+    \item[2.2.2 Contrapositive] The contrapositive of a conditional statement of the form “if $p$ then $q$” is ``if ${\sim} q$ then ${\sim} p$''. Symbolically, the contrapositive of $p\to q$ is ${\sim} q\to {\sim} p$.
     \item[2.2.3 Converse]The \textbf{converse} of a conditional statement ``if $p$ then $q$'' is ``if $q$ then $p$''. Symbolically, the converse of $p\to q$ is $q\to p$. 
     \item[2.2.4 Inverse]The \textbf{inverse} of a conditional  statement ``if $p$ then $q$'' is ``if ${\sim} p$ then ${\sim} q$''. Symbolically, the inverse of $p\to q$ is ${\sim} p\to {\sim} q$.
     \item Note that $p\to q\not\equiv q\to p$. 
@@ -160,7 +160,7 @@
     \item[Ordered Pair]An \textbf{ordered pair} is an expression of the form $(x, y)$. Two ordered pairs $(a, b)$ and $(c,d)$ are equal iff $a=c$ and $b=d$. Symbolically, $(a,b)=(c,d) \Rightarrow (a=c)\land (b=d)$.
     \item[Cartesian Product]Given sets $A$ and $B$, the \textbf{Cartesian product} of $A$ and $B$, denoted $\mathbf{A}\times \mathbf{B}$ and read ``$A$ cross $B$'', is the set of all ordered pairs $(a, b)$ where $a$ is in $A$ and $b$ is in $B$. Symbolically, $A\times B=\{(a,b):a\in A\land b\in B\}$.    
     \item[Set Equality]Given sets $A$ and $B$, $A$ equals $B$, written $A=B$ iff every element of $A$ is in $B$ and every element of $B$ is in $A$. Symbolically, $A=B\Leftrightarrow A\subseteq B\land B\subseteq A$. (Alternative definition: $A=B \Leftrightarrow\forall x(x\in A\Leftrightarrow x\in B)$).
-    \item[Universal set / Universe of Discourse] The 'context' or domain of the problem.
+    \item[Universal set / Universe of Discourse] The context or domain of the problem.
     \item[Union] The \textbf{union} of $A$ and $B$, denoted $\mathbf{A}\cup\mathbf{B}$, is the set of all elements that are in at least one of $A$ or $B$. Symbolically, $A\cup B=\{x\in U: x\in A \lor x\in B\}$.
     \item[Intersection] The \textbf{intersection} of $A$ and $B$, denoted $\mathbf{A}\cap\mathbf{B}$, is the set of all elements that are common to both $A$ and $B$. Symbolically, $A\cap B=\{x\in U:x\in A \land x\in B\}$.
     \item[Difference]The \textbf{difference} of $B$ minus $A$ (or \textbf{relative complement} of $A$ in $B$), denoted $\mathbf{B}-\mathbf{A}$, or $\mathbf{B}\setminus\mathbf{A}$, is the set of all elements that are in $B$ and not $A$. Symbolically, $B\setminus A=\{x\in U:x\in B\land x\not\in A\}$.
@@ -298,6 +298,7 @@
     \item \qquad \textbf{Well-Defined Property w.r.t Equiv Relation ${\sim}$}\quad \;\;$\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,x_{1}{\sim}x_{2}\to f(x_{1}){\sim}f(x_{2})$.
     \item \qquad \textbf{Well-Defined Property w.r.t Equiv Class [x]}\quad \;\;$\forall x_{1},x_{2}\in X,\; \forall f:X\to Y,[x_{1}]=[x_{2}]\to [f(x_{1})]=[f(x_{2})]$.
     
+    % 8 - Mathematical Induction
     \vspace{0.2cm}
     \item[\large Mathematical Induction]
     \item[Sequences and Terms] A \textbf{sequence} is an ordered set with members called \textbf{terms}. Usually, the terms are numbers. A sequence may have infinite terms. General form: $a_{m}, a_{m+1},a_{m+2},\dots,a_{n}$ where $m\leq n$. The $k$ in $a_{k}$ is called a \textbf{subscript} or \textbf{index}. Infinite sequence: $a_{m}, a_{m+1},a_{m+2},\dots$. 
@@ -312,7 +313,54 @@
     \item \qquad \textbf{Telescoping sums} are finite sums in which pairs of consecutive terms \textbf{cancel each other out}, leaving only the \textbf{initial} and \textbf{final terms}. E.g. $\sum_{k=1}^{n}\frac{1}{k(k+1)}=1-\frac{1}{n+1}$. (Note that $\frac{1}{k(k+1)}=\frac{1}{k}-\frac{1}{k+1}$)
     \item[Product Notation]If $m$ and $n$ are integers, $m\leq n$, the symbol \[\prod_{k=m}^{n}a_{k}\] is the \textbf{product} of all the terms $a_{m}, a_{m+1},a_{m+2},\dots,a_{n}$. We write $\prod_{k=m}^{n}a_{k}=a_{m} \cdot a_{m+1} \cdot a_{m+2} \cdot \dots \cdot a_{n}$.
     \item \qquad Recursive definition for product notation: If $m$ is any integer, then \[\prod_{k=m}^{m}a_{k}=a_{m} \text{ and } \prod_{k=m}^{n}a_{k}=(\prod_{k=m}^{n-1}a_{k})\cdot a_{n} \]
-	     
+    \item[Arithmetic Sequence] A sequence $a_{0}, a_{1},a_{2},\dots$ is called an \textbf{arithmetic sequence} (or \textbf{arithmetic progression}) iff there is a constant $d$ such that $a_{k}=a_{k-1}+d$ for all integers $k\geq 1$. It follows that $a_{n}= a_{0}+dn$ for all integers $n\geq 0$. $d$ is the \textbf{common difference}, $a_{0}$ is the \textbf{initial value}.
+    \item \qquad Summing an arithmetic sequence of $n$ terms: \[\sum_{k=0}^{n-1}a_{k}=\frac{n}{2}(2a_{0}+(n-1)d)\]
+    \item[Geometric Sequence] A sequence $a_{0}, a_{1},a_{2},\dots$ is called a \textbf{geometric sequence} (or \textbf{geometric progression}) iff there is a constant $r$ such that $a_{k}=ra_{k-1}$ for all integers $k\geq 1$. It follows that $a_{n}=a_{0}r^{n}$ for all integers $n\geq 0$. $r$ is the \textbf{common ratio}, $a_{0}$ is the \textbf{initial value}.
+    \item \qquad Summing a geometric sequence of $n$ terms: \[ \sum_{k=0}^{n-1}a_{k}=a_{0}(\frac{1-r^{n}}{1-r}) \] 
+    \item[Principal of Mathematical Induction (PMI)] Let $P(n)$ be a property that is defined for integers $n$, and let $a$ be a fixed integer. Suppose the following 2 statements are true:
+    \begin{enumerate}
+    	\item (basis step) $P(a)$ is true. 
+		\item (inductive step) For all integers $k\geq a$, if $P(k)$ is true then $P(k+1)$ is true.     \end{enumerate}
+    \item \qquad Then the statement ``for all integers $n\geq a, P(n)$'' is true.
+    \item \qquad \hl{Note: the basis step need not be $P(1)$; it can be $P(a)$ where $a$ is a fixed integer.}     
+    \item[Closed Form] If a sum with a variable number of terms is shown to be equal to a formula that does not contain either an ellipsis (...) or a summation symbol ($\sum$), we say that it is written in \textbf{closed form}.
+    \item[Well-Ordering Principle for the Integers] Every nonempty subset of $\mathbb{Z}_{\geq 0}$ has a smallest element.
+    \item[Well-Ordering Principle for Non-Negative Integers] Every nonempty subset of $\mathbb{Z}_{\geq 0}$ has a smallest element.
+    \item \qquad Take note that the well-ordering principle applies only to \textbf{integers} and \textbf{non-empty subsets}. That means it does not apply for (and is not violated by) \textbf{real numbers} or \textbf{non-empty sets}.
+    \item[Recurrence Relation]A \textbf{recurrence relation} for a sequence $a_{0}, a_{1},a_{2},\dots$ is a formula that relates each term $a_{k}$ to certain of its predecessors $a_{k-1}, a_{k-2},\dots,a_{k-i}$, where $i$ is an integer with $k-i\geq 0$. If $i$ is a fixed integer, the \textbf{initial conditions} for such a recurrent relation specify the values of $a_{0}, a_{1},a_{2},\dots,a_{i-1}$. If $i$ depends on $k$, the initial conditions specify the values of $a_{0}, a_{1},a_{2},\dots,a_{m}$, where $m$ is an integer with $m\geq 0$.
+    \item \qquad Recursive definition of Fibonacci: $F_{n} = F_{n-1} + F_{n-2}$ for $n>1$.
+    \item \qquad Recursive defintion of factorial: $n! = n\cdot (n-1)!$ for $n\geq 1$.
+    \item \qquad Recursive definition of power: $a^{n}=a^{n-1}\cdot a$ for $n\geq 1$.
+    \item[Recursively Defined Sets]Let $S$ be a finite set with at least one element. A \textbf{string over} $S$ is a finite sequence of elements from $S$. The elements of $S$ are called \textbf{characters} of the string, and the \textbf{length} of a string is the number of characters it contains. The \textbf{null string over} $S$ is defined to be the “string” with no
+characters. It is usually denoted $\epsilon$ and is said to have length 0.
+	\item \qquad $S=\{c_{1},\dots,c_{n}\}$ 
+	\item \qquad $Str(S) ::= \epsilon \;|\;c.Str(S) \text{ s.t. } c\in S$
+	\item[Recursive Definition of a set $S$] \
+	\begingroup
+	\setlength{\tabcolsep}{6pt} % Default value: 6pt
+	\renewcommand{\arraystretch}{1.5} % Default value: 1
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{lp{6in}}
+			Base clause: & Specify that certain elements, called \textbf{founders}, are in $S$: if $c$ is a founder, then $c\in S$. \\
+			Recursion clause: & Specify certain functions, called \textbf{constructors}, under which the set $S$ is closed: if $f$ is a constructor and $x\in S$, then $f(x)\in S$. \\
+			Minimality Clause: & Membership for $S$ can always be demonstrated by (infinitely many) successive applications of the clauses above. \\
+		\end{tabular}
+	\end{table}	     
+	\endgroup
+	\item[Structural Induction over $S$] To prove that $\forall x\in S\; P(x)$ is true, where $P(x)$ is a proposition, it suffices to:
+	\begingroup
+	\setlength{\tabcolsep}{6pt} % Default value: 6pt
+	\renewcommand{\arraystretch}{1.5} % Default value: 1
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{lp{6in}}
+			Base clause: & Show that $P(c)$ is true for every founder $c$; and \\
+			Induction step: & Show that $\forall x\in S(P(x)\to P(f(x)))$ is true for every constructor $f$. In words, if all the founders satisfy a property $P$, and $P$ is preserved by all constructors, then all elements of $S$ satisfy $P$. \\
+		\end{tabular}
+	\end{table}	     
+	\endgroup
+	\item[Induction vs Co-Induction] Inductive proofs are proof based on how data are \emph{constructed}. Co-inductive proofs are proofs based on how data are \emph{decomposed}. Think: A property holds by \emph{induction} if there is \textbf{good reason} for it to hold. A property holds by \emph{co-induction} if there is \textbf{no good reaso}n for it not to hold.
 \end{description}
 
 % ================================ THEOREMS AND LEMMAS ===================================
@@ -409,6 +457,12 @@
     &2.\quad c\cdot\sum_{k=m}^{n}a_{k}=\sum_{k=m}^{n}c\cdot a_{k} &\\
     &3.\quad (\prod_{k=m}^{n}a_{k})\cdot(\prod_{k=m}^{n}b_{k})=(\prod_{k=m}^{n}(a_{k}\cdot b_{k})) &\\
     \end{flalign*}
+    \item[Theorem 5.2.2 (5th: 5.2.1) Sum of first $n$ Integers] For all integers $n\geq 1$, $1+2+3+...+n=\frac{n(n+1)}{2}$.
+    \item[Theorem 5.2.3 (5th: 5.2.2) Sum of a Geometric Sequence] For any real number $r\neq 1$, and any integers $n\geq 0$, \[\sum_{i=0}^{n}r^{i}=\frac{r^{n+1}-1}{r-1}\]
+    \item[Proposition 5.3.1 (5th: 5.3.2)] For all integers $n\geq 0$, $2^{2n}-1$ is divisible by 3.  
+    \item[Proposition 5.3.2 (5th: 5.3.3)] For all integers $n\geq 3$, $2n+1<2^{n}$.
+    \item[Proof (Lecture 8 Slide 39)] For $n\in\mathbb{Z}^{+}$, any $2^{n}\times 2^{n}$ board with one square removed can be tiled by L-trominoes. 
+    \item[Proof (Lecture 8 Slide 45)] Any integer $>$ 1 is divisible by a prime number.
     
     % 5 - Sets
     \item[Theorem 6.2.1 Subset Relations] \
@@ -477,6 +531,19 @@
 \hrule
 \vspace{0.5cm}
 
+% Format for Proofs
+%\begin{enumerate}
+%	\item Item 1 
+%	\item Item 2 
+%	\begin{enumerate}
+%		\item Sub-item 1
+%	\end{enumerate}
+%	\item Item 3
+%	\item Conclusion
+%\end{enumerate}
+
+% If on Mac, use Command + Shift + [ or ] to comment/uncomment multiple lines together
+
 \subsection*{Prove that the product of two consecutive odd numbers is always odd.}
 \begin{enumerate}
     \item Let $a$ and $b$ be the two consecutive odd numbers. 
@@ -498,7 +565,7 @@
     \begin{enumerate}
         \item Then $\sqrt{2}\times\sqrt{8}=\sqrt{16}=4$, which is a rational number (by basic algebra).
     \end{enumerate}
-    \item Therefore, the statement "the product of two irrational numbers is always irrational" is false.
+    \item Therefore, the statement ``the product of two irrational numbers is always irrational'' is false.
 \end{enumerate}
 \paragraph{Note:}One counter-example is sufficient. 
 \vspace{0.1cm}
@@ -539,7 +606,7 @@ between 30 and 100 is odd.
         \item $m^2=2n^2$ (by basic algebra).
         \item Hence $m^2$ is even (by definition of even number, as $n^2$ is an integer by closure).
         \item Hence $m$ is even (by Proposition 4.6.4).
-        \item Let $m=2k$; substituting into 1.3:$4k^2=2n^2$, or $n^2=2k^2$.
+        \item Let $m=2k$; substituting into 1.3: $4k^2=2n^2$, or $n^2=2k^2$.
         \item Hence $n^2$ is even (by definition of even number).
         \item Hence $n$ is even (by Proposition 4.6.4).
         \item So both $m$ and $n$ are even, but this contradicts that $\frac{m}{n}$ is in its lowest term.
@@ -572,6 +639,36 @@ between 30 and 100 is odd.
 
 \endgroup
 % I create a new group here for custom list styles for proofs so that it does not affect the other list styles
+
+% =========================== PROOFS (MATHEMATICAL INDUCTION) =============================
+
+\newpage
+\begingroup
+
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+\section*{Mathematical Induction Proofs}
+\hrule
+\vspace{0.5cm}
+
+\subsection*{Prove that the sum of the first $n$ integers is $\frac{n(n+1)}{2}$}
+\begin{enumerate}
+	\item Let $P(n)\equiv (1+2+\dots+n=\frac{n(n+1)}{2}),\;\forall n\in \mathbb{Z}^{+}$. 
+	\item \textbf{Basis step}: 1 = $\frac{1(1+1)}{2}$, therefore $P(1)$ is true. 
+	\item Assume $P(k)$ is true for some $k\geq 1$. That is, $1+2+\dots+k=\frac{k(k+1)}{2}$
+	\item \textbf{Inductive Step}: (to show $P(k+1)$ is true)
+	\begin{enumerate}
+		\item $1+2+\dots+k+(k+1)=\frac{k(k+1)}{2} + (k+1) = \frac{(k+1)((k+1)+1)}{2}$
+		\item Therefore $P(k+1)$ is true.
+	\end{enumerate}
+	\item Therefore, $P(n)$ is true for $n\in \mathbb{Z}^{+}$.
+\end{enumerate}
+
+\vspace{0.1cm}
+
+\endgroup
 
 \end{document}
 
