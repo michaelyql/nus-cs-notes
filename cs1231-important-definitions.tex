@@ -323,7 +323,7 @@
 		\item (inductive step) For all integers $k\geq a$, if $P(k)$ is true then $P(k+1)$ is true.     \end{enumerate}
     \item \qquad Then the statement ``for all integers $n\geq a, P(n)$'' is true.
     \item \qquad \hl{Note: the basis step need not be $P(1)$; it can be $P(a)$ where $a$ is a fixed integer.}     
-    \item[Closed Form] If a sum with a variable number of terms is shown to be equal to a formula that does not contain either an ellipsis (...) or a summation symbol ($\sum$), we say that it is written in \textbf{closed form}.
+    \item[Closed Form] If a sum with a variable number of terms is shown to be equal to a formula that does not contain either an ellipsis (...) or a summation symbol ($\sum$), we say that it is written in \textbf{closed form}. E.g. $\frac{n(n+1)}{2}$ is the closed form formula for $1+2+3+\dots+n$.
     \item[Well-Ordering Principle for the Integers] Every nonempty subset of $\mathbb{Z}_{\geq 0}$ has a smallest element.
     \item[Well-Ordering Principle for Non-Negative Integers] Every nonempty subset of $\mathbb{Z}_{\geq 0}$ has a smallest element.
     \item \qquad Take note that the well-ordering principle applies only to \textbf{integers} and \textbf{non-empty subsets}. That means it does not apply for (and is not violated by) \textbf{real numbers} or \textbf{non-empty sets}.
@@ -361,6 +361,24 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
 	\end{table}	     
 	\endgroup
 	\item[Induction vs Co-Induction] Inductive proofs are proof based on how data are \emph{constructed}. Co-inductive proofs are proofs based on how data are \emph{decomposed}. Think: A property holds by \emph{induction} if there is \textbf{good reason} for it to hold. A property holds by \emph{co-induction} if there is \textbf{no good reaso}n for it not to hold.
+	
+	% 9 - Cardinality
+	\vspace{0.2cm}
+    \item[\large Cardinality]
+    \item[Pigeonhole Principle]Let $A$ and $B$ be \textbf{finite} sets. If there is an injection $f:A\to B$, then $|A| \leq |B|$. Contrapositive: Let $m, n\in\mathbb{Z}_{+}$ with $m > n$. If $m$ pigeons are put into $n$ pigeonholes, then there must be (at least) one pigeonhole with (at least) two pigeons.
+    \item[Dual Pigeonhole Principles]Let $A$ and $B$ be \textbf{finite} sets. If there is an surjection $f:A\to B$, then $|A| \geq |B|$. Contrapositive: Let $m, n\in\mathbb{Z}_{+}$ with $m < n$. If $m$ pigeons are put into $n$ pigeonholes, then there must be (at least) one pigeonhole with no pigeons.
+    \item[Finite set and Infinite set]Let $\mathbb{Z}_{n} = \{1,2,3,\dots,n\}$, the set of positive integers from 1 to $n$. A set $S$ is said to be \textbf{finite} iff $S$ is empty, or there exists a bijection from $S$ to $\mathbb{Z}_{n}$ for some $n\in\mathbb{Z}^{+}$. A set $S$ is said to be \textbf{infinite} if it is not finite.
+    \item[Cardinality]The \textbf{cardinality} of a finite set $S$, denoted $|S|$, is 
+    \item \qquad \;(i) 0 if $S=\emptyset$, or 
+    \item \qquad (ii) $n$ if $f:S\to \mathbb{Z}_{n}$ is a bijection.
+    \item[Same Cardinality (Cantor)] Given any two sets $A$ and $B$. $A$ is said to have the same cardinality as $B$, written as $|A| = |B|$, iff there is a bijection $f:A\to B$.
+	\item \qquad Note: For a finite set $A$, any proper subset $B$ of $A$ will have $|B|<|A|$. But this is \textbf{not true} for infinite sets. 
+	\item[Cardinal Numbers] Define $\aleph_{0}=|\mathbb{Z}^{+}|$. $\aleph$ is pronounced ``aleph''. This is the first cardinal number.
+	\item[Countably Infinite]A set $S$ is said to be \textbf{countably infinite} (or, $S$ has the cardinality of natural numbers) iff $|S|=\aleph_{0}$.
+	\item[Countable set and Uncountable Set]A set is said to be \textbf{countable} iff it is finite or countably infinite. A set is said to be \textbf{uncountable} if it is not countable.
+	\item \qquad Note: to prove a set is countable, it either has to be a finite set or countably infinite. To prove that a set is countably infinite, its cardinality must be the same as $\aleph_{0}$. In other words, it must have a one-to-one mapping from the set of all positive integers to its domain.
+
+	
 \end{description}
 
 % ================================ THEOREMS AND LEMMAS ===================================
@@ -514,6 +532,27 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
 	 \item[Theorem: Associativity of Function Composition]Let $f:A\to B$, $g:B\to C$ and $h:C\to D$. Then $(h\circ g)\circ f = h\circ (g\circ f)$. Function composition is associative. 
 	 \item[Theorem 7.3.3] If $f:X\to Y$ and $g:Y\to Z$ are both injective, then $g\circ f$ is injective. 
 	 \item[Theorem 7.3.4] If $f:X\to Y$ and $g:Y\to Z$ are both surjective, then $g\circ f$ is surjective.
+	 \item[Theorem: Equality of Cardinality of Finite Sets]Let $A$ and $B$ be any finite sets.
+ iff there is a bijection $f:A\to B$.
+	\item[Theorem 7.4.1 Properties of Cardinality]The same-cardinality relation is an equivalence relation. For all sets $A$, $B$ and $C$: 
+	\item \qquad \textbf{Reflexive}: $|A|=|A|$
+	\item \qquad \textbf{Symmetric}: $|A|=|B|\to|B|=|A|$
+	\item \qquad \textbf{Transitive}: $(|A|=|B|)\land(|B|=|C|)\to|A|=|C|$.
+	\item[Theorem: $\mathbb{Z}^{+} \times \mathbb{Z}^{+}$ is countable] \
+	\item[Theorem (Cartesian Product)]If sets $A$ and $B$ are both countably infinite, then so is $A \times B$.
+	\item[Corollary (General Cartesian Product)]Given $n\geq 2$ countably infinite sets $A_{1}, A_{2}, \dots, A_{n}$ the Cartesian product $A_{1} \times A_{2} \times \dots \times A_{n}$ is also countably infinite.
+	\item[Theorem: Unions]The union of countably many countable sets is countable. That is, if $A_{1}, A_{2}, \dots$ are all countable sets, then so is \[\bigcup_{i=1}^{\infty}A_{i}\]
+	\item[Proposition 9.1]An infinite set $B$ is countable if and only if there is a sequence $b_{0}, b_{1}, b_{2} \dots \in B$ in which every element of $B$ appears exactly once. 
+	\item \qquad (Definition of sequence) A \textbf{sequence} $a_{0}, a_{1}, a_{2}, \dots$ can be represented by a function $a$ whose domain is $\mathbb{Z}_{\geq0}$ that satisfies $a(n)=a_{n}$ for every $n\in\mathbb{Z}_{\geq0}$.
+	\item[Lemma 9.2: Countability via Sequence]An infinite set $B$ is countable if and only if there is a sequence $b_{0}, b_{1}, b_{2} \dots$ in which every element of $B$ appears.
+	\item[Theorem 7.4.2 (Cantor)] The set of real numbers between 0 and 1, $(0,1)=\{x\in\mathbb{R}\;|\;0<x<1\}$, is uncountable. To prove that a a set is uncountable means proving that there is no possibility of a bijection from that set to $\mathbb{Z}^{+}$.
+	\item[Theorem 7.4.3]Any subset of any countable set is countable.
+	\item[Corollary 7.4.4 (Contrapositive of Theorem 7.4.3)]Any set with an uncountable subset is uncountable.
+	\item \qquad Corollary 7.4.4 implies that $\mathbb{R}$ is uncountable since $(0,1)\subseteq\mathbb{R}$ and $(0,1)$ is uncountable.
+	\item[Proposition 9.3]Every infinite set has a countably infinite subset.
+	\item[Lemma 9.4: Union of Countably Infinite Sets]Let $A$ and $B$ be countably infinite sets. Then $A\cup B$ is countable.
+	\item[]
+
 
 \end{description}
 
