@@ -368,15 +368,34 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
     \item[Pigeonhole Principle]Let $A$ and $B$ be \textbf{finite} sets. If there is an injection $f:A\to B$, then $|A| \leq |B|$. Contrapositive: Let $m, n\in\mathbb{Z}_{+}$ with $m > n$. If $m$ pigeons are put into $n$ pigeonholes, then there must be (at least) one pigeonhole with (at least) two pigeons.
     \item[Dual Pigeonhole Principles]Let $A$ and $B$ be \textbf{finite} sets. If there is an surjection $f:A\to B$, then $|A| \geq |B|$. Contrapositive: Let $m, n\in\mathbb{Z}_{+}$ with $m < n$. If $m$ pigeons are put into $n$ pigeonholes, then there must be (at least) one pigeonhole with no pigeons.
     \item[Finite set and Infinite set]Let $\mathbb{Z}_{n} = \{1,2,3,\dots,n\}$, the set of positive integers from 1 to $n$. A set $S$ is said to be \textbf{finite} iff $S$ is empty, or there exists a bijection from $S$ to $\mathbb{Z}_{n}$ for some $n\in\mathbb{Z}^{+}$. A set $S$ is said to be \textbf{infinite} if it is not finite.
+    \item \qquad \textbf{IMPORTANT!!!} CS1231S defines $\mathbb{N}$ to include 0
     \item[Cardinality]The \textbf{cardinality} of a finite set $S$, denoted $|S|$, is 
     \item \qquad \;(i) 0 if $S=\emptyset$, or 
     \item \qquad (ii) $n$ if $f:S\to \mathbb{Z}_{n}$ is a bijection.
     \item[Same Cardinality (Cantor)] Given any two sets $A$ and $B$. $A$ is said to have the same cardinality as $B$, written as $|A| = |B|$, iff there is a bijection $f:A\to B$.
-	\item \qquad Note: For a finite set $A$, any proper subset $B$ of $A$ will have $|B|<|A|$. But this is \textbf{not true} for infinite sets. 
+	\item \qquad Note: For a finite set $A$, any proper subset $B$ of $A$ will have $|B|<|A|$. But this is \textbf{not true} for infinite sets. For example, $2\mathbb{Z}$ is a proper subset of $\mathbb{Z}$, but $|2\mathbb{Z}|=|\mathbb{Z}|$.
 	\item[Cardinal Numbers] Define $\aleph_{0}=|\mathbb{Z}^{+}|$. $\aleph$ is pronounced ``aleph''. This is the first cardinal number.
 	\item[Countably Infinite]A set $S$ is said to be \textbf{countably infinite} (or, $S$ has the cardinality of natural numbers) iff $|S|=\aleph_{0}$.
 	\item[Countable set and Uncountable Set]A set is said to be \textbf{countable} iff it is finite or countably infinite. A set is said to be \textbf{uncountable} if it is not countable.
 	\item \qquad Note: to prove a set is countable, it either has to be a finite set or countably infinite. To prove that a set is countably infinite, its cardinality must be the same as $\aleph_{0}$. In other words, it must have a one-to-one mapping from the set of all positive integers to its domain.
+	\item \qquad \hl{Extra tip:} most of the time, proving that something is uncountable can be done with Proposition 9.2 or Lemma 9.2 and showing that a sequence does not contain every element via a diagonalization process.
+
+	% 10 - Counting
+	\vspace{0.2cm}
+    \item[\large Counting]\
+    \item[Sample Space] A \textbf{sample space} is the set of all possible outcomes of a random process or experiment. An \textbf{event} is a subset of a sample space.
+   \item[Notation]For a finite set $A$, $|A|$ denotes the number of elements in $A$.
+   \item[Equally Likely Probability Formula] If $S$ is a finite sample space in which all outcomes are equally likely and $E$ is an event in $S$, then the probability of $E$, denoted $P(E)$, is \[P(E) = \frac{\text{The number of outcomes in }E}{\text{The number of outcomes in }S}=\frac{|E|}{|S|}\]
+   \item[r-permutation] An \textbf{r-permutation} of a set of $n$ elements is an ordered
+selection of $r$ elements taken from the set. The number of r-permutations of a set of n elements
+is denoted $P(n, r)$. Other notations: $_{n}P_{r}$, $P_{\;n}^{\;r}$.
+\item[Formula for the Probability of the Complement of an Event]If $S$ is a finite sample space and $A$ is an event in $S$, then $P(\overline{A}) = 1-P(A)$.
+	\item[Pigeonhole Principle (PHP)] A function from one finite set to a smaller finite set cannot be one-to- one: There must be at least 2 elements in the domain that have the same image in the co-domain.
+	\item[Generalized Pigeonhole Principle]For any function $f$ from a finite set $X$ with $n$ elements to a finite set $Y$ with $m$ elements and for any positive integer $k$, if $k < n/m$, then there is some $y\in Y$ such that $y$ is the image of at least $k + 1$ distinct elements of $X$.
+	\item[Generalized Pigeonhole Principle (Contrapositive Form)]For any function $f$ from a finite set $X$ with $n$ elements to a finite set $Y$ with $m$ elements and for any positive integer $k$, if for each $y\in Y$, $f^{-1}(\{y\})$ has at most $k$ elements, then $X$ has at most $km$ elements; in other words, $n\leq km$.
+	\item[r-combination] Let $n$ and $r$ be non-negative integers with $rleq n$.
+An \textbf{r-combination} of a set of $n$ elements is a subset of $r$ of the $n$ elements. ${n\choose r}$, read “$n$ choose $r$”, denotes the number of subsets of size $r$ (r- combinations) that can be chosen from a set of $n$ elements. Other symbols used are $C(n, r$), $_{n}C_{r}$, $C_{n,r}$ , or $^{n}C_{r}$.
+	\item[Multiset]An \textbf{r-combination with repetition allowed}, or multiset of size $r$, chosen from a set $X$ of $n$ elements is an unordered selection of elements taken from $X$ with repetition allowed. If $X=\{x_{1},x_{2},\dots,x_{n}\}$, we write an r-combination with repetition allowed as $[x_{i_{1}},x_{i_{2}}, \dots, x_{i_{r}}]$ where each $x_{i_{j}}$ is in $X$ and some of the $x_{i_{j}}$ may equal each other.
 
 	
 \end{description}
@@ -491,7 +510,7 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
     \end{description}
 	\item[Theorem 6.2.2 Set Identities] Let all sets referred to below be subsets of a universal set $U$. 
 
-    \begin{table}[h]
+    \begin{table}[H]
         \centering
         {\rowcolors{1}{white}{lightgray!20}
         \begin{tabular}{|c|c|c|c|}
@@ -541,7 +560,7 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
 	\item[Theorem: $\mathbb{Z}^{+} \times \mathbb{Z}^{+}$ is countable] \
 	\item[Theorem (Cartesian Product)]If sets $A$ and $B$ are both countably infinite, then so is $A \times B$.
 	\item[Corollary (General Cartesian Product)]Given $n\geq 2$ countably infinite sets $A_{1}, A_{2}, \dots, A_{n}$ the Cartesian product $A_{1} \times A_{2} \times \dots \times A_{n}$ is also countably infinite.
-	\item[Theorem: Unions]The union of countably many countable sets is countable. That is, if $A_{1}, A_{2}, \dots$ are all countable sets, then so is \[\bigcup_{i=1}^{\infty}A_{i}\]
+	\item[Theorem: Unions (Lecture 9 Slide 30)]The union of countably many countable sets is countable. That is, if $A_{1}, A_{2}, \dots$ are all countable sets, then so is \[\bigcup_{i=1}^{\infty}A_{i}\]
 	\item[Proposition 9.1]An infinite set $B$ is countable if and only if there is a sequence $b_{0}, b_{1}, b_{2} \dots \in B$ in which every element of $B$ appears exactly once. 
 	\item \qquad (Definition of sequence) A \textbf{sequence} $a_{0}, a_{1}, a_{2}, \dots$ can be represented by a function $a$ whose domain is $\mathbb{Z}_{\geq0}$ that satisfies $a(n)=a_{n}$ for every $n\in\mathbb{Z}_{\geq0}$.
 	\item[Lemma 9.2: Countability via Sequence]An infinite set $B$ is countable if and only if there is a sequence $b_{0}, b_{1}, b_{2} \dots$ in which every element of $B$ appears.
@@ -551,7 +570,24 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
 	\item \qquad Corollary 7.4.4 implies that $\mathbb{R}$ is uncountable since $(0,1)\subseteq\mathbb{R}$ and $(0,1)$ is uncountable.
 	\item[Proposition 9.3]Every infinite set has a countably infinite subset.
 	\item[Lemma 9.4: Union of Countably Infinite Sets]Let $A$ and $B$ be countably infinite sets. Then $A\cup B$ is countable.
-	\item[]
+	\item[Theorem 9.1.1 The Number of Elements in a List] If $m$ and $n$ are integers and $m\leq n$, then there are $n-m+1$ integers from $m$ to $n$ inclusive.
+	\item[Theorem 9.2.1 The Multiplication/Product Rule]If an operation consists of $k$ steps and the first step can be performed in $n_{1}$ ways, the second step can be performed in $n_{2}$ ways (regardless of how the first step was performed), the $k^{th}$ step can be performed in $n_{k}$ ways, (regardless of how the preceding steps were performed), then the entire operation can be performed in $n_{1}\times n_{2} \times n_{3} \times \dots n_{k}$ ways.
+	\item[Theorem 9.2.2 Permutations]The number of permutations of a set with $n$ ($n\geq 1$) elements is $n!$.
+	\item[Theorem 9.2.3 r-permutations from a set of $n$ elements]If $n$ and $r$ are integers and $1\leq r\leq n$, then the number of r-permutations of a set of $n$ elements is given by the formula $P(n, r) = n(n – 1)(n – 2) \dots (n – r + 1)$. Or equivalently, $P(n,r)=\frac{n!}{(n-r)!}$.
+	\item[Theorem 9.3.1 The Addition/Sum Rule]Suppose a finite set $A$ equals the union of $k$
+distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1}|+|A_{2}|+\dots+|A_{k}|$.
+	\item[Theorem 9.3.2 The Difference Rule] If $A$ is a finite set and $B\subseteq A$, then $|A\setminus B|=|A|-|B|$.
+	\item \qquad Derivation from Addition Rule: If $B\subseteq A$, then the two sets $B$ and $A\setminus B$ have no elements in common and $B\cup (A\setminus B) = A$. Hence, by addition rule, $|B|+|A\setminus B|=|A|$. Subtracting $|B|$ from both sides gives the equation $|A\setminus B|=|A|-|B|$.
+	\item[Theorem 9.3.3 The Inclusion/Exclusion Rule for 2 or 3 Sets] If $A$, $B$, and $C$ are any finite sets, then $|A\cup B|=|A|+|B|-|A\cap B|$ and $|A\cup B\cup C| = |A| + |B| + |C| - |A\cap B| - |A\cap C| - |B\cap C| + |A\cap B\cap C|$.
+	\item[Theorem 9.5.1 Formula for ${n\choose r}$]The number of subsets of size $r$ (or r-combinations) that can be chosen from a set of $n$ elements, ${n\choose r}$, is given by the formula ${n\choose r} = \frac{P(n,r)}{r!}$\; or equivalently, ${n\choose r}=\frac{n!}{r!(n-r)!}$ where $n$ and $r$ are non-negative integers with $r\leq n$.
+	\item[Theorem 9.5.2 Permutations with sets of indistinguishable objects]Suppose a collection consists of $n$ objects of which $n_{1}$ are of type 1 and are indistinguishable from each other, $n_{2}$ are of type 2 and are indistinguishable from each other,$\dots$ $n_{k}$ are of type k and are indistinguishable from each other, and suppose that $n_{1}+n_{2}+\dots+n_{k}=n$. Then the number of distinguishable permutations of the $n$ objects is \[{n\choose r}{n-n_{1}\choose n_{2}}{n-n_{1}-n_{2}\choose n_{3}}\dots{n-n_{1}-n_{2}-\dots-n_{k-1}\choose n_{k}} = \frac{n!}{n_{1}!n_{2}!n_{3}!\dots n_{k}!} \]
+	\item[Theorem 9.6.1 Number of r-combinations with Repetition Allowed]The number of r-combination with repetition allowed (multisets of size $r$) that can be selected from a set of $n$ elements is: $r+n-1\choose r$. This equals the number of ways $r$ objects can be selected from $n$ categories of objects with repetitions allowed.
+	\item[Formula to Use] \
+	
+	\item[Theorem 9.7.1 Pascal’s Formula]Let $n$ and $r$ be positive integers, $r\leq n$. Then ${n+1\choose r}={n\choose r-1}+{n\choose r}$. 
+	\item[Theorem 9.7.2 Binomial Theorem] Given any real numbers $a$ and $b$ and any non-negative integer $n$, \[(a+b)^{n}=\sum_{k=0}^{n}{n\choose k}a^{n-k}b^{k}=a^{n}+{n\choose 1}a^{n-1}b^{1} + {n\choose 2}a^{n-2}b^{2}+\dots+{n\choose n-1}a^{1}b^{n-1} + b^{n} \]
+	\item[Theorem 9.9.1 Bayes’ Theorem]Suppose that a sample space $S$ is a union of mutually disjoint events $B_{1}, B_{2}, B_{3},\dots,B_{n}$. Suppose $A$ is an event in $S$, and suppose $A$ and all the $B_{i}$ have non-zero probabilities. If $k$ is an integer with $1\leq k\leq n$, then \[ P(B_{k}|A) = \frac{P(A|B_{k})\cdot P(B_{k})} {P(A|B_{1})\cdot P(B_{1})+P(A|B_{2})\cdot P(B_{2})+\dots+P(A|B_{j})\cdot P(B_{n}) } \]
+	
 
 
 \end{description}
