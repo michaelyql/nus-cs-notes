@@ -70,6 +70,8 @@
 
 % ==================================== DEFINITIONS =====================================
 
+\newcommand{\iterate}[2]{$#1_{1}, #1_{2},\dots,#1_{#2}$}
+
 \newpage
 \section*{Definitions}
 \hrule
@@ -396,7 +398,73 @@ is denoted $P(n, r)$. Other notations: $_{n}P_{r}$, $P_{\;n}^{\;r}$.
 	\item[r-combination] Let $n$ and $r$ be non-negative integers with $rleq n$.
 An \textbf{r-combination} of a set of $n$ elements is a subset of $r$ of the $n$ elements. ${n\choose r}$, read “$n$ choose $r$”, denotes the number of subsets of size $r$ (r- combinations) that can be chosen from a set of $n$ elements. Other symbols used are $C(n, r$), $_{n}C_{r}$, $C_{n,r}$ , or $^{n}C_{r}$.
 	\item[Multiset]An \textbf{r-combination with repetition allowed}, or multiset of size $r$, chosen from a set $X$ of $n$ elements is an unordered selection of elements taken from $X$ with repetition allowed. If $X=\{x_{1},x_{2},\dots,x_{n}\}$, we write an r-combination with repetition allowed as $[x_{i_{1}},x_{i_{2}}, \dots, x_{i_{r}}]$ where each $x_{i_{j}}$ is in $X$ and some of the $x_{i_{j}}$ may equal each other.
-
+	\item[Probability Axioms]Let $S$ be a sample space. A \textbf{probability function} $P$ from the set of all events in $S$ to the set of real numbers satisfies the following axioms: For all events $A$ and $B$ in $S$, 
+	\item \qquad 1. $0\leq P(A)\leq 1$
+	\item \qquad 2. $P(\emptyset)=0$ and $P(S)=1$
+	\item \qquad 3. If $A$ and $B$ are disjoint ($A\cap B=\emptyset$), then $P(A\cup B)=P(A)+P(B)$.
+	\item[Probability of the Complement of an Event]If $A$ is any event in a sample space $S$, then $P(\overline{A})=1-P(A)$.
+	\item[Probability of a General Union of Two Events]If $A$ and $B$ are any events in a sample space $S$, then $P(A\cup B)=P(A)+P(B)-P(A\cap B)$.
+	\item[Expected Value]Suppose the possible outcomes of an experiment, or random process, are real numbers $a_{1}, a_{2}, a_{3}, \dots , a_{n}$ which occur with probabilities
+$p_{1}, p_{2}, p_{3}, \dots , p_{n}$. The expected value of the process is \[ \sum_{k=1}^{n} a_{k}p_{k}=a_{1}p_{1} + a_{2}p_{2} + a_{3}p_{3} + \dots + a_{n}p_{n} \]
+	\item[Linearity of Expectation] The expected value of the sum of random variables is equal to the sum of their individual expected values, regardless of whether they are independent. For random variables $X$ and $Y$, $E[X+Y]=E[X]+E[Y]$. For random variables $X_{1}, X_{2}, \dots , X_{n}$ and constants $c_{1}, c_{2}, \dots , c_{n}$, \[ 	E\left[ \sum_{i=1}^{n}c_{i}\cdot X_{i} \right] = \sum_{i=1}^{n}(c_{i}\cdot E[x_{i}]) \]
+	\item[Conditional Probability] Let $A$ and $B$ be events in a sample space $S$. If $P(A)\neq 0$, then the \textbf{conditional probability of B given A}, denoted $P(B|A)$, is $P(P|A)=\frac{P(A\cap B)}{P(A)}$. 
+	\item[Independent Events]If $A$ and $B$ are events in a sample space $S$, then $A$ and $B$ are \textbf{independent}, if and only if, $P(A\cap B)=P(A)\cdot P(B)$.
+	\item[Pairwise Independent and Mutually Independent]Let $A$, $B$ and $C$ be events in a sample space $S$. $A$ , $B$ and $C$ are \textbf{pairwise independent}, if and only if, they satisfy conditions 1 – 3 below. They are \textbf{mutually independent} if, and only if, they satisfy all four conditions below.
+	\begin{enumerate}
+		\setlength{\itemsep}{5pt} % set item separation; default is 2pt
+		\item $P(A\cap B)=P(A)\cdot P(B)$
+		\item $P(A\cap C)=P(A)\cdot P(C)$
+		\item $P(B\cap C)=P(B)\cdot P(C)$
+		\item $P(A\cap B\cap C)=P(A)\cdot P(B) \cap P(C)$
+	\end{enumerate}
+	
+	% 11 - Graphs 
+	\vspace{0.2cm}
+    \item[\large Graphs]\
+    \item[Undirected Graph] An undirected graph is denoted by $G=(V, E)$ where $V=\{v_{1},v_{2},\dots,v_{n}\}$ and $E=\{e_{1},e_{2},\dots,e_{n}\}$. An undirected edge $e$ connecting $v_{i}$ and $v_{j}$ is denoted as $e=\{v_{i}, v_{j}\}$.
+    \item \qquad An undirected \textbf{graph} $G$ consists of 2 finite sets: a nonempty set $V$ of \textbf{vertices} and a set E of \textbf{edges}, where each (undirected) edge is associated with a set consisting of either one or two vertices called its \textbf{endpoints}.
+    \item \qquad An edge is said to \textbf{connect} its endpoints; two vertices that are connected by an edge are called \textbf{adjacent vertices}; and a vertex that is an endpoint of a loop is said to be \textbf{adjacent to itself}. 
+    \item \qquad An edge is said to be \textbf{incident on} each of its endpoints, and two edges incident on the same endpoint are called adjacent edges. We write $e = \{v, w\}$ for an undirected edge $e$ incident on vertices $v$ and $w$.
+    \item[Directed Graph] A \textbf{directed graph}, or \textbf{digraph}, $G$, consists of 2 finite sets: a nonempty set $V$ of \textbf{vertices} and a set $E$ of \textbf{directed edges},
+where each (directed) edge is associated with an \textbf{ordered pair} of vertices called its \textbf{endpoints}. We write $e = (v, w)$ for a directed edge $e$ from vertex $v$ to vertex $w$.
+    \item[Simple Graph] A \textbf{simple graph} is an undirected graph that \textbf{does not} have any loops or parallel edges. (That is, there is at most one edge between each pair of distinct vertices.)
+    \item[Complete Graph] A \textbf{complete graph} on $n$ \textbf{vertices}, $n > 0$, denoted $\mathbf{K_{n}}$, is a simple graph with $n$ vertices and exactly one edge connecting each pair of distinct vertices. 
+    \item[Bipartite Graph] A \textbf{bipartite graph} (or bigraph) is a simple graph whose vertices can be divided into two disjoint sets $U$ and $V$ such that every edge connects a vertex in $U$ to one in $V$.
+    \item[Complete Bipartite Graph] A complete bipartite graph is a bipartite graph on two disjoint sets $U$ and $V$ such that every vertex in $U$ connects to every vertex in $V$. If $|U|=m$ and $|V|=n$, the complete bipartite graph is denoted as $K_{m, n}$.
+    \item[Subgraph of a Graph] A graph $H$ is said to be a \textbf{subgraph} of graph $G$ iff every vertex in $H$ is also a vertex in $G$, every edge in $H$ is also an edge in $G$, and every edge in $H$ has the same endpoints as it has in $G$.
+    \item[Degree of a Vertex and Total Degree of a Graph] Let $G$ be a graph and $v$ a vertex of $G$. The \textbf{degree} of $v$, denoted $\mathbf{deg(v)}$, equals the number of edges that are incident on $v$, with an edge that is a loop counted twice. The \textbf{total degree of G} is the sum of the degrees of all the vertices of $G$.
+    \item[Indegree and outdegree of a Vertex of a Directed Graph] Let $G=(V,E)$ be a directed graph and $v$ a vertex of $G$. The \textbf{indegree} of $v$, denoted $\mathbf{deg}^{-}(\mathbf{v})$ is the number of directed edges that end at $v$. The \textbf{outdegree} of $v$, denoted $\mathbf{deg}^{+}(\mathbf{v})$, is the number of directed edges that originate from $v$.
+Note that \[ \sum_{v\;\in\; V} \text{deg}^{-}(v) = \sum_{v\;\in\; V} \text{deg}^{+}(v) = |E| \]
+    \item[Walk, Trivial Walk, Trial, Path, Closed Walk] \quad (Let $G$ be a graph, and let $v$ and $w$ be vertices of $G$)
+    \item \qquad A \textbf{walk from v to w} is a finite alternating sequence of adjacent vertices and edges of $G$. Thus a walk has the form $v_{0}e_{1}v_{1}e_{2}\dots v_{n-1}e_{n}v_{n}$ where the $v$'s represent vertices, the $e$'s represent edges, $v_{o}=v$, $v_{n}=w$, and for all $i \in \{1,2,\dots,n\}$, $v_{i-1}$ and $v_{i}$ are the endpoints of $e_{i}$. The number of edges, $n$, is the \textbf{length} of the walk.
+    \item\qquad The \textbf{trivial walk} from $v$ to $v$ consists of the single vertex $v$.
+    \item \qquad A \textbf{trail from v to w} is a walk from $v$ to $w$ that does not contain a repeated edge. 
+    \item \qquad A \textbf{path from v to w} is a trail that does not contain a repeated vertex.
+    \item \qquad A \textbf{closed walk} is a walk that starts and ends at the same vertex.
+    \item[Circuit/Cycle, Simple Circuit/Cycle] \
+    \item \qquad A \textbf{circuit} (or \textbf{cycle}) is a closed walk of length at least 3 that does not contain a repeated edge.
+    \item \qquad A \textbf{simple circuit} (or \textbf{simple cycle}) is a circuit that does not have any other repeated vertex except the first and last.
+    \item \qquad An undirected graph is \textbf{cyclic} if it contains a loop or a cycle; otherwise, it is \textbf{acyclic}.
+    \item[Connectedness]\textbf{Two vertices} $v$ and $w$ of a graph $G$ are \textbf{connected} iff there is a walk from $v$ to $w$. \textbf{The graph $G$ is connected} iff given any two vertices $v$ and $w$ in $G$, there is a walk from $v$ to $w$. Symbolically, $G$ is connected iff $\forall$ vertices $v,w\in V(G)$, $\exists$ a walk from $v$ to $w$.
+    \item[Connected Component] A graph $H$ is a \textbf{connected component} of a graph $G$ iff 
+    \begin{enumerate}
+    	\item The graph $H$ is a subgraph of $G$;
+		\item The graph $H$ is connected; and
+		\item No connected subgraph of $G$ has $H$ as a subgraph and contains vertices or edges that are not in $H$.
+    \end{enumerate}
+    \item[Euler Circuit and Eulerian Graph] Let $G$ be a graph. An \textbf{Euler circuit} for $G$ is a circuit that contains every vertex and every edge of $G$. An \textbf{Eulerian graph} is a graph that contains an Euler circuit.
+    \item[Euler Trail] Let $G$ be a graph, and let $v$ and $w$ be two distinct vertices of $G$. An \textbf{Euler trail/path from} $\mathbf{v}$ \textbf{to} $\mathbf{w}$ is a sequence of adjacent edges and vertices that starts at $v$, ends at $w$, passes through every vertex of $G$ at least once, and traverses every edge of $G$ exactly once.
+    \item[Hamiltonian Circuit and Hamiltonian Graph] Given a graph $G$, a \textbf{Hamiltonian circuit} for $G$ is a simple circuit that includes every vertex of $G$. (That is, every vertex appears exactly once, except for the first and the last, which are the same.) A \textbf{Hamiltonian graph} (also called \textbf{Hamilton graph}) is a graph that contains a
+Hamiltonian circuit.
+    \item[Adjacency Matrix of a Directed Graph] Let $G$ be a directed graph with ordered vertices \iterate{v}{n}. The \textbf{adjacency matrix of} $\mathbf{G}$ is the $n\times n$ matrix $\mathbf{A}=(a_{ij})$ over the set of non-negative integers such that $a_{ij}$ = the number of arrows connecting $v_{i}$ and $v_{j}$ for all $i, j = 1, 2, \dots, n$.
+    \item[Adjacency Matrix of an Undirected Graph] Let $G$ be an undirected graph with ordered vertices \iterate{v}{n}. The \textbf{adjacency matrix} of $G$ is the $n\times n$ matrix $\mathbf{A}=(a_{ij})$ over the set of non-negative integers such that $a_{ij}$ = the number of edges connecting $v_{i}$ and $v_{j}$ for all $i, j = 1, 2, \dots, n$.
+    \item[Symmetric Matrix] An $n\times n$ square matrix $A=(a_{ij})$ is called \textbf{symmetric} iff for all $i,j=1,2,\dots, n$, $a_{ij}=a_{ji}$
+    \item[$\mathbf{n^{th}}$ Power of a Matrix] For any $n \times n$ matrix \textbf{A}, the \textbf{powers of A} are defined as follows: $\mathbf{A^{0}}=\mathbf{I}$ where \textbf{I} is the $n \times n$ identity matrix. $\mathbf{A^{n}}=\mathbf{A\;A^{n-1}}$ for all integers $n\geq 1$.
+    \item[Isomorphic Graph] Let $G=(V_{G}, E_{G})$ and $G'=(V_{G'}, E_{G'})$ be two graphs. $G$ is \textbf{isomorphic to} $G'$, denoted $G\cong G'$, if and only if there exist bijections $g:V_{G}\to V_{G'}$ and $h:E_{G}\to E_{G'}$ that preserve the edge-endpoint functions of $G$ and $G'$ in the sense that for all $v\in V_{G}$ and $e\in E_{G}$, $v$ is an endpoint of $e\Leftrightarrow g(v)$ is an endpoint of $h(e)$.
+    \item[Alternative definition of Isomorphic Graph] Let $G=(V_{G}, E_{G})$ and $G'=(V_{G'}, E_{G'})$ be two graphs. $G$ is \textbf{isomorphic to} $G'$ if and only if there exists a permutation $\pi:V_{G}\to V_{G'}$ such that $\{u,v\}\in E_{G}\Leftrightarrow \{\pi(u),\pi(v)\}\in E_{G'}$
+    \item[Planar Graph] A \textbf{planar graph} is a graph that can be drawn on a (two-dimensional) plane without edges crossing.
+    
+ 
 	
 \end{description}
 
@@ -583,12 +651,49 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 	\item[Theorem 9.5.2 Permutations with sets of indistinguishable objects]Suppose a collection consists of $n$ objects of which $n_{1}$ are of type 1 and are indistinguishable from each other, $n_{2}$ are of type 2 and are indistinguishable from each other,$\dots$ $n_{k}$ are of type k and are indistinguishable from each other, and suppose that $n_{1}+n_{2}+\dots+n_{k}=n$. Then the number of distinguishable permutations of the $n$ objects is \[{n\choose r}{n-n_{1}\choose n_{2}}{n-n_{1}-n_{2}\choose n_{3}}\dots{n-n_{1}-n_{2}-\dots-n_{k-1}\choose n_{k}} = \frac{n!}{n_{1}!n_{2}!n_{3}!\dots n_{k}!} \]
 	\item[Theorem 9.6.1 Number of r-combinations with Repetition Allowed]The number of r-combination with repetition allowed (multisets of size $r$) that can be selected from a set of $n$ elements is: $r+n-1\choose r$. This equals the number of ways $r$ objects can be selected from $n$ categories of objects with repetitions allowed.
 	\item[Formula to Use] \
+	\begingroup
+	\setlength{\tabcolsep}{6pt} % Default value: 6pt
+	\renewcommand{\arraystretch}{1.75} % Default value: 1
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline
+			& \textbf{Order Matters} & \textbf{Order Does Not Matter} \\
+			\hline
+			\textbf{Repetition Is Allowed} & $n^{k}$ & ${k+n-1 \choose k}$ \\
+			\hline
+			\textbf{Repetition Is Not Allowed} & $P(n, k)$ & ${n\choose k}$\\
+			\hline
+		\end{tabular}
+	\end{table}	     
+	\endgroup
 	
 	\item[Theorem 9.7.1 Pascal’s Formula]Let $n$ and $r$ be positive integers, $r\leq n$. Then ${n+1\choose r}={n\choose r-1}+{n\choose r}$. 
 	\item[Theorem 9.7.2 Binomial Theorem] Given any real numbers $a$ and $b$ and any non-negative integer $n$, \[(a+b)^{n}=\sum_{k=0}^{n}{n\choose k}a^{n-k}b^{k}=a^{n}+{n\choose 1}a^{n-1}b^{1} + {n\choose 2}a^{n-2}b^{2}+\dots+{n\choose n-1}a^{1}b^{n-1} + b^{n} \]
 	\item[Theorem 9.9.1 Bayes’ Theorem]Suppose that a sample space $S$ is a union of mutually disjoint events $B_{1}, B_{2}, B_{3},\dots,B_{n}$. Suppose $A$ is an event in $S$, and suppose $A$ and all the $B_{i}$ have non-zero probabilities. If $k$ is an integer with $1\leq k\leq n$, then \[ P(B_{k}|A) = \frac{P(A|B_{k})\cdot P(B_{k})} {P(A|B_{1})\cdot P(B_{1})+P(A|B_{2})\cdot P(B_{2})+\dots+P(A|B_{j})\cdot P(B_{n}) } \]
 	
-
+	\item[Theorem 10.1.1 The Handshake Theorem] If the vertices of $G$ are \iterate{v}{n}, where $n\geq 0$, then the total degree of $G$ = $deg(v_{1}) + deg(v_{2}) + \dots + deg(v_{n}) = 2 \times \text{the number of edges of } G$.
+	\item[Corollary 10.1.2] The total degree of a graph is even.
+	\item[Proposition 10.1.3]In any graph there are an even number of vertices of odd degree.
+	\item[Lemma 10.2.1]Let G be a graph.
+	\item \qquad a. If $G$ is connected, then any two distinct vertices of $G$ can be connected by a path.
+	\item \qquad b. If vertices $v$ and $w$ are part of a circuit in $G$ and one edge is removed from the circuit, then there still exists a trail from $v$ to $w$ in $G$.
+	\item \qquad c. If $G$ is connected and $G$ contains a circuit, then an edge of the circuit can be removed without disconnecting $G$.
+	\item[Theorem 10.2.2]If a graph has an Euler circuit, then every vertex of the graph has positive even degree.
+	\item[Contrapositive Version of Theorem 10.2.2]If some vertex of a graph has odd degree, then the graph doesn’t have an Euler circuit.
+	\item[Theorem 10.2.3]If a graph $G$ is \emph{connected} and the degree of every vertex of G is a positive \emph{even integer}, then $G$ has an Euler circuit.
+	\item[Theorem 10.2.4]A graph $G$ has an Euler circuit iff $G$ is connected and every vertex of $G$ has positive even degree.
+	\item[Corollary 10.2.5] Let $G$ be a graph, and let $v$ and $w$ be two distinct vertices of $G$. There is an Euler trail from $v$ to $w$ iff $G$ is connected, $v$ and $w$ have odd degree, and all other vertices of $G$ have positive even degree.
+	\item[Proposition 10.2.6]If a graph $G$ has a Hamiltonian circuit, then $G$ has a subgraph $H$ with the following properties:
+	\begin{enumerate}
+		\item $H$ contains every vertex of $G$.
+		\item $H$ is connected.
+		\item $H$ has the same number of edges as vertices.
+		\item Every vertex of $H$ has degree 2.
+	\end{enumerate}
+	\item[Theorem 10.3.2] If $G$ is a graph with vertices $v_{1}, v_{2}, \dots, v_{m}$ and \textbf{A} is the adjacency matrix of $G$, then for each positive integer $n$ and for all integers $i, j = 1, 2, \dots, m$, the $ij$-th entry of $\mathbf{A}^{n}$ = the number of walks of length $n$ from $v_{i}$ to $v_{j}$.
+	\item[Theorem 10.4.1 Graph Isomorphism is an Equivalence Relation]Let $S$ be a set of graphs and let $\cong$ be the relation of graph isomorphism on $S$. Then $\cong$ is an equivalence relation on $S$.
+	\item[Euler's Formula]For a connected planar simple graph $G = (V, E)$ with $e = |E|$ and $v = |V|$, if we let $f$ be the number of faces, then $f = e - v + 2$.
 
 \end{description}
 
