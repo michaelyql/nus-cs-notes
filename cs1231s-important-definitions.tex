@@ -1,14 +1,16 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
+\graphicspath{{./images/}} % Path to find images
 \usepackage{multicol} % For double column in Appendix A 
 \usepackage{geometry} 
 \usepackage{amsfonts} % Required for \mathbb{} commands
-\usepackage{amsmath} % So that I can embed text inside math mode using \text{} command as well as use {flalign} environment
+\usepackage{amsmath} % So that I can embed text inside math mode using \text{} command as well as use {flalign} environment. Also used for matrices
 \usepackage[table]{xcolor} % For table colours
 \usepackage{float} % To enable [H] exact placement of table position
 \usepackage{amssymb} % Allow me to use \therefore command in conclusion statements
 \usepackage[mathscr]{euscript} % For curly C (set partition) symbol
 \usepackage{xcolor, soul} % For text highlighting
+\usepackage{tikz} % For graph drawings
 
 \title{Important Definitions for CS1231S}
 \author{Michael Yang}
@@ -70,7 +72,7 @@
 
 % ==================================== DEFINITIONS =====================================
 
-\newcommand{\iterate}[2]{$#1_{1}, #1_{2},\dots,#1_{#2}$}
+\newcommand{\iterate}[2]{$#1_{1}, #1_{2},\dots,#1_{#2}$} % Makes iterating over elements easy i.e. v1, v2, ... vn. Usage: \iterate{v}{n} - v is the element you want to iterate, n is the endpoint (inclusive)
 
 \newpage
 \section*{Definitions}
@@ -236,12 +238,17 @@
 	\item[Set of equivalence classes]Let $A$ be a set and $\sim$ be an equivalence relation on $A$. Denote by $A/{\sim}$ the set of all equivalence classes with respect to $\sim$, i.e., $A/{\sim}=\{x_{\sim}:x\in A\}$. We may read $A/{\sim}$ as “the quotient of $A$ by $\sim$”.
 	\item \qquad \textbf{Proof (Tutorial 4 Q9(b)): $A/{\sim} = \mathscr{C}$} (The set of equivalence classes of $A$ is a partition of $A$.)
 	\item[Antisymmetry] Let $R$ be a relation on a set $A$. $R$ is \textbf{antisymmetric} iff $\forall x,y\in A(x\;R\;y\land y\;R\;x \to x=y)$.
+		\item[Alternate definition of anti-symmetry (Tutorial 10 Q11)] $\forall x,y,(x\neq y)\to ((x,y)\in R)\to ((y,x) \not\in R)$
 	\item[Asymmetry (Tutorial 5 Q6)] Let $R$ be a binary relation on a set $A$. $R$ is \textbf{asymmetric} iff $\forall x, y\in A (x\;R\;y \to y\;{\not}R\; x)$.
 	\item \qquad \textbf{Tutorial 5 Q6(c)} All asymmetric relations are antisymmetric.
 	\item[Partial Order Relations] Let $R$ be a relation on a set $A$. Then $R$ is a \textbf{partial order relation} (or simply \textbf{partial order}) iff $R$ is reflexive, antisymmetric and transitive.
 	\item \qquad Note: the symbol $\preceq$ is often used to refer to a general partial order, and the notation $x\preceq y$ is read as ``x is curly less than or equal to y''.
 	\item \qquad \textbf{Proof (Tutorial 5 Q3):} Binary relation $\subseteq$ on $P(A)$ is a partial order.
 	\item[Partially Ordered Sets]A set $A$ is called a \textbf{partially ordered set} (or \textbf{poset}) with respect to a partial order relation $R$ on $A$, denoted by ($A$, $R$).
+	\item[Irreflexive (Tutorial 10 Q11)]A relation $\prec$ on a set $A$ is said to be \textbf{irreflexive}, iff $\forall a\in A\;(a\not\prec a)$.
+	\item[Strict Partial Order (Tutorial 10 Q11)] A relation is a \textbf{strict partial order} if and only if it is irreflexive, antisymmetric and transitive.
+	\item[Chain (Tutorial 10 Q11)]Let $\preceq$ be a strict partial order on a set $A$. A subset $C$ of $A$ is called \textbf{chain} if and only if each pair of distinct elements in $C$ is comparable, that is, $\forall a,b\in C(a\neq b)\to (a\preceq b\lor b\preceq a)$.
+	\item[Maximal Chain (Tutorial 10 Q11)]A \textbf{maximal chain} is a chain $M$ such that $t\not\in M\to M\cup \{t\}$ is not a chain.
 	\item[Hasse Diagram]Let $\preceq$ be a partial order on a set $A$. A \textbf{Hasse diagram} of $\preceq$ satisfies the following condition for all \underline{distinct} $x,y,m\in A$: If $x\preceq y$ and no $m \in A$ is such that $x\preceq m\preceq y$, then $x$ is placed below $y$ with a line joining them, else no line joins $x$ and $y$.
 	\item \qquad (Tip: to obtain a Hasse Diagram, start with a directed graph of the relation, placing vertices on the page so that all arrows point upwards. Then \textbf{eliminate} 1. the loops at all the vertices, 2. all arrows whose existence is implied by the transitive property, and 3. the direction indicators on the arrows.)
 	\item[Comparability]Suppose $\preceq$ is a partial order relation on a set $A$. Elements $a$ and $b$ of $A$ are said to be \textbf{comparable} iff either $a\preceq b$ or $b\preceq a$. Otherwise, $a$ and $b$ are \textbf{noncomparable}.
@@ -306,9 +313,20 @@
     \item[Sequences and Terms] A \textbf{sequence} is an ordered set with members called \textbf{terms}. Usually, the terms are numbers. A sequence may have infinite terms. General form: $a_{m}, a_{m+1},a_{m+2},\dots,a_{n}$ where $m\leq n$. The $k$ in $a_{k}$ is called a \textbf{subscript} or \textbf{index}. Infinite sequence: $a_{m}, a_{m+1},a_{m+2},\dots$. 
     \item \qquad An \textbf{explicit} formula for a sequence is a rule that shows how the values of $a_{k}$ depend on $k$. E.g. $a_{k}=\frac{k}{k+1}$ for all integers $k\geq 1$. $a_{1}.a_{2}.a_{3}\dots$ \; Dots are element separators.
     \item[Sequence Comprehension] \
-    \item \qquad $\{f(k):k\in S\}:P(B)$ \quad $f:S\to B$ \qquad \qquad \qquad \;\;Order not important, duplicates discarded 
-    \item \qquad $[f(k):k\in[n..m]\;]:Seq(B)$ \quad $f:Z \to B$ \qquad \qquad Order important, duplicates are kept
-    \item \qquad $[f(k):k\in[n..]\;]:Seq(B)$ \qquad \qquad \qquad \qquad \qquad \;\; Infinite sequences
+    
+    \begingroup
+	\setlength{\tabcolsep}{6pt} 
+	\renewcommand{\arraystretch}{1.5} 
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{lp{6in}}
+			$\{f(k):k\in S\}:P(B)$ \quad $f:S\to B$ & Order not important, duplicates discarded \\
+			$[f(k):k\in[n..m]\;]:Seq(B)$ \quad $f:Z \to B$ & Order important, duplicates are kept \\
+			$[f(k):k\in[n..]\;]:Seq(B)$ & Infinite sequences \\
+		\end{tabular}
+	\end{table}	     
+	\endgroup
+	
     \item[Summation] If $m$ and $n$ are integers, $m\leq n$, the symbol \[\sum_{k=m}^{n}a_{k}\] is the \textbf{sum} of all the terms $a_{m}, a_{m+1},a_{m+2},\dots,a_{n}$ (a.k.a summation notation). We say that $a_{m} +  a_{m+1} + a_{m+2} + \dots + a_{n}$ is the \textbf{expanded} form of the sum, and we write $\sum_{k=m}^{n}a_{k} = a_{m} + a_{m+1} + a_{m+2} + \dots + a_{n}$. We call $k$ the \textbf{index} of the summation, $m$ the \textbf{lower limit} of the summation and $n$ the \textbf{upper limit} of the summation.
     \item \qquad Recursive definition of summation: If $m$ is any integer, then \[\sum_{k=m}^{m}a_{k}=a_{m} \text{ and } \sum_{k=m}^{n}a_{k} = (\sum_{k=m}^{n-1}a_{k})+a_{n}\]
     \item \qquad By convention, an \textbf{empty} sum (e.g. $\sum_{k=m}^{n}a_{k}$ where $m>n$) is equal to the additive identity \textbf{0}.
@@ -392,12 +410,13 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
 selection of $r$ elements taken from the set. The number of r-permutations of a set of n elements
 is denoted $P(n, r)$. Other notations: $_{n}P_{r}$, $P_{\;n}^{\;r}$.
 \item[Formula for the Probability of the Complement of an Event]If $S$ is a finite sample space and $A$ is an event in $S$, then $P(\overline{A}) = 1-P(A)$.
-	\item[Pigeonhole Principle (PHP)] A function from one finite set to a smaller finite set cannot be one-to- one: There must be at least 2 elements in the domain that have the same image in the co-domain.
+	\item[Pigeonhole Principle (PHP)] A function from one finite set to a smaller finite set cannot be one-to-one: There must be at least 2 elements in the domain that have the same image in the co-domain.
 	\item[Generalized Pigeonhole Principle]For any function $f$ from a finite set $X$ with $n$ elements to a finite set $Y$ with $m$ elements and for any positive integer $k$, if $k < n/m$, then there is some $y\in Y$ such that $y$ is the image of at least $k + 1$ distinct elements of $X$.
 	\item[Generalized Pigeonhole Principle (Contrapositive Form)]For any function $f$ from a finite set $X$ with $n$ elements to a finite set $Y$ with $m$ elements and for any positive integer $k$, if for each $y\in Y$, $f^{-1}(\{y\})$ has at most $k$ elements, then $X$ has at most $km$ elements; in other words, $n\leq km$.
-	\item[r-combination] Let $n$ and $r$ be non-negative integers with $rleq n$.
-An \textbf{r-combination} of a set of $n$ elements is a subset of $r$ of the $n$ elements. ${n\choose r}$, read “$n$ choose $r$”, denotes the number of subsets of size $r$ (r- combinations) that can be chosen from a set of $n$ elements. Other symbols used are $C(n, r$), $_{n}C_{r}$, $C_{n,r}$ , or $^{n}C_{r}$.
-	\item[Multiset]An \textbf{r-combination with repetition allowed}, or multiset of size $r$, chosen from a set $X$ of $n$ elements is an unordered selection of elements taken from $X$ with repetition allowed. If $X=\{x_{1},x_{2},\dots,x_{n}\}$, we write an r-combination with repetition allowed as $[x_{i_{1}},x_{i_{2}}, \dots, x_{i_{r}}]$ where each $x_{i_{j}}$ is in $X$ and some of the $x_{i_{j}}$ may equal each other.
+	\item[r-combination] Let $n$ and $r$ be non-negative integers with $r\leq n$.
+An \textbf{r-combination} of a set of $n$ elements is a subset of $r$ of the $n$ elements. ${n\choose r}$, read “$n$ choose $r$”, denotes the number of subsets of size $r$ (r-combinations) that can be chosen from a set of $n$ elements. Other symbols used are $C(n, r$), $_{n}C_{r}$, $C_{n,r}$ , or $^{n}C_{r}$.
+	\item[Multiset]An \textbf{r-combination with repetition allowed}, or multiset of size $r$, chosen from a set $X$ of $n$ elements is an unordered selection of elements taken from $X$ with repetition allowed. If $X=\{x_{1},x_{2},\dots,x_{n}\}$, we write an r-combination with repetition allowed as $[x_{i_{1}},x_{i_{2}}, \dots, x_{i_{r}}]$ where each $x_{i_{j}}$ is in $X$ and some of the $x_{i_{j}}$ may equal each other. 
+	\item \qquad Formula: $r + n - 1 \choose r$ (Theorem 9.6.1)
 	\item[Probability Axioms]Let $S$ be a sample space. A \textbf{probability function} $P$ from the set of all events in $S$ to the set of real numbers satisfies the following axioms: For all events $A$ and $B$ in $S$, 
 	\item \qquad 1. $0\leq P(A)\leq 1$
 	\item \qquad 2. $P(\emptyset)=0$ and $P(S)=1$
@@ -407,7 +426,9 @@ An \textbf{r-combination} of a set of $n$ elements is a subset of $r$ of the $n$
 	\item[Expected Value]Suppose the possible outcomes of an experiment, or random process, are real numbers $a_{1}, a_{2}, a_{3}, \dots , a_{n}$ which occur with probabilities
 $p_{1}, p_{2}, p_{3}, \dots , p_{n}$. The expected value of the process is \[ \sum_{k=1}^{n} a_{k}p_{k}=a_{1}p_{1} + a_{2}p_{2} + a_{3}p_{3} + \dots + a_{n}p_{n} \]
 	\item[Linearity of Expectation] The expected value of the sum of random variables is equal to the sum of their individual expected values, regardless of whether they are independent. For random variables $X$ and $Y$, $E[X+Y]=E[X]+E[Y]$. For random variables $X_{1}, X_{2}, \dots , X_{n}$ and constants $c_{1}, c_{2}, \dots , c_{n}$, \[ 	E\left[ \sum_{i=1}^{n}c_{i}\cdot X_{i} \right] = \sum_{i=1}^{n}(c_{i}\cdot E[x_{i}]) \]
-	\item[Conditional Probability] Let $A$ and $B$ be events in a sample space $S$. If $P(A)\neq 0$, then the \textbf{conditional probability of B given A}, denoted $P(B|A)$, is $P(P|A)=\frac{P(A\cap B)}{P(A)}$. 
+	\item[Conditional Probability] Let $A$ and $B$ be events in a sample space $S$. If $P(A)\neq 0$, then the \textbf{conditional probability of B given A}, denoted $P(B|A)$, is $P(B|A)=\frac{P(A\cap B)}{P(A)}$. (Theorem 9.9.1 Bayes' Theorem)
+	\item \qquad \textbf{9.9.2:} $P(A\cap B)=P(B|A)\cdot P(A)$
+	\item \qquad \textbf{9.9.3:} $P(A)=\frac{P(A\cap B)}{P(B|A)}$
 	\item[Independent Events]If $A$ and $B$ are events in a sample space $S$, then $A$ and $B$ are \textbf{independent}, if and only if, $P(A\cap B)=P(A)\cdot P(B)$.
 	\item[Pairwise Independent and Mutually Independent]Let $A$, $B$ and $C$ be events in a sample space $S$. $A$ , $B$ and $C$ are \textbf{pairwise independent}, if and only if, they satisfy conditions 1 – 3 below. They are \textbf{mutually independent} if, and only if, they satisfy all four conditions below.
 	\begin{enumerate}
@@ -415,22 +436,54 @@ $p_{1}, p_{2}, p_{3}, \dots , p_{n}$. The expected value of the process is \[ \s
 		\item $P(A\cap B)=P(A)\cdot P(B)$
 		\item $P(A\cap C)=P(A)\cdot P(C)$
 		\item $P(B\cap C)=P(B)\cdot P(C)$
-		\item $P(A\cap B\cap C)=P(A)\cdot P(B) \cap P(C)$
+		\item $P(A\cap B\cap C)=P(A)\cdot P(B) \cdot P(C)$
 	\end{enumerate}
 	
-	% 11 - Graphs 
+	% [Ch 11 Graphs]
 	\vspace{0.2cm}
     \item[\large Graphs]\
     \item[Undirected Graph] An undirected graph is denoted by $G=(V, E)$ where $V=\{v_{1},v_{2},\dots,v_{n}\}$ and $E=\{e_{1},e_{2},\dots,e_{n}\}$. An undirected edge $e$ connecting $v_{i}$ and $v_{j}$ is denoted as $e=\{v_{i}, v_{j}\}$.
+	
+	\begin{center}
+		\begin{tikzpicture}[relative, node distance={12mm}, thick, main/.style = {draw, circle}]
+    		\node[main] (1) {$v_{1}$};
+			\node[main] (2) [below left of=1] {$v_{2}$}; 
+			\node[main] (3) [below right of=1] {$v_{3}$}; 
+			\draw (1) -- (2);
+			\draw (2) -- (3);
+			\draw (1) to [out=30, in=150] (3);
+			\draw (1) to [out=-30, in=210] (3);
+    	\end{tikzpicture}
+    \end{center}
     \item \qquad An undirected \textbf{graph} $G$ consists of 2 finite sets: a nonempty set $V$ of \textbf{vertices} and a set E of \textbf{edges}, where each (undirected) edge is associated with a set consisting of either one or two vertices called its \textbf{endpoints}.
     \item \qquad An edge is said to \textbf{connect} its endpoints; two vertices that are connected by an edge are called \textbf{adjacent vertices}; and a vertex that is an endpoint of a loop is said to be \textbf{adjacent to itself}. 
     \item \qquad An edge is said to be \textbf{incident on} each of its endpoints, and two edges incident on the same endpoint are called adjacent edges. We write $e = \{v, w\}$ for an undirected edge $e$ incident on vertices $v$ and $w$.
     \item[Directed Graph] A \textbf{directed graph}, or \textbf{digraph}, $G$, consists of 2 finite sets: a nonempty set $V$ of \textbf{vertices} and a set $E$ of \textbf{directed edges},
 where each (directed) edge is associated with an \textbf{ordered pair} of vertices called its \textbf{endpoints}. We write $e = (v, w)$ for a directed edge $e$ from vertex $v$ to vertex $w$.
     \item[Simple Graph] A \textbf{simple graph} is an undirected graph that \textbf{does not} have any loops or parallel edges. (That is, there is at most one edge between each pair of distinct vertices.)
+    
+    \begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.4]{simple_graph} 
+	\end{figure}
+    
     \item[Complete Graph] A \textbf{complete graph} on $n$ \textbf{vertices}, $n > 0$, denoted $\mathbf{K_{n}}$, is a simple graph with $n$ vertices and exactly one edge connecting each pair of distinct vertices. 
+    
+    \begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{complete_graph} 
+	\end{figure}
+	
     \item[Bipartite Graph] A \textbf{bipartite graph} (or bigraph) is a simple graph whose vertices can be divided into two disjoint sets $U$ and $V$ such that every edge connects a vertex in $U$ to one in $V$.
     \item[Complete Bipartite Graph] A complete bipartite graph is a bipartite graph on two disjoint sets $U$ and $V$ such that every vertex in $U$ connects to every vertex in $V$. If $|U|=m$ and $|V|=n$, the complete bipartite graph is denoted as $K_{m, n}$.
+    
+    \begin{figure}[H]
+		\centering
+		\begin{tabular}{ll}
+			\includegraphics[scale=0.5]{bpt_graph} & \includegraphics[scale=0.5]{complete_bpt_graph} \\
+		\end{tabular}
+	\end{figure}
+    
     \item[Subgraph of a Graph] A graph $H$ is said to be a \textbf{subgraph} of graph $G$ iff every vertex in $H$ is also a vertex in $G$, every edge in $H$ is also an edge in $G$, and every edge in $H$ has the same endpoints as it has in $G$.
     \item[Degree of a Vertex and Total Degree of a Graph] Let $G$ be a graph and $v$ a vertex of $G$. The \textbf{degree} of $v$, denoted $\mathbf{deg(v)}$, equals the number of edges that are incident on $v$, with an edge that is a loop counted twice. The \textbf{total degree of G} is the sum of the degrees of all the vertices of $G$.
     \item[Indegree and outdegree of a Vertex of a Directed Graph] Let $G=(V,E)$ be a directed graph and $v$ a vertex of $G$. The \textbf{indegree} of $v$, denoted $\mathbf{deg}^{-}(\mathbf{v})$ is the number of directed edges that end at $v$. The \textbf{outdegree} of $v$, denoted $\mathbf{deg}^{+}(\mathbf{v})$, is the number of directed edges that originate from $v$.
@@ -452,19 +505,160 @@ Note that \[ \sum_{v\;\in\; V} \text{deg}^{-}(v) = \sum_{v\;\in\; V} \text{deg}^
 		\item The graph $H$ is connected; and
 		\item No connected subgraph of $G$ has $H$ as a subgraph and contains vertices or edges that are not in $H$.
     \end{enumerate}
-    \item[Euler Circuit and Eulerian Graph] Let $G$ be a graph. An \textbf{Euler circuit} for $G$ is a circuit that contains every vertex and every edge of $G$. An \textbf{Eulerian graph} is a graph that contains an Euler circuit.
+    \item[Euler Circuit and Eulerian Graph] Let $G$ be a graph. An \textbf{Euler circuit} for $G$ is a circuit that contains every vertex and every edge of $G$. An \textbf{Eulerian graph} is a graph that contains an Euler circuit. (See Theorem 10.2.4)
+    \begin{figure}[H]
+    	\centering
+		\includegraphics[scale=0.3]{euler_circuit}
+    \end{figure}
     \item[Euler Trail] Let $G$ be a graph, and let $v$ and $w$ be two distinct vertices of $G$. An \textbf{Euler trail/path from} $\mathbf{v}$ \textbf{to} $\mathbf{w}$ is a sequence of adjacent edges and vertices that starts at $v$, ends at $w$, passes through every vertex of $G$ at least once, and traverses every edge of $G$ exactly once.
     \item[Hamiltonian Circuit and Hamiltonian Graph] Given a graph $G$, a \textbf{Hamiltonian circuit} for $G$ is a simple circuit that includes every vertex of $G$. (That is, every vertex appears exactly once, except for the first and the last, which are the same.) A \textbf{Hamiltonian graph} (also called \textbf{Hamilton graph}) is a graph that contains a
 Hamiltonian circuit.
+	\item[Matrix]An $m\times n$ (read ``m by n'') \textbf{matrix} A over a set $S$ is a rectangular array of elements of $S$ arranged into $m$ rows and $n$ columns. We write $\mathbf{A}=(a_{ij})$.
+	\[
+	\begin{bmatrix}
+		a_{11} & a_{12} & \dots & a_{1j} & \dots & a_{1n} \\
+		a_{21} & a_{22} & \dots & a_{2j} & \dots & a_{2n} \\
+		\vdots & \vdots &   \   & \vdots &   \   & \vdots \\
+		a_{i1} & a_{i2} & \dots & a_{ij} & \dots & a_{in} \\
+		\vdots & \vdots &   \   & \vdots &   \   & \vdots \\
+		a_{m1} & a_{m2} & \dots & a_{mj} & \dots & a_{mn} \\
+	\end{bmatrix}
+	\]
+	\item \qquad If \textbf{A} and \textbf{B} are matrices, then $\mathbf{A} = \mathbf{B}$ if, and only if, \textbf{A} and \textbf{B} have the same size and the corresponding entries of \textbf{A} and \textbf{B} are all equal; that is, $a_{ij}=b_{ij}$ for all $i=1,2,\dots,m$ and $j=1,2,\dots,n$.
+	\item \qquad A matrix for which the numbers of rows and columns are equal is called a \textbf{square matrix}.
+	\item \qquad If \textbf{A} is a square matrix of size $n\times n$, then the main diagonal of \textbf{A} consists of all the entries $a_{11},a_{22},\dots,a_{nn}$.
+	
     \item[Adjacency Matrix of a Directed Graph] Let $G$ be a directed graph with ordered vertices \iterate{v}{n}. The \textbf{adjacency matrix of} $\mathbf{G}$ is the $n\times n$ matrix $\mathbf{A}=(a_{ij})$ over the set of non-negative integers such that $a_{ij}$ = the number of arrows connecting $v_{i}$ and $v_{j}$ for all $i, j = 1, 2, \dots, n$.
+    
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.5]{adj_matrix}
+		\end{figure}
+    
     \item[Adjacency Matrix of an Undirected Graph] Let $G$ be an undirected graph with ordered vertices \iterate{v}{n}. The \textbf{adjacency matrix} of $G$ is the $n\times n$ matrix $\mathbf{A}=(a_{ij})$ over the set of non-negative integers such that $a_{ij}$ = the number of edges connecting $v_{i}$ and $v_{j}$ for all $i, j = 1, 2, \dots, n$.
+    \item \qquad Note: the adjacency matrix for an undirected graph is symmetric.
     \item[Symmetric Matrix] An $n\times n$ square matrix $A=(a_{ij})$ is called \textbf{symmetric} iff for all $i,j=1,2,\dots, n$, $a_{ij}=a_{ji}$
+    \item[Scalar Product] Suppose that all entries in matrices \textbf{A} and \textbf{B} are real numbers. If the number of elements, $n$, in the $i$th row of \textbf{A} equals the number of elements in the $j$th column of \textbf{B}, then the \textbf{scalar product} or \textbf{dot product} of the $i$th row of A and the $j$th column of \textbf{B} is the real number obtained as follows: 
+    \[ 
+	\begin{bmatrix}
+	   	a_{i1} & a_{i2} & \dots & a_{in} \\
+	\end{bmatrix}
+	\begin{bmatrix}
+    	b_{1j} \\
+    	b_{2j} \\
+		\vdots \\
+		b_{nj} \\
+    \end{bmatrix}
+    = a_{i1}b_{1j} + a_{i2}b_{2j} + \dots + a_{in}b_{nj}
+    \]
+    \item[Matrix Multiplication] Let \textbf{A} $= (a_{ij})$ be an $m\times k$ matrix and \textbf{B} $= (b_{ij})$ an $k\times n$ matrix with real entries. The (matrix) product of \textbf{A} times \textbf{B}, denoted \textbf{AB}, is that matrix $(c_{ij})$ defined as
+follows:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{matrix_multiplication}
+	\end{figure}
+	\item \qquad where $c_{ij}=a_{i1}b_{1j}+a_{i2}b_{2j}+\dots+a_{ik}b_{kj}=\sum^{k}_{r=1}a_{ir}b_{rj}$ for all $i=1,2,\dots,m$ and $j=1,2,\dots,n$.
+	\item \qquad Note: matrix multiplication is \textbf{not commutative} i.e. \textbf{A} $\times$ \textbf{B} $\neq$ \textbf{B} $\times$ \textbf{A} but it is associative, i.e. \textbf{(AB)C} $=$ \textbf{A(BC)}.
+	\item[Identity Matrix]For each positive integer $n$, the $n\times n$ \textbf{identity matrix}, denoted $I_{n} = (\delta_{ij})$ or just \textbf{I} (if the size of the matrix is obvious from context), is the $n\times n$ matrix in which all the entries in the main
+diagonal are 1’s and all other entries are 0’s. In other words, 
+	\[ 
+		\delta_{ij}=
+		\begin{cases}
+			\text{1, if $i=j$} \\
+			\text{0, if $i\neq j$} \\
+		\end{cases}
+	\]
     \item[$\mathbf{n^{th}}$ Power of a Matrix] For any $n \times n$ matrix \textbf{A}, the \textbf{powers of A} are defined as follows: $\mathbf{A^{0}}=\mathbf{I}$ where \textbf{I} is the $n \times n$ identity matrix. $\mathbf{A^{n}}=\mathbf{A\;A^{n-1}}$ for all integers $n\geq 1$.
     \item[Isomorphic Graph] Let $G=(V_{G}, E_{G})$ and $G'=(V_{G'}, E_{G'})$ be two graphs. $G$ is \textbf{isomorphic to} $G'$, denoted $G\cong G'$, if and only if there exist bijections $g:V_{G}\to V_{G'}$ and $h:E_{G}\to E_{G'}$ that preserve the edge-endpoint functions of $G$ and $G'$ in the sense that for all $v\in V_{G}$ and $e\in E_{G}$, $v$ is an endpoint of $e\Leftrightarrow g(v)$ is an endpoint of $h(e)$.
     \item[Alternative definition of Isomorphic Graph] Let $G=(V_{G}, E_{G})$ and $G'=(V_{G'}, E_{G'})$ be two graphs. $G$ is \textbf{isomorphic to} $G'$ if and only if there exists a permutation $\pi:V_{G}\to V_{G'}$ such that $\{u,v\}\in E_{G}\Leftrightarrow \{\pi(u),\pi(v)\}\in E_{G'}$
+    
+    \begin{figure}[H]
+		\centering
+		\begin{tabular}{ll}
+			\includegraphics[scale=0.6]{isomorphic_graph} &
+			\includegraphics[scale=0.6]{isomorphic_bijection}
+		\end{tabular}
+	\end{figure}
+    
     \item[Planar Graph] A \textbf{planar graph} is a graph that can be drawn on a (two-dimensional) plane without edges crossing.
     
+    \begin{figure}[H]
+		\centering
+		\begin{tabular}{ll}
+			\includegraphics[scale=0.4]{planar_graph} &
+			\includegraphics[scale=0.4]{nonplanar_graph}
+		\end{tabular}
+	\end{figure}
+	
+	\item \qquad \textbf{Kuratowski's Theorem:} A finite graph is planar if and only if it does not contain a subgraph that is a subdivision of the complete graph $K_{5}$ or the complete bipartite graph $K_{3,3}$.
+    \item[Dominating Set (Tutorial 10 Q9)]A set of vertices, $D$, in an undirected simple graph is said to be a \textbf{dominating set} if every vertex not in $D$ is adjacent to at least one vertex in $D$.
+    \item[Minimal Dominating Set (Tutorial 10 Q9)]A \textbf{minimal dominating set} is a dominating set such that none of its proper subsets are dominating sets.
+    \item[Complement of a graph (Tutorial 10 Definition 1)]If $G$ is a simple graph, the \emph{complement} of $G$, denoted $\overline{G}$ , is obtained as follows: the vertex set of $\overline{G}$ is identical to the vertex set of $G$. However, two distinct vertices $v$ and $w$ of $\overline{G}$ are connected by an edge if and only if $v$ and $w$ are not connected by an edge in $G$.
+    \item[Self-complementary Graph (Tutorial 10 Definition 2)]A \emph{self-complementary graph} is isomorphic with its complement. 
+    \item[Triangle (Tutorial 10 Definition 3)]A simple circuit (cycle) of length three is called a \emph{triangle}.
+    \item[Proof (Tutorial 10 Q10)]Let $G$ be any any simple graph with 6 vertices. Then $G$ or its complementary graph $\overline{G}$ contains a triangle.
  
+ 	% [Ch 12 Trees]
+	\vspace{0.2cm}
+    \item[\large Trees]\
+    \item[Tree] (The graph is assumed to be undirected here.)
+    \item \qquad A \textbf{graph} is said to be \textbf{circuit-free} if and only if it has no circuits.
+    \item \qquad A graph is called a \textbf{tree} if and only if it is circuit-free and connected.
+    \item \qquad A \textbf{trivial tree} is a graph that consists of a single vertex.
+    \item \qquad A graph is called a \textbf{forest} if and only if it is circuit-free and not connected.
+    
+    \begin{figure}[H]
+    	\centering
+    	\begin{tabular}{lll}
+    		\includegraphics[scale=0.5]{graph} & 
+    		\includegraphics[scale=0.5]{tree}  &
+    		\includegraphics[scale=0.5]{forest} \
+    	\end{tabular}
+    \end{figure}
+    
+    \item[Terminal vertex (leaf) and internal vertex]Let $T$ be a tree. If $T$ has only one or two vertices, then each is called a \textbf{terminal vertex} (or \textbf{leaf}). If $T$ has at least three vertices, then a vertex of degree 1 in $T$ is called a \textbf{terminal vertex} (or \textbf{leaf}), and a vertex of degree greater than 1 in $T$ is called an \textbf{internal vertex}.
+    \item[Rooted Tree, Level, Height] \
+    \item \qquad A \textbf{rooted tree} is a tree in which there is one vertex that is distinguished from the others and is called the \textbf{root}. 
+    \item \qquad The \textbf{level} of a vertex is the number of edges along the unique path between it and the root.
+    \item \qquad The \textbf{height} of a rooted tree is the maximum level of any vertex of the tree.
+    
+    \begin{figure}[H]
+    	\centering
+	    \includegraphics[scale=0.5]{rooted_tree}
+	\end{figure}
+	
+    \item[Child, Parent, Sibling, Ancestor, Descendant] Given the root or any internal vertex $v$ of a rooted tree, the \textbf{children} of $v$ are all those vertices that are adjacent to $v$ and are one level farther away from the root than $v$. If $w$ is a child of $v$, then $v$ is called the \textbf{parent} of $w$, and two distinct vertices that are both children of the same parent are called \textbf{siblings}. Given two distinct vertices $v$ and $w$, if $v$ lies on the unique path between $w$ and the root, then $v$ is an \textbf{ancestor} of $w$, and $w$ is a \textbf{descendant} of $v$.
+    \item[Binary Tree, Full Binary Tree]A \textbf{binary tree} is a rooted tree in which every parent has at most two children. Each child is designated either a \textbf{left child} or a \textbf{right child} (but not both), and every parent has at most one left child and one right child. A \textbf{full binary tree} is a binary tree in which each parent has exactly two children.
+    
+    \begin{figure}[H]
+    	\centering
+		\includegraphics[scale=0.4]{btree}
+    \end{figure}
+    
+    \item[Left Subtree, Right Subtree]Given any parent $v$ in a binary tree $T$, if $v$ has a left child, then the \textbf{left subtree} of $v$ is the binary tree whose root is the left child of $v$, whose vertices consist of the left child of $v$ and all its descendants, and whose edges consist of all those edges of $T$ that connect the vertices of the left subtree. The \textbf{right subtree} of $v$ is defined analogously.
+    \item[Spanning Tree]A \textbf{spanning tree} for a graph $G$ is a subgraph of $G$ that contains every vertex of $G$ and is a tree.
+    \item[Binary Tree Traversal] \textbf{Tree traversal} (also known as \textbf{tree search}) is the process of visiting each node in a tree data structure exactly once in a systematic manner. There are two types of traversal: \textbf{breadth-first search (BFS)} or \textbf{depth-first search (DFS)}. 
+    \item \qquad In \textbf{BFS}, it starts at the root and visits its adjacent vertices, and then moves to the next level. 
+    \item \qquad In \textbf{DFS}, it starts at the root node and explores as far as possible along each branch before backtracking. 
+    \item \qquad There are three types of depth-first traversal: 
+	\begin{enumerate}
+		\item Pre-order: Current $\to$ Left $\to$ Right
+		\item In-order: Left $\to$ Current $\to$ Right 
+		\item Post-order: Left $\to$ Right $\to$ Current
+	\end{enumerate}
+	
+	\begin{figure}[H]
+		\centering
+		\caption{DFS Traversal}
+		\includegraphics[scale=0.4]{dfs} \\
+		\vspace{0.5cm}
+		\caption{BFS Traversal}
+		\includegraphics[scale=0.6]{bfs}
+	\end{figure}
+		
+    \item[Weighted Graph]A \textbf{weighted graph} is a graph for which each edge has an associated positive real number \textbf{weight}. The sum of the weights of all the edges is the \textbf{total weight} of the graph. 
+    \item[Minimum Spanning Tree]A \textbf{minimum spanning tree} for a connected weighted graph is a spanning tree that has the least possible total weight compared to all other spanning trees for the graph. If $G$ is a weighted graph and $e$ is an edge of $G$, then $w(e)$ denotes the weight of $e$ and $w(G)$ denotes the total weight of $G$.
+    
 	
 \end{description}
 
@@ -631,13 +825,13 @@ Hamiltonian circuit.
 	\item[Theorem: Unions (Lecture 9 Slide 30)]The union of countably many countable sets is countable. That is, if $A_{1}, A_{2}, \dots$ are all countable sets, then so is \[\bigcup_{i=1}^{\infty}A_{i}\]
 	\item[Proposition 9.1]An infinite set $B$ is countable if and only if there is a sequence $b_{0}, b_{1}, b_{2} \dots \in B$ in which every element of $B$ appears exactly once. 
 	\item \qquad (Definition of sequence) A \textbf{sequence} $a_{0}, a_{1}, a_{2}, \dots$ can be represented by a function $a$ whose domain is $\mathbb{Z}_{\geq0}$ that satisfies $a(n)=a_{n}$ for every $n\in\mathbb{Z}_{\geq0}$.
-	\item[Lemma 9.2: Countability via Sequence]An infinite set $B$ is countable if and only if there is a sequence $b_{0}, b_{1}, b_{2} \dots$ in which every element of $B$ appears.
+	\item[Lemma 9.2 Countability via Sequence]An infinite set $B$ is countable if and only if there is a sequence $b_{0}, b_{1}, b_{2} \dots$ in which every element of $B$ appears.
 	\item[Theorem 7.4.2 (Cantor)] The set of real numbers between 0 and 1, $(0,1)=\{x\in\mathbb{R}\;|\;0<x<1\}$, is uncountable. To prove that a a set is uncountable means proving that there is no possibility of a bijection from that set to $\mathbb{Z}^{+}$.
 	\item[Theorem 7.4.3]Any subset of any countable set is countable.
 	\item[Corollary 7.4.4 (Contrapositive of Theorem 7.4.3)]Any set with an uncountable subset is uncountable.
 	\item \qquad Corollary 7.4.4 implies that $\mathbb{R}$ is uncountable since $(0,1)\subseteq\mathbb{R}$ and $(0,1)$ is uncountable.
 	\item[Proposition 9.3]Every infinite set has a countably infinite subset.
-	\item[Lemma 9.4: Union of Countably Infinite Sets]Let $A$ and $B$ be countably infinite sets. Then $A\cup B$ is countable.
+	\item[Lemma 9.4 Union of Countably Infinite Sets]Let $A$ and $B$ be countably infinite sets. Then $A\cup B$ is countable.
 	\item[Theorem 9.1.1 The Number of Elements in a List] If $m$ and $n$ are integers and $m\leq n$, then there are $n-m+1$ integers from $m$ to $n$ inclusive.
 	\item[Theorem 9.2.1 The Multiplication/Product Rule]If an operation consists of $k$ steps and the first step can be performed in $n_{1}$ ways, the second step can be performed in $n_{2}$ ways (regardless of how the first step was performed), the $k^{th}$ step can be performed in $n_{k}$ ways, (regardless of how the preceding steps were performed), then the entire operation can be performed in $n_{1}\times n_{2} \times n_{3} \times \dots n_{k}$ ways.
 	\item[Theorem 9.2.2 Permutations]The number of permutations of a set with $n$ ($n\geq 1$) elements is $n!$.
@@ -645,7 +839,7 @@ Hamiltonian circuit.
 	\item[Theorem 9.3.1 The Addition/Sum Rule]Suppose a finite set $A$ equals the union of $k$
 distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1}|+|A_{2}|+\dots+|A_{k}|$.
 	\item[Theorem 9.3.2 The Difference Rule] If $A$ is a finite set and $B\subseteq A$, then $|A\setminus B|=|A|-|B|$.
-	\item \qquad Derivation from Addition Rule: If $B\subseteq A$, then the two sets $B$ and $A\setminus B$ have no elements in common and $B\cup (A\setminus B) = A$. Hence, by addition rule, $|B|+|A\setminus B|=|A|$. Subtracting $|B|$ from both sides gives the equation $|A\setminus B|=|A|-|B|$.
+	\item \qquad How it's derived: If $B\subseteq A$, then the two sets $B$ and $A\setminus B$ have no elements in common and $B\cup (A\setminus B) = A$. Hence, by addition rule, $|B|+|A\setminus B|=|A|$. Subtracting $|B|$ from both sides gives the equation $|A\setminus B|=|A|-|B|$.
 	\item[Theorem 9.3.3 The Inclusion/Exclusion Rule for 2 or 3 Sets] If $A$, $B$, and $C$ are any finite sets, then $|A\cup B|=|A|+|B|-|A\cap B|$ and $|A\cup B\cup C| = |A| + |B| + |C| - |A\cap B| - |A\cap C| - |B\cap C| + |A\cap B\cap C|$.
 	\item[Theorem 9.5.1 Formula for ${n\choose r}$]The number of subsets of size $r$ (or r-combinations) that can be chosen from a set of $n$ elements, ${n\choose r}$, is given by the formula ${n\choose r} = \frac{P(n,r)}{r!}$\; or equivalently, ${n\choose r}=\frac{n!}{r!(n-r)!}$ where $n$ and $r$ are non-negative integers with $r\leq n$.
 	\item[Theorem 9.5.2 Permutations with sets of indistinguishable objects]Suppose a collection consists of $n$ objects of which $n_{1}$ are of type 1 and are indistinguishable from each other, $n_{2}$ are of type 2 and are indistinguishable from each other,$\dots$ $n_{k}$ are of type k and are indistinguishable from each other, and suppose that $n_{1}+n_{2}+\dots+n_{k}=n$. Then the number of distinguishable permutations of the $n$ objects is \[{n\choose r}{n-n_{1}\choose n_{2}}{n-n_{1}-n_{2}\choose n_{3}}\dots{n-n_{1}-n_{2}-\dots-n_{k-1}\choose n_{k}} = \frac{n!}{n_{1}!n_{2}!n_{3}!\dots n_{k}!} \]
@@ -670,7 +864,7 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 	
 	\item[Theorem 9.7.1 Pascal’s Formula]Let $n$ and $r$ be positive integers, $r\leq n$. Then ${n+1\choose r}={n\choose r-1}+{n\choose r}$. 
 	\item[Theorem 9.7.2 Binomial Theorem] Given any real numbers $a$ and $b$ and any non-negative integer $n$, \[(a+b)^{n}=\sum_{k=0}^{n}{n\choose k}a^{n-k}b^{k}=a^{n}+{n\choose 1}a^{n-1}b^{1} + {n\choose 2}a^{n-2}b^{2}+\dots+{n\choose n-1}a^{1}b^{n-1} + b^{n} \]
-	\item[Theorem 9.9.1 Bayes’ Theorem]Suppose that a sample space $S$ is a union of mutually disjoint events $B_{1}, B_{2}, B_{3},\dots,B_{n}$. Suppose $A$ is an event in $S$, and suppose $A$ and all the $B_{i}$ have non-zero probabilities. If $k$ is an integer with $1\leq k\leq n$, then \[ P(B_{k}|A) = \frac{P(A|B_{k})\cdot P(B_{k})} {P(A|B_{1})\cdot P(B_{1})+P(A|B_{2})\cdot P(B_{2})+\dots+P(A|B_{j})\cdot P(B_{n}) } \]
+	\item[Theorem 9.9.1 Bayes’ Theorem]Suppose that a sample space $S$ is a union of mutually disjoint events $B_{1}, B_{2}, B_{3},\dots,B_{n}$. Suppose $A$ is an event in $S$, and suppose $A$ and all the $B_{i}$ have non-zero probabilities. If $k$ is an integer with $1\leq k\leq n$, then \[ P(B_{k}|A) = \frac{P(A|B_{k})\cdot P(B_{k})} {P(A|B_{1})\cdot P(B_{1})+P(A|B_{2})\cdot P(B_{2})+\dots+P(A|B_{n})\cdot P(B_{n}) } \]
 	
 	\item[Theorem 10.1.1 The Handshake Theorem] If the vertices of $G$ are \iterate{v}{n}, where $n\geq 0$, then the total degree of $G$ = $deg(v_{1}) + deg(v_{2}) + \dots + deg(v_{n}) = 2 \times \text{the number of edges of } G$.
 	\item[Corollary 10.1.2] The total degree of a graph is even.
@@ -694,6 +888,21 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 	\item[Theorem 10.3.2] If $G$ is a graph with vertices $v_{1}, v_{2}, \dots, v_{m}$ and \textbf{A} is the adjacency matrix of $G$, then for each positive integer $n$ and for all integers $i, j = 1, 2, \dots, m$, the $ij$-th entry of $\mathbf{A}^{n}$ = the number of walks of length $n$ from $v_{i}$ to $v_{j}$.
 	\item[Theorem 10.4.1 Graph Isomorphism is an Equivalence Relation]Let $S$ be a set of graphs and let $\cong$ be the relation of graph isomorphism on $S$. Then $\cong$ is an equivalence relation on $S$.
 	\item[Euler's Formula]For a connected planar simple graph $G = (V, E)$ with $e = |E|$ and $v = |V|$, if we let $f$ be the number of faces, then $f = e - v + 2$.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.4]{eulers_formula}
+	\end{figure}
+	
+	\item[Lemma 10.5.1]Any non-trivial tree has at least one vertex of degree 1.
+	\item[Theorem 10.5.2]Any tree with $n$ vertices ($n$ > 0) has $n-1$ edges.
+	\item[Lemma 10.5.3]If $G$ is any connected graph, $C$ is any circuit in $G$, and one of the edges of $C$ is removed from $G$, then the graph that remains is still connected.
+	\item[Theorem 10.5.4]If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
+	\item[Theorem 10.6.1 Full Binary Tree Theorem]If $T$ is a full binary tree with $k$ internal vertices, then $T$ has a total of $2k + 1$ vertices and has $k + 1$ terminal vertices (leaves).
+	\item[Theorem 10.6.2]For non-negative integers $h$, if $T$ is any binary tree with height $h$ and $t$ terminal vertices (leaves), then $t\leq 2^{h}$. Equivalently, $log_{2}t\leq h$.
+	\item[Proposition 10.7.1] \
+	\item \qquad 1. Every connected graph has a spanning tree.
+	\item \qquad 2. Any two spanning trees for a graph have the same number of edges.
 
 \end{description}
 
@@ -822,6 +1031,19 @@ between 30 and 100 is odd.
 
 % =========================== PROOFS (MATHEMATICAL INDUCTION) =============================
 
+% Format for Proofs
+%\vspace{0.1cm}
+%\subsection*{Title}
+%\begin{enumerate}
+%	\item Item 1 
+%	\item Item 2 
+%	\begin{enumerate}
+%		\item Sub-item 1
+%	\end{enumerate}
+%	\item Item 3
+%	\item Conclusion
+%\end{enumerate}
+
 \newpage
 \begingroup
 
@@ -847,8 +1069,62 @@ between 30 and 100 is odd.
 \end{enumerate}
 
 \vspace{0.1cm}
+\subsection*{Prove by induction that for all $n\in\mathbb{Z}^{+}$, $1^{2} + 2^{2} + \dots + n^{2} = \frac{1}{6}n(n+1)(2n+1)$.}
+\begin{enumerate}
+	\item For each $n\in\mathbb{Z}^{+}$, let $P(n)\equiv 1^{2} + 2^{2} + \dots + n^{2} = \frac{1}{6}n(n+1)(2n+1)$.
+	\item (Basis step) $P(1)$ is true because $1^{2} = 1 = \frac{1}{6}\times 1\times (1+1)\times(2\times1+1)$.
+	\item (Inductive step)
+	\begin{enumerate}
+		\item Let $k\in\mathbb{Z}^{+}$ such that $P(k)$ is true, i.e. $1^{2} + 2^{2} + \dots + n^{2} = \frac{1}{6}k(k+1)(2k+1)$
+		\item Then $1^{2} + 2^{2} + \dots + k^{2} + (k+1)^{2}$
+		\item $= \frac{1}{6}k(k+1)(2k+1) + (k+1)^{2}$ \qquad by the inductive hypothesis
+		\item $= \frac{1}{6}(k+1)(k(2k+1)+6(k+1))$
+		\item $= \frac{1}{6}(k+1)(2k^{2} + 7k + 6)$
+		\item $= \frac{1}{6}(k+1)(k+2)(2k+3)$
+		\item $= \frac{1}{6}k(k+1)((k+1)+1)(2(k+1)+1)$ \qquad by basic algebra.
+		\item Thus $P(k+1)$ is true.
+	\end{enumerate}
+	\item Therefore, $\forall n\in\mathbb{Z}^{+} P(n)$ is true by MI.
+\end{enumerate}
+
+\vspace{0.1cm}
+\subsection*{Prove by induction on $n$ that given any set $A$, $|P(A)|=2^{n}$ where $P(A)$ denotes the powerset of $A$ and $|A|=n$.}
+\begin{enumerate}
+	\item For each $n\in\mathbb{N}$, let $P(n)\equiv (|P(A)|=2^{n})$ where $A$ is any $n$-element set.
+	\item (Basis step) $P(0)$ is true because $|P(\emptyset)|=|\{\emptyset\}|=1=2^{0}$ as $P(\emptyset)=\{\emptyset\}$ and $|\emptyset|=0$.
+	\item (Inductive step)
+	\begin{enumerate}
+		\item Let $k\in\mathbb{N}$ such that $P(k)$ is true, i.e. $|P(X)|=2^{k}$ where $X$ is any $k$-element set.
+		\item Let $A$ be a $k+1$-element set.
+		\item Since $k\geq 0$, there is there is at least one element in $A$. Pick $z\in A$.
+		\item The subsets of $A$ can be split into 2 groups: those that contain $z$ and those that don’t.
+		\item Those subsets that do not contain $z$ are the same as the subsets of $A\setminus \{z\}$, which has a cardinality of $k$, and hence $|P(A\setminus \{z\})|=2^{k}$ by the inductive hypothesis.
+		\item Those subsets that contain $z$ can be matched up one for one with those subsets that do not contain $z$ by unioning $\{z\}$ to the latter.
+		\item Hence there is an equal number of subsets that contain $z$ and subsets that don’t.
+		\item Hence $|P(A)|=2^{k}+2^{k}=2^{k+1}$.
+		\item Thus $P(k+1)$ is true.
+	\end{enumerate}
+	\item Therefore, $\forall n\in\mathbb{N} P(n)$ is true by MI.
+\end{enumerate}
 
 \endgroup
+
+% ================= Graph diagrams =================
+
+\newpage
+\section*{Graph Diagrams}
+\hrule
+\vspace{0.5cm}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.7]{graph_practice}
+\end{figure} 
+\begin{flushleft}
+C, D, F - Hamiltonian Graphs 
+
+A, B, E - not Hamiltonian Graphs
+\end{flushleft}
 
 \end{document}
 
