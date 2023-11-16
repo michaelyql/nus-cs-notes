@@ -11,6 +11,7 @@
 \usepackage[mathscr]{euscript} % For curly C (set partition) symbol
 \usepackage{xcolor, soul} % For text highlighting
 \usepackage{tikz} % For graph drawings
+\usepackage{pifont} % For star symbols \ding{73}
 
 \title{Important Definitions for CS1231S}
 \author{Michael Yang}
@@ -628,16 +629,15 @@ diagonal are 1’s and all other entries are 0’s. In other words,
 	\end{figure}
 	
     \item[Child, Parent, Sibling, Ancestor, Descendant] Given the root or any internal vertex $v$ of a rooted tree, the \textbf{children} of $v$ are all those vertices that are adjacent to $v$ and are one level farther away from the root than $v$. If $w$ is a child of $v$, then $v$ is called the \textbf{parent} of $w$, and two distinct vertices that are both children of the same parent are called \textbf{siblings}. Given two distinct vertices $v$ and $w$, if $v$ lies on the unique path between $w$ and the root, then $v$ is an \textbf{ancestor} of $w$, and $w$ is a \textbf{descendant} of $v$.
-    \item[Binary Tree, Full Binary Tree]A \textbf{binary tree} is a rooted tree in which every parent has at most two children. Each child is designated either a \textbf{left child} or a \textbf{right child} (but not both), and every parent has at most one left child and one right child. A \textbf{full binary tree} is a binary tree in which each parent has exactly two children.
+    \item[Binary Tree / Full Binary Tree]A \textbf{binary tree} is a rooted tree in which every parent has at most two children. Each child is designated either a \textbf{left child} or a \textbf{right child} (but not both), and every parent has at most one left child and one right child. A \textbf{full binary tree} is a binary tree in which \textbf{each parent has exactly two children.}
     
     \begin{figure}[H]
     	\centering
 		\includegraphics[scale=0.4]{btree}
     \end{figure}
     
-    \item[Left Subtree, Right Subtree]Given any parent $v$ in a binary tree $T$, if $v$ has a left child, then the \textbf{left subtree} of $v$ is the binary tree whose root is the left child of $v$, whose vertices consist of the left child of $v$ and all its descendants, and whose edges consist of all those edges of $T$ that connect the vertices of the left subtree. The \textbf{right subtree} of $v$ is defined analogously.
-    \item[Spanning Tree]A \textbf{spanning tree} for a graph $G$ is a subgraph of $G$ that contains every vertex of $G$ and is a tree.
-    \item[Binary Tree Traversal] \textbf{Tree traversal} (also known as \textbf{tree search}) is the process of visiting each node in a tree data structure exactly once in a systematic manner. There are two types of traversal: \textbf{breadth-first search (BFS)} or \textbf{depth-first search (DFS)}. 
+    \item[Left Subtree / Right Subtree]Given any parent $v$ in a binary tree $T$, if $v$ has a left child, then the \textbf{left subtree} of $v$ is the binary tree whose root is the left child of $v$, whose vertices consist of the left child of $v$ and all its descendants, and whose edges consist of all those edges of $T$ that connect the vertices of the left subtree. The \textbf{right subtree} of $v$ is defined analogously.
+    \item[Binary Tree Traversal] Tree \textbf{traversal} (also known as \textbf{tree search}) is the process of visiting each node in a tree data structure exactly once in a systematic manner. There are two types of traversal: \textbf{breadth-first search (BFS)} or \textbf{depth-first search (DFS)}. 
     \item \qquad In \textbf{BFS}, it starts at the root and visits its adjacent vertices, and then moves to the next level. 
     \item \qquad In \textbf{DFS}, it starts at the root node and explores as far as possible along each branch before backtracking. 
     \item \qquad There are three types of depth-first traversal: 
@@ -655,9 +655,50 @@ diagonal are 1’s and all other entries are 0’s. In other words,
 		\caption{BFS Traversal}
 		\includegraphics[scale=0.6]{bfs}
 	\end{figure}
-		
+	
+	\item \qquad \hl{Tip: draw 'dots' on the side of the nodes, which represent the order in which they are searched/visited. For pre-order: dot on the left of each node. In-order: dot below node. Post-order: dot to the right of each node.}
+	\item \qquad \hl{Tip 2: for pre-order traversal, root is at the start. For post-order, root is at the end. For in-order traversal, root is in the middle of the sequence, and all nodes to the left of the root node are the left children and all nodes to the right of the root node are the right children.}
+	\item[Spanning Tree]A \textbf{spanning tree} for a graph $G$ is a subgraph of $G$ that contains every vertex of $G$ and is a tree. 
+	\item \qquad (Spanning tree = remove edges from the graph until you cannot remove any more edges without disconnecting the graph)
     \item[Weighted Graph]A \textbf{weighted graph} is a graph for which each edge has an associated positive real number \textbf{weight}. The sum of the weights of all the edges is the \textbf{total weight} of the graph. 
     \item[Minimum Spanning Tree]A \textbf{minimum spanning tree} for a connected weighted graph is a spanning tree that has the least possible total weight compared to all other spanning trees for the graph. If $G$ is a weighted graph and $e$ is an edge of $G$, then $w(e)$ denotes the weight of $e$ and $w(G)$ denotes the total weight of $G$.
+    \item[\ding{73} Kruskal's Algorithm for MST] Input: $G$ [a connected weighted graph]
+    \begin{enumerate}
+    	\item Initialize $T$ to have all the vertices of $G$ and no edges.
+		\item Let $E$ be the set of all edges of $G$, and let $m = 0$.
+		\item While ($m < n - 1$)
+		\begin{enumerate}
+			\item Find an edge $e$ in $E$ of least weight.
+			\item Delete $e$ from $E$.
+			\item If addition of $e$ to the edge set of $T$ does not produce a circuit, then add $e$ to the edge set of $T$ and set $m = m + 1$
+		\end{enumerate}
+		\item Output: $T$ [$T$ is a minimum spanning tree for $G$]
+    \end{enumerate}
+    \item[\ding{73} Prim's Algorithm for MST] Input: $G$ [a connected weighted graph with $n$ edges]
+    \begin{enumerate}
+    	\item Pick a vertex $v$ of $G$ and let $T$ be the graph with this vertex only.
+		\item Let $V$ be the set of all vertices of $G$ except $v$.
+		\item For $i = 1$ to $n - 1$
+		\begin{enumerate}
+			\item Find an edge $e$ of $G$ such that (1) $e$ connects $T$ to one of the vertices in $V$, and (2) $e$ has the least weight of all edges connecting $T$ to a vertex in $V$. Let $w$ be the endpoint of $e$ that is in V.
+			\item Add $e$ and $w$ to the edge and vertex sets of $T$, and delete $w$ from $V$.
+		\end{enumerate}
+		\item Output: $T$ [$T$ is a minimum spanning tree for $G$]
+    \end{enumerate}
+    \item[Djikstra's Algorithm for shortest path] (Not tested AY23/24 Sem1) 
+    \begin{enumerate}
+    	\item Let $v$ be the \textbf{initial node} (the source). The \textbf{distance} of a node $w$ is defined as the distance from the initial node $v$. 
+		\item Set the distances of all nodes to be infinity (except $v$), and mark all nodes as unvisited (including $v$). Set the distance of the initial node to itself as 0. 
+		\item Loop: while there are still unvisited nodes, 
+		\begin{enumerate}
+			\item Pick the vertex with the smallest distance to the initial node $v$ as the \emph{current} node $u$. 
+			\item Mark $u$ as visited. 
+			\item For \textbf{each} adjacent (neighbouring) node $n$ of the current node that is unvisited, compare the \textbf{current distance} of $n$ with the distance obtained from traversing from $u$ to $n$, i.e. $distance(u) + weight(u, n)$. Take the \textbf{smaller} of the two and set it as the new distance of $n$. 
+			\item If there are still unvisited nodes, repeat from step 3. 
+		\end{enumerate} 
+		\item Return the distance of the target (destination) node from the initial node $v$.
+    \end{enumerate}
+    \item \hl{Note: there are many variations of Djikstra's Algorithm; some can return you the exact path taken. This version only returns the shortest distance of the target from the source node, but they are all similar in essence.}
     
 	
 \end{description}
@@ -867,12 +908,18 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 	\item[Theorem 9.9.1 Bayes’ Theorem]Suppose that a sample space $S$ is a union of mutually disjoint events $B_{1}, B_{2}, B_{3},\dots,B_{n}$. Suppose $A$ is an event in $S$, and suppose $A$ and all the $B_{i}$ have non-zero probabilities. If $k$ is an integer with $1\leq k\leq n$, then \[ P(B_{k}|A) = \frac{P(A|B_{k})\cdot P(B_{k})} {P(A|B_{1})\cdot P(B_{1})+P(A|B_{2})\cdot P(B_{2})+\dots+P(A|B_{n})\cdot P(B_{n}) } \]
 	
 	\item[Theorem 10.1.1 The Handshake Theorem] If the vertices of $G$ are \iterate{v}{n}, where $n\geq 0$, then the total degree of $G$ = $deg(v_{1}) + deg(v_{2}) + \dots + deg(v_{n}) = 2 \times \text{the number of edges of } G$.
+	\item[Tutorial 11 Discussion Q1] For a simple connected graph with $n$ $(n>0)$ vertices, there are minimum $(n - 1)$ edges and maximum $\frac{n(n-1)}{2}$ edges.
+	\item \qquad (Since the graph is connected, there is a unique path from every vertex to every other vertex, and removing any edge will make the graph disconnected. Thus the minimum number of edges is $n-1$. Max number of edges can be derived from Handshake Theorem, which is a sum of the AP series $1 + 2 + \dots + (n-1)$.)
+	\item[Tutorial 11 Discussion Q2] For a graph with $n$ $ (n > 1)$ vertices, there are $2^{n \choose 2}$ simple graphs. 
+	\item \qquad This is because there are maximum $\frac{n(n-1)}{2}$ edges which is equivalent to $n\choose 2$. For each edge, you can either include or not include it, hence the number of permutations is 2 to the power of the maximum number of edges.
 	\item[Corollary 10.1.2] The total degree of a graph is even.
 	\item[Proposition 10.1.3]In any graph there are an even number of vertices of odd degree.
-	\item[Lemma 10.2.1]Let G be a graph.
+	\item[\ding{73} Lemma 10.2.1]Let G be a graph.
 	\item \qquad a. If $G$ is connected, then any two distinct vertices of $G$ can be connected by a path.
 	\item \qquad b. If vertices $v$ and $w$ are part of a circuit in $G$ and one edge is removed from the circuit, then there still exists a trail from $v$ to $w$ in $G$.
 	\item \qquad c. If $G$ is connected and $G$ contains a circuit, then an edge of the circuit can be removed without disconnecting $G$.
+	\item[Proof (Tutorial 11 Q5)] Let $G=(V,E)$ be a simple, undirected graph. If $G$ is connected, then $|E|\geq|V|-1$.
+	\item[Proof (Tutorial 11 Q6)] Let $G=(V,E)$ be a simple, undirected graph. If $G$ is acyclic, then $|E|\leq|V|-1$.
 	\item[Theorem 10.2.2]If a graph has an Euler circuit, then every vertex of the graph has positive even degree.
 	\item[Contrapositive Version of Theorem 10.2.2]If some vertex of a graph has odd degree, then the graph doesn’t have an Euler circuit.
 	\item[Theorem 10.2.3]If a graph $G$ is \emph{connected} and the degree of every vertex of G is a positive \emph{even integer}, then $G$ has an Euler circuit.
@@ -886,6 +933,7 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 		\item Every vertex of $H$ has degree 2.
 	\end{enumerate}
 	\item[Theorem 10.3.2] If $G$ is a graph with vertices $v_{1}, v_{2}, \dots, v_{m}$ and \textbf{A} is the adjacency matrix of $G$, then for each positive integer $n$ and for all integers $i, j = 1, 2, \dots, m$, the $ij$-th entry of $\mathbf{A}^{n}$ = the number of walks of length $n$ from $v_{i}$ to $v_{j}$.
+	\item \qquad (Note: $\mathbf{A^{0}}$ is the identity matrix \textbf{I}. See definitions for $n^{th}$ power of a matrix.)
 	\item[Theorem 10.4.1 Graph Isomorphism is an Equivalence Relation]Let $S$ be a set of graphs and let $\cong$ be the relation of graph isomorphism on $S$. Then $\cong$ is an equivalence relation on $S$.
 	\item[Euler's Formula]For a connected planar simple graph $G = (V, E)$ with $e = |E|$ and $v = |V|$, if we let $f$ be the number of faces, then $f = e - v + 2$.
 	
@@ -893,11 +941,17 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 		\centering
 		\includegraphics[scale=0.4]{eulers_formula}
 	\end{figure}
+	\item[Proof (Tutorial 11 Q2)] For any planar graph with $f$ faces, $v$ vertices and $e$ edges, (a) $3f\leq 2e$, and (b) $e\leq 3v-6$.
+	\item \qquad (a) This is because each face must have at least 3 edges, and each each can be counted at most 2 times (borders between 2 faces), so there is an upper bound of $2e$.
+	\item \qquad (b) Derived from Euler's formula, or just by counting the number of edges.
 	
 	\item[Lemma 10.5.1]Any non-trivial tree has at least one vertex of degree 1.
-	\item[Theorem 10.5.2]Any tree with $n$ vertices ($n$ > 0) has $n-1$ edges.
-	\item[Lemma 10.5.3]If $G$ is any connected graph, $C$ is any circuit in $G$, and one of the edges of $C$ is removed from $G$, then the graph that remains is still connected.
-	\item[Theorem 10.5.4]If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
+	\item[\ding{73} Theorem 10.5.2]Any tree with $n$ vertices ($n > 0$) has $n-1$ edges.
+	\item[\ding{73} Lemma 10.5.3]If $G$ is any connected graph, $C$ is any circuit in $G$, and one of the edges of $C$ is removed from $G$, then the graph that remains is still connected.
+	\item[\ding{73} Theorem 10.5.4]If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
+	\item[Proof (Tutorial 11 Q7)] Let $G=(V,E)$ be a simple, undirected graph. $G$ is a tree iff there is exactly one path between every pair of vertices. 
+	\item[Lemma 10.5.5] Let $G$ be a simple, undirected graph. Then if there are two distinct paths from a vertex $v$ to a different vertex $w$, then $G$ contains a cycle (and hence $G$ is cyclic).
+	\item \qquad (i.e. 2 distinct paths from $v$ to $w$ $\Rightarrow$ G is cyclic \quad $||$  \quad G is acyclic $\Rightarrow$ at most one distinct path from $v$ to $w$ (contrapositive))
 	\item[Theorem 10.6.1 Full Binary Tree Theorem]If $T$ is a full binary tree with $k$ internal vertices, then $T$ has a total of $2k + 1$ vertices and has $k + 1$ terminal vertices (leaves).
 	\item[Theorem 10.6.2]For non-negative integers $h$, if $T$ is any binary tree with height $h$ and $t$ terminal vertices (leaves), then $t\leq 2^{h}$. Equivalently, $log_{2}t\leq h$.
 	\item[Proposition 10.7.1] \
