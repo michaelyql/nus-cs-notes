@@ -389,7 +389,7 @@ characters. It is usually denoted $\epsilon$ and is said to have length 0.
     \item[Pigeonhole Principle]Let $A$ and $B$ be \textbf{finite} sets. If there is an injection $f:A\to B$, then $|A| \leq |B|$. Contrapositive: Let $m, n\in\mathbb{Z}_{+}$ with $m > n$. If $m$ pigeons are put into $n$ pigeonholes, then there must be (at least) one pigeonhole with (at least) two pigeons.
     \item[Dual Pigeonhole Principles]Let $A$ and $B$ be \textbf{finite} sets. If there is an surjection $f:A\to B$, then $|A| \geq |B|$. Contrapositive: Let $m, n\in\mathbb{Z}_{+}$ with $m < n$. If $m$ pigeons are put into $n$ pigeonholes, then there must be (at least) one pigeonhole with no pigeons.
     \item[Finite set and Infinite set]Let $\mathbb{Z}_{n} = \{1,2,3,\dots,n\}$, the set of positive integers from 1 to $n$. A set $S$ is said to be \textbf{finite} iff $S$ is empty, or there exists a bijection from $S$ to $\mathbb{Z}_{n}$ for some $n\in\mathbb{Z}^{+}$. A set $S$ is said to be \textbf{infinite} if it is not finite.
-    \item \qquad \textbf{IMPORTANT!!!} CS1231S defines $\mathbb{N}$ to include 0
+    \item \qquad \hl{\textbf{IMPORTANT!!!} CS1231S defines $\mathbb{N}$ to include 0}
     \item[Cardinality]The \textbf{cardinality} of a finite set $S$, denoted $|S|$, is 
     \item \qquad \;(i) 0 if $S=\emptyset$, or 
     \item \qquad (ii) $n$ if $f:S\to \mathbb{Z}_{n}$ is a bijection.
@@ -461,21 +461,21 @@ $p_{1}, p_{2}, p_{3}, \dots , p_{n}$. The expected value of the process is \[ \s
     \item \qquad An edge is said to be \textbf{incident on} each of its endpoints, and two edges incident on the same endpoint are called adjacent edges. We write $e = \{v, w\}$ for an undirected edge $e$ incident on vertices $v$ and $w$.
     \item[Directed Graph] A \textbf{directed graph}, or \textbf{digraph}, $G$, consists of 2 finite sets: a nonempty set $V$ of \textbf{vertices} and a set $E$ of \textbf{directed edges},
 where each (directed) edge is associated with an \textbf{ordered pair} of vertices called its \textbf{endpoints}. We write $e = (v, w)$ for a directed edge $e$ from vertex $v$ to vertex $w$.
-    \item[Simple Graph] A \textbf{simple graph} is an undirected graph that \textbf{does not} have any loops or parallel edges. (That is, there is at most one edge between each pair of distinct vertices.)
+    \item[\ding{73} Simple Graph] A \textbf{simple graph} is an undirected graph that \textbf{does not} have any loops or parallel edges. (That is, there is at most one edge between each pair of distinct vertices.)
     
     \begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.4]{simple_graph} 
 	\end{figure}
     
-    \item[Complete Graph] A \textbf{complete graph} on $n$ \textbf{vertices}, $n > 0$, denoted $\mathbf{K_{n}}$, is a simple graph with $n$ vertices and exactly one edge connecting each pair of distinct vertices. 
+    \item[\ding{73} Complete Graph] A \textbf{complete graph} on $n$ \textbf{vertices}, $n > 0$, denoted $\mathbf{K_{n}}$, is a simple graph with $n$ vertices and exactly one edge connecting each pair of distinct vertices. 
     
     \begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.5]{complete_graph} 
 	\end{figure}
 	
-    \item[Bipartite Graph] A \textbf{bipartite graph} (or bigraph) is a simple graph whose vertices can be divided into two disjoint sets $U$ and $V$ such that every edge connects a vertex in $U$ to one in $V$.
+    \item[\ding{73} Bipartite Graph] A \textbf{bipartite graph} (or bigraph) is a simple graph whose vertices can be divided into two disjoint sets $U$ and $V$ such that every edge connects a vertex in $U$ to one in $V$.
     \item[Complete Bipartite Graph] A complete bipartite graph is a bipartite graph on two disjoint sets $U$ and $V$ such that every vertex in $U$ connects to every vertex in $V$. If $|U|=m$ and $|V|=n$, the complete bipartite graph is denoted as $K_{m, n}$.
     
     \begin{figure}[H]
@@ -486,7 +486,7 @@ where each (directed) edge is associated with an \textbf{ordered pair} of vertic
 	\end{figure}
     
     \item[Subgraph of a Graph] A graph $H$ is said to be a \textbf{subgraph} of graph $G$ iff every vertex in $H$ is also a vertex in $G$, every edge in $H$ is also an edge in $G$, and every edge in $H$ has the same endpoints as it has in $G$.
-    \item[Degree of a Vertex and Total Degree of a Graph] Let $G$ be a graph and $v$ a vertex of $G$. The \textbf{degree} of $v$, denoted $\mathbf{deg(v)}$, equals the number of edges that are incident on $v$, with an edge that is a loop counted twice. The \textbf{total degree of G} is the sum of the degrees of all the vertices of $G$.
+    \item[\ding{73} Degree of a Vertex and Total Degree of a Graph] Let $G$ be a graph and $v$ a vertex of $G$. The \textbf{degree} of $v$, denoted $\mathbf{deg(v)}$, equals the number of edges that are incident on $v$, with \textbf{an edge that is a loop counted twice}. The \textbf{total degree of G} is the sum of the degrees of all the vertices of $G$.
     \item[Indegree and outdegree of a Vertex of a Directed Graph] Let $G=(V,E)$ be a directed graph and $v$ a vertex of $G$. The \textbf{indegree} of $v$, denoted $\mathbf{deg}^{-}(\mathbf{v})$ is the number of directed edges that end at $v$. The \textbf{outdegree} of $v$, denoted $\mathbf{deg}^{+}(\mathbf{v})$, is the number of directed edges that originate from $v$.
 Note that \[ \sum_{v\;\in\; V} \text{deg}^{-}(v) = \sum_{v\;\in\; V} \text{deg}^{+}(v) = |E| \]
     \item[Walk, Trivial Walk, Trial, Path, Closed Walk] \quad (Let $G$ be a graph, and let $v$ and $w$ be vertices of $G$)
@@ -499,14 +499,15 @@ Note that \[ \sum_{v\;\in\; V} \text{deg}^{-}(v) = \sum_{v\;\in\; V} \text{deg}^
     \item \qquad A \textbf{circuit} (or \textbf{cycle}) is a closed walk of length at least 3 that does not contain a repeated edge.
     \item \qquad A \textbf{simple circuit} (or \textbf{simple cycle}) is a circuit that does not have any other repeated vertex except the first and last.
     \item \qquad An undirected graph is \textbf{cyclic} if it contains a loop or a cycle; otherwise, it is \textbf{acyclic}.
-    \item[Connectedness]\textbf{Two vertices} $v$ and $w$ of a graph $G$ are \textbf{connected} iff there is a walk from $v$ to $w$. \textbf{The graph $G$ is connected} iff given any two vertices $v$ and $w$ in $G$, there is a walk from $v$ to $w$. Symbolically, $G$ is connected iff $\forall$ vertices $v,w\in V(G)$, $\exists$ a walk from $v$ to $w$.
+    \item[Connectedness]\textbf{Two vertices} $v$ and $w$ of a graph $G$ are \textbf{connected} iff there is a \textbf{walk} from $v$ to $w$. \textbf{The graph $G$ is connected} iff given any two vertices $v$ and $w$ in $G$, there is a walk from $v$ to $w$. Symbolically, $G$ is connected iff $\forall$ vertices $v,w\in V(G)$, $\exists$ a walk from $v$ to $w$.
     \item[Connected Component] A graph $H$ is a \textbf{connected component} of a graph $G$ iff 
     \begin{enumerate}
     	\item The graph $H$ is a subgraph of $G$;
 		\item The graph $H$ is connected; and
 		\item No connected subgraph of $G$ has $H$ as a subgraph and contains vertices or edges that are not in $H$.
     \end{enumerate}
-    \item[Euler Circuit and Eulerian Graph] Let $G$ be a graph. An \textbf{Euler circuit} for $G$ is a circuit that contains every vertex and every edge of $G$. An \textbf{Eulerian graph} is a graph that contains an Euler circuit. (See Theorem 10.2.4)
+    \item \qquad \emph{(Basically, a subgraph of G that is connected on its own)}
+    \item[Euler Circuit and Eulerian Graph] Let $G$ be a graph. An \textbf{Euler circuit} for $G$ is a circuit that contains every vertex and every edge of $G$. An \textbf{Eulerian graph} is a graph that contains an Euler circuit. (See below for examples)
     \begin{figure}[H]
     	\centering
 		\includegraphics[scale=0.3]{euler_circuit}
@@ -538,7 +539,7 @@ Hamiltonian circuit.
     
     \item[Adjacency Matrix of an Undirected Graph] Let $G$ be an undirected graph with ordered vertices \iterate{v}{n}. The \textbf{adjacency matrix} of $G$ is the $n\times n$ matrix $\mathbf{A}=(a_{ij})$ over the set of non-negative integers such that $a_{ij}$ = the number of edges connecting $v_{i}$ and $v_{j}$ for all $i, j = 1, 2, \dots, n$.
     \item \qquad Note: the adjacency matrix for an undirected graph is symmetric.
-    \item[Symmetric Matrix] An $n\times n$ square matrix $A=(a_{ij})$ is called \textbf{symmetric} iff for all $i,j=1,2,\dots, n$, $a_{ij}=a_{ji}$
+    \item[Symmetric Matrix] An $n\times n$ square matrix $A=(a_{ij})$ is called \textbf{symmetric} iff for all $i,j=1,2,\dots, n$, $a_{ij}=a_{ji}$.
     \item[Scalar Product] Suppose that all entries in matrices \textbf{A} and \textbf{B} are real numbers. If the number of elements, $n$, in the $i$th row of \textbf{A} equals the number of elements in the $j$th column of \textbf{B}, then the \textbf{scalar product} or \textbf{dot product} of the $i$th row of A and the $j$th column of \textbf{B} is the real number obtained as follows: 
     \[ 
 	\begin{bmatrix}
@@ -571,7 +572,7 @@ diagonal are 1’s and all other entries are 0’s. In other words,
 	\]
     \item[$\mathbf{n^{th}}$ Power of a Matrix] For any $n \times n$ matrix \textbf{A}, the \textbf{powers of A} are defined as follows: $\mathbf{A^{0}}=\mathbf{I}$ where \textbf{I} is the $n \times n$ identity matrix. $\mathbf{A^{n}}=\mathbf{A\;A^{n-1}}$ for all integers $n\geq 1$.
     \item[Isomorphic Graph] Let $G=(V_{G}, E_{G})$ and $G'=(V_{G'}, E_{G'})$ be two graphs. $G$ is \textbf{isomorphic to} $G'$, denoted $G\cong G'$, if and only if there exist bijections $g:V_{G}\to V_{G'}$ and $h:E_{G}\to E_{G'}$ that preserve the edge-endpoint functions of $G$ and $G'$ in the sense that for all $v\in V_{G}$ and $e\in E_{G}$, $v$ is an endpoint of $e\Leftrightarrow g(v)$ is an endpoint of $h(e)$.
-    \item[Alternative definition of Isomorphic Graph] Let $G=(V_{G}, E_{G})$ and $G'=(V_{G'}, E_{G'})$ be two graphs. $G$ is \textbf{isomorphic to} $G'$ if and only if there exists a permutation $\pi:V_{G}\to V_{G'}$ such that $\{u,v\}\in E_{G}\Leftrightarrow \{\pi(u),\pi(v)\}\in E_{G'}$
+    \item[\ding{73} Alternative definition of Isomorphic Graph] Let $G=(V_{G}, E_{G})$ and $G'=(V_{G'}, E_{G'})$ be two graphs. $G$ is \textbf{isomorphic to} $G'$ if and only if there exists a permutation $\pi:V_{G}\to V_{G'}$ such that $\{u,v\}\in E_{G}\Leftrightarrow \{\pi(u),\pi(v)\}\in E_{G'}$
     
     \begin{figure}[H]
 		\centering
@@ -591,14 +592,14 @@ diagonal are 1’s and all other entries are 0’s. In other words,
 		\end{tabular}
 	\end{figure}
 	
-	\item \qquad \textbf{Kuratowski's Theorem:} A finite graph is planar if and only if it does not contain a subgraph that is a subdivision of the complete graph $K_{5}$ or the complete bipartite graph $K_{3,3}$.
+	\item[Kuratowski's Theorem] A finite graph is planar if and only if it does not contain a subgraph that is a subdivision of the complete graph $K_{5}$ or the complete bipartite graph $K_{3,3}$.
     \item[Dominating Set (Tutorial 10 Q9)]A set of vertices, $D$, in an undirected simple graph is said to be a \textbf{dominating set} if every vertex not in $D$ is adjacent to at least one vertex in $D$.
     \item[Minimal Dominating Set (Tutorial 10 Q9)]A \textbf{minimal dominating set} is a dominating set such that none of its proper subsets are dominating sets.
     \item[Complement of a graph (Tutorial 10 Definition 1)]If $G$ is a simple graph, the \emph{complement} of $G$, denoted $\overline{G}$ , is obtained as follows: the vertex set of $\overline{G}$ is identical to the vertex set of $G$. However, two distinct vertices $v$ and $w$ of $\overline{G}$ are connected by an edge if and only if $v$ and $w$ are not connected by an edge in $G$.
     \item[Self-complementary Graph (Tutorial 10 Definition 2)]A \emph{self-complementary graph} is isomorphic with its complement. 
     \item[Triangle (Tutorial 10 Definition 3)]A simple circuit (cycle) of length three is called a \emph{triangle}.
     \item[Proof (Tutorial 10 Q10)]Let $G$ be any any simple graph with 6 vertices. Then $G$ or its complementary graph $\overline{G}$ contains a triangle.
- 
+
  	% [Ch 12 Trees]
 	\vspace{0.2cm}
     \item[\large Trees]\
@@ -700,6 +701,70 @@ diagonal are 1’s and all other entries are 0’s. In other words,
     \end{enumerate}
     \item \hl{Note: there are many variations of Djikstra's Algorithm; some can return you the exact path taken. This version only returns the shortest distance of the target from the source node, but they are all similar in essence.}
     
+    
+    \newpage
+    
+    \item[Summary of Definitions] \
+	\begingroup
+    \setlength{\tabcolsep}{6pt}
+	\renewcommand{\arraystretch}{1.75} 
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|p{4in}|}
+			\hline 
+			Walk & \hfil Can repeat any edges and vertices \\
+			\hline
+			Trail & \hfil No repeated edges (can revisit vertices) \\
+			\hline
+			Path & \hfil No repeated edges and no repeated vertices \\ 
+			\hline
+			Closed Walk & \hfil A walk that starts and ends at the same vertex \\
+			\hline
+			Circuit & A closed walk of at least length 3 with no repeated edges (can revisit vertices but must end at the start vertex) \\ 
+			\hline
+			Cycle & Closed walk of at least length 3. No repeated edges, no repeated vertices (except first and last vertex) \\
+			\hline
+			Cyclic & \hfil Any graph that contains a cycle or a loop \\
+			\hline
+			Acyclic & \hfil Not cyclic (no cycle or loop) \\
+			\hline
+			Connected vertices & \hfil There is a walk from $v$ to $w$ \\
+			\hline
+			Connected graph & \hfil Given \emph{any} two vertices, there is a walk between them \\
+			\hline
+			Euler Circuit & Circuit containing every vertex and traversing every edge only once. I.e. no repeated edges, but you can revisit vertices. You must start and end at the same vertex \\
+			\hline
+			Euler Graph & \hfil Contains an Euler Circuit \\
+			\hline
+			Euler Trail & Start at $v$, end at $w$, contains every vertex of $G$ (can revisit vertices) and traverses every edge exactly once \\
+			\hline
+			Hamiltonian Circuit & Visit every vertex exactly once (except first and last vertex, must start and end at same vertex). Inherently, there won't be any repeated edges  \\
+			\hline 
+			Hamiltonian Graph & \hfil Contains a Hamiltonain Circuit \\ 
+			\hline
+			Hamiltonian Trail & \hfil Start at $v$, end at $w$, must visit every vertex in $G$ exactly once \\
+			\hline
+			Simple Graph & \hfil No loops (to self) and no parallel edges \\
+			\hline
+			Complete Graph & Simple graph with exactly one edge between each pair of distinct vertices. Denoted $K_{n}$ where $n$ is the number of vertices \\ 
+			\hline
+			Bipartite Graph & Vertex set split into two disjoint sets such that vertices in one set only has edges to vertices in the other set \\
+			\hline
+			Tree & \hfil Connected and circuit-free graph \\ 
+			\hline 
+			Trivial Tree & \hfil Graph with only one vertex \\
+			\hline 
+			Forest & \hfil Not connected but circuit-free graph \\
+			\hline
+			Spanning Tree & \hfil Contains every vertex of $G$ and is a tree \\ 
+			\hline
+			MST & \hfil Spanning tree with the least possible weight \\
+			\hline
+		\end{tabular}
+	\end{table}	  
+	\endgroup
+	
+	\item \emph{Note: Epp and CS1231S refer to a `cycle' as a `simple circuit'. Euler Trails are loosely referred to as Euler Paths but they are NOT paths because you can still repeat vertices.}
 	
 \end{description}
 
@@ -908,9 +973,9 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 	\item[Theorem 9.9.1 Bayes’ Theorem]Suppose that a sample space $S$ is a union of mutually disjoint events $B_{1}, B_{2}, B_{3},\dots,B_{n}$. Suppose $A$ is an event in $S$, and suppose $A$ and all the $B_{i}$ have non-zero probabilities. If $k$ is an integer with $1\leq k\leq n$, then \[ P(B_{k}|A) = \frac{P(A|B_{k})\cdot P(B_{k})} {P(A|B_{1})\cdot P(B_{1})+P(A|B_{2})\cdot P(B_{2})+\dots+P(A|B_{n})\cdot P(B_{n}) } \]
 	
 	\item[Theorem 10.1.1 The Handshake Theorem] If the vertices of $G$ are \iterate{v}{n}, where $n\geq 0$, then the total degree of $G$ = $deg(v_{1}) + deg(v_{2}) + \dots + deg(v_{n}) = 2 \times \text{the number of edges of } G$.
-	\item[Tutorial 11 Discussion Q1] For a simple connected graph with $n$ $(n>0)$ vertices, there are minimum $(n - 1)$ edges and maximum $\frac{n(n-1)}{2}$ edges.
-	\item \qquad (Since the graph is connected, there is a unique path from every vertex to every other vertex, and removing any edge will make the graph disconnected. Thus the minimum number of edges is $n-1$. Max number of edges can be derived from Handshake Theorem, which is a sum of the AP series $1 + 2 + \dots + (n-1)$.)
-	\item[Tutorial 11 Discussion Q2] For a graph with $n$ $ (n > 1)$ vertices, there are $2^{n \choose 2}$ simple graphs. 
+	\item[Proof (Tutorial 11 Discussion Q1)] For a simple connected graph with $n$ $(n>0)$ vertices, there are minimum $(n - 1)$ edges and maximum $\frac{n(n-1)}{2}$ edges.
+	\item \qquad (Since the graph is connected, there is a unique path from every vertex to every other vertex, and removing any edge will make the graph disconnected. Thus the minimum number of edges is $n-1$. Max number of edges can be derived from Handshake Theorem, which is the sum of the AP series $1 + 2 + \dots + (n-1)$.)
+	\item[Proof (Tutorial 11 Discussion Q2)] For a graph with $n$ $ (n > 1)$ vertices, there are $2^{n \choose 2}$ simple graphs. 
 	\item \qquad This is because there are maximum $\frac{n(n-1)}{2}$ edges which is equivalent to $n\choose 2$. For each edge, you can either include or not include it, hence the number of permutations is 2 to the power of the maximum number of edges.
 	\item[Corollary 10.1.2] The total degree of a graph is even.
 	\item[Proposition 10.1.3]In any graph there are an even number of vertices of odd degree.
@@ -950,7 +1015,7 @@ distinct mutually disjoint subsets $A_{1}, A_{2}, \dots, A_{k}$. Then $|A|=|A_{1
 	\item[\ding{73} Lemma 10.5.3]If $G$ is any connected graph, $C$ is any circuit in $G$, and one of the edges of $C$ is removed from $G$, then the graph that remains is still connected.
 	\item[\ding{73} Theorem 10.5.4]If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
 	\item[Proof (Tutorial 11 Q7)] Let $G=(V,E)$ be a simple, undirected graph. $G$ is a tree iff there is exactly one path between every pair of vertices. 
-	\item[Lemma 10.5.5] Let $G$ be a simple, undirected graph. Then if there are two distinct paths from a vertex $v$ to a different vertex $w$, then $G$ contains a cycle (and hence $G$ is cyclic).
+	\item[\ding{73} Lemma 10.5.5] Let $G$ be a simple, undirected graph. Then if there are two distinct paths from a vertex $v$ to a different vertex $w$, then $G$ contains a cycle (and hence $G$ is cyclic).
 	\item \qquad (i.e. 2 distinct paths from $v$ to $w$ $\Rightarrow$ G is cyclic \quad $||$  \quad G is acyclic $\Rightarrow$ at most one distinct path from $v$ to $w$ (contrapositive))
 	\item[Theorem 10.6.1 Full Binary Tree Theorem]If $T$ is a full binary tree with $k$ internal vertices, then $T$ has a total of $2k + 1$ vertices and has $k + 1$ terminal vertices (leaves).
 	\item[Theorem 10.6.2]For non-negative integers $h$, if $T$ is any binary tree with height $h$ and $t$ terminal vertices (leaves), then $t\leq 2^{h}$. Equivalently, $log_{2}t\leq h$.
