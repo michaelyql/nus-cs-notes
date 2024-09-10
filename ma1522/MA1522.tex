@@ -53,7 +53,7 @@
 }
 \createNewTcbBox{definitionBox}{Definition}{def}{BabyBlue}
 \createNewTcbBox{theoremBox}{Theorem}{theo}{ForestGreen}
-\createNewTcbBox{corollaryBox}{Corolalry}{corr}{Amber}
+\createNewTcbBox{corollaryBox}{Corollary}{corr}{Amber}
 \createNewTcbBox{algorithmBox}{Algorithm}{algo}{CadmiumRed}
 \createNewTcbBox{propertiesBox}{Properties}{props}{Silver}
 	
@@ -194,8 +194,20 @@ The scalars $c_{1}, c_{2},\dots c_{k}$ are called \textbf{coefficients}.\\
 \\ Let $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$ be vectors in \R{n}. The \textbf{span} (or \textbf{linear span}) of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$ is the subset of \R{n} containing all the linear combinations of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$, \[ \text{span}\{\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}\}=\{ c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}\;|\; \constants  \}. \] 
 }
 
-\algo{to Check for Linear Combination}{ 
+\algo{to Check for Linear Combination}{
+\begin{enumerate}
+\item Form the $n\times k$ matrix $\Bf{A}=(\mathbf{u}_{1}\q \mathbf{u}_{2}\q\dots\q \mathbf{u}_{k})$ whose columns are the vectors in $S$.
+\item Then a vector \textbf{v} in \R{n} is in $span\{ \mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \}$  if and only if the system $\Bf{Ax=v}$ is consistent.
+\item If the system is consistent, then the solutions to the system are the possible coefficients of the linear combination. That is, if $\Bf{u}=\left( \begin{matrix} c_{1}\\c_{2}\\ \vdots \\c_{k} \end{matrix} \right)$ is a solution to $\Bf{Ax=v}$, then \[ \Bf{v}=c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}. \]
+\end{enumerate}
+}
 
+\algo{to Check if $span(S)=$ \R{n}}{ 
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vectors in \R{n}. \begin{enumerate}
+\item Form the $n\times k$ matrix $\Bf{A}=(\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k})$ whose columns are the vectors in $S$.
+\item Then $span(S)=$\R{n} if and only if the system $\Bf{Ax=v}$ is consistent for all \textbf{v}.
+\item This is equivalent to the reduced row-echelon form of \textbf{A} having no zero rows.
+\end{enumerate}
 }
 
  
