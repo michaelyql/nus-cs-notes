@@ -1,0 +1,252 @@
+\documentclass[11pt]{article}
+
+%:packages
+\usepackage{geometry}                	                  
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}  % \mathbb commands
+\usepackage{enumitem}  % control description indentation
+\usepackage{tcolorbox}
+\usepackage{mathtools}
+\tcbuselibrary{theorems}
+\tcbuselibrary{skins}  % enable enhanced tcb option
+
+%:cover page
+\begin{document}
+\title{MA1522 Notes (AY24/25 Sem1)}
+\author{Michael Yang}
+\date{September 3, 2024}							
+\maketitle
+
+%:colors
+\definecolor{ForestGreen}{rgb}{0.13, 0.55, 0.13}
+\definecolor{BabyBlue}{rgb}{0, 0.5, 1}
+\definecolor{Amber}{rgb}{1.0, 0.6, 0.4}
+\definecolor{CadmiumRed}{rgb}{0.89, 0.0, 0.13}
+\definecolor{Silver}{rgb}{0.65, 0.65, 0.65}
+
+%:commands
+\newcommand{\R}[1]{\mbox{$\mathbb{R}^{#1}$}}  % R^n
+\newcommand{\Bf}[1]{\mathbf{#1}}
+\newcommand{\Bb}[1]{\mathbb{#1}}
+\newcommand{\q}{\quad}
+\newcommand{\qq}{\qquad}
+\newcommand{\constants}{c_{1}, c_{2}, \dots, c_{k} \in \mathbb{R}}
+
+% Usage: \createNewTcbBox{name}{displayName}{prefix}{colour}
+\newcommand{\createNewTcbBox}[4]{
+    \NewTcbTheorem{#1}{#2}{%
+    	enhanced,
+    	separator sign none,
+    	frame empty,
+    	colback=#4!5!white,
+    	colbacktitle=#4!25!white,
+    	colframe=#4!80!white,
+    	coltitle=#4!50!black,
+    	borderline={0.5mm}{0mm}{#4!10!white},
+    	borderline={0.5mm}{0mm}{#4!60!white},
+    	attach boxed title to top left={yshift=-2mm, xshift=2mm},
+    	boxed title style={boxrule=0.4pt},
+    	fonttitle=\bfseries,
+    	theorem name,
+    	}{#3}
+}
+\createNewTcbBox{definitionBox}{Definition}{def}{BabyBlue}
+\createNewTcbBox{theoremBox}{Theorem}{theo}{ForestGreen}
+\createNewTcbBox{corollaryBox}{Corolalry}{corr}{Amber}
+\createNewTcbBox{algorithmBox}{Algorithm}{algo}{CadmiumRed}
+\createNewTcbBox{propertiesBox}{Properties}{props}{Silver}
+	
+\newcommand{\defn}[1]{% Definition
+\begin{definitionBox}{}{}
+#1
+\end{definitionBox}%
+\vspace{0.1cm}
+}
+\newcommand{\thm}[1]{% Theorem
+\begin{theoremBox}{}{} 
+#1
+\end{theoremBox}%
+\vspace{0.1cm}
+}
+\newcommand{\corr}[1]{% Corollary
+\begin{corollaryBox}{}{}
+#1
+\end{corollaryBox}%
+\vspace{0.1cm}
+}
+\newcommand{\algo}[2]{% Algorithm
+\begin{algorithmBox}{#1}{}
+#2
+\end{algorithmBox}%
+\vspace{0.1cm}
+}
+\newcommand{\props}[2]{% Properties
+\begin{propertiesBox}{#1}{}
+#2
+\end{propertiesBox}%
+\vspace{0.1cm}
+}
+\newcommand{\sectiontitle}[1]{% Section title
+\begin{flushleft}\large{\textbf{#1}}\end{flushleft}} 
+\newcommand{\chapter}[1]{% New chapter
+\newpage
+\section*{#1}
+\hrule
+\vspace{0.3cm}
+}
+
+% Margins
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=2cm}
+
+% ========================== Chapter 1 ==========================
+\chapter{Chapter 1: Linear Systems}
+
+% ========================== Chapter 2 ==========================
+\chapter{Chapter 2: Matrix Algebra}
+
+\sectiontitle{2.1 Definition and Special types of Matrices}
+\sectiontitle{2.2 Matrix Algebra}
+\sectiontitle{2.3 Linear System and Matrix Equation}
+\sectiontitle{2.4 Inverse of Matrices}
+\sectiontitle{2.5 Elementary Matrices}
+\sectiontitle{2.6 Equivalent Statements for Invertibility}
+\sectiontitle{2.7 LU Factorization}
+\sectiontitle{2.8 Determinant by Cofactor Expansion}
+\sectiontitle{2.9 Determinant by Reduction}
+\sectiontitle{2.10 Properties of Determinant}
+
+% ========================== Chapter 3 ==========================
+\chapter{Chapter 3: Euclidean Vector Spaces}
+
+\sectiontitle{3.1 Euclidian Vector Spaces}
+
+\defn{A (real) \emph{n}-\textbf{vector} is a collection of \emph{n} ordered real numbers, \[ \mathbf{v}\;=\; \begin{pmatrix} v_{1} \\ v_{2} \\ \vdots \\ v_{n} \end{pmatrix} ,where\text{ } v_{i} \in \mathbb{R} \text{ \emph{for} } i = 1, \dots, n. \] The real number $v_{i}$ is called the \emph{i}-th coordinate of the vector \textbf{v}. The \textbf{Euclidiean} \emph{n}-\textbf{space}, denoted \R{n}, is the collection of all \emph{n}-vectors \[ \mathbb{R}^{n} = \left\{ v =  \begin{matrix}   \begin{pmatrix}  v_{1} \\ v_{2} \\ \vdots \\ v_{n} \end{pmatrix} \end{matrix} \middle| v_{i} \in \mathbb{R} \text{ \emph{for} } i = 1, \dots, n.\right\} \]}
+
+\props{of Vector Addition and Scalar Multiplication}{
+Since vectors are matrices (column vectors are $n \times 1$  matrices and row vectors are $1 \times n$ matrices), the properties of matrix addition and scalar multiplication holds for vectors. For any vectors $\mathbf{u}, \mathbf{v}, \mathbf{w}$ and scalars $a, b\in \mathbb{R}$ , \begin{enumerate}
+\item The sum $\Bf{u} + \Bf{v} $ is a vector in \R{n}
+\item (Commutative) $\Bf{u} + \Bf{v} = \Bf{v} + \Bf{u}$
+\item (Associative) $\Bf{u} + (\Bf{v} + \Bf{w}) = (\Bf{u} + \Bf{v}) +\Bf{w} $.
+\item (Zero vector) $\Bf{0} + \Bf{v} = \Bf{v}$.
+\item The negative $-\Bf{v}$ is a vector in \R{n} such that $\Bf{v}-\Bf{v}=\Bf{0}$.
+\item (Scalar multiple) $a\Bf{v}$  is a vector in \R{n}.
+\item (Distribution) $a(\Bf{u} + \Bf{v})= a\Bf{u} + a\Bf{v}$.
+\item (Distribution) $(a+b)\Bf{u} = a\Bf{u} + b\Bf{u}$.
+\item (Associativity of scalar multiplication) $(ab)\textbf{u} = a(b\Bf{u})$.
+\item If $a\Bf{u} = \Bf{0}$, then either $a=0$ or $\Bf{u} = \Bf{0}$.
+ \end{enumerate}
+}
+
+\defn{A \textbf{linear combination} of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \in $ \R{n} is $c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}$ for some $c_{1},  c_{2},\dots, c_{k} \in$  \R{k}.}
+
+\defn{A set $V$ equipped with \textbf{addition} and \textbf{scalar multiplication} is said to be a \textbf{vector space} over \R{}  if it satisfies the following axioms. 
+\begin{enumerate}
+\item For any vectors $\Bf{u, v}$ in $V$, the sum $\Bf{u} + \Bf{v}$ is in $V$. 
+\item (Commutative) For any vectors $\Bf{u, v}$ in $V$, $\Bf{u} + \Bf{v} = \Bf{v} + \Bf{u}$
+\item (Associative) For any vectors $\Bf{u, v, w}$ in $V$, $\Bf{u} + (\Bf{v} + \Bf{w}) = (\Bf{u} + \Bf{v}) +\Bf{w} $
+\item (Zero vector) There is a vector $\Bf{0}$ in $V$ such that $\Bf{0} + \Bf{v} = \Bf{v}$ for all vectors $\Bf{v}$ in $V$. 
+\item (Negative) For any vector $\Bf{u}$ in $V$, there exists a vector $-\Bf{u}$ in $V$ such that 
+$\Bf{u} + (-\Bf{u}) = \Bf{0}$.
+\item For any scalar $a$ in \R{} and vector $\Bf{v}$ in $V$, $a\Bf{v}$  is a vector in $V$.
+\item (Distribution) For any scalar $a$ in \R{} and vector $\Bf{u,v}$ in $V$, $a(\Bf{u} + \Bf{v})= a\Bf{u} + a\Bf{v}$.
+\item (Distribution) For any scalars  $a, b$ in \R{} and vector $\Bf{u}$ in $V$, $(a + b)\Bf{u} = a\Bf{u} + b\Bf{u}$.
+\item (Associativity of scalar multiplication) For any scalars $a, b$ in \R{} and vector $\Bf{u}$ in $V$, $a(b\Bf{u}) = (ab)\Bf{u}$.
+\item For any vector $\Bf{u}$ in $V$, $1\Bf{u} = \Bf{u}$.
+\end{enumerate}
+}
+
+\sectiontitle{3.2 Dot Product, Norm, Distance} 
+
+\defn{The inner product (or dot product) of vectors $\textbf{u} = (u_{i})$
+ and  $\textbf{v} = (v_{i})$ 
+in \R{n}
+ is defined to be \[ \Bf{u}\cdot \Bf{v} = {u}_{1} v_{1} +  {u}_{2} v_{2}, + \dots + {u}_{n}v_{n}.  \]  
+\\ Define the \textbf{norm} of a vector $\Bf{u} \in $\R{n}, $\Bf{u}=(u_{i})$, to be the square root of the inner product of $\Bf{u}$ with itself, and is denoted as $||\Bf{u}||$, \[ ||u|| = \sqrt{\Bf{u} \cdot \Bf{u}}=\sqrt{{u}^{2}_{1}+{u}^{2}_{2}+\dots+{u}^{2}_{n}}.\]
+\\ This is also known as the \textbf{length} or \textbf{magnitude} of the vector.
+}
+
+\props{of inner product and norm}{Let $\Bf{u, v} \in$ \R{n} be vectors and $a,b,c\in \mathbb{R}$ be real numbers.
+\begin{enumerate}
+\item Inner product is \textbf{symmetric}, \[ \Bf{u}\cdot\Bf{v} = \Bf{v}\cdot\Bf{u}. \]
+\item Inner product \textbf{commutes} with scalar multiple, \[c\Bf{u}\cdot\Bf{v}=(c\Bf{u})\cdot\Bf{v}=\Bf{u}\cdot(c\Bf{v}).\]
+\item Inner product is \textbf{distributive}, \[ \Bf{u}\cdot(a\Bf{v} + b\Bf{w})  = a\Bf{u}\cdot\Bf{v} + b\Bf{u}\cdot\Bf{w} \]
+\item Inner product is \textbf{positive definite}, $\Bf{u}\cdot\Bf{u}\geq 0$  with equality if and only if $\Bf{u} = \Bf{0}$.
+\item $||c\Bf{u}||=|c| \;||\Bf{u}||$.
+\end{enumerate}
+}
+
+\defn{A vector $\Bf{u} \in$ \R{n} is a \textbf{unit vector} if its norm is 1, \[||\Bf{u}||=1 \]  \textbf{Normalizing a vector} \\
+Let $\Bf{u}$ be a nonzero vector $\Bf{u} \neq \Bf{0}$. By multiplying by the reciprocal of the norm, we get a unit vector, \[ \Bf{u} \longrightarrow \frac{\Bf{u}}{||\Bf{u}||} \]
+This is called \textbf{normalizing} \textbf{u}.
+}
+
+\defn{The \textbf{distance} between two vectors \textbf{u} and \textbf{v}, denoted as $d(\Bf{u}, \Bf{v})$, is defined to be \[ d(\Bf{u}, \Bf{v}) = ||\Bf{u}-\Bf{v}||. \] 
+Define the angle $\theta$ between two nonzero vectors, $\Bf{u, v}\neq\Bf{0}$ to be such that \[ \frac{\Bf{u}\cdot\textbf{v}}{||\Bf{u}||\;||\Bf{v}||} \]
+}
+
+
+\sectiontitle{3.3 Linear Combinations and Linear Spans}
+
+\defn{
+A linear combination of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \in$\R{n} is \[  c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}\text{, for some } c_{1}, c_{2},\dots c_{k} \in \mathbb{R}. \]
+The scalars $c_{1}, c_{2},\dots c_{k}$ are called \textbf{coefficients}.\\
+\\ Let $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$ be vectors in \R{n}. The \textbf{span} (or \textbf{linear span}) of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$ is the subset of \R{n} containing all the linear combinations of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$, \[ \text{span}\{\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}\}=\{ c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}\;|\; \constants  \}. \] 
+}
+
+\algo{to Check for Linear Combination}{ 
+
+}
+
+ 
+\sectiontitle{3.4 Subspaces} 
+
+\sectiontitle{3.5 Linear Independence} 
+
+\sectiontitle{3.6 Basis and Coordinates} 
+
+
+\sectiontitle{3.7 Dimensions}
+
+\thm{Let $V$ be a subspace of \R{n} and $B$ a basis for $V$. Suppose $B$ contains $k$ vectors, $|B|=k$. Let $v_{1},v_{2},\dots,v_{k}$ be vectors in $V$. Then \begin{enumerate} 
+\item $\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{k}$ is linearly independent if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{k}]_{B}$ is linearly independent (respectively, dependent) in \R{k}; and
+\item \{$\mathbf{v}_{1}, \mathbf{v}_{2},\dots, \mathbf{v}_{k}$\} spans $V$ if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{k}]_{B}$ spans \R{k}.
+\end{enumerate}}
+
+\corr{Let $V$ be a subspace of \R{n} and $V$ a basis for $B$. Suppose $B$ contains $k$ vectors, $|B|=k$.\begin{enumerate}
+\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m > k$, then $S$ is linearly dependent.
+\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m < k$, then $S$ cannot span $V$.
+\end{enumerate}}
+
+\corr{Suppose $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ and $T=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{m}\}$ are bases for a subspace $V\subseteq$\;\R{n}. Then $k=m$.}
+
+\defn{Let $V$ be a subspace of \R{n}. The \textbf{dimension} of $V$, denoted by $\text{dim}(V)$, is defined to be the number of vectors in any basis of $V$.}
+
+\thm{(Dimension of solution space) Let \textbf{A} be a $m \times n$ matrix. The \textbf{number of non-pivot columns} in the reduced row-echelon form of $A$ is the \textbf{dimension} of the solution space \[V=\{ \mathbf{u}\in \text{\R{n}}\; |\; \mathbf{Au=0} \}. \]}
+
+\thm{(Spanning Set Theorem) Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a subset of vectors in \R{n}, and let $V=span(S)$. Suppose $V$ is not the zero space, $V\neq \{\mathbf{0}\}$. Then there must be a subset of $S$ that is a basis for $V$.}
+
+\thm{(Linear Independence Theorem) Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ a linearly independent subset of $V$, $S\subseteq V$. Then there must be a set $T$ containing $S$, $S\subseteq T$ such that $T$ is a basis for $V$.
+}
+
+\sectiontitle{3.8 Transition Matrices}
+
+\defn{Let $V$ be a subspace of \R{n}. Suppose $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ are \textbf{basis} for the subspace $V$. Define the \textbf{transition matrix} from $T$ to $S$ to be \[\mathbf{P}=([\mathbf{v}_{1}]_{S}\q[\mathbf{v}_{2}]_{S}\q\dots\q[\mathbf{v}_{k}]_{S}),\]the matrix whose columns are the coordinates of the vectors in $T$ relative to the basis $S$.}
+
+\thm{(Transition Matrix) Let $V$ be a subspace of \R{n}. Suppose $S =  \{  u_{1}  ,\dots, u_{k}    \}$ are \textbf{bases} for the subspace $V$. Let \textbf{P} be the transition matrix from $T$ to $S$. Then for any vector $w$ in $V$, \[ [\mathbf{w}]_{S} = \mathbf{P}[\mathbf{w}]_{T}. \] }
+
+\algo{to find Transition Matrix}{ Let $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ be a basis for a subspace $V$ in \R{n}. To find \textbf{P}, the transition matrix from $T$ to $S$, \[(``S''|``T'') = (u_{1}\q u_{2}\q \dots u_{k}\q|\q v_{1}\q v_{2}\q\dots v_{k} ) \xrightarrow{\text{rref}} \left(\q \begin{matrix}\mathbf{I}_{k}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \middle|\q \begin{matrix}\mathbf{P}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \right)  \]}
+
+\thm{(Inverse of Transition Matrix) Suppose $S = \{ u_{1},\dots, u_{k}\}$ and $T = \{ v_{1},\dots, v_{k} \}$ are \textbf{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the transition matrix from $T$ to $S$. Then $P^{-1}$ is the transition matrix from $S$ to $T$.}
+
+% ========================== Chapter 4 ==========================
+\chapter{Chapter 4: Subspaces Associated to a Matrix}
+
+\sectiontitle{4.1 Column Space, Row Space, and Nullspace}
+
+\sectiontitle{4.2 Rank}
+
+
+\end{document}
+
+
