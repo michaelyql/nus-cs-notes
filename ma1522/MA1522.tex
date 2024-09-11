@@ -4,12 +4,13 @@
 \usepackage{geometry}                	                  
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{amsfonts}  % \mathbb commands
-\usepackage{enumitem}  % control description indentation
+\usepackage{amsfonts} 	  % \mathbb commands
+\usepackage{enumitem} 	  % control description indentation
 \usepackage{tcolorbox}
 \usepackage{mathtools}
 \tcbuselibrary{theorems}
-\tcbuselibrary{skins}  % enable enhanced tcb option
+\tcbuselibrary{skins} 	  % enable enhanced tcb option
+\tcbuselibrary{breakable} % allow boxes to break to next page
 
 %:cover page
 \begin{document}
@@ -49,6 +50,7 @@
     	boxed title style={boxrule=0.4pt},
     	fonttitle=\bfseries,
     	theorem name,
+		breakable,
     	}{#3}
 }
 \createNewTcbBox{definitionBox}{Definition}{def}{BabyBlue}
@@ -63,7 +65,7 @@
 \end{definitionBox}%
 \vspace{0.1cm}
 }
-\newcommand{\thm}[1]{% Theorem
+\newcommand{\theo}[1]{% Theorem
 \begin{theoremBox}{}{} 
 #1
 \end{theoremBox}%
@@ -162,7 +164,7 @@ $\Bf{u} + (-\Bf{u}) = \Bf{0}$.
  and  $\textbf{v} = (v_{i})$ 
 in \R{n}
  is defined to be \[ \Bf{u}\cdot \Bf{v} = {u}_{1} v_{1} +  {u}_{2} v_{2}, + \dots + {u}_{n}v_{n}.  \]  
-\\ Define the \textbf{norm} of a vector $\Bf{u} \in $\R{n}, $\Bf{u}=(u_{i})$, to be the square root of the inner product of $\Bf{u}$ with itself, and is denoted as $||\Bf{u}||$, \[ ||u|| = \sqrt{\Bf{u} \cdot \Bf{u}}=\sqrt{{u}^{2}_{1}+{u}^{2}_{2}+\dots+{u}^{2}_{n}}.\]
+\\ Define the \textbf{norm} of a vector $\Bf{u} \in$ \R{n}, $\Bf{u}=(u_{i})$, to be the square root of the inner product of $\Bf{u}$ with itself, and is denoted as $||\Bf{u}||$, \[ ||u|| = \sqrt{\Bf{u} \cdot \Bf{u}}=\sqrt{{u}^{2}_{1}+{u}^{2}_{2}+\dots+{u}^{2}_{n}}.\]
 \\ This is also known as the \textbf{length} or \textbf{magnitude} of the vector.
 }
 
@@ -210,8 +212,74 @@ Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vecto
 \end{enumerate}
 }
 
+\props{of linear span}{
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a finite set of vector. The span of $S$, $span(S)$ has the following properties.
+\begin{enumerate}
+\item The span of $S$ \textbf{contains the origin}, \[ \Bf{0} \in span(S). \]
+\item The span of $S$ is \textbf{closed under vector addition}, for any \textbf{u, v} $\in span(S)$, and real number $\alpha \in$ \R{}, \[\Bf{u} + \Bf{v} \in span(S) \]
+\item The span $S$ is \textbf{closed under scalar multiplication}, for any $\Bf{u}\in span(S)$ and real number $\alpha\in$\R{}, \[ \alpha\Bf{u} \in span(S). \]
+Properties (ii) and (iii) can be combined together into one property (ii'): The span is closed under linear combinations, that is, if \textbf{u, v} are vectors in $span(S)$ and $\alpha, \beta$ are any scalars, then the linear combination $\alpha\Bf{u} + \beta\Bf{v}$ is a vector in $span(S)$.
+\end{enumerate}
+}
+
+\theo{(Linear span is closed under linear combinations) \\ \\
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vectors in \R{n}. For any vectors $\mathbf{v}_{1}, \mathbf{v}_{2},\dots, \mathbf{v}_{m}$ in $span(S)$, the span of $\mathbf{v}_{1}, \mathbf{v}_{2},\dots, \mathbf{v}_{m}$ is a subset of $span(S)$, \[ span\{\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{m}\} \subseteq span(S). \]
+}
+
+\algo{to check for Set Relations between Spans}{
+Suppose we are given 2 sets of vectors $T=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{m}\}$ and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$. \begin{enumerate}
+\item By the corollary, if $\Bf{v}_{i} \in span(S)$ for $i = 1,\dots,m$, we can conclude that $span(T) \subseteq span(S)$.
+\item Recall that to check if $\Bf{v}_{i} \in span(S)$, we check that the system $(\;\textbf{u}_{1}\;\textbf{u}_{2}\;\dots\;\Bf{u}_{k} \;|\; \Bf{v}_{i}\;)$ is consistent for all $i = 1,\dots,m$.
+\item There are in total $m$ such linear systems to check. However, since they have the same coefficient matrix, we may combine and check them together, that is, check that \[ (\;\textbf{u}_{1}\;\textbf{u}_{2}\;\dots\;\Bf{u}_{k} \;|\; \Bf{v}_{1}\ \;|\; \Bf{v}_{2} \;|\; \dots \;|\; \Bf{v}_{m}\; ) \] is consistent.
+\end{enumerate}
+}
+
+\theo{(Algorithm to check for set relations between spans) \\ \\
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ and $T=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{m}\}$ be sets of vectors in \R{n}. Then $span(T) \subseteq span(S)$ if and only if $(\;\textbf{u}_{1}\;\textbf{u}_{2}\;\dots\;\Bf{u}_{k} \;|\; \Bf{v}_{1}\ \;|\; \Bf{v}_{2} \;|\; \dots \;|\; \Bf{v}_{m}\; )$ is consistent. 
+}
  
 \sectiontitle{3.4 Subspaces} 
+
+\defn{The set of solutions to a linear system \textbf{Ax = b} can be expressed \textbf{implicitly} as \[ V = \{\Bf{u}\in \mathbb{R}^{n} \;|\; \Bf{Au=b}\} \] or \textbf{explicitly} as \[ V=\{ \Bf{u} + s_{1}\Bf{v}_{1} +  s_{2}\Bf{v}_{2} + \dots + s_{k}\Bf{v}_{k} \;|\; s_{1},s_{2},\dots,s_{k} \in \mathbb{R} \}, \] where $\Bf{u} + s_{1}\Bf{v}_{1} +  s_{2}\Bf{v}_{2} + \dots + s_{k}\Bf{v}_{k},\; s_{1},s_{2},\dots,s_{k} \in \mathbb{R}$ is the general solution.
+}
+
+\defn{A subset $V$ of \R{n} is a \textbf{subspace} if it satisfies the following properties.
+\begin{enumerate}
+\item $V$ \textbf{contains the zero vector}, $\textbf{0} \in V$.
+\item $V$  is \textbf{closed under scalar multiplication}. For any vector. $v$ in $V$ and scalar $\alpha$, the vector $\alpha\Bf{v}$ is in $V$.
+\item $V$ is \textbf{closed under addition}. For any vectors \textbf{u, v} in $V$, the sum \textbf{u + v} is in $V$.
+\end{enumerate}
+Property (i) can be replaced with property (i'): $V$ is \textbf{nonempty}.\\ \\
+Properties (ii) and (iii) is equivalent to property (ii'):
+$V$ is \textbf{closed under linear combination}. For any \textbf{u, v} in $V$, and scalars $\alpha, \beta$, the linear combination $\alpha\Bf{u} + \beta\Bf{v}$ is in $V$.
+}
+
+\theo{(Solution set of a homogeneous system is a subspace) \\ \\
+The solution set $V=\{\textbf{u}\;|\;\Bf{Au=b}\}$ to a linear system \textbf{Ax = b} is a \textbf{subspace} if and only if \textbf{b = 0}, that is, the system is \textbf{homogeneous}.
+}
+
+\defn{The \textbf{solution set} to a \textbf{homogeneous system} is call a \textbf{solution space.}}
+
+\theo{(Subspaces are equivalent to linear spans) \\ \\
+A subset $V\subseteq$ \R{n} is a subspace if and only if it is a linear span, $V=span(S)$, for some finite set $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$.\\ \\
+\textbf{Check if a set is a subspace} \\
+To show that a set $V$ is a subspace, we can either
+\begin{itemize}
+\item find a spanning set, that is, find a set $S$  such that $V=span(s)$, or
+\item show that $V$ satisfies the 3 conditions of being a subspace.
+\end{itemize}
+To show that a subset $V$ is not a subspace, we can either
+\begin{itemize}
+\item show that it does not contain the zero vector, $\Bf{0} \not\in V$,
+\item find a vector $\Bf{v}\in V$ and a scalar $\alpha\in$ \R{} such that $\alpha\Bf{v}\not\in V$, or
+\item find vectors $\Bf{u, v} \in V$ such that the sum is not in $V$, $\Bf{u + v} \not\in V$.
+\end{itemize}
+}
+
+\theo{(Affine spaces)\\ \\
+The solution set $W=\{\;\mathbf{w}\;|\;\mathbf{Aw=b}\;\}$ of a non-homogeneous linear system \textbf{Ax = b}, $\Bf{b}\not =0$, is given by \[ \Bf{u} + V := \{\; \Bf{u+v} \;|\;\Bf{v}\in V\; \} \] where $V=\{\;v\;|\;\Bf{Av=0}\;\}$ is the solution space to the associated homogeneous system and \textbf{u} is a particular solution, \textbf{Au = b}. \\ \\
+That is, vectors in \textbf{u} + $V$ are of the form \textbf{u + v} for some \textbf{v} in $V$.
+}
 
 \sectiontitle{3.5 Linear Independence} 
 
@@ -220,7 +288,7 @@ Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vecto
 
 \sectiontitle{3.7 Dimensions}
 
-\thm{Let $V$ be a subspace of \R{n} and $B$ a basis for $V$. Suppose $B$ contains $k$ vectors, $|B|=k$. Let $v_{1},v_{2},\dots,v_{k}$ be vectors in $V$. Then \begin{enumerate} 
+\theo{Let $V$ be a subspace of \R{n} and $B$ a basis for $V$. Suppose $B$ contains $k$ vectors, $|B|=k$. Let $v_{1},v_{2},\dots,v_{k}$ be vectors in $V$. Then \begin{enumerate} 
 \item $\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{k}$ is linearly independent if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{k}]_{B}$ is linearly independent (respectively, dependent) in \R{k}; and
 \item \{$\mathbf{v}_{1}, \mathbf{v}_{2},\dots, \mathbf{v}_{k}$\} spans $V$ if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{k}]_{B}$ spans \R{k}.
 \end{enumerate}}
@@ -234,22 +302,27 @@ Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vecto
 
 \defn{Let $V$ be a subspace of \R{n}. The \textbf{dimension} of $V$, denoted by $\text{dim}(V)$, is defined to be the number of vectors in any basis of $V$.}
 
-\thm{(Dimension of solution space) Let \textbf{A} be a $m \times n$ matrix. The \textbf{number of non-pivot columns} in the reduced row-echelon form of $A$ is the \textbf{dimension} of the solution space \[V=\{ \mathbf{u}\in \text{\R{n}}\; |\; \mathbf{Au=0} \}. \]}
+\theo{(Dimension of solution space) \\ \\ 
+Let \textbf{A} be a $m \times n$ matrix. The \textbf{number of non-pivot columns} in the reduced row-echelon form of $A$ is the \textbf{dimension} of the solution space \[V=\{ \mathbf{u}\in \text{\R{n}}\; |\; \mathbf{Au=0} \}. \]}
 
-\thm{(Spanning Set Theorem) Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a subset of vectors in \R{n}, and let $V=span(S)$. Suppose $V$ is not the zero space, $V\neq \{\mathbf{0}\}$. Then there must be a subset of $S$ that is a basis for $V$.}
+\theo{(Spanning Set Theorem) \\ \\
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a subset of vectors in \R{n}, and let $V=span(S)$. Suppose $V$ is not the zero space, $V\neq \{\mathbf{0}\}$. Then there must be a subset of $S$ that is a basis for $V$.}
 
-\thm{(Linear Independence Theorem) Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ a linearly independent subset of $V$, $S\subseteq V$. Then there must be a set $T$ containing $S$, $S\subseteq T$ such that $T$ is a basis for $V$.
+\theo{(Linear Independence Theorem) \\ \\ 
+Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ a linearly independent subset of $V$, $S\subseteq V$. Then there must be a set $T$ containing $S$, $S\subseteq T$ such that $T$ is a basis for $V$.
 }
 
 \sectiontitle{3.8 Transition Matrices}
 
 \defn{Let $V$ be a subspace of \R{n}. Suppose $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ are \textbf{basis} for the subspace $V$. Define the \textbf{transition matrix} from $T$ to $S$ to be \[\mathbf{P}=([\mathbf{v}_{1}]_{S}\q[\mathbf{v}_{2}]_{S}\q\dots\q[\mathbf{v}_{k}]_{S}),\]the matrix whose columns are the coordinates of the vectors in $T$ relative to the basis $S$.}
 
-\thm{(Transition Matrix) Let $V$ be a subspace of \R{n}. Suppose $S =  \{  u_{1}  ,\dots, u_{k}    \}$ are \textbf{bases} for the subspace $V$. Let \textbf{P} be the transition matrix from $T$ to $S$. Then for any vector $w$ in $V$, \[ [\mathbf{w}]_{S} = \mathbf{P}[\mathbf{w}]_{T}. \] }
+\theo{(Transition Matrix) \\ \\
+Let $V$ be a subspace of \R{n}. Suppose $S =  \{  u_{1}  ,\dots, u_{k}    \}$ are \textbf{bases} for the subspace $V$. Let \textbf{P} be the transition matrix from $T$ to $S$. Then for any vector $w$ in $V$, \[ [\mathbf{w}]_{S} = \mathbf{P}[\mathbf{w}]_{T}. \] }
 
 \algo{to find Transition Matrix}{ Let $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ be a basis for a subspace $V$ in \R{n}. To find \textbf{P}, the transition matrix from $T$ to $S$, \[(``S''|``T'') = (u_{1}\q u_{2}\q \dots u_{k}\q|\q v_{1}\q v_{2}\q\dots v_{k} ) \xrightarrow{\text{rref}} \left(\q \begin{matrix}\mathbf{I}_{k}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \middle|\q \begin{matrix}\mathbf{P}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \right)  \]}
 
-\thm{(Inverse of Transition Matrix) Suppose $S = \{ u_{1},\dots, u_{k}\}$ and $T = \{ v_{1},\dots, v_{k} \}$ are \textbf{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the transition matrix from $T$ to $S$. Then $P^{-1}$ is the transition matrix from $S$ to $T$.}
+\theo{(Inverse of Transition Matrix) \\ \\ 
+Suppose $S = \{ u_{1},\dots, u_{k}\}$ and $T = \{ v_{1},\dots, v_{k} \}$ are \textbf{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the transition matrix from $T$ to $S$. Then $P^{-1}$ is the transition matrix from $S$ to $T$.}
 
 % ========================== Chapter 4 ==========================
 \chapter{Chapter 4: Subspaces Associated to a Matrix}
