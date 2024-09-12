@@ -33,6 +33,9 @@
 \newcommand{\q}{\quad}
 \newcommand{\qq}{\qquad}
 \newcommand{\constants}{c_{1}, c_{2}, \dots, c_{k} \in \mathbb{R}}
+\newcommand{\blue}[1]{{\color{blue}#1}}
+\newcommand{\purple}[1]{{\color{violet}#1}}
+\newcommand{\orange}[1]{{\color{orange}#1}}
 
 % Usage: \createNewTcbBox{name}{displayName}{prefix}{colour}
 \newcommand{\createNewTcbBox}[4]{
@@ -283,8 +286,88 @@ That is, vectors in \textbf{u} + $V$ are of the form \textbf{u + v} for some \te
 
 \sectiontitle{3.5 Linear Independence} 
 
+\defn{A set $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is linearly independent if the only coefficients $\constants$ satisfying the equation \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} +\dots + c_{k}\mathbf{u}_{k} = \Bf{u} \] are $c_{1} = c_{2} = \dots = c_{k} = 0$. Otherwise, we say that the set is linearly dependent.}
+
+\algo{to Check for Linear Independence}{
+Let $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vectors in \R{n}. \begin{itemize}
+\item $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \textbf{linearly independent} if and only if the homogeneous system $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)\Bf{x} = \Bf{0}$ has only the \textbf{trivial solution}.
+\item The homogeneous system has only the \textbf{trivial solution} if and only if the reduce \textbf{row-echelon form} of $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \textbf{no non-pivot column}.
+\end{itemize}
+}
+
+\theo{(Solution set of a homogeneous system is a subspace) \\ \\
+A subset $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ of \R{n} is \textbf{linearly independent} if and only if the \textbf{reduced row-echelon form} of $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \textbf{no non-pivot columns}.
+}
+
 \sectiontitle{3.6 Basis and Coordinates} 
 
+\defn{Let $V$ be a subspace of \R{n}. A set $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a \textbf{basis} for $V$ if \begin{itemize}
+\item $span(S)=V$ and
+\item $S$ is linearly independent.
+\end{itemize}
+}
+
+\theo{Suppose $S\;\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for 
+. Then every vector \textbf{v} in the subspace $V$ \textbf{can be written} as a linear combination of vectors in $S$ \textbf{uniquely}.}
+
+\theo{(Basis for Solution Set of Homogeneous System) \\ \\ 
+Let $V=\{\Bf{u}|\Bf{Au=0}\}$ be the solution space to some homogeneous system. Suppose $s_{1}\mathbf{u}_{1} +  s_{1}\mathbf{u}_{2} + \dots + s_{1}\mathbf{u}_{k}$, $s_{1},s_{2},\dots,s_{k}\in\mathbb{R}$ is a general solution to the homogeneous system $\Bf{Ax = 0}$. Then $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for the subspace $V=\{\Bf{u}|\Bf{Au=0}\}$.
+}
+
+\theo{Basis for the zero space $\{\Bf{0}\}$ of \R{n} is the \textbf{empty set} $\{\}$ or $\emptyset$.}
+
+\theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the columns are linearly independent.}
+
+\theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the columns spans \R{n}.}
+
+
+\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n}  containing $n$  vectors. Then $S$ is linearly independent if and only if $S$ spans \R{n}.
+}
+
+\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n} and  $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ be the matrix whose columns are vectors in $S$. Then $S$ is a \blue{basis} for \R{n} if and only if \purple{$k=n$} and \textbf{A} is an invertible matrix.
+}
+
+\theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the \purple{columns} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
+}
+
+\theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the \purple{row} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
+}
+
+\theo{(Equivalent Statements for Invertibility) \\ \\ 
+Let \textbf{A} be a square matrix of order $n$. The following statements are equivalent.
+\begin{enumerate}
+\item \textbf{A} is invertible.
+\item $\Bf{A}^{T}$ is invertible.
+\item \textbf{A} has a left-inverse, that is, there is a matrix \textbf{B} such that \textbf{BA = I}.
+\item \textbf{A} has a right-inverse, that is, there is a matrix \textbf{B} such that \textbf{AB = I}.
+\item The reduced row-echelon form of \textbf{A} is the identity matrix.
+\item \textbf{A} can be expressed as a product of elementary matrices.
+\item The homogeneous system \textbf{Ax = 0} has only the trivial solution.
+\item For any \textbf{b}, the system \textbf{Ax = b} is consistent.
+\item The determinant of \textbf{A} is nonzero, $\text{det}(\Bf{A})\not = 0$.
+\item The columns/rows of \textbf{A} are linearly independent for \R{n}.
+\item The columns/rows of \textbf{A} spans \R{n}.
+\end{enumerate}
+}
+
+\defn{(Coordinates Relative to a Basis) \\ \\ 
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a basis for a subspace $V$ of \R{n}.\\
+Then given any vector $\Bf{v} \in V$, we can write \textbf{v} unique as \[ c_{1}\mathbf{u}_{1},  c_{2}\mathbf{u}_{2},\dots, c_{k}\mathbf{u}_{k}. \]
+The coordinates of \textbf{v} relative to the basis $S$ is defined to be the vector \[ [\Bf{v}]_{s} = \left(\; \begin{matrix} c_{1}\\c_{2}\\ \vdots \\ c_{k} \end{matrix} \;\right). \]
+}
+
+\algo{for Computing Relative Coordinate}{
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u_{k}}\}$ be a basis for a subspace $V$ of \R{n}.\\ \\
+For $\Bf{v}\in V$, find real numbers $\constants \in$ \R{} such that \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k} = \Bf{v}. \] 
+That is, we are solving for \[ (\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;|\;\Bf{v}). \]
+}
+
+\theo{Let $V$ be a subspace of \R{n} and $B$ a basis for $V$.
+\begin{enumerate} 
+\item For any vectors \textbf{u, v}$\in V$, \textbf{u = v} if and only if $[\Bf{u}]_{B}=[\Bf{v}]_{B}$.
+\item For any $\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{m}\in V$, \[ [c_{1}\mathbf{v}_{1} +  c_{2}\mathbf{v}_{2} + \dots + c_{m}\mathbf{v}_{m}]_{B} = c_{1}[\mathbf{v}_{1}]_{B} +  c_{2}[\mathbf{v}_{2}]_{B} + \dots + c_{m}[\mathbf{v}_{m}]_{B}. \]
+\end{enumerate}
+}
 
 \sectiontitle{3.7 Dimensions}
 
@@ -294,16 +377,16 @@ That is, vectors in \textbf{u} + $V$ are of the form \textbf{u + v} for some \te
 \end{enumerate}}
 
 \corr{Let $V$ be a subspace of \R{n} and $V$ a basis for $B$. Suppose $B$ contains $k$ vectors, $|B|=k$.\begin{enumerate}
-\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m > k$, then $S$ is linearly dependent.
-\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m < k$, then $S$ cannot span $V$.
+\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m > k$, then $S$ is \purple{linearly dependent}.
+\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m < k$, then $S$ \orange{cannot span} $V$.
 \end{enumerate}}
 
 \corr{Suppose $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ and $T=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{m}\}$ are bases for a subspace $V\subseteq$\;\R{n}. Then $k=m$.}
 
-\defn{Let $V$ be a subspace of \R{n}. The \textbf{dimension} of $V$, denoted by $\text{dim}(V)$, is defined to be the number of vectors in any basis of $V$.}
+\defn{Let $V$ be a subspace of \R{n}. The \purple{dimension} of $V$, denoted by $\text{dim}(V)$, is defined to be the \purple{number of vectors} in any \orange{basis} of $V$.}
 
 \theo{(Dimension of solution space) \\ \\ 
-Let \textbf{A} be a $m \times n$ matrix. The \textbf{number of non-pivot columns} in the reduced row-echelon form of $A$ is the \textbf{dimension} of the solution space \[V=\{ \mathbf{u}\in \text{\R{n}}\; |\; \mathbf{Au=0} \}. \]}
+Let \textbf{A} be a $m \times n$ matrix. The \purple{number of non-pivot columns} in the reduced row-echelon form of $A$ is the \orange{dimension} of the solution space \[V=\{ \mathbf{u}\in \text{\R{n}}\; |\; \mathbf{Au=0} \}. \]}
 
 \theo{(Spanning Set Theorem) \\ \\
 Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a subset of vectors in \R{n}, and let $V=span(S)$. Suppose $V$ is not the zero space, $V\neq \{\mathbf{0}\}$. Then there must be a subset of $S$ that is a basis for $V$.}
@@ -312,17 +395,34 @@ Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a subset of ve
 Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ a linearly independent subset of $V$, $S\subseteq V$. Then there must be a set $T$ containing $S$, $S\subseteq T$ such that $T$ is a basis for $V$.
 }
 
+\theo{Let $U$ and $V$ be \orange{subspaces} of \R{n}.
+\begin{enumerate}
+\item If \blue{$U\subseteq V$}, then \purple{$dim(U) \leq dim(V)$}.
+\item If \blue{$U\subseteq V$}, and \blue{$U\not = V$}, then \purple{$dim(U) < dim(V)$}
+That is, $U\subseteq V$, then \purple{$dim(U) \leq dim(V)$} with \purple{equality} if and only if \purple{$U=V$}.
+\end{enumerate}
+}
+
+\theo{(B1) \\ \\
+Let $V$ be a $k$-dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $U\subseteq V$ is a \orange{linearly independent} subset containing \purple{$k$} vectors, \purple{$|S|=k$}. Then $S$ is a \blue{basis} for $V$.
+}
+
+\theo{(B2) \\ \\ 
+Let $V$ be a $k$ dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $S$ is a set containing \purple{$k$} vectors, \purple{$|S|=k$}, such that \orange{$V\subseteq span(S)$}. Then $S$ is a \blue{basis} for $V$.
+}
+
+
 \sectiontitle{3.8 Transition Matrices}
 
-\defn{Let $V$ be a subspace of \R{n}. Suppose $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ are \textbf{basis} for the subspace $V$. Define the \textbf{transition matrix} from $T$ to $S$ to be \[\mathbf{P}=([\mathbf{v}_{1}]_{S}\q[\mathbf{v}_{2}]_{S}\q\dots\q[\mathbf{v}_{k}]_{S}),\]the matrix whose columns are the coordinates of the vectors in $T$ relative to the basis $S$.}
+\defn{Let $V$ be a subspace of \R{n}. Suppose $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ are \textbf{basis} for the subspace $V$. Define the \blue{transition matrix} from \orange{$T$ to $S$} to be \[\mathbf{P}=(\;[\mathbf{v}_{1}]_{S}\q[\mathbf{v}_{2}]_{S}\q\dots\q[\mathbf{v}_{k}]_{S}\;),\]the matrix whose columns are the coordinates of the vectors in $T$ relative to the basis $S$.}
 
 \theo{(Transition Matrix) \\ \\
-Let $V$ be a subspace of \R{n}. Suppose $S =  \{  u_{1}  ,\dots, u_{k}    \}$ are \textbf{bases} for the subspace $V$. Let \textbf{P} be the transition matrix from $T$ to $S$. Then for any vector $w$ in $V$, \[ [\mathbf{w}]_{S} = \mathbf{P}[\mathbf{w}]_{T}. \] }
+Let $V$ be a subspace of \R{n}. Suppose $S =  \{  u_{1}  ,\dots, u_{k}    \}$ are \textbf{bases} for the subspace $V$. Let \textbf{P} be the transition matrix from \purple{$T$ to $S$}. Then for any vector $w$ in $V$, \[ [\mathbf{w}]_{S} = \mathbf{P}[\mathbf{w}]_{T}. \] }
 
 \algo{to find Transition Matrix}{ Let $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ be a basis for a subspace $V$ in \R{n}. To find \textbf{P}, the transition matrix from $T$ to $S$, \[(``S''|``T'') = (u_{1}\q u_{2}\q \dots u_{k}\q|\q v_{1}\q v_{2}\q\dots v_{k} ) \xrightarrow{\text{rref}} \left(\q \begin{matrix}\mathbf{I}_{k}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \middle|\q \begin{matrix}\mathbf{P}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \right)  \]}
 
 \theo{(Inverse of Transition Matrix) \\ \\ 
-Suppose $S = \{ u_{1},\dots, u_{k}\}$ and $T = \{ v_{1},\dots, v_{k} \}$ are \textbf{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the transition matrix from $T$ to $S$. Then $P^{-1}$ is the transition matrix from $S$ to $T$.}
+Suppose $S = \{ u_{1},\dots, u_{k}\}$ and $T = \{ v_{1},\dots, v_{k} \}$ are \orange{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the \orange{transition matrix from $T$ to $S$}. Then $P^{-1}$ is the \orange{transition matrix from $S$ to $T$}.}
 
 % ========================== Chapter 4 ==========================
 \chapter{Chapter 4: Subspaces Associated to a Matrix}

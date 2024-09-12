@@ -1,0 +1,82 @@
+\documentclass[11pt]{article}
+
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{enumitem}
+
+%:code colours
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+%:article start
+
+\begin{document}
+
+\title{cp}
+\author{}
+\date{12 sep 2024}
+\maketitle
+
+\setlist[itemize,1]{label=$\diamond$}
+\setlist[itemize,2]{label=$\circ$}
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=2cm}
+\newpage
+
+
+\section{subset sum}
+
+\begin{flushleft}
+
+\begin{itemize}
+\item subset sum problem: does $S$ have subset that sums exactly to $T$ 
+\item partition problem: partition $S$ into two subsets such that $sum(S_{1}) = sum(S_{2})$ (special case of subset sum where $T = \frac{1}{2}\times sum(S)$)
+\end{itemize}
+
+\end{flushleft}
+
+\subsection{naive $O(2^{n})$}
+\begin{lstlisting}[language=Python]
+def isSubsetSum(arr, n, target):
+    if target == 0:
+        return True
+    if n == 0 and target != 0:
+        return False
+
+    if arr[n-1] > target:
+        return isSubsetSum(arr, n-1, target)
+
+    return isSubsetSum(arr, n-1, target) or isSubsetSum(arr, n-1, target - arr[n-1])
+\end{lstlisting}
+
+\subsection{memoized $O(n*sum)$}
+
+\subsection{dp with $O(sum)$ space}
+
+
+\end{document}
