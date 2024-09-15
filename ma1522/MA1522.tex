@@ -36,6 +36,8 @@
 \newcommand{\blue}[1]{{\color{blue}#1}}
 \newcommand{\purple}[1]{{\color{violet}#1}}
 \newcommand{\orange}[1]{{\color{orange}#1}}
+\newcommand{\brown}[1]{{\color{brown}#1}}
+\newcommand{\red}[1]{{\color{red}#1}}
 
 % Usage: \createNewTcbBox{name}{displayName}{prefix}{colour}
 \newcommand{\createNewTcbBox}[4]{
@@ -118,8 +120,64 @@
 \sectiontitle{2.6 Equivalent Statements for Invertibility}
 \sectiontitle{2.7 LU Factorization}
 \sectiontitle{2.8 Determinant by Cofactor Expansion}
+
+
 \sectiontitle{2.9 Determinant by Reduction}
+
+\theo{Suppose \textbf{B} is obtained from \textbf{A} by a \red{single} \orange{elementary row operation}, $\Bf{A}\xrightarrow{r} \Bf{B}$.\\
+Then the \purple{determinant} of \textbf{B} is obtained from the \purple{determinant} of \textbf{A} as such.
+\begin{itemize}
+\item If $r=R_{i} + aR_{j}$, then det(\textbf{B}) = det(\textbf{A});
+\item If $r=cR_{i}$, then det(\textbf{B}) = $c$ det(\textbf{A});
+\item If $r=R_{i} \leftrightarrow R_{j}$, then det(\textbf{B}) = $-$det(\textbf{A}).
+\end{itemize}
+}
+
+\corr{The determinant of an elementary matrix \textbf{E} is given as such.
+\begin{itemize}
+\item If \textbf{E} corresponds to $R_{i}+aR_{j}$, then det(\textbf{E}) = 1.
+\item If \textbf{E} corresponds to $cR_{i}$, then det(\textbf{E}) = $c$.
+\item If \textbf{E} corresponds to $R_{i}+aR_{j}$, then det(\textbf{E}) = $-$1.
+\end{itemize}
+}
+
+\theo{Let \textbf{A} and \textbf{R} be square matrices such that \[\Bf{R}=\Bf{E}_{k}\dots\Bf{E}_{2}\textbf{E}_{1}\Bf{A}\] for some elementary matrices $\mathbf{E}_{1},  \mathbf{E}_{2},\dots, \mathbf{E}_{k}$. Then \[ \text{det}(\Bf{R}) = \text{det}(\Bf{E}_{k})\dots\text{det}(\Bf{E}_{2})\text{det}(\Bf{E}_{1})\text{det}(\Bf{A}).  \]
+}
+
+\corr{Let \textbf{A} be a $n\times n$ square matrix.\\
+Suppose $\Bf{A}\xrightarrow{r_{1}}\xrightarrow{r_{2}}\dots\xrightarrow{r_{k}}\Bf{R}=\left( 
+\begin{matrix} 
+d_{1} & * & \dots & * \\ 
+0 & d_{2} & \dots & * \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & d_{n} \\
+\end{matrix} \right)$
+, where \textbf{R} is the reduced row-echelon form of \textbf{A}. Let $\Bf{E}_{1}$ be the elementary matrix corresponding to the elementary row operation $r_{i}$, for $i=1,\dots,k$. Then \[ 
+\text{det}(\Bf{A})=\frac{d_{1}d_{2}\dots d_{n}}{\text{det}(\Bf{E}_{k})\dots\text{det}(\Bf{E}_{2})\text{det}(\Bf{E}_{1})}.
+\]
+}
+
 \sectiontitle{2.10 Properties of Determinant}
+
+\theo{(Determinant of product is the product of determinant)\\\;\\
+Let \textbf{A} and \textbf{B} be square matrices of the same size. Then \[\text{det}(\Bf{AB})=\text{det}(\Bf{A})\text{det}(\Bf{B}).\] By induction, for square matrices $\mathbf{A}_{1},  \mathbf{A}_{2},\dots, \mathbf{A}_{k}$ of the same size, \[\text{det}(\mathbf{A}_{1}  \mathbf{A}_{2}\dots \mathbf{A}_{k})=\text{det}(\Bf{A}_{1})\text{det}(\Bf{A}_{2})\dots\text{det}(\Bf{A}_{k}).\]
+}
+
+\theo{(Determinant of inverse is the inverse of determinant)\\\;\\
+If \textbf{A} is \purple{invertible}, then \[\text{det}(\Bf{A}^{-1})=\text{det}(\Bf{A})^{-1}\]
+}
+
+\theo{(Determinant of scalar multiplication)\\\;\\
+For any square matrix \textbf{A} of order $n$ and scalar $c$, \[\text{det}(c\Bf{A})=c^{n}\;\text{det}(\Bf{A}).\]
+}
+
+\defn{Let \textbf{A} be a $n\times n$ square matrix. The \blue{adjoint} of \textbf{A}, denoted as  \textbf{adj(A)}, is the $n\times n$ square matrix whose $(i, j)$ entry is the $(j, i)$-cofactor of \textbf{A},\[ \Bf{adj(A)}=\left( \begin{matrix}A_{11} & A_{12} & \dots & A_{1n}\\ A_{21} & A_{22} & \dots & A_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ A_{n1} & A_{n2} & \dots & A_{nn} \end{matrix} \right)^{T} = \left( \begin{matrix}A_{11} & A_{21} & \dots & A_{n1}\\ A_{12} & A_{22} & \dots & A_{n2} \\ \vdots & \vdots & \ddots & \vdots \\ A_{1n} & A_{2n} & \dots & A_{nn} \end{matrix} \right) \]}
+
+\theo{(Adjoint formula)\\\;\\
+Let \textbf{A} be a \orange{square} matrix and \textbf{adj(A)} be its \purple{adjoint}. Then\[ \Bf{A(adj(A))}=\text{det}(\Bf{A})\Bf{I},\] where \textbf{I} is the identity matrix.}
+
+\corr{(Adjoint formula for inverse)\\\;\\
+Let \textbf{A} be an \purple{invertible} matrix. Then the \orange{inverse} of \textbf{A} is given by \[\textbf{A}^{-1}=\frac{1}{\text{det}(\Bf{A})}\Bf{adj(A)}\]}
 
 % ========================== Chapter 3 ==========================
 \chapter{Chapter 3: Euclidean Vector Spaces}
@@ -286,17 +344,17 @@ That is, vectors in \textbf{u} + $V$ are of the form \textbf{u + v} for some \te
 
 \sectiontitle{3.5 Linear Independence} 
 
-\defn{A set $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is linearly independent if the only coefficients $\constants$ satisfying the equation \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} +\dots + c_{k}\mathbf{u}_{k} = \Bf{u} \] are $c_{1} = c_{2} = \dots = c_{k} = 0$. Otherwise, we say that the set is linearly dependent.}
+\defn{A set $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \blue{linearly independent} if the \orange{only coefficients} $\constants$ satisfying the equation \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} +\dots + c_{k}\mathbf{u}_{k} = \Bf{0} \] are $c_{1} = c_{2} = \dots = c_{k} = 0$. Otherwise, we say that the set is \blue{linearly dependent}.}
 
 \algo{to Check for Linear Independence}{
 Let $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vectors in \R{n}. \begin{itemize}
-\item $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \textbf{linearly independent} if and only if the homogeneous system $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)\Bf{x} = \Bf{0}$ has only the \textbf{trivial solution}.
-\item The homogeneous system has only the \textbf{trivial solution} if and only if the reduce \textbf{row-echelon form} of $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \textbf{no non-pivot column}.
+\item $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \orange{linearly independent} if and only if the \blue{homogeneous system} $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)\Bf{x} = \Bf{0}$ has only the \orange{trivial solution}.
+\item The homogeneous system has only the \orange{trivial solution} if and only if the \orange{reduced row-echelon form} of $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \orange{no non-pivot column}.
 \end{itemize}
 }
 
 \theo{(Solution set of a homogeneous system is a subspace) \\ \\
-A subset $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ of \R{n} is \textbf{linearly independent} if and only if the \textbf{reduced row-echelon form} of $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \textbf{no non-pivot columns}.
+A subset $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ of \R{n} is \orange{linearly independent} if and only if the \purple{reduced row-echelon form} of $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \orange{no non-pivot columns}.
 }
 
 \sectiontitle{3.6 Basis and Coordinates} 
@@ -307,14 +365,14 @@ A subset $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ of \R{n} is 
 \end{itemize}
 }
 
-\theo{Suppose $S\;\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for 
-. Then every vector \textbf{v} in the subspace $V$ \textbf{can be written} as a linear combination of vectors in $S$ \textbf{uniquely}.}
+\theo{Suppose $S\;\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for $V$. Then every vector \textbf{v} in the subspace $V$ \orange{can be written} as a linear combination of vectors in $S$ \orange{uniquely}.}
 
 \theo{(Basis for Solution Set of Homogeneous System) \\ \\ 
-Let $V=\{\Bf{u}|\Bf{Au=0}\}$ be the solution space to some homogeneous system. Suppose $s_{1}\mathbf{u}_{1} +  s_{1}\mathbf{u}_{2} + \dots + s_{1}\mathbf{u}_{k}$, $s_{1},s_{2},\dots,s_{k}\in\mathbb{R}$ is a general solution to the homogeneous system $\Bf{Ax = 0}$. Then $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for the subspace $V=\{\Bf{u}|\Bf{Au=0}\}$.
+Let $V=\{\Bf{u}|\Bf{Au=0}\}$ be the solution space to some homogeneous system. Suppose \[s_{1}\mathbf{u}_{1} +  s_{1}\mathbf{u}_{2} + \dots + s_{k}\mathbf{u}_{k}, s_{1},s_{2},\dots,s_{k}\in\mathbb{R}\] is a general solution to the homogeneous system $\Bf{Ax = 0}$. \\
+Then $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for the subspace $V=\{\Bf{u}|\Bf{Au=0}\}$.
 }
 
-\theo{Basis for the zero space $\{\Bf{0}\}$ of \R{n} is the \textbf{empty set} $\{\}$ or $\emptyset$.}
+\theo{Basis for the zero space $\{\Bf{0}\}$ of \R{n} is the \orange{empty set} $\{\}$ or $\emptyset$.}
 
 \theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the columns are linearly independent.}
 
@@ -324,29 +382,29 @@ Let $V=\{\Bf{u}|\Bf{Au=0}\}$ be the solution space to some homogeneous system. S
 \corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n}  containing $n$  vectors. Then $S$ is linearly independent if and only if $S$ spans \R{n}.
 }
 
-\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n} and  $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ be the matrix whose columns are vectors in $S$. Then $S$ is a \blue{basis} for \R{n} if and only if \purple{$k=n$} and \textbf{A} is an invertible matrix.
+\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n} and  $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ be the matrix whose columns are vectors in $S$. Then $S$ is a \blue{basis} for \R{n} if and only if \purple{$k=n$} and \textbf{A} is an \orange{invertible matrix}.
 }
 
-\theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the \purple{columns} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
+\theo{A $n\times n$ \orange{square} matrix \textbf{A} is invertible if and only if the \purple{columns} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
 }
 
-\theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the \purple{row} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
+\theo{A $n\times n$ \orange{square} matrix \textbf{A} is invertible if and only if the \purple{row} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
 }
 
 \theo{(Equivalent Statements for Invertibility) \\ \\ 
 Let \textbf{A} be a square matrix of order $n$. The following statements are equivalent.
 \begin{enumerate}
-\item \textbf{A} is invertible.
-\item $\Bf{A}^{T}$ is invertible.
-\item \textbf{A} has a left-inverse, that is, there is a matrix \textbf{B} such that \textbf{BA = I}.
-\item \textbf{A} has a right-inverse, that is, there is a matrix \textbf{B} such that \textbf{AB = I}.
-\item The reduced row-echelon form of \textbf{A} is the identity matrix.
-\item \textbf{A} can be expressed as a product of elementary matrices.
-\item The homogeneous system \textbf{Ax = 0} has only the trivial solution.
-\item For any \textbf{b}, the system \textbf{Ax = b} is consistent.
-\item The determinant of \textbf{A} is nonzero, $\text{det}(\Bf{A})\not = 0$.
-\item The columns/rows of \textbf{A} are linearly independent for \R{n}.
-\item The columns/rows of \textbf{A} spans \R{n}.
+\item \textbf{A} is \blue{invertible}.
+\item $\Bf{A}^{T}$ is \blue{invertible}.
+\item \textbf{A} has a \blue{left-inverse}, that is, there is a matrix \textbf{B} such that \textbf{BA = I}.
+\item \textbf{A} has a \blue{right-inverse}, that is, there is a matrix \textbf{B} such that \textbf{AB = I}.
+\item The \orange{reduced row-echelon form} of \textbf{A} is the \orange{identity matrix}.
+\item \textbf{A} can be expressed as a \orange{product} of \orange{elementary matrices}.
+\item The \purple{homogeneous system} \textbf{Ax = 0} has \brown{only the trivial solution}.
+\item For \orange{any} \textbf{b}, the system \textbf{Ax = b} is \purple{consistent}.
+\item The \purple{determinant} of \textbf{A} is \orange{nonzero}, $\text{det}(\Bf{A})\not = 0$.
+\item The \purple{columns/rows} of \textbf{A} are \orange{linearly independent} for \R{n}.
+\item The \purple{columns/rows} of \textbf{A} \orange{spans} \R{n}.
 \end{enumerate}
 }
 
@@ -403,12 +461,21 @@ That is, $U\subseteq V$, then \purple{$dim(U) \leq dim(V)$} with \purple{equalit
 \end{enumerate}
 }
 
-\theo{(B1) \\ \\
+\theo{(B1) \\ 
 Let $V$ be a $k$-dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $U\subseteq V$ is a \orange{linearly independent} subset containing \purple{$k$} vectors, \purple{$|S|=k$}. Then $S$ is a \blue{basis} for $V$.
+\begin{enumerate}
+\item $|S|=dim(V)$
+\item $S\subseteq V$
+\item $S$ is linearly independent
+\end{enumerate}
 }
 
-\theo{(B2) \\ \\ 
+\theo{(B2) \\ 
 Let $V$ be a $k$ dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $S$ is a set containing \purple{$k$} vectors, \purple{$|S|=k$}, such that \orange{$V\subseteq span(S)$}. Then $S$ is a \blue{basis} for $V$.
+\begin{enumerate}
+\item $|S|=dim(V)$
+\item $V\subseteq span(S)$
+\end{enumerate}
 }
 
 
