@@ -242,6 +242,22 @@ def isIdealPermutation(self, A):
     return all(abs(i - v) <= 1 for i, v in enumerate(A))
 \end{lstlisting}
 
+\subsection{Min Adjacent Swaps to Sort Binary Array}
+input: \\
+nums = [0, 0, 1, 0, 1, 0, 1, 1]\\
+\begin{lstlisting}[language=Python]
+def minSwaps(A: list[int]):
+  res = 0
+  ones_count = 0
+  for i in range(len(A)): 
+    if A[i] == 0:
+      if ones_count > 0:
+        res += ones_count
+    else:
+      ones_count += 1
+  return res
+\end{lstlisting}
+
 \subsection{Permutation Inversion (CSES)}
 count the number of permutations of $1..n$ that have exactly $k$ inversions\\\;\\
 e.g. n = 4, k = 3, answer = 6\\\;\\
