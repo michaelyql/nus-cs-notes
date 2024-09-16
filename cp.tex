@@ -305,5 +305,48 @@ def permutationWithKInversions(n: int, k: int):
 
 \end{lstlisting}
 
+\subsection{Min Adjacent Swaps to Make Palindrome}
+
+\begin{lstlisting}[language=Python]
+def min_swaps_to_make_palindrome(s):
+    def can_be_palindrome(s):
+        from collections import Counter
+        freq = Counter(s)
+        odd_count = sum(1 for v in freq.values() if v % 2 != 0)
+        return odd_count <= 1
+
+    if not can_be_palindrome(s):
+        return -1  # Impossible to rearrange into a palindrome
+
+    s = list(s)
+    left, right = 0, len(s) - 1
+    swaps = 0
+
+    while left < right:
+        # If the characters match, move inward
+        if s[left] == s[right]:
+            left += 1
+            right -= 1
+        else:
+            # Find the match for s[left] on the right side
+            l, r = left, right
+            while r > l and s[r] != s[left]:
+                r -= 1
+
+            # If we found a match for s[left]
+            if r == l:
+                # If the left element has no matching pair, swap it forward (for odd-length strings)
+                s[l], s[l+1] = s[l+1], s[l]
+                swaps += 1
+            else:
+                # Swap to bring s[r] to the right position
+                for i in range(r, right):
+                    s[i], s[i+1] = s[i+1], s[i]
+                    swaps += 1
+                left += 1
+                right -= 1
+
+    return swaps
+\end{lstlisting}
 
 \end{document}
