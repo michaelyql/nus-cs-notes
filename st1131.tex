@@ -184,8 +184,9 @@ aes(x = ..., y = ..., colour = ..., size = ...)
 \lstinline|ggplot()| is used to construct the initial plot object, and is almost always followed by a plus sign (+) to add components to the plot.
 
 \begin{lstlisting}[language=R]
-+ geom_histogram(bars = 5)
-+ 
++ geom_histogram(bins = 5)
++ geom_point()
++ geom_smooth(method = "lm", se = FALSE) # draws a trendline
 \end{lstlisting}
 
 \newpage
