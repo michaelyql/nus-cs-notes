@@ -4,6 +4,7 @@
 \usepackage{listings}
 \usepackage{courier}
 \usepackage{enumitem}
+\usepackage{amsmath}
 \usepackage[document]{ragged2e}
 
 %:code colours
@@ -348,5 +349,34 @@ def min_swaps_to_make_palindrome(s):
 
     return swaps
 \end{lstlisting}
+
+\section{Movie Festival (CSES)}
+given a list of movies with $[\text{start}_{i}, \text{end}_{i}]$, find the max number of movies you can attend, assuming you can move instantaneously between venues and can only be at one movie at a time
+\begin{lstlisting}[language=Python]
+def maxMovies(A: list[list[int]]):
+	ans = 0
+	currentMovieEnd = -1
+	sorted(A, key = lambda x: x[1])
+	for [start, end] in A:
+		if start >= currentMovieEnd:
+			currentMovieEnd = start
+			ans += 1
+	return ans
+\end{lstlisting}
+
+\section{Maximum Subarray Sum}
+\begin{lstlisting}[language=Python]
+def mss(A: list[int]):
+	ans = 0
+	sum = 0
+	for i in range(len(A)):
+		if sum + A[i] > 0:
+			sum += A[i]
+		else:
+			sum = 0
+		ans = max(ans, sum)
+	return ans
+\end{lstlisting}
+
 
 \end{document}
