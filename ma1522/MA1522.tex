@@ -25,6 +25,7 @@
 \definecolor{Amber}{rgb}{1.0, 0.6, 0.4}
 \definecolor{CadmiumRed}{rgb}{0.89, 0.0, 0.13}
 \definecolor{Silver}{rgb}{0.65, 0.65, 0.65}
+\definecolor{Amethyst}{rgb}{0.6, 0.4, 0.8}
 
 %:commands
 \newcommand{\R}[1]{\mbox{$\mathbb{R}^{#1}$}}  % R^n
@@ -58,11 +59,13 @@
 		breakable,
     	}{#3}
 }
+%:tcb boxes
 \createNewTcbBox{definitionBox}{Definition}{def}{BabyBlue}
 \createNewTcbBox{theoremBox}{Theorem}{theo}{ForestGreen}
 \createNewTcbBox{corollaryBox}{Corollary}{corr}{Amber}
 \createNewTcbBox{algorithmBox}{Algorithm}{algo}{CadmiumRed}
 \createNewTcbBox{propertiesBox}{Properties}{props}{Silver}
+\createNewTcbBox{lemmaBox}{Lemma}{lemma}{Amethyst}
 	
 \newcommand{\defn}[1]{% Definition
 \begin{definitionBox}{}{}
@@ -94,6 +97,12 @@
 \end{propertiesBox}%
 \vspace{0.1cm}
 }
+\newcommand{\lemma}[1]{% Lemma
+\begin{lemmaBox}{}{}
+#1
+\end{lemmaBox}%
+\vspace{0.1cm}
+}
 \newcommand{\sectiontitle}[1]{% Section title
 \begin{flushleft}\large{\textbf{#1}}\end{flushleft}} 
 \newcommand{\chapter}[1]{% New chapter
@@ -106,26 +115,668 @@
 % Margins
 \newgeometry{left=1cm, right=1cm, top=1cm, bottom=2cm}
 
+% Increase the max number columns for a matrix to 20 (default 10)
+\setcounter{MaxMatrixCols}{20}
+
+% Suppress underfull hbox warnings
+\hbadness = 10000
+
 % ========================== Chapter 1 ==========================
 \chapter{Chapter 1: Linear Systems}
+
+\sectiontitle{1.1 Introduction to Linear Systems}
+\defn{A \textbf{linear equation} with $n$ variables in \textbf{standard form} has the form \[a_{1}x_{1}+a_{2}x_{2}+\dots+a_{n}x_{n}=b.\] Here $a_{1},a_{2},\dots,a_{n}$ are known constants, called the \textbf{coefficients}, $b$ is called the \textbf{constant} and $x_{1},x_{2},x_{n}$ are variables. \\\;\\ The linear equation is homogeneous if $b=0$, i.e. \[a_{1}x_{1}+a_{2}x_{2}+\dots+a_{n}x_{n}=0.\] A \textbf{system of linear equations}, or a \textbf{linear system} consists of a finite number of linear equations. In general, a linear system with $m$ variables and $n$ equations in standard form is written as 
+\[ \left\{ \begin{matrix} 
+\q a_{11}x_{1}\q+\q a_{12}x_{2}\q+\q\dots\q+\q a_{1n}x_{n}\q=\q b_{1} \\
+\q a_{21}x_{1}\q+\q a_{22}x_{2}\q+\q\dots\q+\q a_{2n}x_{n}\q=\q b_{2} \\
+\q\q\vdots \\
+\q a_{m1}x_{1}\q+\q a_{m2}x_{2}\q+\q\dots\q+\q a_{mn}x_{n}\q=\q b_{m} 
+\end{matrix} \right. 
+\]
+The linear system is \textbf{homogeneous} if $b_{1}=b_{2}=\dots=b_{m}=0$, that is, all the linear equations are homogeneous.\\
+
+Given a linear system, we say that \[ x_{1}=c_{1}, x_{2}=c_{2},\dots,x_{n}=c_{n}\] is a \textbf{solution} to the \textbf{linear system} if the equations are simultaneously satisfied after making the substitution.\\
+
+The \textbf{general solution} to a linear system captures all possible solutions to the linear system.\\
+
+A linear system is said to be \textbf{inconsistent} if it does not have any solutions. It is \textbf{consistent} otherwise, that is, a linear system is consistent if it has at least one solution.
+}
+
+\sectiontitle{1.2 Solving a Linear System and Row-Echelon Form}
+\defn{(Augmented Matrix)\\
+
+A linear system 
+\[ \left\{ \begin{matrix} 
+\q a_{11}x_{1}\q+\q a_{12}x_{2}\q+\q\dots\q+\q a_{1n}x_{n}\q=\q b_{1} \\
+\q a_{21}x_{1}\q+\q a_{22}x_{2}\q+\q\dots\q+\q a_{2n}x_{n}\q=\q b_{2} \\
+\q\q\vdots \\
+\q a_{m1}x_{1}\q+\q a_{m2}x_{2}\q+\q\dots\q+\q a_{mn}x_{n}\q=\q b_{m} 
+\end{matrix} \right. 
+\]
+can be expressed uniquely as an \textbf{augmented matrix}
+\[ \left( \begin{matrix} 
+\q a_{11} && a_{12} && \dots && a_{1n} \\
+\q a_{21} && a_{22} && \dots && a_{2n} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q a_{m1} && a_{m2} && \dots && a_{mn} \\
+\end{matrix}
+\q\middle|\q
+\begin{matrix}
+b_{1}\\b_{2}\\ \vdots\\ b_{m}
+\end{matrix}\q
+\right)
+\]
+}
+
+\defn{In the augmented matrix, a \textbf{zero row} is a row with all entries 0. A \textbf{leading entry} of a row is the first nonzero entry of the row counting from the left.\\
+
+An augmented matrix is in \textbf{row-echelon form (REF)} if
+\begin{enumerate}
+\item If \textbf{zero rows} exists, they are at the bottom of the matrix.
+\item The \textbf{leading entries} are \textbf{further to the right} as we move down the rows.
+\end{enumerate} \;\\
+An augmented matrix in \textbf{REF} has the form
+\[
+\left(\q
+\begin{matrix}
+*      &   \   & \ & \ & \     & \ & \ & \ \\
+0      & \dots & 0 & * & \     & \ & \ & \ \\
+0      & \dots & 0 & 0 & \dots & 0 & * & \ \\
+\vdots &  \    & \ & \ &   \   & \ & \ & \vdots \\
+0      & \dots & \ & \ &   \   & \ & \dots & 0 \\
+\end{matrix}
+\q\middle|\q
+\begin{matrix}
+* \\ * \\ * \\ \vdots \\ 0
+\end{matrix}\q
+\right)
+\]
+
+\;\\In the \textbf{row-echelon form}, a \textbf{pivot column} is a column containing a \textbf{leading entry}. Otherwise, it is called a \textbf{non-pivot column}.\\
+
+The augmented matrix is in \textbf{reduced row-echelon form (RREF)} if further
+\begin{enumerate}
+\item The leading entries are 1.
+\item In each pivot column, all entries except the leading entry is 0.
+\end{enumerate}
+\;\\ A matrix in \textbf{RREF} has the form
+\[
+\left(\q
+\begin{matrix}{}
+0      & \dots & 1 &     \ & *  & 0 & \ & * & 0 & * \\
+0      & \dots & 0 & \dots & 0  & 1 & \ & * & 0 & * \\
+0      & \dots & 0 & \dots & 0  & 0 & \dots & 0 & 1 & * \\
+0      & \dots & 0 & \dots & \  & 0 & \ & \ & 0 & 0 \\
+\vdots & \     & \ & \     & \  & \vdots & \ & \ & \vdots & \vdots \\
+0      & \dots & 0 & \dots & \  & 0 & \ & \dots & 0 & 0 \\
+\end{matrix}
+\q\middle|\q
+\begin{matrix}
+* \\ * \\ * \\ 0\\ \vdots \\ 0
+\end{matrix}\q
+\right)
+\]
+\;\\
+\textbf{Solutions from REF and RREF}
+\begin{itemize}
+\item If the augmented matrix is in row-echelon form, we perform \textbf{back substitution} to obtain the solutions.
+\item If the augmented matrix is in reduced row-echelon form, we will read off the solutions directly. 
+\end{itemize}\;\\
+\textbf{Number of solutions from row-echelon form.}
+\begin{itemize}
+\item \textbf{No solution}: a row of zero before the bar (coefficient matrix) and a non zero number after the bar.
+\item Unique solution: all columns of coefficient matrix are pivot columns (not possible if there is more variables than equations)
+\item \textbf{Infinitely many solutions}: when there is a non-pivot column in the augmented matrix before the bar
+\end{itemize}
+}
+
+\sectiontitle{1.3 Elementary Row Operations}
+\defn{There are 3 types of \textbf{elementary row operations}.
+\begin{enumerate}
+\item Exchanging 2 rows, $R_{i}\leftrightarrow R_{j}$;
+\item Adding a multiple of a row to another, $R_{i}+cR_{j},c\in\mathbb{R}$ and $i\not = j$;
+\item Multiplying a row by a nonzero constant, $aR_{j}, a\not =0$. 
+\end{enumerate}
+Two \textbf{(augmented) matrices} are \textbf{row equivalent} if one can be obtained from the other by \textbf{elementary row operations}.}
+
+\theo{Two linear systems have the \textbf{same solutions} if their \textbf{augmented matrices} are \textbf{row equivalent}.}
+
+\defn{(Reverse of elementary row operations)\\\;
+
+Every elementary row operation has a reverse elementary row operation. The reverse of the row operations are given as such.
+\begin{enumerate}
+\item The reverse of exchanging 2 rows, $R_{i}\leftrightarrow R_{j}$, is itself.
+\item The reverse of adding a multiple of a row to another, $R_{i}+cR_{j}$ is subtracting the multiple of that row, $R_{i}-cR_{j}$.
+\item The reverse of multiplying a row by a nonzero constant, $aR_{j}$ is the multiplication of the reciprocal of the constant, $\frac{1}{a}R_{j}$.
+\end{enumerate}
+}
+
+\sectiontitle{1.4 Row Reduction, Gaussian and Gauss-Jordan Elimination}
+\defn{\textbf{Gaussian elimination}\\
+
+\textbf{Step 1:} Locate the leftmost column that does not consist entirely of zeros.\\
+
+\textbf{Step 2}: Interchange the top row with another row, if necessary, to bring a nonzero entry to the top of the column found in Step 1.\\
+
+\textbf{Step 3}: For each row below the top row, add a suitable multiple of the top row to it so that the entry below the leading entry of the top row becomes zero.\\
+
+\textbf{Step 4}: Now cover the top row in the augmented matrix and begin again with Step 1 applied to the submatrix that remains. Continue this way until the entire matrix is in row-echelon form.
+
+The (augmented) matrix is now is row-echelon form. The result of step 1 to 4 reduces to (augmented) matrix to a row-echelon form. The process up to step 4 is called \textbf{Gaussian Elimination}.\\
+
+\textbf{Gauss-Jordan elimination}\\
+If we continue to perform the next 2 steps, the entire process is called \textbf{Gauss-Jordan Elimination}.\\
+
+\textbf{Step 5}: Multiply a suitable constant to each row so that all the leading entries become 1.\\ 
+
+\textbf{Step 6}: Beginning with the last nonzero row and working upward, add suitable multiples of each row to the rows above to introduce zeros above the leading entries.\\
+
+The (augmented) matrix is now in reduced row-echelon form.
+}
+
+\sectiontitle{1.5 More on Linear Systems}
+\underline{\textbf{Summary to solving linear systems}}
+\begin{enumerate}
+\item Write the linear system in its standard form.
+\item Form the augmented matrix of the linear system.
+\item Reduce the augmented matrix to either a row-echelon form or reduced row echelon form. May use Gaussian/Gauss-Jordan elimination.
+\item Check if the system is consistent
+\begin{itemize}
+\item If the last column is a pivot column, the system is inconsistent.
+\item Otherwise, the system is consistent. If there are any non-pivot columns in the left hand side of the augmented matrix, assign the corresponding variables as parameters, $s, t$, or $s_{1},s_{2},\dots,s_{k}$.
+\end{itemize}
+\item If the system is in reduced row-echelon form, read off the solutions directly.
+\item If the system is in row-echelon form only, do back substitution, starting from the lowest nonzero row.
+\item Write down the (general) solution to the system.
+\end{enumerate}
 
 % ========================== Chapter 2 ==========================
 \chapter{Chapter 2: Matrix Algebra}
 
 \sectiontitle{2.1 Definition and Special types of Matrices}
+\defn{A (real-valued) \textbf{matrix} is a rectangular array of (real) numbers
+\[
+\Bf{A}=
+\left(\q\begin{matrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \dots & a_{mn} \\
+\end{matrix}\q\right)=(a_{ij})_{m\times n}={(a_{ij})^{m}_{i=1}}^{n}_{j=1}
+\]
+where $a_{ij}\in$ \R{} are real numbers. The size of the matrix is said to be $m\times n$ (read as $m$ by $n$), where $m$ is the number of rows and $n$ is the number of columns. \\
+
+The numbers in the array are called \textbf{entries}. The $(i,j)$-entry, $a_{ij}$, $i=1,\dots,m$, $j=1,\dots,n$, is the number in the $i$-th row $j$-th column.
+}
+
+\defn{(Special Types of Matrices)\\
+
+\textbf{Vectors}: A $n \times 1$ matrix is called a (column) \textbf{vector}, and a $1\times n$ matrix is called a (row) \textbf{vector}.\\
+
+\textbf{Zero matrices}: All entries equal 0, denoted as $\Bf{0}_{m\times n}$. \textbf{Not necessarily a square matrix}.\\
+
+\textbf{Square matrices}: Number of rows = number of columns. \[
+\Bf{A}=(a_{ij})_{n}=
+\left(\q\begin{matrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{m2} & \dots & a_{nn} \\
+\end{matrix}\q\right)
+\]
+
+A size $n \times n$ matrix is a square matrix of \textbf{order} $n$.\\
+
+The entries $a_{ii}, i = 1, 2, \dots, n,$ (explicitly, $a_{11}$, $a_{22}$, $\dots$, $a_{nn}$) are called the \textbf{diagonal entries} of the \textbf{(square) matrix}.\\
+
+\textbf{Diagonal matrix}: \textbf{D} = $(a_{ij})_{n}$, $a_{ij}=0$ for $i\not= j$. Denote as \textbf{D} = \[ diag (d_{1}, d_{2}, \dots, d_{n})= 
+\left(\q\begin{matrix}
+d_{1} & 0 & \dots & 0 \\
+0 & d_{2} & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & d_{n} \\
+\end{matrix}\q\right)\]
+
+\textbf{Scalar matrix}: \textbf{C} = $(a_{ij})$, $a_{ij}=\begin{cases}c\q \text{if } i = j\\ 0\q  \text{if } i \not=j \end{cases}$, \textbf{C} = \[ diag (c, c, \dots, c)= 
+\left(\q\begin{matrix}
+c & 0 & \dots & 0 \\
+0 & c & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & c \\
+\end{matrix}\q\right)\]
+
+\textbf{Identity matrix}: \textbf{I} = $(a_{ij})$, $a_{ij}=\begin{cases}1\q \text{if } i = j\\ 0\q \text{if } i \not=j \end{cases}$, $\Bf{I}_{n}$ = \[ diag (1, 1, \dots, 1)= 
+\left(\q\begin{matrix}
+1 & 0 & \dots & 0 \\
+0 & 1 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & 1 \\
+\end{matrix}\q\right)\]
+
+A scalar matrix can also be denoted as $\textbf{C}$ = $c\textbf{I}$, where \textbf{I} is the identity matrix. \\
+
+\textbf{Upper triangular}: \textbf{A} = $(a_{ij})$, $a_{ij}=0$ for $i > j$: \[ 
+\left(\q\begin{matrix}
+* & * & \dots & * \\
+0 & * & \dots & * \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & * \\
+\end{matrix}\q\right)\]\\
+
+\textbf{Strictly upper triangular}: \textbf{A} = $(a_{ij})$, $a_{ij}=0$ for $i \geq j$: \[ 
+\left(\q\begin{matrix}
+0 & * & \dots & * \\
+0 & 0 & \dots & * \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & 0 \\
+\end{matrix}\q\right)\]\\
+
+\textbf{Lower triangular}: \textbf{A} = $(a_{ij})$, $a_{ij}=0$ for $i < j$: \[ 
+\left(\q\begin{matrix}
+* & 0 & \dots & 0 \\
+* & * & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+* & * & \dots & * \\
+\end{matrix}\q\right)\]\\
+
+\textbf{Strictly lower triangular}: \textbf{A} = $(a_{ij})$, $a_{ij}=0$ for $i \leq j$: \[ 
+\left(\q\begin{matrix}
+0 & 0 & \dots & 0 \\
+* & 0 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+* & * & \dots & 0 \\
+\end{matrix}\q\right)\]\\
+
+\textbf{Symmetric matrices}: \textbf{A} = $(a_{ij})$, $a_{ij}=a_{ji}$: \[ 
+\left(\q\begin{matrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{m2} & \dots & a_{nn} \\
+\end{matrix}\q\right)=
+\left(\q\begin{matrix}
+a_{11} & a_{21} & \dots & a_{n1} \\
+a_{12} & a_{22} & \dots & a_{n2} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{1n} & a_{2n} & \dots & a_{nn} \\
+\end{matrix}\q\right)
+\]}
+
 \sectiontitle{2.2 Matrix Algebra}
+
+\defn{
+Scalar multiplication: $c\left( \begin{matrix} 
+\q a_{11} && a_{12} && \dots && a_{1n} \\
+\q a_{21} && a_{22} && \dots && a_{2n} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q a_{m1} && a_{m2} && \dots && a_{mn} \\
+\end{matrix}
+\q\right)=\left( \begin{matrix} 
+\q ca_{11} && ca_{12} && \dots && ca_{1n} \\
+\q ca_{21} && ca_{22} && \dots && ca_{2n} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q ca_{m1} && ca_{m2} && \dots && ca_{mn} \\
+\end{matrix}
+\q\right)$\\
+
+Matrix addition: \begin{align*}
+\left( \begin{matrix} 
+\q a_{11} && a_{12} && \dots && a_{1n} \\
+\q a_{21} && a_{22} && \dots && a_{2n} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q a_{m1} && a_{m2} && \dots && a_{mn} \\
+\end{matrix}
+\q\right) + 
+\left( \begin{matrix} 
+\q b_{11} && b_{12} && \dots && b_{1n} \\
+\q b_{21} && b_{22} && \dots && b_{2n} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q b_{m1} && b_{m2} && \dots && b_{mn} \\
+\end{matrix}
+\q\right) \\ =
+\left( \begin{matrix} 
+\q a_{11}+b_{11} && a_{12}+b_{12} && \dots && a_{1n}+b_{1n} \\
+\q a_{21}+b_{21} && a_{22}+b_{22} && \dots && a_{2n}+b_{2n}\\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q a_{m1}+b_{m1} && a_{m2}+b_{m2} && \dots && a_{mn}+b_{mn} \\
+\end{matrix}
+\q\right)
+\end{align*}
+}
+
+\theo{(Properties of Matrix Addition and Scalar Multiplication)\\
+
+For matrices $\Bf{A}=(a_{ij})_{m\times n},\Bf{B}=(b_{ij})_{m\times n},\Bf{C}=(c_{ij})_{m\times n}$ and real numbers $a,b\in$ \R{},
+\begin{enumerate}
+\item (Commutative) \textbf{A} + \textbf{B} = \textbf{B} + \textbf{A}
+\item (Associative) \textbf{A} + (\textbf{B} + \textbf{C}) = (\textbf{A} + \textbf{B}) + \textbf{C}
+\item (Additive identity) $\Bf{0}_{m\times n}$ + \textbf{A} = \textbf{A}
+\item (Additive inverse) (\textbf{A}) + (-\textbf{A}) =  $\Bf{0}_{m\times n}$
+\item (Distributive law) $a(\Bf{A}+\Bf{B})$ = $a\Bf{A}+a\Bf{B}$
+\item (Scalar addition) $(a+b)\Bf{A}=a\Bf{A}+b\Bf{A}$
+\item (Associative) $(ab)\Bf{A} = a(b\Bf{A})$
+\item If $a\Bf{A}=\Bf{0}_{m\times n}$, then either $a=0$ or \textbf{A} = \textbf{0}.
+\end{enumerate}}
+
+\defn{\textbf{Matrix multiplication} \\
+
+\textbf{AB} = $\Bf{A}=(a_{ij})_{m\times p} \Bf{B}=(b_{ij})_{p\times n} = (\sum^{p}_{k=1}a_{ik}b_{kj})_{m\times n}$
+
+\[
+\left( \begin{matrix} 
+\q a_{11} && a_{12} && \dots && a_{1p} \\
+\q a_{21} && a_{22} && \dots && a_{2p} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q a_{m1} && a_{m2} && \dots && a_{mp} \\
+\end{matrix}
+\q\right) 
+\left( \begin{matrix} 
+\q b_{11} && b_{12} && \dots && b_{1p} \\
+\q b_{21} && b_{22} && \dots && b_{2p} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q b_{m1} && b_{m2} && \dots && b_{mp} \\
+\end{matrix}
+\q\right) =
+\]
+
+\[ \left( \begin{matrix} 
+a_{11}b_{11}+a_{12}b_{21}+\dots+a_{1p}b_{p1} & a_{11}b_{12}+a_{12}b_{22}+\dots+a_{1p}b_{p2} & \dots & a_{1p}b_{1n}+a_{12}b_{2n}+\dots+a_{1p}b_{pn} \\
+a_{21}b_{11}+a_{22}b_{21}+\dots+a_{2p}b_{p1} & a_{21}b_{22}+a_{22}b_{22}+\dots+a_{2p}b_{p2} & \dots & a_{21}b_{1n}+a_{22}b_{2n}+\dots+a_{2p}b_{pn} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1}b_{11}+a_{m2}b_{21}+\dots+a_{mp}b_{p1} & a_{m1}b_{12}+a_{m2}b_{22}+\dots+a_{mp}b_{p2} & a_{m2} & a_{m1}b_{1n}+a_{m2}b_{2n}+\dots+a_{mp}b_{pn} \\
+\end{matrix}
+\right) 
+\]\\
+
+Caution: Matrix multiplication is not commutative $\Bf{AB}\not = \Bf{BA}$ in general.
+}
+
+\defn{
+If we multiply \textbf{A} to the left of \textbf{B}, we are \textbf{pre-multiplying} \textbf{A} to \textbf{B}.\\
+
+If we multiply \textbf{A} to the right of \textbf{B}, we are \textbf{post-multiplying} \textbf{A} to \textbf{B}.
+}
+
+\theo{(Properties of Matrix Multiplication)\\
+
+\begin{enumerate}
+\item (Associative) (\textbf{AB})\textbf{C}=\textbf{A}(\textbf{BC})
+\item (Left distributive law) \textbf{A(B+C)}=\textbf{AB}+\textbf{AC}
+\item (Right distributive law) \textbf{(A + B)C} = \textbf{AC} + \textbf{BC}
+\item (Commute with scalar multiplication) c(\textbf{AB}) = (c\textbf{A})\textbf{B} = \textbf{A}(c\textbf{B})
+\item (Multiplicative identity) For any $m\times n$ matrix \textbf{A}, $\Bf{I}_{n}\Bf{A}=\Bf{A}=\Bf{AI}_{n}$
+\item (Nonzero Zero divisor) There exists $\Bf{A}\not=\Bf{0}_{m\times p}$ and $\Bf{B}\not=\Bf{0}_{p\times n}$ such that $\Bf{AB}=\Bf{0}_{m\times n}$
+\item (Zero matrix) For any $m\times n$ matrix \textbf{A}, $\Bf{A0}_{n\times p}=\Bf{0}_{m\times p}$ and $\Bf{0}_{p\times m}\Bf{A}=\Bf{0}_{p\times n}$
+\end{enumerate}}
+
+\defn{Define the power of square matrices inductively as such.
+\begin{enumerate}
+\item $\Bf{A}^{0}=\textbf{I}$
+\item $\Bf{A}^{n}=\Bf{AA}^{n-1}$, for $n\geq 1$.
+\end{enumerate}}
+
 \sectiontitle{2.3 Linear System and Matrix Equation}
+
+\defn{(Matrix Equation)\\
+
+A linear system in standard form
+\[ \left\{ \begin{matrix} 
+\q a_{11}x_{1}\q+\q a_{12}x_{2}\q+\q\dots\q+\q a_{1n}x_{n}\q=\q b_{1} \\
+\q a_{21}x_{1}\q+\q a_{22}x_{2}\q+\q\dots\q+\q a_{2n}x_{n}\q=\q b_{2} \\
+\q\q\vdots \\
+\q a_{m1}x_{1}\q+\q a_{m2}x_{2}\q+\q\dots\q+\q a_{mn}x_{n}\q=\q b_{m} 
+\end{matrix} \right. 
+\]
+can be expressed as a \textbf{matrix equation}
+\[ \left( \begin{matrix} 
+\q a_{11} && a_{12} && \dots && a_{1n} \\
+\q a_{21} && a_{22} && \dots && a_{2n} \\
+\q \vdots && \vdots && \ddots && \vdots \\
+\q a_{m1} && a_{m2} && \dots && a_{mn} \\
+\end{matrix}
+\q\right)
+\left(
+\begin{matrix}
+x_{1}\\x_{2}\\ \vdots\\ x_{n}
+\end{matrix}
+\right) = 
+\left(
+\begin{matrix}
+b_{1}\\b_{2}\\ \vdots\\ b_{n}
+\end{matrix}
+\right), \Bf{Ax = b}
+\]
+Here $\Bf{A}=(a_{ij})_{m\times n}$ is called the \textbf{coefficient matrix}, $\Bf{x} = (x_{i})_{n\times 1}$ the \textbf{variable vector}, and $\Bf{b} = (b_{i})_{m\times 1}$ the \textbf{constant vector}. \\
+
+It can also be expressed as a \textbf{vector equation}:
+\[x_{1}\left(\begin{matrix}a_{11}\\a_{21}\\ \vdots\\ a_{m1}\end{matrix}\right) + x_{2}\left(\begin{matrix}a_{12}\\a_{22}\\ \vdots\\ a_{m2}\end{matrix}\right)  + \dots + 
+x_{n}\left(\begin{matrix}a_{1n}\\a_{2n}\\ \vdots\\ a_{mn}\end{matrix}\right) = 
+\left(\begin{matrix}b_{1}\\b_{2}\\ \vdots\\ b_{m}\end{matrix}\right), x_{1}\Bf{a}_{1}+x_{2}\Bf{a}_{2}+\dots+x_{n}\Bf{a}_{n} = \textbf{b}
+\]
+
+Here $\Bf{a}_{i}$ is called the \textbf{coefficient vector} for variable $x_{i}$, for $i=1,\dots,n$.
+}
+
+\props{of Homogeneous Linear System}{A homogeneous linear system \textbf{Ax = 0} is \textbf{always consistent}, since the \textbf{zero vector} is a solution, \textbf{A0 = 0}.}
+
+\defn{The zero vector is called the \textbf{trivial solution}. If $x\not= 0$ is a nonzero solution to the homogeneous system, it is called a \textbf{nontrivial solution}.}
+
+\theo{
+A \textbf{homogeneous linear system} \textbf{Ax = 0} has \textbf{infinitely many solutions} if and only if it has a \textbf{nontrivial solution}.}
+
+\lemma{Let \textbf{v} be a particular solution \textbf{Ax = b}, and \textbf{u} be a particular solution to the homogeneous system \textbf{Ax = 0} with the same coefficient matrix \textbf{A}. Then \textbf{v + u} is also a solution to \textbf{Ax = b}.}
+
+\lemma{Suppose $\Bf{v}_{1}$ and $\Bf{v}_{2}$ are solutions to the linear system \textbf{Ax = b}. Then $\Bf{v}_{1} - \Bf{v}_{2}$ is a solution to the homogeneous linear system \textbf{Ax = 0} with the same coefficient matrix.
+}
+
+\defn{A $p \times q $ \textbf{submatrix} of an $m \times n$ matrix \textbf{A}, $p \leq m$, $q \leq  n$, is formed by taking a $p \times q$ block of the entries of the matrix \textbf{A}.}
+
+\theo{(Block Multiplication)\\
+
+Let \textbf{A} be an $m \times p$ matrix and \textbf{B} a $p \times n$ matrix. Let $\Bf{A}_{1}$ be a $(m_{2} - m_{1} + 1) \times p$ submatrix of \textbf{A} obtained by taking rows $m_{1}$ to $m_{2}$, and $\Bf{b}_{1}$ a $p \times (n_{2} - n_{1} + 1)$ submatrix of \textbf{B} obtained by taking columns $n_{1}$ to $n_{2}$. Then the product $\Bf{A}_{1}\Bf{B}_{1}$ is a $(m_{2} - m_{1} + 1) \times (n_{2} - n_{1} + 1)$ submatrix of \textbf{AB} obtained by taking rows $m_{1}$ to $m_{2}$ and columns $n_{1}$ to $n_{2}$.\\
+
+In particular, let $\Bf{b}_{i}$ be the $j$-th column of \textbf{B}. Then \[ \Bf{AB}=\Bf{A}(\Bf{b}_{1}\q\Bf{b}_{2}\q\dots\q\Bf{b}_{n})=(\Bf{Ab_{1}}\q\Bf{Ab_{2}}\q\dots\q \Bf{Ab_{n}}).\]
+
+Also, if $\Bf{a}_{i}$ is the $i$-th row of B, then \[ \Bf{AB}=\left(\begin{matrix}\Bf{a}_{1}\\ \Bf{a}_{2} \\ \vdots \\ \Bf{a}_{m} \end{matrix} \right) \Bf{B} = \left(\begin{matrix}\Bf{a}_{1}\Bf{B} \\ \Bf{a}_{2}\Bf{B} \\ \vdots \\ \Bf{a}_{m}\Bf{B} \end{matrix} \right)
+\]
+}
+
 \sectiontitle{2.4 Inverse of Matrices}
+
+\defn{
+A $n \times n$ square matrix \textbf{A} is \textbf{invertible} if there exists a \textbf{square} matrix \textbf{B} of the same size such that $\Bf{AB} = \Bf{I}_{n} = \Bf{BA}.$\\
+
+A matrix is said to be \textbf{non-invertible} otherwise.\\
+
+A non-invertible square matrix is called a \textbf{singular matrix}.}
+
+\theo{(Uniqueness of inverse)\\ 
+
+If \textbf{B} and \textbf{C} are both inverses of a square matrix \textbf{A}, then \textbf{B} = \textbf{C}.
+}
+
+\defn{Since the inverse is \textbf{unique}, we can denote the \textbf{inverse} of an \textbf{invertible} matrix \textbf{A} by $\Bf{A}^{-1}$ and call it the \textbf{inverse} of
+\textbf{A}. That is, \textbf{A} is invertible and $\Bf{A}^{-1}$ is its (unique) inverse if \[ \Bf{AA^{-1}}=\Bf{I}_{n}=\Bf{A^{-1}A}.\]
+}
+
+
+\theo{(Inverse of 2 by 2 square matrices)\\
+
+A $2 \times 2$ square matrix \textbf{A} = $\left( \begin{matrix} a & b \\ c & d \end{matrix} \right)$ is invertible if and only if $ad - bc \not= 0$. In this case, the inverse is given by \[ \Bf{A}^{-1}=\frac{1}{ad-bc} \left( \begin{matrix} d & -b \\ -c & a \end{matrix} \right). \]
+}
+
+\theo{(Cancellation Law for Matrices)\\
+
+Let \textbf{A} be an \textbf{invertible} matrix of order $n$.
+\begin{enumerate}
+\item (Left cancellation) If \textbf{B} and \textbf{C} are $n \times m$ matrices with \textbf{AB} = \textbf{AC}, then \textbf{B} = \textbf{C}.
+\item (Right cancellation) If \textbf{B} and \textbf{C} are $m \times n$ matrices with \textbf{BA} = \textbf{CA}, then \textbf{B} = \textbf{C}.
+\end{enumerate}
+
+Caution: If \textbf{AB} = \textbf{CA}, we cannot conclude that \textbf{B} = \textbf{C}.
+}
+
+\theo{
+Suppose \textbf{A} is an $n \times n$ invertible square matrix. Then for any $n \times 1$ vector \textbf{b}, \textbf{Ax} = \textbf{b} has a unique solution.
+}
+
+\corr{Suppose \textbf{A} is \textbf{invertible}. Then the \textbf{trivial solution} is the \textbf{only solution} to the homogeneous system \textbf{Ax} = \textbf{0}.}
+
+\algo{to compute inverse}{
+Suppose \textbf{A} is an invertible $n \times n$ matrix. By uniqueness of the inverse, there must be a unique solution to \[ \Bf{AX} = \Bf{I}. \] By block multiplication, we are solving the augmented matrix \[ (\Bf{A}\;|\;\textbf{I})\xrightarrow{RREF}(\Bf{I}\;|\;\Bf{A}^{-1}). \]
+}
+
+\theo{(Properties of inverses)\\
+
+Let \textbf{A} be an \textbf{invertible matrix} of order $n$.
+\begin{enumerate}
+\item $(\Bf{A}^{-1})^{-1} = \Bf{A}.$
+\item For any \textbf{nonzero} real number $a \in$ \R{}, $(a\Bf{A})$ is \textbf{invertible} with \textbf{inverse} $(a\Bf{A})^{-1} = \frac{1}{a}\Bf{A}^{-1}$.
+\item $\Bf{A}^{T}$ is \textbf{invertible} with \textbf{inverse} $(\Bf{A}^{T})^{-1} = (\Bf{A}^{-1})^{T}$. (that is, the inverse of the transpose is the transpose of the inverse).
+\item If \textbf{B} is an \textbf{invertible} matrix of order n, then (\textbf{AB}) is \textbf{invertible} with \textbf{inverse} $(\Bf{AB})^{-1} = \Bf{B}^{-1}\Bf{A}^{-1}$.
+\end{enumerate}
+
+By (4): Product of invertible matrices is invertible.\\
+
+If $\mathbf{A}_{1},  \mathbf{A}_{2},\dots, \mathbf{A}_{k}$ are \textbf{invertible} matrices of the same size, then the product $\mathbf{A}_{1}\mathbf{A}_{2}\dots \mathbf{A}_{k}$ is \textbf{invertible} with $(\mathbf{A}_{1}\mathbf{A}_{2}\dots \mathbf{A}_{k})^{-1} = \mathbf{A}_{k}^{-1}\dots\mathbf{A}_{2}^{-1} \mathbf{A}_{1}^{-1}$.}
+
+\defn{
+The \textbf{negative power} of an \textbf{invertible} matrix is defined to be \[ \Bf{A}^{-n} = (\Bf{A}^{-1})^{n}\] for any $n > 0$.
+}
+
 \sectiontitle{2.5 Elementary Matrices}
+
+\defn{A square matrix of order $n$ \textbf{E} is called an \textbf{elementary matrix} if it can be obtained from the identity matrix $I_{n}$ by performing a \textbf{single elementary row operation} where \[ \Bf{I}_{n} \xrightarrow{r} \Bf{E} \] is an elementary row operation.\\
+
+The \textbf{elementary row operation} performed to obtain \textbf{E} is said to be the \textbf{row operation} corresponding to the elementary matrix.}
+
+\theo{(Elementary matrix and elementary row operation)\\
+
+Let \textbf{A} be an $n\times m$ matrix and \textbf{E} be the \textbf{elementary matrix corresponding} to the \textbf{elementary row operation} $r$.\\
+
+Then the product \textbf{EA} is the \textbf{resultant} of performing the row operation $r$ on \textbf{A}, \[\Bf{A}\xrightarrow{r}\Bf{EA}.\]
+
+Suppose now \textbf{B} is row equivalent to \textbf{A}, \[ \Bf{A}\xrightarrow{r_{1}}\xrightarrow{r_{2}}\dots\xrightarrow{r_{k}}\Bf{B}.\]
+
+Let $\Bf{E}_{i}$ be the elementary matrix corresponding to the row operation $r_{i}$, for $i=1,2,\dots,k$. Then \[\Bf{B}=\Bf{E}_{k}\dots\Bf{E}_{2}\Bf{E}_{1}\Bf{A}.\]}
+
+\theo{Two $n\times m$ matrices \textbf{A} and \textbf{B} are \textbf{row equivalent} if and only if there exists \textbf{elementary matrices} $\Bf{E}_{1},\Bf{E}_{2}\dots,\Bf{E}_{k}$ such that $\Bf{B}=\Bf{E}_{k}\dots\Bf{E}_{2}\Bf{E}_{1}\Bf{A}$.}
+
+\theo{(Inverse of elementary matrices)\\
+
+Every elementary matrix \textbf{E} is \textbf{invertible}. The inverse $\Bf{E}^{-1}$ is the elementary row operation corresponding to the \textbf{reverse} of the original corresponding row operation.
+\begin{enumerate}
+\item $\q\Bf{I}_{n}\xrightarrow{R_{i}+cR_{j}}\Bf{E}\xrightarrow{R_{i}-cR_{j}}\Bf{I}_{n}\implies \Bf{E}:R_{i}+cR_{j}, \Bf{E}^{-1}:R_{i}-cR_{j}$.
+\item $\q\Bf{I}_{n}\xrightarrow{R_{i}\leftrightarrow R_{j}}\Bf{E}\xrightarrow{R_{i}\leftrightarrow R_{j}}\Bf{I}_{n}\implies \Bf{E}:R_{i}\leftrightarrow R_{j}, \Bf{E}^{-1}:R_{i}\leftrightarrow R_{j}$.
+\item $\q\Bf{I}_{n}\xrightarrow{\;cR_{i}\q}\Bf{E}\xrightarrow{\;\frac{1}{c}R_{i}\q}\Bf{I}_{n}\implies \Bf{E}:cR_{i}, \Bf{E}^{-1}:\frac{1}{c}R_{i}$.
+\end{enumerate}
+
+}
+
 \sectiontitle{2.6 Equivalent Statements for Invertibility}
+
+\theo{If \textbf{A} = $\Bf{E}_{k}\dots\Bf{E}_{2}\Bf{E}_{1}$ is a product of elementary matrices, then \textbf{A} is invertible.}
+
+\corr{If the reduce row-echelon form of \textbf{A} is the identity matrix, then \textbf{A} is invertible.}
+
+\theo{A square matrix \textbf{A} is invertible if and only if the homogeneous system $\Bf{Ax = 0}$ has only the trivial solution}
+
+\theo{A square matrix \textbf{A} is invertible if and only if it’s reduced row-echelon form is the identity matrix.}
+
+\theo{A square matrix \textbf{A} is invertible if and only if it is a product of elementary matrices.}
+
+\defn{
+Let \textbf{A} be a $n \times m$ matrix.
+\begin{enumerate}
+\item A $m \times n$ matrix \textbf{B} is said to be a left inverse of \textbf{A} if $\Bf{BA = I}_{m}$, where $\Bf{I}_{m}$ is the $m \times m$ identity matrix.
+\item A $m \times n$ matrix \textbf{B} is said to be a right inverse of \textbf{A} if $\Bf{AB = I}_{n}$, where $\Bf{I}_{n}$ is the $n \times n$ identity matrix.
+\end{enumerate}
+\textbf{B} is a left inverse of \textbf{A} if and only if \textbf{A} is a right inverse of \textbf{B}.
+}
+
+\theo{A square matrix \textbf{A} is invertible if and only if it has a left inverse.}
+
+\theo{A square matrix \textbf{A} is invertible if and only if it has a right inverse.}
+
+\theo{A square matrix \textbf{A} is invertible if and only if \textbf{Ax = b} has a unique solution for all \textbf{b}.}
+
+\algo{for Finding Inverse}{
+Let \textbf{A} be a $ n \times n$ matrix.\\
+
+Step 1: Form the $n \times 2n$ (augmented matrix) $(\;\Bf{A}\;|\;\Bf{I}_{n})$. \\
+
+Step 2: Reduce the matrix $(\;\Bf{A}\;|\;\Bf{I}_{n}) \rightarrow (\;\Bf{R}\;|\;\Bf{B})$ to its REF or RREF. \\
+
+Step 3: If RREF $\Bf{R}\not= \Bf{I}$ or REF has a zero row, then \textbf{A} is not invertible. If RREF \textbf{R = I} or REF has no zero row, \textbf{A} is invertible with inverse $\Bf{A}^{-1}=\Bf{B}$.}
+
 \sectiontitle{2.7 LU Factorization}
+
+\defn{A square matrix \textbf{L} is a \textbf{unit lower triangular} matrix if \textbf{L} is a lower triangular matrix with 1 in the diagonal entries.\\
+
+An \textbf{LU factorization} of a $m\times n$ matrix \textbf{A} is the decomposition
+\[\Bf{A=LU},\]where \textbf{L} is a unit lower triangular matrix, and \textbf{U} is a row-echelon form of \textbf{A}.\\
+
+If such LU factorization exits for \textbf{A}, we say that \textbf{A} is LU factorizable.}
+
+\lemma{(Product of unit lower triangular matrix is unit lower triangular)\\
+
+Let \textbf{A} and \textbf{B} be unit lower triangular matrices of the same size. Then \textbf{AB} is a unit lower triangular matrix too.}
+
+\lemma{If \textbf{E} is an elementary matrix corresponding to the operation $R_{i}+cR_{j}$ for $i > j$ for some real number $c$, then \textbf{E} is a lower triangular matrix.}
+
+\algo{to LU factorization}{Suppose $\Bf{A}\xrightarrow{r_{1},r_{2},\dots,r_{k}} \Bf{U}$, where each row operation $r_{l}$ is of the form $R_{i}+cR_{j}$ for some $i>j$ and real number $c$, and \textbf{U} is an row-echelon form of \textbf{A}. Let $\Bf{E}_{i}$ be the elementary matrix corresponding for $r_{i}$, for $r=1,2,\dots,k$. Then \[ \Bf{E}_{k}\dots\Bf{E}_{2}\Bf{E}_{1}\Bf{A}=\Bf{U} \implies \Bf{A}=\Bf{E}_{1}^{-1}\Bf{E}_{2}^{-1}\dots\Bf{E}_{k}^{-1}\Bf{U}=\Bf{LU} \] where $\Bf{L}=\Bf{E}_{1}^{-1}\Bf{E}_{2}^{-1}\dots\Bf{E}_{k}^{-1}$. Then \[\Bf{A}=\Bf{LU}=
+\left(\q\begin{matrix}
+1 & 0 & \dots & 0 \\
+* & 1 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+* & * & \dots & 1 \\
+\end{matrix}\q\right)
+\left(\q
+\begin{matrix}{}
+* & \ & \ & \ & \ & \dots & * \\
+0 & \dots & 0 & * & \ & \dots & * \\
+\vdots & \ & \ & \ & \ & \ & \vdots \\
+0 & \dots & \ & \ & \ & \dots & * \\
+\end{matrix}
+\q\right)
+\]\\
+\textbf{Solving Linear System using LU Factorization}\\
+
+Let \textbf{A = LU} be a LU-factorization. Consider the linear system \textbf{Ax = b}.
+\begin{itemize}
+\item Since \textbf{L} is a unit lower, can solve \textbf{Ly = b} by substitution starting from top row.
+\item Since \textbf{U} is in row-echelon form, can solve \textbf{Ux = y} by back subsitution.
+\end{itemize}
+}
+
+\defn{A $n \times n$ matrix \textbf{P} is a \textbf{permutation matrix} if every rows and columns has a 1 in only one entry, and 0 everywhere else. Equivalently, \textbf{P} is a permutation matrix if and only if \textbf{P} is the product of elementary matrices corresponding to row
+swaps.
+}
+
 \sectiontitle{2.8 Determinant by Cofactor Expansion}
 
+\defn{The \textbf{determinant} of \textbf{A} is defined to be
+\begin{align}
+\text{det}(\Bf{A})=a_{i1}A_{i1}+a_{i2}A_{i2}+\dots+ a_{in}A_{in}=\sum_{k=1}^{n}a_{ik}A_{ik}\\
+=a_{1j}A_{1j}+a_{2j}A_{2j}+\dots+ a_{nj}A_{nj}=\sum_{k=1}^{n}a_{kj}A_{kj} 
+\end{align}
+where \[ A_{ij}=(-1)^{i+j}\text{det}(\Bf{M}_{ij})\] is the $(i, j)$-\textbf{cofactor} of \textbf{A}, and $\Bf{M}_{ij}$, the $(i, j)$ \textbf{matrix minor} of \textbf{A}, obtained from \textbf{A} by deleting the $i$-th row and $j$-th column.\\
+
+This is called the \textbf{cofactor expansion} along $\begin{cases}\text{row}\q\q i\q(1) \\ \text{column } j\q(2)\end{cases}$.\\
+
+The determinant of \textbf{A} is also denoted as $\text{det}(\Bf{A})=|\Bf{A}|$.}
+
+\theo{(Determinant is invariant under transpose)\\
+
+The determinant of a square matrix \textbf{A} is equal to the determinant of its transpose, 
+\[ \text{det}(\Bf{A})=\text{det}(\Bf{A}^{T}).\]}
+
+\corr{The \textbf{determinant} of a \textbf{triangular matrix} is the \textbf{multiplication of the diagonal entries}. That is, if \textbf{A} = $(a_{ij})_{n}$ is a \textbf{triangular matrix}, then \[\text{det}(\Bf{A})=a_{11}a_{22}=\dots a_{nn}=\prod^{n}_{k=1}a_{ii}.\]}
 
 \sectiontitle{2.9 Determinant by Reduction}
 
-\theo{Suppose \textbf{B} is obtained from \textbf{A} by a \red{single} \orange{elementary row operation}, $\Bf{A}\xrightarrow{r} \Bf{B}$.\\
-Then the \purple{determinant} of \textbf{B} is obtained from the \purple{determinant} of \textbf{A} as such.
+\theo{Suppose \textbf{B} is obtained from \textbf{A} by a \textbf{single} \textbf{elementary row operation}, $\Bf{A}\xrightarrow{r} \Bf{B}$.\\
+Then the \textbf{determinant} of \textbf{B} is obtained from the \textbf{determinant} of \textbf{A} as such.
 \begin{itemize}
 \item If $r=R_{i} + aR_{j}$, then det(\textbf{B}) = det(\textbf{A});
 \item If $r=cR_{i}$, then det(\textbf{B}) = $c$ det(\textbf{A});
@@ -159,25 +810,27 @@ d_{1} & * & \dots & * \\
 
 \sectiontitle{2.10 Properties of Determinant}
 
+\theo{A \textbf{square matrix A} is \textbf{invertible} if and only if $\text{det}(\Bf{A})\not=0$.}
+
 \theo{(Determinant of product is the product of determinant)\\\;\\
 Let \textbf{A} and \textbf{B} be square matrices of the same size. Then \[\text{det}(\Bf{AB})=\text{det}(\Bf{A})\text{det}(\Bf{B}).\] By induction, for square matrices $\mathbf{A}_{1},  \mathbf{A}_{2},\dots, \mathbf{A}_{k}$ of the same size, \[\text{det}(\mathbf{A}_{1}  \mathbf{A}_{2}\dots \mathbf{A}_{k})=\text{det}(\Bf{A}_{1})\text{det}(\Bf{A}_{2})\dots\text{det}(\Bf{A}_{k}).\]
 }
 
 \theo{(Determinant of inverse is the inverse of determinant)\\\;\\
-If \textbf{A} is \purple{invertible}, then \[\text{det}(\Bf{A}^{-1})=\text{det}(\Bf{A})^{-1}\]
+If \textbf{A} is \textbf{invertible}, then \[\text{det}(\Bf{A}^{-1})=\text{det}(\Bf{A})^{-1}\]
 }
 
 \theo{(Determinant of scalar multiplication)\\\;\\
 For any square matrix \textbf{A} of order $n$ and scalar $c$, \[\text{det}(c\Bf{A})=c^{n}\;\text{det}(\Bf{A}).\]
 }
 
-\defn{Let \textbf{A} be a $n\times n$ square matrix. The \blue{adjoint} of \textbf{A}, denoted as  \textbf{adj(A)}, is the $n\times n$ square matrix whose $(i, j)$ entry is the $(j, i)$-cofactor of \textbf{A},\[ \Bf{adj(A)}=\left( \begin{matrix}A_{11} & A_{12} & \dots & A_{1n}\\ A_{21} & A_{22} & \dots & A_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ A_{n1} & A_{n2} & \dots & A_{nn} \end{matrix} \right)^{T} = \left( \begin{matrix}A_{11} & A_{21} & \dots & A_{n1}\\ A_{12} & A_{22} & \dots & A_{n2} \\ \vdots & \vdots & \ddots & \vdots \\ A_{1n} & A_{2n} & \dots & A_{nn} \end{matrix} \right) \]}
+\defn{Let \textbf{A} be a $n\times n$ square matrix. The \textbf{adjoint} of \textbf{A}, denoted as  \textbf{adj(A)}, is the $n\times n$ square matrix whose $(i, j)$ entry is the $(j, i)$-cofactor of \textbf{A},\[ \Bf{adj(A)}=\left( \begin{matrix}A_{11} & A_{12} & \dots & A_{1n}\\ A_{21} & A_{22} & \dots & A_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ A_{n1} & A_{n2} & \dots & A_{nn} \end{matrix} \right)^{T} = \left( \begin{matrix}A_{11} & A_{21} & \dots & A_{n1}\\ A_{12} & A_{22} & \dots & A_{n2} \\ \vdots & \vdots & \ddots & \vdots \\ A_{1n} & A_{2n} & \dots & A_{nn} \end{matrix} \right) \]}
 
 \theo{(Adjoint formula)\\\;\\
-Let \textbf{A} be a \orange{square} matrix and \textbf{adj(A)} be its \purple{adjoint}. Then\[ \Bf{A(adj(A))}=\text{det}(\Bf{A})\Bf{I},\] where \textbf{I} is the identity matrix.}
+Let \textbf{A} be a \textbf{square} matrix and \textbf{adj(A)} be its \textbf{adjoint}. Then\[ \Bf{A(adj(A))}=\text{det}(\Bf{A})\Bf{I},\] where \textbf{I} is the identity matrix.}
 
 \corr{(Adjoint formula for inverse)\\\;\\
-Let \textbf{A} be an \purple{invertible} matrix. Then the \orange{inverse} of \textbf{A} is given by \[\textbf{A}^{-1}=\frac{1}{\text{det}(\Bf{A})}\Bf{adj(A)}\]}
+Let \textbf{A} be an \textbf{invertible} matrix. Then the \textbf{inverse} of \textbf{A} is given by \[\textbf{A}^{-1}=\frac{1}{\text{det}(\Bf{A})}\Bf{adj(A)}\]}
 
 % ========================== Chapter 3 ==========================
 \chapter{Chapter 3: Euclidean Vector Spaces}
@@ -201,7 +854,7 @@ Since vectors are matrices (column vectors are $n \times 1$  matrices and row ve
  \end{enumerate}
 }
 
-\defn{A \textbf{linear combination} of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \in $ \R{n} is $c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}$ for some $c_{1},  c_{2},\dots, c_{k} \in$  \R{k}.}
+\defn{A \textbf{linear combination} of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \in $ \R{n} is $c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}$ for some $c_{1},  c_{2},\dots, c_{k} \in$  \R{}.}
 
 \defn{A set $V$ equipped with \textbf{addition} and \textbf{scalar multiplication} is said to be a \textbf{vector space} over \R{}  if it satisfies the following axioms. 
 \begin{enumerate}
@@ -221,7 +874,7 @@ $\Bf{u} + (-\Bf{u}) = \Bf{0}$.
 
 \sectiontitle{3.2 Dot Product, Norm, Distance} 
 
-\defn{The inner product (or dot product) of vectors $\textbf{u} = (u_{i})$
+\defn{The \textbf{inner product} (or \textbf{dot product}) of vectors $\textbf{u} = (u_{i})$
  and  $\textbf{v} = (v_{i})$ 
 in \R{n}
  is defined to be \[ \Bf{u}\cdot \Bf{v} = {u}_{1} v_{1} +  {u}_{2} v_{2}, + \dots + {u}_{n}v_{n}.  \]  
@@ -229,7 +882,7 @@ in \R{n}
 \\ This is also known as the \textbf{length} or \textbf{magnitude} of the vector.
 }
 
-\props{of inner product and norm}{Let $\Bf{u, v} \in$ \R{n} be vectors and $a,b,c\in \mathbb{R}$ be real numbers.
+\theo{(Properties of inner product and norm)\\\;\\Let $\Bf{u, v} \in$ \R{n} be vectors and $a,b,c\in \mathbb{R}$ be real numbers.
 \begin{enumerate}
 \item Inner product is \textbf{symmetric}, \[ \Bf{u}\cdot\Bf{v} = \Bf{v}\cdot\Bf{u}. \]
 \item Inner product \textbf{commutes} with scalar multiple, \[c\Bf{u}\cdot\Bf{v}=(c\Bf{u})\cdot\Bf{v}=\Bf{u}\cdot(c\Bf{v}).\]
@@ -245,19 +898,20 @@ This is called \textbf{normalizing} \textbf{u}.
 }
 
 \defn{The \textbf{distance} between two vectors \textbf{u} and \textbf{v}, denoted as $d(\Bf{u}, \Bf{v})$, is defined to be \[ d(\Bf{u}, \Bf{v}) = ||\Bf{u}-\Bf{v}||. \] 
-Define the angle $\theta$ between two nonzero vectors, $\Bf{u, v}\neq\Bf{0}$ to be such that \[ \frac{\Bf{u}\cdot\textbf{v}}{||\Bf{u}||\;||\Bf{v}||} \]
+Define the \textbf{angle} $\theta$ between two \textbf{nonzero} vectors, $\Bf{u, v}\neq\Bf{0}$ to be such that \[ cos(\theta)=\frac{\Bf{u}\cdot\textbf{v}}{||\Bf{u}||\;||\Bf{v}||} \]
 }
 
 
 \sectiontitle{3.3 Linear Combinations and Linear Spans}
 
 \defn{
-A linear combination of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \in$\R{n} is \[  c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}\text{, for some } c_{1}, c_{2},\dots c_{k} \in \mathbb{R}. \]
+A linear combination of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \in$ \R{n} is \[  c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}\text{, for some } c_{1}, c_{2},\dots c_{k} \in \mathbb{R}. \]
 The scalars $c_{1}, c_{2},\dots c_{k}$ are called \textbf{coefficients}.\\
 \\ Let $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$ be vectors in \R{n}. The \textbf{span} (or \textbf{linear span}) of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$ is the subset of \R{n} containing all the linear combinations of $\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}$, \[ \text{span}\{\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k}\}=\{ c_{1}\mathbf{u}_{1} + c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k}\;|\; \constants  \}. \] 
 }
 
 \algo{to Check for Linear Combination}{
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vectors in \R{n}.
 \begin{enumerate}
 \item Form the $n\times k$ matrix $\Bf{A}=(\mathbf{u}_{1}\q \mathbf{u}_{2}\q\dots\q \mathbf{u}_{k})$ whose columns are the vectors in $S$.
 \item Then a vector \textbf{v} in \R{n} is in $span\{ \mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k} \}$  if and only if the system $\Bf{Ax=v}$ is consistent.
@@ -268,7 +922,7 @@ The scalars $c_{1}, c_{2},\dots c_{k}$ are called \textbf{coefficients}.\\
 \algo{to Check if $span(S)=$ \R{n}}{ 
 Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vectors in \R{n}. \begin{enumerate}
 \item Form the $n\times k$ matrix $\Bf{A}=(\mathbf{u}_{1},  \mathbf{u}_{2},\dots, \mathbf{u}_{k})$ whose columns are the vectors in $S$.
-\item Then $span(S)=$\R{n} if and only if the system $\Bf{Ax=v}$ is consistent for all \textbf{v}.
+\item Then $span(S)=$ \R{n} if and only if the system $\Bf{Ax=v}$ is consistent for all \textbf{v}.
 \item This is equivalent to the reduced row-echelon form of \textbf{A} having no zero rows.
 \end{enumerate}
 }
@@ -277,9 +931,9 @@ Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vecto
 Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a finite set of vector. The span of $S$, $span(S)$ has the following properties.
 \begin{enumerate}
 \item The span of $S$ \textbf{contains the origin}, \[ \Bf{0} \in span(S). \]
-\item The span of $S$ is \textbf{closed under vector addition}, for any \textbf{u, v} $\in span(S)$, and real number $\alpha \in$ \R{}, \[\Bf{u} + \Bf{v} \in span(S) \]
-\item The span $S$ is \textbf{closed under scalar multiplication}, for any $\Bf{u}\in span(S)$ and real number $\alpha\in$\R{}, \[ \alpha\Bf{u} \in span(S). \]
-Properties (ii) and (iii) can be combined together into one property (ii'): The span is closed under linear combinations, that is, if \textbf{u, v} are vectors in $span(S)$ and $\alpha, \beta$ are any scalars, then the linear combination $\alpha\Bf{u} + \beta\Bf{v}$ is a vector in $span(S)$.
+\item The span of $S$ is \textbf{closed under vector addition}, for any \textbf{u, v} $\in span(S)$, \[\Bf{u} + \Bf{v} \in span(S) \]
+\item The span $S$ is \textbf{closed under scalar multiplication}, for any $\Bf{u}\in span(S)$ and real number $\alpha\in$ \R{}, \[ \alpha\Bf{u} \in span(S). \]
+Properties (ii) and (iii) can be combined together into one property (ii'): The span is \textbf{closed under linear combinations}, that is, if \textbf{u, v} are vectors in $span(S)$ and $\alpha, \beta$ are any scalars, then the linear combination $\alpha\Bf{u} + \beta\Bf{v}$ is a vector in $span(S)$.
 \end{enumerate}
 }
 
@@ -307,7 +961,7 @@ Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ and $T=\{\mathbf{
 \defn{A subset $V$ of \R{n} is a \textbf{subspace} if it satisfies the following properties.
 \begin{enumerate}
 \item $V$ \textbf{contains the zero vector}, $\textbf{0} \in V$.
-\item $V$  is \textbf{closed under scalar multiplication}. For any vector. $v$ in $V$ and scalar $\alpha$, the vector $\alpha\Bf{v}$ is in $V$.
+\item $V$  is \textbf{closed under scalar multiplication}. For any vector $v$ in $V$ and scalar $\alpha$, the vector $\alpha\Bf{v}$ is in $V$.
 \item $V$ is \textbf{closed under addition}. For any vectors \textbf{u, v} in $V$, the sum \textbf{u + v} is in $V$.
 \end{enumerate}
 Property (i) can be replaced with property (i'): $V$ is \textbf{nonempty}.\\ \\
@@ -326,7 +980,7 @@ A subset $V\subseteq$ \R{n} is a subspace if and only if it is a linear span, $V
 \textbf{Check if a set is a subspace} \\
 To show that a set $V$ is a subspace, we can either
 \begin{itemize}
-\item find a spanning set, that is, find a set $S$  such that $V=span(s)$, or
+\item find a spanning set, that is, find a set $S$  such that $V=span(S)$, or
 \item show that $V$ satisfies the 3 conditions of being a subspace.
 \end{itemize}
 To show that a subset $V$ is not a subspace, we can either
@@ -338,23 +992,23 @@ To show that a subset $V$ is not a subspace, we can either
 }
 
 \theo{(Affine spaces)\\ \\
-The solution set $W=\{\;\mathbf{w}\;|\;\mathbf{Aw=b}\;\}$ of a non-homogeneous linear system \textbf{Ax = b}, $\Bf{b}\not =0$, is given by \[ \Bf{u} + V := \{\; \Bf{u+v} \;|\;\Bf{v}\in V\; \} \] where $V=\{\;v\;|\;\Bf{Av=0}\;\}$ is the solution space to the associated homogeneous system and \textbf{u} is a particular solution, \textbf{Au = b}. \\ \\
+The solution set $W=\{\;\mathbf{w}\;|\;\mathbf{Aw=b}\;\}$ of a non-homogeneous linear system \textbf{Ax = b}, $\Bf{b}\not =0$, is given by \[ \Bf{u} + V := \{\; \Bf{u+v} \;|\;\Bf{v}\in V\; \} \] where $V=\{\;\Bf{v}\;|\;\Bf{Av=0}\;\}$ is the solution space to the associated homogeneous system and \textbf{u} is a particular solution, \textbf{Au = b}. \\ \\
 That is, vectors in \textbf{u} + $V$ are of the form \textbf{u + v} for some \textbf{v} in $V$.
 }
 
 \sectiontitle{3.5 Linear Independence} 
 
-\defn{A set $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \blue{linearly independent} if the \orange{only coefficients} $\constants$ satisfying the equation \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} +\dots + c_{k}\mathbf{u}_{k} = \Bf{0} \] are $c_{1} = c_{2} = \dots = c_{k} = 0$. Otherwise, we say that the set is \blue{linearly dependent}.}
+\defn{A set $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \textbf{linearly independent} if the \textbf{only coefficients} $\constants$ satisfying the equation \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} +\dots + c_{k}\mathbf{u}_{k} = \Bf{0} \] are $c_{1} = c_{2} = \dots = c_{k} = 0$. Otherwise, we say that the set is \textbf{linearly dependent}.}
 
 \algo{to Check for Linear Independence}{
 Let $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a set of vectors in \R{n}. \begin{itemize}
-\item $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \orange{linearly independent} if and only if the \blue{homogeneous system} $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)\Bf{x} = \Bf{0}$ has only the \orange{trivial solution}.
-\item The homogeneous system has only the \orange{trivial solution} if and only if the \orange{reduced row-echelon form} of $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \orange{no non-pivot column}.
+\item $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is \textbf{linearly independent} if and only if the \textbf{homogeneous system} $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)\Bf{x} = \Bf{0}$ has only the \textbf{trivial solution}.
+\item The homogeneous system has only the \textbf{trivial solution} if and only if the \textbf{reduced row-echelon form} of $(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \textbf{no non-pivot column}.
 \end{itemize}
 }
 
 \theo{(Solution set of a homogeneous system is a subspace) \\ \\
-A subset $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ of \R{n} is \orange{linearly independent} if and only if the \purple{reduced row-echelon form} of $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \orange{no non-pivot columns}.
+A subset $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ of \R{n} is \textbf{linearly independent} if and only if the \textbf{reduced row-echelon form} of $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ has \textbf{no non-pivot columns}.
 }
 
 \sectiontitle{3.6 Basis and Coordinates} 
@@ -365,86 +1019,86 @@ A subset $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ of \R{n} is 
 \end{itemize}
 }
 
-\theo{Suppose $S\;\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for $V$. Then every vector \textbf{v} in the subspace $V$ \orange{can be written} as a linear combination of vectors in $S$ \orange{uniquely}.}
+\theo{Suppose $S\;\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for $V$. Then every vector \textbf{v} in the subspace $V$ \textbf{can be written} as a linear combination of vectors in $S$ \textbf{uniquely}.}
 
 \theo{(Basis for Solution Set of Homogeneous System) \\ \\ 
 Let $V=\{\Bf{u}|\Bf{Au=0}\}$ be the solution space to some homogeneous system. Suppose \[s_{1}\mathbf{u}_{1} +  s_{1}\mathbf{u}_{2} + \dots + s_{k}\mathbf{u}_{k}, s_{1},s_{2},\dots,s_{k}\in\mathbb{R}\] is a general solution to the homogeneous system $\Bf{Ax = 0}$. \\
 Then $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is a basis for the subspace $V=\{\Bf{u}|\Bf{Au=0}\}$.
 }
 
-\theo{Basis for the zero space $\{\Bf{0}\}$ of \R{n} is the \orange{empty set} $\{\}$ or $\emptyset$.}
+\theo{Basis for the zero space $\{\Bf{0}\}$ of \R{n} is the \textbf{empty set} $\{\}$ or $\emptyset$.}
 
 \theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the columns are linearly independent.}
 
 \theo{A $n\times n$ square matrix \textbf{A} is invertible if and only if the columns spans \R{n}.}
 
 
-\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n}  containing $n$  vectors. Then $S$ is linearly independent if and only if $S$ spans \R{n}.
+\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{n}\}$  be a subset of \R{n}  containing $n$  vectors. Then $S$ is linearly independent if and only if $S$ spans \R{n}.
 }
 
-\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n} and  $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ be the matrix whose columns are vectors in $S$. Then $S$ is a \blue{basis} for \R{n} if and only if \purple{$k=n$} and \textbf{A} is an \orange{invertible matrix}.
+\corr{Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$  be a subset of \R{n} and  $\Bf{A}=(\;\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;)$ be the matrix whose columns are vectors in $S$. Then $S$ is a \textbf{basis} for \R{n} if and only if \textbf{$k=n$} and \textbf{A} is an \textbf{invertible matrix}.
 }
 
-\theo{A $n\times n$ \orange{square} matrix \textbf{A} is invertible if and only if the \purple{columns} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
+\theo{A $n\times n$ \textbf{square} matrix \textbf{A} is invertible if and only if the \textbf{columns} of  \textbf{A} form a \textbf{basis} for \R{n}.
 }
 
-\theo{A $n\times n$ \orange{square} matrix \textbf{A} is invertible if and only if the \purple{row} of  \textbf{A} form a basis for \orange{basis} for \R{n}.
+\theo{A $n\times n$ \textbf{square} matrix \textbf{A} is invertible if and only if the \textbf{rows} of \textbf{A} form a \textbf{basis} for \R{n}.
 }
 
 \theo{(Equivalent Statements for Invertibility) \\ \\ 
 Let \textbf{A} be a square matrix of order $n$. The following statements are equivalent.
 \begin{enumerate}
-\item \textbf{A} is \blue{invertible}.
-\item $\Bf{A}^{T}$ is \blue{invertible}.
-\item \textbf{A} has a \blue{left-inverse}, that is, there is a matrix \textbf{B} such that \textbf{BA = I}.
-\item \textbf{A} has a \blue{right-inverse}, that is, there is a matrix \textbf{B} such that \textbf{AB = I}.
-\item The \orange{reduced row-echelon form} of \textbf{A} is the \orange{identity matrix}.
-\item \textbf{A} can be expressed as a \orange{product} of \orange{elementary matrices}.
-\item The \purple{homogeneous system} \textbf{Ax = 0} has \brown{only the trivial solution}.
-\item For \orange{any} \textbf{b}, the system \textbf{Ax = b} is \purple{consistent}.
-\item The \purple{determinant} of \textbf{A} is \orange{nonzero}, $\text{det}(\Bf{A})\not = 0$.
-\item The \purple{columns/rows} of \textbf{A} are \orange{linearly independent} for \R{n}.
-\item The \purple{columns/rows} of \textbf{A} \orange{spans} \R{n}.
+\item \textbf{A} is \textbf{invertible}.
+\item $\Bf{A}^{T}$ is \textbf{invertible}.
+\item \textbf{A} has a \textbf{left-inverse}, that is, there is a matrix \textbf{B} such that \textbf{BA = I}.
+\item \textbf{A} has a \textbf{right-inverse}, that is, there is a matrix \textbf{B} such that \textbf{AB = I}.
+\item The \textbf{reduced row-echelon form} of \textbf{A} is the \textbf{identity matrix}.
+\item \textbf{A} can be expressed as a \textbf{product} of \textbf{elementary matrices}.
+\item The \textbf{homogeneous system} \textbf{Ax = 0} has \textbf{only the trivial solution}.
+\item For \textbf{any} \textbf{b}, the system \textbf{Ax = b} is \textbf{consistent}.
+\item The \textbf{determinant} of \textbf{A} is \textbf{nonzero}, $\text{det}(\Bf{A})\not = 0$.
+\item The \textbf{columns/rows} of \textbf{A} are \textbf{linearly independent} for \R{n}.
+\item The \textbf{columns/rows} of \textbf{A} \textbf{spans} \R{n}.
 \end{enumerate}
 }
 
 \defn{(Coordinates Relative to a Basis) \\ \\ 
 Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a basis for a subspace $V$ of \R{n}.\\
-Then given any vector $\Bf{v} \in V$, we can write \textbf{v} unique as \[ c_{1}\mathbf{u}_{1},  c_{2}\mathbf{u}_{2},\dots, c_{k}\mathbf{u}_{k}. \]
+Then given any vector $\Bf{v} \in V$, we can write \textbf{v} unique as \[ c_{1}\mathbf{u}_{1}+  c_{2}\mathbf{u}_{2}+\dots+ c_{k}\mathbf{u}_{k}. \]
 The coordinates of \textbf{v} relative to the basis $S$ is defined to be the vector \[ [\Bf{v}]_{s} = \left(\; \begin{matrix} c_{1}\\c_{2}\\ \vdots \\ c_{k} \end{matrix} \;\right). \]
 }
 
 \algo{for Computing Relative Coordinate}{
 Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u_{k}}\}$ be a basis for a subspace $V$ of \R{n}.\\ \\
-For $\Bf{v}\in V$, find real numbers $\constants \in$ \R{} such that \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k} = \Bf{v}. \] 
+For $\Bf{v}\in V$, find real numbers $\constants$  such that \[ c_{1}\mathbf{u}_{1} +  c_{2}\mathbf{u}_{2} + \dots + c_{k}\mathbf{u}_{k} = \Bf{v}. \] 
 That is, we are solving for \[ (\Bf{u}_{1}\;\Bf{u}_{2}\;\dots\;\Bf{u}_{k}\;|\;\Bf{v}). \]
 }
 
 \theo{Let $V$ be a subspace of \R{n} and $B$ a basis for $V$.
 \begin{enumerate} 
-\item For any vectors \textbf{u, v}$\in V$, \textbf{u = v} if and only if $[\Bf{u}]_{B}=[\Bf{v}]_{B}$.
+\item For any vectors \textbf{u, v }$\in V$, \textbf{u = v} if and only if $[\Bf{u}]_{B}=[\Bf{v}]_{B}$.
 \item For any $\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{m}\in V$, \[ [c_{1}\mathbf{v}_{1} +  c_{2}\mathbf{v}_{2} + \dots + c_{m}\mathbf{v}_{m}]_{B} = c_{1}[\mathbf{v}_{1}]_{B} +  c_{2}[\mathbf{v}_{2}]_{B} + \dots + c_{m}[\mathbf{v}_{m}]_{B}. \]
 \end{enumerate}
 }
 
 \sectiontitle{3.7 Dimensions}
 
-\theo{Let $V$ be a subspace of \R{n} and $B$ a basis for $V$. Suppose $B$ contains $k$ vectors, $|B|=k$. Let $v_{1},v_{2},\dots,v_{k}$ be vectors in $V$. Then \begin{enumerate} 
-\item $\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{k}$ is linearly independent if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{k}]_{B}$ is linearly independent (respectively, dependent) in \R{k}; and
-\item \{$\mathbf{v}_{1}, \mathbf{v}_{2},\dots, \mathbf{v}_{k}$\} spans $V$ if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{k}]_{B}$ spans \R{k}.
+\theo{Let $V$ be a subspace of \R{n} and $B$ a basis for $V$. Suppose $B$ contains $k$ vectors, $|B|=k$. Let $\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{m}$ be vectors in $V$. Then \begin{enumerate} 
+\item $\mathbf{v}_{1},  \mathbf{v}_{2},\dots, \mathbf{v}_{m}$ is linearly independent (respectively, dependent) if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{m}]_{B}$ is linearly independent (respectively, dependent) in \R{k}; and
+\item \{$\mathbf{v}_{1}, \mathbf{v}_{2},\dots, \mathbf{v}_{m}$\} spans $V$ if and only if [$\mathbf{v}_{1}]_{B},  [\mathbf{v}_{2}]_{B},\dots, [\mathbf{v}_{m}]_{B}$ spans \R{k}.
 \end{enumerate}}
 
 \corr{Let $V$ be a subspace of \R{n} and $V$ a basis for $B$. Suppose $B$ contains $k$ vectors, $|B|=k$.\begin{enumerate}
-\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m > k$, then $S$ is \purple{linearly dependent}.
-\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m < k$, then $S$ \orange{cannot span} $V$.
+\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m > k$, then $S$ is \textbf{linearly dependent}.
+\item If $S=\{\mathbf{v}_{1},\mathbf{v}_{2}\dots,\mathbf{v}_{m}\}$ is a subset of $V$ with $m < k$, then $S$ \textbf{cannot span} $V$.
 \end{enumerate}}
 
 \corr{Suppose $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ and $T=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{m}\}$ are bases for a subspace $V\subseteq$\;\R{n}. Then $k=m$.}
 
-\defn{Let $V$ be a subspace of \R{n}. The \purple{dimension} of $V$, denoted by $\text{dim}(V)$, is defined to be the \purple{number of vectors} in any \orange{basis} of $V$.}
+\defn{Let $V$ be a subspace of \R{n}. The \textbf{dimension} of $V$, denoted by $\text{dim}(V)$, is defined to be the \textbf{number of vectors} in any \textbf{basis} of $V$.}
 
 \theo{(Dimension of solution space) \\ \\ 
-Let \textbf{A} be a $m \times n$ matrix. The \purple{number of non-pivot columns} in the reduced row-echelon form of $A$ is the \orange{dimension} of the solution space \[V=\{ \mathbf{u}\in \text{\R{n}}\; |\; \mathbf{Au=0} \}. \]}
+Let \textbf{A} be a $m \times n$ matrix. The \textbf{number of non-pivot columns} in the reduced row-echelon form of $A$ is the \textbf{dimension} of the solution space \[V=\{ \mathbf{u}\in \text{\R{n}}\; |\; \mathbf{Au=0} \}. \]}
 
 \theo{(Spanning Set Theorem) \\ \\
 Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a subset of vectors in \R{n}, and let $V=span(S)$. Suppose $V$ is not the zero space, $V\neq \{\mathbf{0}\}$. Then there must be a subset of $S$ that is a basis for $V$.}
@@ -453,16 +1107,16 @@ Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a subset of ve
 Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ a linearly independent subset of $V$, $S\subseteq V$. Then there must be a set $T$ containing $S$, $S\subseteq T$ such that $T$ is a basis for $V$.
 }
 
-\theo{Let $U$ and $V$ be \orange{subspaces} of \R{n}.
+\theo{Let $U$ and $V$ be \textbf{subspaces} of \R{n}.
 \begin{enumerate}
-\item If \blue{$U\subseteq V$}, then \purple{$dim(U) \leq dim(V)$}.
-\item If \blue{$U\subseteq V$}, and \blue{$U\not = V$}, then \purple{$dim(U) < dim(V)$}
-That is, $U\subseteq V$, then \purple{$dim(U) \leq dim(V)$} with \purple{equality} if and only if \purple{$U=V$}.
+\item If \textbf{$U\subseteq V$}, then \textbf{$dim(U) \leq dim(V)$}.
+\item If \textbf{$U\subseteq V$}, and \textbf{$U\not = V$}, then \textbf{$dim(U) < dim(V)$}
+That is, $U\subseteq V$, then \textbf{$dim(U) \leq dim(V)$} with \textbf{equality} if and only if \textbf{$U=V$}.
 \end{enumerate}
 }
 
 \theo{(B1) \\ 
-Let $V$ be a $k$-dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $U\subseteq V$ is a \orange{linearly independent} subset containing \purple{$k$} vectors, \purple{$|S|=k$}. Then $S$ is a \blue{basis} for $V$.
+Let $V$ be a $k$-dimensional subspace of \R{n}, \textbf{$dim(V)=k$}. Suppose $S\subseteq V$ is a \textbf{linearly independent} subset containing \textbf{$k$} vectors, \textbf{$|S|=k$}. Then $S$ is a \textbf{basis} for $V$. \\\;\\In summary,
 \begin{enumerate}
 \item $|S|=dim(V)$
 \item $S\subseteq V$
@@ -471,7 +1125,7 @@ Let $V$ be a $k$-dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $U\
 }
 
 \theo{(B2) \\ 
-Let $V$ be a $k$ dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $S$ is a set containing \purple{$k$} vectors, \purple{$|S|=k$}, such that \orange{$V\subseteq span(S)$}. Then $S$ is a \blue{basis} for $V$.
+Let $V$ be a $k$ dimensional subspace of \R{n}, \textbf{$dim(V)=k$}. Suppose $S$ is a set containing \textbf{$k$} vectors, \textbf{$|S|=k$}, such that \textbf{$V\subseteq span(S)$}. Then $S$ is a \textbf{basis} for $V$.\\\;\\ In summary,
 \begin{enumerate}
 \item $|S|=dim(V)$
 \item $V\subseteq span(S)$
@@ -481,22 +1135,22 @@ Let $V$ be a $k$ dimensional subspace of \R{n}, \purple{$dim(V)=k$}. Suppose $S$
 
 \sectiontitle{3.8 Transition Matrices}
 
-\defn{Let $V$ be a subspace of \R{n}. Suppose $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ are \textbf{basis} for the subspace $V$. Define the \blue{transition matrix} from \orange{$T$ to $S$} to be \[\mathbf{P}=(\;[\mathbf{v}_{1}]_{S}\q[\mathbf{v}_{2}]_{S}\q\dots\q[\mathbf{v}_{k}]_{S}\;),\]the matrix whose columns are the coordinates of the vectors in $T$ relative to the basis $S$.}
+\defn{Let $V$ be a subspace of \R{n}. Suppose $S=\{\Bf{u}_{1},\dots,\Bf{u}_{k}\}$ and $T=\{\Bf{v}_{1},\dots,\Bf{v}_{k}\}$ are \textbf{basis} for the subspace $V$. Define the \textbf{transition matrix} from \textbf{$T$ to $S$} to be \[\mathbf{P}=(\;[\mathbf{v}_{1}]_{S}\q[\mathbf{v}_{2}]_{S}\q\dots\q[\mathbf{v}_{k}]_{S}\;),\]the matrix whose columns are the coordinates of the vectors in $T$ relative to the basis $S$.}
 
 \theo{(Transition Matrix) \\ \\
-Let $V$ be a subspace of \R{n}. Suppose $S =  \{  u_{1}  ,\dots, u_{k}    \}$ are \textbf{bases} for the subspace $V$. Let \textbf{P} be the transition matrix from \purple{$T$ to $S$}. Then for any vector $w$ in $V$, \[ [\mathbf{w}]_{S} = \mathbf{P}[\mathbf{w}]_{T}. \] }
+Let $V$ be a subspace of \R{n}. Suppose $S =  \{ \Bf{u}_{1}  ,\dots, \Bf{u}_{k} \}$ and $T=\{\Bf{v}_{1},\dots,\Bf{v}_{k}\}$ are \textbf{bases} for the subspace $V$. Let \textbf{P} be the transition matrix from \textbf{$T$ to $S$}. Then for any vector $w$ in $V$, \[ [\mathbf{w}]_{S} = \mathbf{P}[\mathbf{w}]_{T}. \] }
 
-\algo{to find Transition Matrix}{ Let $S=\{u_{1},\dots,u_{k}\}$ and $T=\{v_{1},\dots,v_{k}\}$ be a basis for a subspace $V$ in \R{n}. To find \textbf{P}, the transition matrix from $T$ to $S$, \[(``S''|``T'') = (u_{1}\q u_{2}\q \dots u_{k}\q|\q v_{1}\q v_{2}\q\dots v_{k} ) \xrightarrow{\text{rref}} \left(\q \begin{matrix}\mathbf{I}_{k}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \middle|\q \begin{matrix}\mathbf{P}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \right)  \]}
+\algo{to find Transition Matrix}{ Let $S=\{\Bf{u}_{1},\dots,\Bf{u}_{k}\}$ and $T=\{\Bf{v}_{1},\dots,\Bf{v}_{k}\}$ be basis for a subspace $V$ in \R{n}. To find \textbf{P}, the transition matrix from $T$ to $S$, \[(``S''|``T'') = (\Bf{u}_{1}\q \Bf{u}_{2}\q \dots \q\Bf{u}_{k}\q|\q \Bf{v}_{1}\q \Bf{v}_{2}\q\dots \Bf{v}_{k} \q) \xrightarrow{\text{rref}} \left(\q \begin{matrix}\mathbf{I}_{k}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \middle|\q \begin{matrix}\mathbf{P}\\ \mathbf{0}_{(n-k)\times k}  \end{matrix}\q \right)  \]}
 
 \theo{(Inverse of Transition Matrix) \\ \\ 
-Suppose $S = \{ u_{1},\dots, u_{k}\}$ and $T = \{ v_{1},\dots, v_{k} \}$ are \orange{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the \orange{transition matrix from $T$ to $S$}. Then $P^{-1}$ is the \orange{transition matrix from $S$ to $T$}.}
+Suppose $S = \{ \Bf{u}_{1},\dots, \Bf{u}_{k}\}$ and $T = \{ \Bf{v}_{1},\dots, \Bf{v}_{k} \}$ are \textbf{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the \textbf{transition matrix from $T$ to $S$}. Then $\Bf{P}^{-1}$ is the \textbf{transition matrix from $S$ to $T$}.}
 
 % ========================== Chapter 4 ==========================
-\chapter{Chapter 4: Subspaces Associated to a Matrix}
+%\chapter{Chapter 4: Subspaces Associated to a Matrix}
 
-\sectiontitle{4.1 Column Space, Row Space, and Nullspace}
+%\sectiontitle{4.1 Column Space, Row Space, and Nullspace}
 
-\sectiontitle{4.2 Rank}
+%\sectiontitle{4.2 Rank}
 
 
 \end{document}
