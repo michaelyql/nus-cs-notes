@@ -36,6 +36,9 @@
 
 \lstset{style=mystyle}
 
+\newcommand{\br}{\\\;\\} % break line
+\newcommand{\soln}{\textbf{solution}\\}
+
 %:article start
 
 \begin{document}
@@ -378,5 +381,122 @@ def mss(A: list[int]):
 	return ans
 \end{lstlisting}
 
+\section{Firefly Queries (CF 2009F)}
+given array $A$ of length $n$, create $B = C_{1} + C_{2} + \dots + C_{n}$ where $C_{i}$ is the $i$-th cyclic shift of $A$. for each of the $q$ queries with $l, r$, return the sum of elements in the range $[l, r]$ inclusive. \\
+
+$1 \leq n \leq 2\cdot 10^{5}$, $1 \leq a_{i} \leq 10^{6}$
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main() {
+    int t;
+    cin >> t;
+    while (t--) { // test cases
+        ll n, q; // n and no. of queries
+        cin >> n >> q;
+        vector<ll> a(n), ps(1); // array A and prefix sum
+        for (ll &r : a) {
+            cin >> r;
+            ps.push_back(ps.back() + r);
+        }
+        for (ll &r : a) {
+            ps.push_back(ps.back() + r);
+        }
+        while (q--) {
+            ll l, r; 
+            cin >> l >> r;
+            l--; r--; // l and r are 1-indexed
+            ll i = l / n, j = r / n; // which subarray does it belong to
+            l %= n; r %= n;	// find remainder (suffix and prefix)
+            cout << ps[n] * (j - i + 1) - (ps[i + l] - ps[i]) - (ps[j + n] - ps[j + r + 1]) << "\n";
+        }
+    }
+}
+\end{lstlisting}
+
+\section{Yunli's Subarray Queries (CF 2009G)}
+for an arbitrary array $b$, you can perform the following operation any number of times: pick any index $i$ and set $b_{i}$ to \textbf{any} integer (not necessary to be within $[1, n]$)\br
+
+let $f(b)$ be the min number of operations until $b$ contains a consecutive subarray of at least $k$ elements.\br
+
+a consecutive array with $k$ elements starting at index $i$ is such that $b_{j} = b_{j-1} + 1$ for all $i < j \leq i + k - 1$\br
+
+$1 \leq k \leq n \leq 2\cdot 10^{5}$, $1\leq q\leq 2\cdot 10^{5}$, $1\leq a_{i} \leq n$\br
+
+given array $A$ and $k$, and $q$ queries $[l, r]$, for each query 
+\subsection{G1 (easy)}
+output $f([a_{l},\dots,a_{l+k-1}])$\br
+
+\soln
+precompute $f(b)$ for each subarray of length $k$ using \textbf{sliding window}. there will be in total $(n-k+1)$ such subarrays. to calculate $f(b)$, convert each element from $a_{i}$ to $(a_{i} - i)$. then maintain $cnt$ for each distinct value of $(a_{i} - i)$ in the subarray.\br
+
+ $f(b)$ is $k - \text{max}(cnt)$ i.e. min operations to equalize array / make all elements in array the same. this is because it is optimal (takes least no. of ops to equalize the array) by making every element equal to the value of $(a_{i} -i)$ that appears the most in the subarray.\br
+ 
+each time sliding window is moved, decrement $cnt$ for $A[l]$ and increment $cnt$ for $A[r+1]$\br
+
+for each query, return $ans[l]$, where $ans[l]$ is the value of $f([a_{l},\dots,a_{l+k-1}])$
+\begin{lstlisting}[language=C++]
+#include "bits/stdc++.h"
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx,avx2,sse,sse2")
+#define fast ios_base::sync_with_stdio(0) , cin.tie(0) , cout.tie(0)
+#define endl '\n'
+#define int long long
+#define f first
+#define mp make_pair
+#define s second
+using namespace std;
+
+void solve(){
+    int n, k, q; cin >> n >> k >> q;
+    int a[n + 1]; for(int i = 1; i <= n; i++) cin >> a[i];
+    map <int,int> m;
+    multiset <int> tot;
+    for(int i = 1; i <= n; i++) tot.insert(0);
+    for(int i = 1; i < k; i++){
+        tot.erase(tot.find(m[a[i] - i]));
+        m[a[i] - i]++;
+        tot.insert(m[a[i] - i]);
+    }
+    int ret[n + 1];
+    for(int i = k; i <= n; i++){
+        tot.erase(tot.find(m[a[i] - i]));
+        m[a[i] - i]++;
+        tot.insert(m[a[i] - i]);
+        int p = i - k + 1;
+        ret[p] = k - *tot.rbegin();
+        tot.erase(tot.find(m[a[p] - p]));
+        m[a[p] - p]--;
+        tot.insert(m[a[p] - p]);
+    }
+    while(q--){
+        int l, r ; cin >> l >> r;
+        cout << ret[l] << endl;
+    }
+    tot.clear();
+    m.clear();
+}
+
+signed main()
+{
+    fast;
+    int t;
+    cin >> t;
+    while(t--){
+        solve();
+    }
+}
+\end{lstlisting}
+
+
+\subsection{G2 (hard)}
+output $\sum_{j=l+k-1}^{r}f([a_{l},\dots,a_{j}])$\br
+
+\soln
+let $c_{i} = f([a_{i},\dots,a_{i+k-1}])$. the problem simplifies to finding $\sum_{j=l}^{r-k+1}(\text{min}^{j}_{i=l}c_{i})$
+
+\subsection{G3 (extreme)}
+output $\sum_{i=l}^{r-k+1}\sum_{j=i+k-1}^{r}f([a_{i},\dots,a_{j}])$
 
 \end{document}
