@@ -499,4 +499,229 @@ let $c_{i} = f([a_{i},\dots,a_{i+k-1}])$. the problem simplifies to finding $\su
 \subsection{G3 (extreme)}
 output $\sum_{i=l}^{r-k+1}\sum_{j=i+k-1}^{r}f([a_{i},\dots,a_{j}])$
 
+\section{Rendez-vous de Marian et Robin (CF 2014E)}
+$n$ vertices and $m$ bidirectional edges \br each edge takes $m_{i}$ time to travel, all edge weights are even. \br M starts at node 1 and R starts at node $n$. they want to meet at a node in the shortest time, and they cannot meet on an edge. \br some of the nodes have a horse, once on a horse they can cut their travel time for all subsequent edges by $1/2$. \br find the shortest time for them to meet at any edge, or -1 if they cannot meet \br
+$2 \leq n \leq 2\cdot 10^{5}$, $1\leq m \leq 2\cdot 10^{5}$, no self loops or multiple edges. \br
+
+\soln run dijkstras twice, once from 1, once from $n$. need to maintain two vectors, (1) distance to each vertex with a horse and (2) without a horse
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <vector>
+#include <set>
+
+using namespace std;
+
+void dijkstra(int s, vector<vector<long long>> &d, vector<vector<pair<int,long long>>> &graph, vector<bool> &hs){
+    auto cmp = [&](auto &a, auto &b){return make_pair(d[a.first][a.second],a) < make_pair(d[b.first][b.second],b);};
+    set<pair<int,int>,decltype(cmp)> q(cmp);
+    
+    d[s][0] = 0;
+    q.insert({s,0});
+
+    while (q.size()){
+        auto [curv,curh] = *q.begin();
+        q.erase(q.begin());
+
+        bool horse = (curh || hs[curv]);
+        for (auto &[neighv, neighd] : graph[curv]){
+            long long dist = horse?neighd/2:neighd;
+            if (d[neighv][horse] > d[curv][curh] + dist){
+                q.erase({neighv,horse});
+                d[neighv][horse] = d[curv][curh] + dist;
+                q.insert({neighv,horse});
+            }
+        }
+    }
+}
+
+void work(){
+    int n,m,h;
+    cin >> n >> m >> h;
+
+    vector<bool> hs(n);
+    vector<vector<pair<int,long long>>> graph(n);
+    
+    for (int i=0;i<h;i++){
+        int c;
+        cin >> c;
+        hs[--c]=1;
+    }
+
+    for (int i=0;i<m;i++){
+        int a,b,c;
+        cin >> a >> b >> c;
+
+        a--,b--;
+        graph[a].push_back({b,c});
+        graph[b].push_back({a,c});
+    }
+
+    vector<vector<long long>> d1(n,vector<long long>(2,1e18));
+    vector<vector<long long>> d2(n,vector<long long>(2,1e18));
+
+    dijkstra(0,d1,graph,hs);
+    dijkstra(n-1,d2,graph,hs);
+
+
+    long long best = 1e18;
+    auto get = [&](int a){return max(min(d1[a][0],d1[a][1]),min(d2[a][0],d2[a][1]));};
+
+    for (int i=0;i<n;i++) best = min(best,get(i));
+    
+    cout << (best==1e18?-1:best) << '\n';
+}
+
+int main(){
+    int t;
+    cin >> t;
+    while (t--) work();
+
+    return 0;
+}
+\end{lstlisting}
+
+\section{Hungry Games (CF 1994A)}
+Yaroslav is interested in how many (contiguous) subsegments of mushrooms can be selected such that the character's final toxicity level $g$ is not zero. The game mechanics are as follows:\br
+
+The character starts with a toxicity level $g = 0$. For each mushroom with toxicity level $k$, the toxicity level of the character is increased by $k$. \br
+
+If at any point $g > x$ (the maximum allowable toxicity level), the toxicity level g resets to zero. The goal is to count the number of subsegments $[l, r]$ such that the final toxicity level $g$ after eating mushrooms from $l$ to $r$ is not zero.\br
+
+You need to find how many such valid subsegments exist where the toxicity level does not exceed $x$ and doesn't reset to zero after completing the subsegment.\br
+\soln 
+$O(n\;log n)$
+\begin{lstlisting}[language=C++]
+#include<bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+int main() {
+    cin.tie(nullptr)->sync_with_stdio(false);
+
+    int tests;
+    cin >> tests;
+    while (tests--) {
+        int n;
+        ll x;
+        cin >> n >> x;
+        vector<ll> a(n + 1);
+        for (int i = 1; i <= n; ++i) cin >> a[i];
+        partial_sum(a.begin() + 1, a.end(), a.begin() + 1);
+        vector<int> dp(n + 2);
+        for (int i = n - 1; i >= 0; --i) {
+            int q = upper_bound(a.begin(), a.end(), a[i] + x) - a.begin();
+            dp[i] = dp[q] + q - i - 1;
+        }
+        cout << accumulate(dp.begin(), dp.end(), 0ll) << '\n';
+    }
+}
+\end{lstlisting}
+
+\section{Find Minimum Operations (CF 2020A)}
+given $n$ and $k$, each operation you can subtract any power of $k$ from n. return the min. operations needed to make $n$ equal to 0.
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int find_min_oper(int n, int k){
+	if(k == 1) return n;
+	int ans = 0;
+	while(n){
+		ans += n%k; // basically get the base k representation of n
+		n /= k; 
+	}
+	return ans;
+}
+ 
+int main()
+{
+	int t;
+	cin >> t;
+	while(t--){
+		int n,k;
+		cin >> n >> k;
+		cout << find_min_oper(n,k) << "\n";
+	}
+    return 0;
+}
+\end{lstlisting}
+
+\section{Brightness Begins (CF 2002B)}
+for $n$ light bulbs you do the following operation $n$ times from $i = 1,2,\dots,n$: flip every $i^{th}$ bulb (from on to off and vice versa). e.g. flip $1, 2, 3, 4\dots$, then flip $2, 4, 6\dots$, then $3,6,9\dots$\br
+find the minimum $n$ such that there are exactly $k$ light bulbs switched on. all bulbs are initially switched on.\br
+\soln
+if $x$ is a perfect square, then it has an odd number of divisors. in all other cases (where $x$ is not a perfect square), $x$ will have an even number of divisors (1 included). refer to the theorem for no. of divisors i.e. for $n = p_{1}^{a}\cdot p_{2}^{b} \dots $, no of divisors of $n$ = $(a+1)(b+1)\dots$\br binary search for the value of $n$. there will be $n-\left\lfloor\sqrt{n}\right\rfloor$ bulbs switched on, because $\left\lfloor\sqrt{n}\right\rfloor$ equals the number of perfect squares up to and including $n$ (which are switched off)
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t;
+    cin >> t;
+    while(t--){
+        long long k, l = 1, r = 2e18;
+        cin >> k;
+        while(r-l > 1){
+            long long mid = (l+r)>>1;
+            long long n = mid - int(sqrtl(mid));
+            if(n >= k) r = mid;
+            else l = mid;
+        }
+        cout << r << "\n";
+    }
+    return 0;
+}
+\end{lstlisting}
+
+\section{Bitwise Balancing (CF 2002C)}
+Given $b$, $c$ and $d$, find if there exists an $a$ such at $(a\;|\;b)-(a\;\&\;c)=d$ and return any of them. if it doesn't exist, return -1\br
+
+\soln
+since $(a\;|\;b) = x$ is greater than or equal to $(a\;\&\;c) = y$, at each bit, $x$ will not need to borrow from more significant bits to perform the subtraction. \br so for the $k^{th}$ bit of $d$ i.e. $d_{k}$, if $d_{k} = 0$ then either $x = 0$ and $y = 0$, or $x = 1$ and $y = 1$. \br in total there are $2^{3} = 8$ combinations of $b$, $c$ and $d$. so if the $k^{th}$ bit in $b$, $c$ and $d$ do not fit into any of the 8 cases, then it is not possible to find an $a$ that fits the requirements
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+ 
+void solve() {
+    ll a = 0, b, c, d, pos = 1, bit_b, bit_c, bit_d, mask = 1;
+    cin >> b >> c >> d;
+    for (ll i = 0; i < 62; i++) {
+        if (b&mask) bit_b = 1;
+        else bit_b = 0;
+        if (c&mask) bit_c = 1;
+        else bit_c = 0;
+        if (d&mask) bit_d = 1;
+        else bit_d = 0;
+        if ((bit_b && (!bit_c) && (!bit_d)) || ((!bit_b) && bit_c && bit_d)) {
+            pos = 0;
+            break;
+        }
+        if (bit_b && bit_c) {
+            a += (1ll-bit_d)*mask;
+        } else {
+            a += bit_d*mask;
+        }
+        mask<<=1;
+    }
+    if (pos) {
+        cout << a << "\n";
+    } else {
+        cout << -1 << "\n";
+    }
+}
+ 
+int main() {
+    ll t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+}
+\end{lstlisting}
+
 \end{document}
