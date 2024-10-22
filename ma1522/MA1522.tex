@@ -8,6 +8,7 @@
 \usepackage{enumitem} 	  % control description indentation
 \usepackage{tcolorbox}
 \usepackage{mathtools}
+%\usepackage{pifont} 	  % \ding{51} checkmark, \ding{55} x mark
 \tcbuselibrary{theorems}
 \tcbuselibrary{skins} 	  % enable enhanced tcb option
 \tcbuselibrary{breakable} % allow boxes to break to next page
@@ -26,6 +27,7 @@
 \definecolor{CadmiumRed}{rgb}{0.89, 0.0, 0.13}
 \definecolor{Silver}{rgb}{0.65, 0.65, 0.65}
 \definecolor{Amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{Byzantium}{rgb}{0.44, 0.16, 0.39}
 
 %:commands
 \newcommand{\R}[1]{\mbox{$\mathbb{R}^{#1}$}}  % R^n
@@ -39,6 +41,9 @@
 \newcommand{\orange}[1]{{\color{orange}#1}}
 \newcommand{\brown}[1]{{\color{brown}#1}}
 \newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\br}{\\\;\\}
+\newcommand{\true}{(\textbf{T})}
+\newcommand{\false}{(\textbf{F})}
 
 % Usage: \createNewTcbBox{name}{displayName}{prefix}{colour}
 \newcommand{\createNewTcbBox}[4]{
@@ -66,6 +71,8 @@
 \createNewTcbBox{algorithmBox}{Algorithm}{algo}{CadmiumRed}
 \createNewTcbBox{propertiesBox}{Properties}{props}{Silver}
 \createNewTcbBox{lemmaBox}{Lemma}{lemma}{Amethyst}
+\createNewTcbBox{noteBox}{Note}{note}{Byzantium}
+\createNewTcbBox{questionBox}{Question}{question}{Byzantium}
 	
 \newcommand{\defn}[1]{% Definition
 \begin{definitionBox}{}{}
@@ -73,36 +80,56 @@
 \end{definitionBox}%
 \vspace{0.1cm}
 }
+
 \newcommand{\theo}[1]{% Theorem
 \begin{theoremBox}{}{} 
 #1
 \end{theoremBox}%
 \vspace{0.1cm}
 }
+
 \newcommand{\corr}[1]{% Corollary
 \begin{corollaryBox}{}{}
 #1
 \end{corollaryBox}%
 \vspace{0.1cm}
 }
+
 \newcommand{\algo}[2]{% Algorithm
 \begin{algorithmBox}{#1}{}
 #2
 \end{algorithmBox}%
 \vspace{0.1cm}
 }
+
 \newcommand{\props}[2]{% Properties
 \begin{propertiesBox}{#1}{}
 #2
 \end{propertiesBox}%
 \vspace{0.1cm}
 }
+
 \newcommand{\lemma}[1]{% Lemma
 \begin{lemmaBox}{}{}
 #1
 \end{lemmaBox}%
 \vspace{0.1cm}
 }
+
+\newcommand{\note}[1]{% Note
+\begin{noteBox}{}{}
+#1
+\end{noteBox}%
+\vspace{0.1cm}
+}
+
+\newcommand{\qn}[1]{% Question
+\begin{questionBox}{}{}
+#1
+\end{questionBox}%
+\vspace{0.1cm}
+}
+
 \newcommand{\sectiontitle}[1]{% Section title
 \begin{flushleft}\large{\textbf{#1}}\end{flushleft}} 
 \newcommand{\chapter}[1]{% New chapter
@@ -121,6 +148,8 @@
 % Suppress underfull hbox warnings
 \hbadness = 10000
 
+%:[HIDE] Ch1-3
+\begin{comment}
 % ========================== Chapter 1 ==========================
 \chapter{Chapter 1: Linear Systems}
 
@@ -788,7 +817,7 @@ Then the \textbf{determinant} of \textbf{B} is obtained from the \textbf{determi
 \begin{itemize}
 \item If \textbf{E} corresponds to $R_{i}+aR_{j}$, then det(\textbf{E}) = 1.
 \item If \textbf{E} corresponds to $cR_{i}$, then det(\textbf{E}) = $c$.
-\item If \textbf{E} corresponds to $R_{i}+aR_{j}$, then det(\textbf{E}) = $-$1.
+\item If \textbf{E} corresponds to $R_{i}\leftrightarrow R_{j}$, then det(\textbf{E}) = $-$1.
 \end{itemize}
 }
 
@@ -1145,13 +1174,525 @@ Let $V$ be a subspace of \R{n}. Suppose $S =  \{ \Bf{u}_{1}  ,\dots, \Bf{u}_{k} 
 \theo{(Inverse of Transition Matrix) \\ \\ 
 Suppose $S = \{ \Bf{u}_{1},\dots, \Bf{u}_{k}\}$ and $T = \{ \Bf{v}_{1},\dots, \Bf{v}_{k} \}$ are \textbf{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the \textbf{transition matrix from $T$ to $S$}. Then $\Bf{P}^{-1}$ is the \textbf{transition matrix from $S$ to $T$}.}
 
+%:[HIDE] Ch 1-3
+\end{comment} 
+
+%:[HIDE] Ch 4
+%\begin{comment}
+
 % ========================== Chapter 4 ==========================
-%\chapter{Chapter 4: Subspaces Associated to a Matrix}
+\chapter{Chapter 4: Subspaces Associated to a Matrix}
 
-%\sectiontitle{4.1 Column Space, Row Space, and Nullspace}
+\sectiontitle{4.1 Column Space, Row Space, and Nullspace}
 
-%\sectiontitle{4.2 Rank}
+\defn{Let \textbf{A} be an $m\times n$ matrix, 
+\[ \Bf{A}=\left( \begin{matrix}a_{11} & a_{12} & \dots & a_{1n}\\ a_{21} & a_{22} & \dots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \dots & a_{mn} \end{matrix} \right) \] \\
+The \textbf{row space} of \textbf{A} is the subspace of \R{n} spanned by the rows of \textbf{A}, 
+\[\text{Row(\textbf{A})} = \text{span}\{(a_{11}\q a_{12}\q \dots\q a_{1n}),(a_{21}\q a_{22}\q \dots\q a_{2n}),\dots,(a_{m1}\q a_{m2}\q \dots\q a_{mn})\}\] 
+The \textbf{column space} of \textbf{A} is the subspace of \R{m} spanned by the columns of \textbf{A}, 
+\[
+\text{Col(\textbf{A})} = \text{span} \left\{ \begin{pmatrix} a_{11} \\ a_{21} \\ \vdots \\  a_{m1} \end{pmatrix}, \begin{pmatrix} a_{12} \\ a_{22} \\ \vdots \\  a_{m2} \end{pmatrix}, \dots, \begin{pmatrix} a_{1n} \\ a_{2n} \\ \vdots \\  a_{mn} \end{pmatrix} \right\}
+\]
+\textbf{Remark}: May write the vectors in row space as column vectors.
+}
 
+\theo{(Row operations preserve row space)\br
+Suppose \textbf{A} and \textbf{B} are \textbf{row equivalent matrices}. Then $Row(\Bf{A})=Row(\Bf{B})$.
+}
+
+\theo{(Basis for row space)\br
+For any matrix \textbf{A}, the \textbf{nonzero rows} of the \textbf{reduced row-echelon form} of \textbf{A} form a \textbf{basis} for the row space of \textbf{A}.
+}
+
+\theo{(Row operations preserve linear relations between columns)\br
+Let $\Bf{A}=(\Bf{a}_{1}\q\Bf{a}_{2}\q\dots\q\Bf{a}_{n})$ and $\Bf{B}=(\Bf{b}_{1}\q\Bf{b}_{2}\q\dots\q\Bf{b}_{n})$ be row equivalent $m\times n$ matrices, where $\Bf{a}_{i}$ and $\Bf{b}_{i}$ is the $i$-th column of \textbf{A} and \textbf{B}, respectively, for $i=1,\dots,n$. Then for any coefficients $c_{1},c_{2},\dots,c_{n}$,
+\[c_{1}\Bf{a}_{1}+c_{2}\Bf{a}_{2}+\dots+c_{n}\Bf{a}_{n}=\Bf{0}\]
+if and only if 
+\[c_{1}\Bf{b}_{1}+c_{2}\Bf{b}_{2}+\dots+c_{n}\Bf{b}_{n}=\Bf{0}\]
+}
+
+\theo{(Basis for column space)\br
+Suppose \textbf{R} is the reduced row-echelon form of a matrix \textbf{A}. Then the columns of \textbf{A} corresponding to the pivot columns in \textbf{R} form a basis for the column space of \textbf{A}.\br
+The column space is the set of vectors \textbf{v} such that \textbf{Ax = v} is consistent, or the set of vectors \textbf{v} such that \textbf{v = Au} for some \textbf{u},
+\[
+Col(\Bf{A})=\{\Bf{v = Au}\;|\;\Bf{u}\in\mathbb{R}^{k}\}=\{\Bf{v}\;|\;\Bf{Ax = v}\text{ is consistent}\}.
+\]
+}
+
+\defn{
+
+The \textbf{nullspace} of a $m\times n$ matrix \textbf{A} is the solution space to the homogeneous system \textbf{Ax = 0} with coefficient matrix \textbf{A}. It is denoted as 
+\[
+Null(\textbf{A})=\{\Bf{v}\in\mathbb{R}^{n}\;|\;\Bf{Av = 0}\}.
+\]
+
+Whenever we come across a subspace, we are interested in its dimensions.\br
+The \textbf{nullity} of \textbf{A} is the dimension of the nullspace of \textbf{A}, denoted as
+\[
+nullity(\Bf{A})=dim(Null(\Bf{A}))
+\]
+}
+
+\sectiontitle{4.2 Rank}
+
+\theo{Let \textbf{A}
+ be a $m\times n$
+ matrix and \textbf{R}
+ its reduced row-echelon form.
+\begin{flalign*}
+\text{dim(Col(\textbf{A}))}&=\text{\# of pivot columns in RREF of \textbf{A},}\\
+&=\text{\# of leading entries in RREF of \textbf{A},}\\
+&=\text{\# of nonzero rows in RREF of \textbf{A} = dim(Row(\textbf{A}))}\\
+\end{flalign*}
+}
+
+\defn{
+Define the \textbf{rank} of \textbf{A} to be the dimension of its column space or row space
+\[ rank(\Bf{A})=dim(Col(\Bf{A}))=dim(Row(\Bf{A}))\]
+}
+
+\theo{
+Rank is invariant under transpose, 
+\[rank(\Bf{A})=rank(\Bf{A}^{T})\]
+}
+
+\theo{
+The linear system \textbf{Ax = b}
+ is \textbf{consistent} if and only if 
+the rank of \textbf{A}
+ is equal to the rank of the augmented matrix $(\Bf{A}\;|\;\textbf{b})$,
+\[
+rank(\Bf{A})=rank((\Bf{A\;|\;\Bf{b}})).
+\]
+}
+
+\lemma{
+Let \textbf{A} be a $m\times n$ matrix and \textbf{B} a $n\times p$ matrix. The column space of the product \textbf{AB} is a subspace of the column space of \textbf{A},\[\text{Col}(\Bf{AB})\subseteq \text{Col} (\Bf{A})\]
+}
+
+\theo{
+Let \textbf{A} be a $m\times n$ matrix and \textbf{B} a $n\times p$ matrix. Then
+\[
+rank(\Bf{AB})\leq \text{min}\{rank(\Bf{A}),rank(\Bf{B})\}
+\]
+}
+
+\theo{
+If \textbf{A} and \textbf{B} are \textbf{row equivalent} matrices, then $rank(\Bf{A})=rank(\Bf{B})$.
+}
+
+\theo{(Rank-Nullity Theorem)\br
+Let \textbf{A} be a $m\times n$  matrix. The sum of its rank and nullity is equal to the number of columns,
+\[rank(\Bf{A})+nullity(\Bf{A})=n\]
+}
+
+\theo{
+(Equivalent Statements of Invertibility)
+\begin{enumerate}
+	\setcounter{enumi}{11}
+	\item \textbf{A} is of full rank, $rank(\Bf{A})=n$.
+	\item $nullity(\Bf{A})=0$.
+\end{enumerate}
+}
+
+\theo{(Full Rank Equals Number of Columns)\br
+Suppose \textbf{A} is a $m\times n$ matrix. The following statements are equivalent.
+\begin{enumerate}
+	\item \textbf{A} is full rank, where the rank is equal to the number of columns, $rank(\Bf{A})=n$.
+	\item The rows of \textbf{A} spans \R{n}, $\text{Row(\textbf{A})=}$ \R{n}.
+	\item The columns of \textbf{A} are linearly independent.
+	\item The homogeneous system \textbf{Ax = 0} has only the trivial solution, that is, $Null(\Bf{A})=\{\Bf{0}\}$.
+	\item $\Bf{A}^{T}\Bf{A}$ is an invertible matrix of order $n$.
+	\item \textbf{A} has a left inverse.
+\end{enumerate} 
+The reduced row-echelon form of \textbf{A} is 
+\[
+\Bf{R}=\begin{pmatrix} \Bf{I}_{n} \\ \Bf{0}_{(m-n)\times n} \end{pmatrix}
+\]
+}
+
+\theo{(Full Rank Equals Number of Rows)\br
+Suppose \textbf{A} is a $m\times n$ matrix. The following statements are equivalent.
+\begin{enumerate}
+	\item \textbf{A} is full rank, where the rank is equal to the number of columns, $rank(\Bf{A})=m$.
+	\item The columns of \textbf{A} spans \R{m}, $\text{Col(\textbf{A})=}$ \R{m}.
+	\item The rows of \textbf{A} are linearly independent.
+	\item The linear system \textbf{Ax = b} is consistent for every \textbf{b} $\in$ \R{m}.
+	\item $\Bf{A}\Bf{A}^{T}$ is an invertible matrix of order $m$.
+	\item \textbf{A} has a right inverse.
+\end{enumerate} 
+The reduced row-echelon form of \textbf{A} is 
+\[
+\Bf{R}=
+\begin{pmatrix} 
+1 & \dots & 0 & \dots & 0 & \dots & 0 & \dots \\
+0 & \dots & 1 & \dots & 0 & \dots & 0 & \dots \\
+0 & \dots & 0 & \dots & 1 & \dots & 0 & \dots \\
+\vdots & \dots & \vdots & \dots & \vdots & \dots & \vdots & \dots \\
+0 & \dots & 0 & \dots & 0 & \dots & 1 & \dots \\
+\end{pmatrix}
+\]
+
+}
+
+%:[HIDE] Ch 4
+%\end{comment} 
+
+% ========================== Chapter 5 ==========================
+\chapter{Chapter 5: Orthogonality and Least Square Solution}
+
+\sectiontitle{5.1 Orthogonality}
+
+\defn{Two vectors $\Bf{u}, \Bf{v}$ in \R{n} are \textbf{orthogonal} if $\Bf{u}\cdot \Bf{v}=0$.\br In this case, either one of the vectors is the zero vector, or that they are \textbf{perpendicular}. }
+
+\defn{
+A set $S=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{k}\}$ of vectors is \textbf{orthogonal} if $\Bf{v}_{i}\cdot \Bf{v}_{j}=0$ for every $i\not=j$, that is, vectors in $S$ are \textbf{pairwise orthogonal}.\br A set $S=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{k}\}$  of vectors is \textbf{orthonormal} if for all $i,j=1,\dots,k$, \[\Bf{v}_{i}\cdot \Bf{v}_{j}=\begin{cases}0\q \text{ if }i \not= j, \\ 1\q \text{ if }i = j. \end{cases}\] That is, $S$ is \textbf{orthogonal}, and all the vectors are \textbf{unit vectors}.}
+
+\note{\textbf{Orthogonal} set can contain zero vector $\Bf{0}$.\br \textbf{Orthonormal} set cannot contain $\Bf{0}$.}
+
+\defn{Let $V$ be a subspace of \R{n}. A vector $n\in$ \R{n} is \textbf{orthogonal} to $V$ if for every $\Bf{v}$ in $V$, $\Bf{n}\cdot\Bf{v}=0$, that is, $\Bf{n}$ is \textbf{orthogonal} to every vector in $V$. We will denote it as $\Bf{n}\perp\Bf{V}$.}
+
+\theo{
+Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a spanning set for $V$, span($S$)=$V$. Then a vector $\Bf{w}$ is \textbf{orthogonal} to $V$ if and only if $\Bf{w}\cdot\Bf{u}_{i}=0$ for all $i=1,\dots,k$. 
+}
+
+\theo{
+Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a spanning set for $V$. Then $\Bf{w}$ is \textbf{orthogonal} to $V$ if and only if $\Bf{w}$ is in the nullspace of $\Bf{A}^{T}$, where $\Bf{A}=(\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{k})$; \[ \Bf{w}\perp V \q\Leftrightarrow\q \Bf{w}\in Null(\Bf{A}^{T})\]
+}
+
+\defn{
+Let $V$ be a subspace of \R{n}. The \textbf{orthogonal complement} of $V$ is the set of all vectors that are \textbf{orthogonal} to $V$, and is denoted as \[ V^{\perp}=\{ \Bf{w}\in\mathbb{R}^{n}\;|\;\Bf{w}\cdot\Bf{v}=0 \text{ for all }\Bf{v} \text{ in } V\} \]
+}
+
+\theo{
+Let $V$ be a subspace of \R{n} and $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a spanning set for $V$. Let $\Bf{A}=(\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{k})$. Then the \textbf{orthogonal complement} of $V$ is the nullspace of $\Bf{A}^{T}$, \[ V^{\perp}=Null(\Bf{A}^{T})\]
+}
+
+\note{
+Let $\Bf{A}$ be a $m\times n$ matrix. The nullspace of $\Bf{A}$ is the orthogonal complement of the row space of $\Bf{A}$, \[ Row(\Bf{A})^{\perp}=Null(\Bf{A})\]
+}
+
+\sectiontitle{5.2 Orthogonal and Orthonormal Bases}
+
+\defn{
+Suppose $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is an \textbf{orthogonal set} of \textbf{nonzero} vectors. Then $S$ is linearly independent.
+}
+
+\theo{
+Every \textbf{orthonormal set} is \textbf{linearly independent}.
+}
+
+\defn{
+Let $V$ be a subspace of \R{n}. A set $S\subseteq V$ is an \textbf{orthogonal basis} (resp, \textbf{orthonormal basis}) of $V$ if $S$ is a basis of $V$ and $S$ is an \textbf{orthogonal} (resp, \textbf{orthonormal}) set.
+}
+
+\theo{
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be an orthogonal basis for a subspace $V$ of \R{n}. Then for any $\Bf{v}\in V$, \[ \Bf{v} = \big(  \frac{\mathbf{v}\cdot \mathbf{u}_1}{  \parallel \mathbf{u}_1 \parallel^2 }  \big)\mathbf{u}_1 + \big(  \frac{\mathbf{v}\cdot \mathbf{u}_2}{  \parallel \mathbf{u}_2 \parallel^2 }  \big)\mathbf{u}_2 + \dots + \big(  \frac{\mathbf{v}\cdot \mathbf{u}_k}{  \parallel \mathbf{u}_k \parallel^2 }  \big)\mathbf{u}_k \]
+If further $S$ is an \textbf{orthonormal basis}, then \[ \Bf{v}=(\Bf{v}\cdot\Bf{u}_{1})\Bf{u}_{1}+(\Bf{v}\cdot\Bf{u}_{2})\Bf{u}_{2}+\dots+(\Bf{v}\cdot\Bf{u}_{k})\Bf{u}_{k} \] that is, $S$ orthogonal, $[\Bf{v}]_{s}=\begin{pmatrix} \frac{\mathbf{v}\cdot \mathbf{u}_1}{  \parallel \mathbf{u}_1 \parallel^2 }  \\ \ \\ \frac{\mathbf{v}\cdot \mathbf{u}_2}{  \parallel \mathbf{u}_2 \parallel^2 }\\ \ \\ \vdots\\ \ \\ \frac{\mathbf{v}\cdot \mathbf{u}_k}{  \parallel \mathbf{u}_k \parallel^2 } \end{pmatrix} $, $S$ orthonormal, $[\Bf{v}]_{S}\begin{pmatrix} \mathbf{v}\cdot \mathbf{u}_1  \\ \mathbf{v}\cdot \mathbf{u}_2 \\ \vdots \\ \mathbf{v}\cdot \mathbf{u}_k  \end{pmatrix} $.\br Note that this only works if $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is an orthogonal or orthonormal basis.
+}
+
+\note{
+Let $V$ be a subspace of \R{n} and $S$ an \textbf{orthonormal basis} of $V$. For any $\Bf{u},\Bf{v}\in V$, \begin{enumerate}
+\item $\Bf{u}\cdot\Bf{v}=[\Bf{u}]_{S}\cdot[\Bf{v}]_{S}$
+\item $\parallel \Bf{u-v} \parallel \;=\; \parallel [\Bf{u}]_{S}-[\Bf{v}]_{S} \parallel$
+\end{enumerate}
+}
+
+\defn{
+A $n\times n$ square matrix $\Bf{A}$ is \textbf{orthogonal} if $\Bf{A}^{T}=\Bf{A}^{-1}$, equivalently, $\Bf{A}^{T}\Bf{A}=\Bf{I}=\Bf{A}\Bf{A}^{T}$.
+}
+
+\theo{
+Let \textbf{A} be a square matrix of order $n$. The following statements are equivalent.
+\begin{enumerate}
+\item \textbf{A} is an \textbf{orthogonal matrix}.
+\item The \textbf{columns} of \textbf{A} form an \textbf{orthonormal basis} for \R{n}.
+\item The \textbf{rows} of \textbf{A} form an \textbf{orthonormal basis} for \R{n}.
+\end{enumerate}
+}
+
+\note{The term 'orthonormal matrix' is not used.}
+
+\qn{
+Let $W$ be a subspace of dimension 3. We can never find an orthonormal subset of $W$ containing 4 vectors. (\textbf{T})\br Orthonormal set is linearly independent and if $W$ contains a set of 4 linearly independent vectors, then $3=\text{dim}(W)\geq 4$, a contradiction. An orthonormal set is linearly independent. Also, if $U$ and $V$ are subspaces such that $U\subseteq V$, then $dim(U)\leq dim(V)$.
+}
+
+\qn{
+Which is true regarding an orthogonal set $S$ containing 3 non-zero vectors in \R{3}?
+\begin{enumerate}
+\item The set $S$ must be linearly independent \true
+\item $S$ is a basis for \R{3} \true
+\item Each pair of vectors in $S$ are perpendicular to each other \true
+\item The set $S$ must span \R{3} \true
+\end{enumerate} 
+Nonzero orthogonal vectors are perpendicular to each other, and is thus linearly independent.
+}
+
+\qn{
+An orthogonal set must be linearly independent. \true \br Orthogonal set can contain the zero vector, which makes the set linearly dependent.
+}
+
+\qn{
+Let $S=\left\{  \begin{pmatrix} 1/\sqrt{2} \\ 1/\sqrt{2} \\ 0 \end{pmatrix}, \begin{pmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \\ 0 \end{pmatrix} \right\}$ be a basis for a subspace $V$ in \R{3}. Let $\Bf{v}=\begin{pmatrix}3\\ 4\\ 0\end{pmatrix}$. What is the norm of $[\Bf{v}]_{S}$, $\parallel [\Bf{v}]_{S} \parallel$?\br $\sqrt{3^{2}+4^{2}}=5$. If $S$ is an orthonormal basis for $V$, then for any vector $v\in V$, $\parallel \Bf{v} \parallel \;=\; \parallel [\Bf{v}]_{S} \parallel$.
+}
+
+\qn{
+A square matrix \textbf{A} of order $n$ is orthogonal if the columns or rows of \textbf{A} form an orthogonal basis for \R{n}. \false \br
+The columns and/or columns need to form an orthonormal basis, not an orthogonal basis, in order for \textbf{A} to be orthogonal.
+}
+
+\sectiontitle{5.3 Orthogonal Projection}
+
+\theo{Orthogonal projection theorem\br
+Let $V$ be a subspace of \R{n}. Every vector $\Bf{w}$ in \R{n} can be decomposed \textbf{uniquely} as a sum \[\Bf{w}=\Bf{w}_{p}+\Bf{w}_{n}\]where $\Bf{w}_{n}$ is orthogonal to $V$ and  $\Bf{w}_{p}$ is in $V$. Moreover, if $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ is an \textbf{orthogonal basis} for $V$, then \[\Bf{w}_{p}=\frac{\Bf{w}\cdot\Bf{u}_{1}}{\Bf{u}_{1}\cdot\Bf{u}_{1}}\Bf{u}_{1}+\frac{\Bf{w}\cdot\Bf{u}_{2}}{\Bf{u}_{2}\cdot\Bf{u}_{2}}\Bf{u}_{2}+\dots+\frac{\Bf{w}\cdot\Bf{u}_{k}}{\Bf{u}_{k}\cdot\Bf{u}_{k}}\Bf{u}_{k}.\]
+}
+
+\defn{
+Define the vector $\Bf{w}_{p}$ in the theorem above as the \textbf{orthogonal projection} (or just \textbf{projection}) of $\Bf{w}$ onto the subspace $V$.
+}
+
+\theo{Best Approximation Theorem\br
+Let $V$ be a subspace of \R{n} and $\Bf{w}$ a vector in \R{n}. Let $\Bf{w}_{p}$ be the projection of $\Bf{w}$ onto $V$. Then $\Bf{w}_{p}$ is a vector in $V$ closest to $\Bf{w}$; that is, \[\parallel \Bf{w-w_{p}}\parallel \;\leq\; \parallel \Bf{w-v} \parallel\] for all $\Bf{v}$ in $V$.
+}
+
+\defn{Gram-Schmidt Orthogonalization\br
+Let $S=\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{k}\}$ be a linearly independent set. Let \begin{flalign*}
+&\Bf{v}_{1}=\Bf{u}_{1}\\
+&\Bf{v}_{2}=\Bf{u}_{2}-\left(\frac{\Bf{v}_{1}\cdot\Bf{u}_{2}}{\parallel\Bf{v}_{1}\parallel^{2}}\right)\Bf{v}_{1}\\
+&\Bf{v}_{3}=\Bf{u}_{3}-\left(\frac{\Bf{v}_{1}\cdot\Bf{u}_{3}}{\parallel\Bf{v}_{1}\parallel^{2}}\right)\Bf{v}_{1}-\left(\frac{\Bf{v}_{2}\cdot\Bf{u}_{3}}{\parallel\Bf{v}_{2}\parallel^{2}}\right)\Bf{v}_{2}\\
+&\q\vdots\\
+&\Bf{v}_{3}=\Bf{u}_{3}-\left(\frac{\Bf{v}_{1}\cdot\Bf{u}_{k}}{\parallel\Bf{v}_{1}\parallel^{2}}\right)\Bf{v}_{1}-\left(\frac{\Bf{v}_{2}\cdot\Bf{u}_{k}}{\parallel\Bf{v}_{2}\parallel^{2}}\right)\Bf{v}_{2}-\dots-\left(\frac{\Bf{v}_{k-1}\cdot\Bf{u}_{k}}{\parallel\Bf{v}_{k-1}\parallel^{2}}\right)\Bf{v}_{k-1}\\
+\end{flalign*}
+
+Then $V=\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{k}\}$ is an \textbf{orthogonal} set (of nonzero vectors), and hence, \[ \left\{ \frac{\Bf{v}_{ 1 }}{\parallel \Bf{v}_{1} \parallel},\frac{\Bf{v}_{ 2 }}{\parallel \Bf{v}_{2} \parallel},\dots,\frac{\Bf{v}_{ k }}{\parallel \Bf{v}_{k} \parallel} \right\} \] is an \textbf{orthonormal set} such that $\text{span}\{\Bf{v}_{1},\dots,\Bf{v}_{k}\}=\text{span}\{\Bf{u}_{1},\dots,\Bf{u}_{k}\}$. 
+}
+
+\sectiontitle{5.4 QR Factorization}
+
+\defn{
+Suppose now \textbf{A} is a $m\times n$ matrix with linearly independent columns, i.e. $rank(\Bf{A})=n$. Write \[ \Bf{A}=(\Bf{a}_{1}\q\Bf{a}_{2}\q\dots\q\Bf{a}_{n}). \] Since the set $S=\{\mathbf{a}_{1},\mathbf{a}_{2},\dots,\mathbf{a}_{n}\}$ is \textbf{linearly independent} we may apply the \textbf{Gram-Schmidt process} on $S$ to obtain an \textbf{orthonormal set} $\{\mathbf{q}_{1},\mathbf{q}_{2},\dots,\mathbf{q}_{n}\}$. Set \[ \Bf{Q}=(\Bf{q}_{1}\q\Bf{q}_{2}\q\dots\q\Bf{q}_{n}). \] Recall that for any $j=1,2,\dots,n$, $\text{span}\{\Bf{a}_{1},\Bf{a}_{2},\dots,\Bf{a}_{j}\}=\text{span}\{\Bf{q}_{1},\Bf{q}_{2},\dots,\Bf{q}_{j}\}$. In particular, $\Bf{a}_{j}$ is in $\text{span}\{\Bf{q}_{1},\Bf{q}_{2},\dots,\Bf{q}_{j}\}$. Thus we may write \[ \Bf{a}_{j}= r_{1j}\Bf{q}_{1}+r_{2j}\Bf{q}_{2}+\dots+r_{jj}\Bf{q}_{j}+0\Bf{q}_{j+1}+\dots+0\Bf{q}_{n} = (\Bf{q}_{1}\q\dots\q\Bf{q}_{j}\q\dots\q\Bf{q}_{n}) \begin{pmatrix}r_{1j} \\ \vdots \\ r_{jj} \\ 0 \\ \vdots \\ 0 \end{pmatrix} \]
+Explicitly,
+\begin{flalign*}
+& \Bf{a}_{1}=r_{11}\Bf{q}_{1}= (\Bf{q}_{1}\q\dots\q\Bf{q}_{n}) \begin{pmatrix}r_{11} \\ 0 \\ \vdots \\ 0 \end{pmatrix} \\
+& \Bf{a}_{2}=r_{12}\Bf{q}_{1} + r_{22}\Bf{q}_{2} = (\Bf{q}_{1}\q\dots\q\Bf{q}_{n}) \begin{pmatrix}r_{12} \\ r_{22} \\ \vdots \\ 0 \end{pmatrix} \\
+& \q\vdots \\
+& \Bf{a}_{n}=r_{1n}\Bf{q}_{1} + r_{2n}\Bf{q}_{2} + \dots + r_{nn}\Bf{q}_{n} = (\Bf{q}_{1}\q\dots\q\Bf{q}_{n}) \begin{pmatrix}r_{1n} \\ r_{2n} \\ \vdots \\ r_{nn} \end{pmatrix} \\
+\end{flalign*}
+Thus, we may write
+\begin{flalign*}
+A &= (\Bf{a}_{1}\q\Bf{a}_{2}\q\dots\q\Bf{a}_{n}) \\
+&= (\Bf{q}_{1}\q\Bf{q}_{2}\q\dots\q\Bf{q}_{n}) \begin{pmatrix} r_{11} & r_{12} & \dots & r_{1n}\\ 0 & r_{22} & \dots & r_{2n}\\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & r_{nn} \end{pmatrix} \\
+&= \Bf{QR}\\
+\end{flalign*} 
+for some $m\times n$ matrix \textbf{Q} with \textbf{orthonormal columns}, and a \textbf{upper triangular} $n\times n$  matrix \textbf{R}.
+}
+
+\note{
+$\Bf{Q}^{T}\textbf{Q}=\Bf{I}_{n}$.\br
+The diagonal entries of \textbf{R} are positive, $r_{ii}>0$ for all $i=1,2,\dots,n$.\br
+The upper triangular matrix \textbf{R} is invertible.
+}
+
+\theo{(QR Factorization)\br
+Suppose \textbf{A} is a $m\times n$ matrix with \textbf{linearly independent} columns. Then \textbf{A} can be written as \textbf{A = QR} for some $m\times n$ matrix \textbf{Q} such that $\Bf{Q}^{T}\textbf{Q}=\Bf{I}_{n}$ and \textbf{invertible} upper triangular matrix \textbf{R} with \textbf{positive} diagonal entries.
+}
+
+\defn{The decomposition given in the theorem above is called a \textbf{QR factorization} of \textbf{A}.}
+
+\algo{to QR Factorization}{
+Let \textbf{A} be a $m\times n$ matrix with \textbf{linearly independent} columns.
+\begin{enumerate}
+\item Perform Gram-Schmidt on the columns of $\Bf{A} = (\Bf{a}_{1}\q\Bf{a}_{2}\q\dots\q\Bf{a}_{n})$ to obtain an \textbf{orthonormal set} $\{\mathbf{q}_{1},\mathbf{q}_{2},\dots,\mathbf{q}_{n}\}$.
+\item Set $\Bf{Q}=\{\mathbf{q}_{1},\mathbf{q}_{2},\dots,\mathbf{q}_{n}\}$.
+\item Compute $\Bf{R}=\Bf{Q}^{T}\Bf{A}$. 
+\end{enumerate}
+}
+
+\corr{
+Suppose \textbf{A} is a $m\times n$ matrix with \textbf{linearly independent} columns, i.e. $rank(\Bf{A})=n$. Then $\Bf{A}^{T}\Bf{A}$ is invertible, and \textbf{A} has a \textbf{left inverse}; that is, there is a \textbf{B} such that $\Bf{BA}=\Bf{A}_{n}$
+}
+
+\sectiontitle{5.5 Least Square Approximation}
+
+\defn{
+Let \textbf{A} be a $m\times n$ matrix and \textbf{b} a vector in \R{m}. A vector \textbf{u} in \R{n} is a \textbf{least square solution} of \textbf{Ax = b} if for every vector $\Bf{v}\in\R{n}$, \[ \parallel \Bf{Au-b} \parallel\; \leq\; \parallel \Bf{Av-b} \parallel  \]
+}
+
+\theo{Let \textbf{A} be a $m\times n$ matrix and \textbf{b} a vector in \R{m}. A vector \textbf{u} in \R{n} is a \textbf{least square solution} to \textbf{Ax = b} if and only if \textbf{u} is the \textbf{projection} of \textbf{b} onto the column space of \textbf{A}, $Col(A)$.
+}
+
+\theo{Let \textbf{A} be a $m\times n$ matrix and \textbf{b} a vector in \R{m}. A vector \textbf{u} in \R{n} is a \textbf{least square solution} to \textbf{Ax = b} if and only if \textbf{u} is a solution to $\Bf{A}^{T}\Bf{Ax=A}^{T}\Bf{b}$.
+}
+
+\note{Least square solutions are not unique, but projection is unique.}
+
+\note{
+Let \textbf{A} be a $m\times n$ matrix and \textbf{b} a vector in \R{n}. For any choice of \textbf{least square solution u}, that is, for any solution \textbf{u} of $\Bf{A}^{T}\Bf{Ax=A}^{T}\Bf{b}$., the projection \textbf{Au} is unique.
+}
+
+\theo{Let \textbf{V} be a subspace of \R{n} and $S = \{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{k}\}$ be a \textbf{spanning set} for $V$.  Set $\Bf{A} = (\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{k})$. Let \textbf{w} be a vector in \R{n}, and \textbf{u} be a least square solution to \textbf{Ax = w}. Then $\Bf{w}_{p}=\Bf{Au}$ is the \textbf{orthogonal projection} of a vector \textbf{w} onto $V$.\br In particular, if $S = \{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{k}\}$ is a \textbf{basis} for $V$, then the \textbf{orthogonal projection} of a vector \textbf{w} onto $V$ is \[ \Bf{w}_{p}=\Bf{A}(\Bf{A}^{T}\Bf{A})^{-1}\Bf{A}^{T}\Bf{w}. \]
+}
+
+\note{For any $m\times n$ matrix \textbf{A} and $\Bf{b}\in$ \R{n}, $\Bf{A}^{T}\Bf{Ax=A}^{T}\Bf{b}$ is always consistent. (The rank of $\Bf{A}^{T}\Bf{A}$ is always equal to ($\Bf{A}^{T}\Bf{A}\q\Bf{A}^{T}\Bf{b}$))}
+
+\qn{
+Let \textbf{u}
+ be a solution to $\Bf{A}^{T}\Bf{Ax=A}^{T}\Bf{b}$
+. Which of the following statement is false?
+\begin{itemize}
+\item \textbf{u} is a least square solution to \textbf{Ax = b} \true
+\item \textbf{Au - b} is orthogonal to the column space of \textbf{A} \true 
+\item \textbf{u} is the unique solution to $\Bf{A}^{T}\Bf{Ax=A}^{T}\Bf{b}$ \false
+\item For any vector $\Bf{v}\in$ \R{n}, $\parallel \Bf{Au-b} \parallel\; \leq\; \parallel \Bf{Av-b} \parallel$ \true
+\item \textbf{Au} is the projection of \textbf{b} onto the column space of \textbf{A} \true 
+\end{itemize}
+}
+
+\qn{If \textbf{u} is a solution to \textbf{Ax = b}, then \textbf{u} is a least square solution to \textbf{Ax = b}. \true}
+
+\qn{
+Suppose $rank(\Bf{A})=$ number of columns of \textbf{A}. Which of the statements is always true?
+\begin{itemize}
+\item $\Bf{A}(\Bf{A}^{T}\Bf{A})^{-1}\Bf{A}^{T}\Bf{b}$ is the unique least square solution to \textbf{Ax = b} \false
+\item $(\Bf{A}^{T}\Bf{A})^{-1}\Bf{A}^{T}\Bf{b}$ is the unique least square solution to \textbf{Ax = b} \true
+\item $(\Bf{A}^{T}\Bf{A})^{-1}\Bf{A}^{T}\Bf{b}$ is the unique solution to \textbf{Ax = b} \false
+\end{itemize}
+Full rank implies $\Bf{A}^{T}\Bf{A}$ is invertible. 
+}
+
+
+\chapter{6 Eigenanalysis}
+\sectiontitle{6.1 Eigenvalues and Eigenvectors}
+
+\defn{
+Let \textbf{A} be a \textbf{square} matrix of order $n$. A real number $\lambda$ is an \textbf{eigenvalue} of \textbf{A} if there is a \textbf{nonzero} vector \textbf{v} in \R{n}, $\Bf{v}\not=0$, such that \[\Bf{Av}=\lambda\Bf{v}.\] In this case, the nonzero vector \textbf{v} is called an \textbf{eigenvector} associated to $\lambda$. Let \textbf{A} be a \textbf{square} matrix of order $n$, the \textbf{characteristic polynomial} of \textbf{A}, denoted as $\text{char}(\Bf{A})$, is the degree $n$ polynomial \[ \text{det}(x\Bf{I}-\Bf{A}).\]
+}
+
+\theo{
+Let \textbf{A} be a \textbf{square} matrix of order $n$. $\lambda\in$ \R{n} is an \textbf{eigenvalue} of \textbf{A} if and only if the homogeneous system $(\lambda\Bf{I}-\Bf{Ax=0})$ has \textbf{nontrivial} solutions.}
+
+\theo{Let \textbf{A} be a \textbf{square} matrix of order $n$. $\lambda$ is an \textbf{eigenvalue} of \textbf{A} if and only if $\lambda$ is a \textbf{root} of the \textbf{characteristic polynomial} $\text{det}(x\Bf{I}-\Bf{A}).$.
+}
+
+\theo{(Equivalent statements for invertibility)\br 14. A \textbf{square} matrix \textbf{A} is \textbf{invertible} if and only if $\lambda=0$ is \textbf{not} an \textbf{eigenvalue} of \textbf{A}.} 
+
+\defn{
+Let $\lambda$ be an eigenvalue of \textbf{A}. The \textbf{algebraic multiplicity} of $\lambda$ is the \textbf{largest integer} $r_{\lambda}$ such that \[\text{det}(x\Bf{I}-\Bf{A})=(x-\lambda)^{r_{\lambda}}p(x)\] for some polynomial $p(x)$. Alternatively, $r_{\lambda}$ is the \textbf{positive integer} such that in the above equation, $\lambda$ is \textbf{not a root} of $p(x)$. Suppose \textbf{A} is an order $n$ square matrix such that $\text{det}(x\Bf{I}-\Bf{A})$ can be \textbf{factorized} into \textbf{linear factors completely}.\br Then we can write \[\text{det}(x\Bf{I}-\Bf{A})=(x-\lambda_{1})^{r_{1}}(x-\lambda_{2})^{r_{2}}\dots(x-\lambda_{k})^{r_{1k}}\] where $r_{1}+r_{2}+\dots+r_{k}=n$, and $\lambda,\lambda_{2},\dots,\lambda_{k}$ are the \textbf{distinct eigenvalues} of \textbf{A}.\br Then the \textbf{algebraic multiplicity} of $\lambda_{i}$ is $r_{i}$ for $i=1,\dots,k$.
+}
+
+\theo{The \textbf{eigenvalues} of a \textbf{triangular matrix} are the \textbf{diagonal entries}. The \textbf{algebraic multiplicity} of the eigenvalue is the number of times it appears as a diagonal entry of \textbf{A}.}
+
+\defn{
+The \textbf{eigenspace} associated to an eigenvalue $\lambda$ of \textbf{A} is \[E_{\lambda}=\{\Bf{v}\in\mathbb{R}^{n}\;|\;\Bf{Av}=\Bf{\lambda v}\}=Null(\Bf{\lambda I-A}).\] The \textbf{geometric multiplicity} of an eigenvalue $\lambda$ is the \textbf{dimension} of its associated eigenspace, \[dim(E_{\lambda})=nullity(\Bf{\lambda I-A})\]
+}
+
+\note{
+If \textbf{A} and \textbf{B} are row equivalent order $n$ square matrices, if $\lambda$ is an eigenvalue of \textbf{A}, it is not guaranteed to be an eigenvalue of \textbf{B}. If \textbf{v} is an eigenvector of \textbf{A}, it is not guaranteed to be an eigenvector of \textbf{B}.\br This is because row operations affect the determinant of the matrix, so eigenvalues and eigenvectors are not preserved. 
+}
+
+\note{
+Let \textbf{A} be a $n\times n$ matrix. The characteristic polynomial of \textbf{A} is equal to the characteristic polynomial of $\Bf{A}^{T}$. Hence \textbf{A} and $\Bf{A}^{T}$ has the same eigenvalues.\br Let $\lambda$ be an eigenvalue of \textbf{A}. The geometric multiplicity of $\lambda$ as an eigenvalue of \textbf{A} is equal to its geometric multiplicity as an eigenvalue of $\Bf{A}^{T}$.
+}
+
+\sectiontitle{6.2 Diagonalizaton}
+
+\defn{
+A square matrix \textbf{A} of order $n$ is \textbf{diagonalizable} if there exists an \textbf{invertible} matrix \textbf{P} such that \[\Bf{P}^{-1}\Bf{AP}=\Bf{D}\] is a \textbf{diagonal} matrix, OR \[\Bf{A}=\Bf{P}\Bf{DP}^{-1}\]
+}
+
+\defn{
+A $n\times n$ square matrix \textbf{A} is \textbf{diagonalizable} if and only if \textbf{A} has $n$ \textbf{linearly independent eigenvectors}. That is, \textbf{A} is \textbf{diagonalizable} if and only if \[ \Bf{P}=(\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n}),\text{ and } \Bf{D}=\begin{pmatrix} \mu_{1} & 0 & \dots & 0\\ 0 & \mu_{2} & \dots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & \mu_{n} \end{pmatrix}, \] where $\mu_{i}$ is the \textbf{eigenvalue} associated to \textbf{eigenvector} $\Bf{u}_{i}$, $i=1,2,\dots,n$,$\Bf{Au}_{i}=\mu_{i}\Bf{u}_{i}$, and $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{n}\}$ is a \textbf{basis} for \R{n}. 
+}
+
+\theo{(Eigenspaces are linearly independent)\br
+Let \textbf{A} be a $n\times n$ \textbf{square} matrix. Let $\lambda_{1}$  and $\lambda_{2}$ be \textbf{distinct eigenvalues} of \textbf{A}, $\lambda_{1}\not=\lambda_{2}$. Suppose $\{\mathbf{u}_{1},\dots,\mathbf{u}_{k}\}$ is a \textbf{linearly independent} subset of eigenspace associated to eigenvalue $\lambda_{1}$, and $\{\mathbf{v}_{1},\dots,\mathbf{v}_{m}\}$ is a \textbf{linearly independent} subset of of eigenspace associated to eigenvalue $\lambda_{2}$. Then the union $\{\mathbf{u}_{1},\dots,\mathbf{u}_{k},\mathbf{v}_{1},\dots,\mathbf{v}_{m}\}$ is \textbf{linearly independent}.
+ }
+ 
+\theo{(Geometric Multiplicity is no greater than Algebraic multiplicity)\br
+The \textbf{geometric multiplicity} of an \textbf{eigenvalue} $\lambda$  of a square matrix \textbf{A} is \textbf{no greater} than the \textbf{algebraic multiplicity}, that is,\[1\leq \text{dim}(E_{\lambda})\leq r_{\lambda}\]
+}
+
+\theo{(Equivalent Statements for Diagonalizability)\br
+Let \textbf{A} be a square matrix of order $n$. The following statements are equivalent.
+\begin{enumerate}
+\item \textbf{A} is diagonalizable.
+\item There exists a \textbf{basis} $\{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{n}\}$ of \R{n} of \textbf{eigenvectors} of \textbf{A}.
+\item The \textbf{characteristic polynomial} of \textbf{A} \textbf{splits} into \textbf{linear factors}, \[ \text{det}(x\Bf{I}-\Bf{A})=(x-\lambda_{1})^{r_{\lambda_{1}}}(x-\lambda_{2})^{r_{\lambda_{2}}}\dots(x-\lambda_{k})^{r_{\lambda_{k}}} \] where $r_{\lambda_{i}}$ is the \textbf{algebraic multiplicity} of $\lambda_{i}$, for $i=1,\dots,k$, and the \textbf{eigenvalues} are \textbf{distinct}, $\lambda_{i}\not=\lambda_{j}$ for all $i\not=j$, and the \textbf{geometric multiplicity} is equal to the \textbf{algebraic multiplicity} for each eigenvalue $\lambda_{i}$, \[ \text{dim}(E_{\lambda_{i}})=r_{\lambda_{i}} \]
+\end{enumerate}
+}
+
+\defn{
+A \textbf{square} matrix \textbf{A}
+ of order $n$
+ is \textbf{not diagonalizable} if either
+\begin{enumerate}
+\item the characteristic polynomial $ \text{det}(x\Bf{I}-\Bf{A}) $ does not split into linear factors, or
+\item there exists an eigenvalue $\lambda$ such that $\text{dim}(E_{\lambda}) < r_{\lambda}$.
+\end{enumerate}
+}
+
+\algo{to Diagonalization}{
+Let \textbf{A}
+ be an order $n$
+ square matrix.
+\begin{enumerate}
+\item Compute the characteristic polynomial. \textbf{If the characteristic polynomial does not split into linear factors, A is not diagonalizable.} Otherwise, write \[\text{det}(x\Bf{I}-\Bf{A})=(x-\lambda_{1})^{r_{\lambda_{1}}}(x-\lambda_{2})^{r_{\lambda_{2}}}\dots(x-\lambda_{k})^{r_{\lambda_{k}}}\]
+\item For each eigenvalue $\lambda_{i}$ of \textbf{A}, $i=1,\dots,k$, find a basis $S_{\lambda_{i}}$  for the eigenspace, that is, find a basis $S_{\lambda_{i}}$  for the solution space of the following linear system, \[(\lambda_{i}\Bf{I}-\Bf{A})\Bf{x=0}\]
+\textbf{Compute first the eigenspace associated to eigenvalues with algebraic multiplicity greater than 1. If} $\text{dim}(E_{\lambda_{i}}) < r_{\lambda}$ \textbf{, A is not diagonalizable.}
+\item Let $S=\bigcup_{i=1}^{k}{S_{\lambda_{i}}} $. Then $S = \{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{n}\}$ is a basis for \R{n} consisting of eigenvectors of \textbf{A}.
+\item Let $\Bf{P} = (\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n})$, and $\Bf{D}=diag(\mu_{1},\mu_{2},\dots,\mu_{n})$, where $\mu_{i}$ is the eigenvalue associated to $\Bf{u}_{i}$, $i=1,\dots,n$, \[\Bf{Au}_{i}=\mu_{i}\Bf{u}_{i}\] 
+Then \[ \Bf{A} = \Bf{PDP}^{-1} = (\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n}) \begin{pmatrix} \mu_{1} & 0 & \dots & 0\\ 0 & \mu_{2} & \dots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & \mu_{n} \end{pmatrix} (\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n})^{-1}
+\]
+\end{enumerate}
+}
+
+\qn{
+Suppose \textbf{A} is diagonalizable. Which of the following statement(s) is/are true?\br
+If the diagonal matrix \textbf{D} is fixed, then the invertible matrix \textbf{P} is fixed. \false \br
+If the invertible matrix \textbf{P} is fixed, then the diagonal matrix \textbf{D} is fixed. \true
+}
+
+\sectiontitle{6.3 Orthogonally Diagonalizable}
+
+\defn{An order $n$ square matrix \textbf{A} is \textbf{orthogonally diagonalizable} if \[\Bf{A}=\Bf{PDP}^{T}\]for some \textbf{orthogonal matrix} \textbf{P} and \textbf{diagonal} matrix \textbf{D}.}
+
+\theo{(The Spectral Theorem)\br
+Let \textbf{A} be a $n\times n$ square matrix. \textbf{A} is \textbf{orthgonally diagonalizable} if and only if \textbf{A} is \textbf{symmetric}.}
+
+\theo{(Equivalent statements for orthogonally diagonalizable)\br
+Let \textbf{A} be a square matrix of order $n$. The following statements are equivalent.
+\begin{enumerate}
+\item \textbf{A} is orthogonally diagonalizable.
+\item There exists an orthonormal basis $\{\Bf{u}_{1},\Bf{u}_{2},\dots,\Bf{u}_{n}\}$ of \R{n} of \textbf{eigenvectors} of \textbf{A}.
+\item \textbf{A} is a \textbf{symmetric} matrix.
+\end{enumerate}
+\textbf{A} is \textbf{orthogonally diagonalizable} if and only if
+\[\Bf{P}=(\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n}),\text{ and }\Bf{D}=\begin{pmatrix} \mu_{1} & 0 & \dots & 0\\ 0 & \mu_{2} & \dots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & \mu_{n} \end{pmatrix} \] where $\mu_{i}$ is the \textbf{eigenvalue} associated to \textbf{eigenvector} $\Bf{u}_{i}$, $i=1,\dots,n$ , $\Bf{Au}_{i}=\mu_{i}\Bf{u}_{i}$, and $\{\Bf{u}_{1},\Bf{u}_{2},\dots,\Bf{u}_{n}\}$ is an \textbf{orthonormal basis} for \R{n}.
+}
+
+\theo{(Eigenspaces of a symmetric matrix is orthogonal)\br
+If \textbf{A} is a \textbf{symmetric} matrix, then the \textbf{eigenspaces} are \textbf{orthogonal} to each other. That is, suppose $\lambda_{1}$ and $\lambda_{2}$ are \textbf{distinct eigenvalues} of a \textbf{symmetric matrix A}, $\lambda_{2}\not=\lambda_{2}$, and $\Bf{v}_{i}$ is an eigenvector associated to eigenvalue $\lambda_{i}$, for $i=1,2$. Then $\Bf{v}_{1}\cdot\Bf{v}_{2}=0$.
+}
+
+\algo{to Orthogonal Diagonalization}{
+Let \textbf{A}
+ be an order $n$
+ symmetric matrix. Since \textbf{A}
+ is symmetric, it is orthogonally diagonalizable.
+\begin{enumerate}
+\item Compute the characteristic polynomial \[\text{det}(x\Bf{I}-\Bf{A})=(x-\lambda_{1})^{r_{\lambda_{1}}}(x-\lambda_{2})^{r_{\lambda_{2}}}\dots(x-\lambda_{k})^{r_{\lambda_{k}}}\]
+\item For each eigenvalue $\lambda_{i}$ of \textbf{A}, $i=1,\dots,k$, find a basis $S_{\lambda_{i}}$ for the eigenspace, that is, find a basis $S_{\lambda_{i}}$ for the solution space of the following linear system, \[(\lambda_{i}\Bf{I}-\Bf{A})\Bf{x}=0.\]
+\item Apply Gram-Schmidt process to each basis $S_{\lambda_{i}}$ of the eigenspace $E_{\lambda_{i}}$ to obtain an orthonormal basis $T_{\lambda_{i}}$. Let $T=\bigcup_{i=1}^{k}{T_{\lambda_{i}}} $. Then $T=\{\Bf{u}_{1},\Bf{u}_{2},\dots,\Bf{u}_{n}\}$ is an orthonormal basis for \R{n}.
+\item Let $\Bf{P}=(\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n})$, and $\Bf{D}=diag(\mu_{1},\mu_{2},\dots,\mu_{n})$, where $\mu_{i}$ is the eigenvalue associated to $\Bf{u}_{i}$, $i=1,\dots,n$, $\Bf{Au}_{i}=\mu_{i}\Bf{u}_{i}$. Then \textbf{P} is an orthogonal matrix, and \[\Bf{A}=\Bf{PDP}^{T}=(\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n})\begin{pmatrix} \mu_{1} & 0 & \cdots & 0\\ 0 & \mu_{2} & \cdots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & \mu_{n} \end{pmatrix}\begin{pmatrix}\Bf{u}_{1}^{T}\\ \Bf{u}_{2}^{T} \\ \vdots \\ \Bf{u}_{n}^{T} \end{pmatrix}.\]
+\end{enumerate}
+}
+
+\sectiontitle{6.4 Application of Diagonalization: Markov Chain}
+\sectiontitle{6.5 Application of Orthogonal Diagonalization: Singular Value Decomposition}
+
+\chapter{7 Linear Transformation}
+\sectiontitle{7.1 Introduction to Linear Transformation}
+\sectiontitle{7.2 Range and Kernel of Linear Transformation}
 
 \end{document}
 
