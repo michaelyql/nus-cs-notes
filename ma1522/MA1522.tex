@@ -1688,7 +1688,95 @@ Let \textbf{A}
 }
 
 \sectiontitle{6.4 Application of Diagonalization: Markov Chain}
+
+\theo{
+Suppose $\Bf{A}=\Bf{PDP}^{-1}$. Then $\Bf{A}^{m}=\Bf{PD}^{m}\Bf{P}^{-1}$.
+}
+
+\theo{(Powers of diagonal matrices)\br
+Let $\Bf{D}=\begin{pmatrix} d_{1} & 0 & \cdots & 0\\ 0 & d_{2} & \cdots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & d_{n} \end{pmatrix}$ be a diagonal matrix. Then for any positive integer $m$, $\Bf{D}^{m}=\begin{pmatrix} d_{1}^{m} & 0 & \cdots & 0\\ 0 & d_{2}^{m} & \cdots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & d_{n}^{m}\end{pmatrix}$.}
+
+\corr{(Powers of diagonalizable matrices)\br
+Suppose \textbf{A} is  \textbf{diagonalizable}. Write $\Bf{A}=\Bf{P}\begin{pmatrix} \mu_{1} & 0 & \cdots & 0\\ 0 & \mu_{2} & \cdots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & \mu_{n} \end{pmatrix}\Bf{P}^{-1}$. Then for any positive integer $k>0$, \[ \Bf{A}^{k} = \Bf{P}\begin{pmatrix} \mu_{1}^{k} & 0 & \cdots & 0\\ 0 & \mu_{2}^{k} & \cdots & 0\\ \vdots & \ & \ddots & \vdots \\ 0 & 0 & \dots & \mu_{n}^{k} \end{pmatrix}\Bf{P}^{-1}\] Moreover, if \textbf{A} is \textbf{invertible}, then the identity above holds for any integer $k\in\mathbb{Z}$.
+}
+
+\defn{
+\begin{enumerate}
+\item A vector $\Bf{v}=(v_{i})_{n}$ with \textbf{nonnegative} coordinates that add up to 1, $\sum_{i=1}^{n}v_{i}=1$, is called a \textbf{probability vector}.
+\item A \textbf{stochastic matrix} is a square matrix whose columns are \textbf{probability vectors}.
+\item A \textbf{Markov chain} is a sequence of \textbf{probability vectors} $\Bf{x}_{0},\Bf{x}_{1},\dots,\Bf{x}_{k},\dots$, together with a \textbf{stochastic matrix P} such that \[ \Bf{x}_{1}=\Bf{Px}_{0},\q\Bf{x}_{2}=\Bf{Px}_{1},\q\dots\q,\q\Bf{x}_{k}=\Bf{Px}_{k-1},\dots\]
+\end{enumerate}
+A \textbf{steady-state vector}, or \textbf{equilibrium vector} for a \textbf{stochastic matrix P} is a \textbf{probability vector} that is an \textbf{eigenvector} associated to eigenvalue 1. 
+}
+
+\theo{
+Let \textbf{P} be a $n\times n$ \textbf{stochastic matrix} and \[ \Bf{x}_{0},\q\Bf{x}_{1}=\Bf{Px}_{0},\q\Bf{x}_{2}=\Bf{Px}_{1},\q\dots\q,\q\Bf{x}_{k}=\Bf{Px}_{k-1}\] be a \textbf{Markov chain} for some probability vector $\Bf{x}_{0}$. If the Markov chain \textbf{converges}, it will converge to an \textbf{equilibrium vector}. 
+}
+
+\defn{(Google PageRank Algorithm)\br
+Suppose the set $S$ contains $n$ sites.\br We define the \textbf{adjacency matrix} for $S$ for be the order $n$ square matrix $\Bf{A}=(a_{ij})$ where \[ a_{ij}=\begin{cases} 1\q\text{ if site \emph{j} has an outgoing link to site \emph{i};} \\ 0\q\text{ if site \emph{j} does not have an outgoing link to site \emph{i}.}\end{cases} \] From the \textbf{adjacency matrix} \textbf{A}, we define the \textbf{probability transition matrix} $\Bf{P}=(p_{ij})$ by dividing each entry of \textbf{A} by the sum of the entries in the same column; that is \[ p_{ij}=\frac{a_{ij}}{\sum_{k=1}^{n}a_{kj}}\]
+}
+
+\defn{
+A stochastic matrix is \textbf{regular} if for some positive integer $k>0$, the matrix power $\Bf{P}^{k}$ has positive entries, \[\Bf{P}^{k}=(a_{ij})_{n},\q a_{ij}>0 \text{ for all }i,j=1,\dots,n.\]
+}
+
+\theo{
+Suppose \[ \Bf{x}_{1}=\Bf{Px}_{0},\q\Bf{x}_{2}=\Bf{Px}_{1},\q\dots\q,\q\Bf{x}_{k}=\Bf{Px}_{k-1},\dots\]is a Markov chain and \textbf{P} is a \textbf{regular stochastic matrix}. Then The Markov chain \textbf{will converge} to the \textbf{unique equilibrium vector}.
+}
+
+\algo{to Computing Equilibrium vector}{
+Let \textbf{P} be a $n\times n$ stochastic matrix.
+\begin{enumerate}
+\item Find an eigenvector \textbf{u} associate to eigenvalue $\lambda=1$, that is, find a nontrivial solution to the homogeneous system  $\Bf{(I-P)x=0}$.
+\item Write $\Bf{u}=(u_{i})$. Then
+\end{enumerate}
+\[ \Bf{v}=\frac{1}{\sum_{k=1}^{n}u_{k}}\Bf{u} \] will be an equilibrium vector. Indeed, the $i$-th coordinate of \textbf{v} is $\frac{u_{i}}{\sum_{k=1}^{n}u_{k}}$ and hence, the sum of the coordinates of \textbf{v} is \[\sum_{i=1}^{n}\frac{u_{i}}{\sum_{k=1}^{n}u_{k}}=\frac{\sum_{k=1}^{n}u_{i}}{\sum_{k=1}^{n}u_{k}}=1 \] Alternatively, the equilibrium eigenvectors are solutions to the equation \[ \begin{pmatrix} \Bf{P-I}_{n} \\ 1\q1\q\dots\q1 \end{pmatrix}\Bf{x}=\begin{pmatrix}0\\ \vdots \\ 0 \\ 1 \end{pmatrix}\] where $\Bf{I}_{n}$ is the $n\times n$ identity matrix. Here $\begin{pmatrix} \Bf{P-I}_{n} \\ 1\q1\q\dots\q1 \end{pmatrix}$ is the $(n+1)\times n$ matrix whose first $n$ rows are the matrix $\Bf{P-I}_{n}$, and the last row has all entries 1.
+}
+
 \sectiontitle{6.5 Application of Orthogonal Diagonalization: Singular Value Decomposition}
+
+\theo{
+(Singular value decomposition)\br
+Let \textbf{A} be a $m\times n$ matrix. Then \[\Bf{A}=\Bf{U\Sigma V}^{T}\]where \textbf{U} is an order $m$ orthogonal matrix, \textbf{V} an order $n$ orthogonal matrix, and the matrix $\Bf{\Sigma}$ has the form \[\Bf{\Sigma}=\begin{pmatrix}\Bf{D} & \Bf{0}_{r\times(n-r)}\\ \Bf{0}_{(m-r)\times r} & \Bf{0}_{(m-r)\times(n-r)}\end{pmatrix}\] for some diagonal matrix \textbf{D} of order $r$, where $r\leq \text{min}\{m,n\}$.
+}
+
+\algo{to Singular Value Decomposition}{
+Let \textbf{A} be a $m\times n$ matrix with $rank(\Bf{A})=r$.
+\begin{enumerate}
+\item The matrix $\Bf{A}^{T}\Bf{A}$ is a symmetric matrix, and is thus orthogonally diagonalizable. Find the eigenvalues of $\Bf{A}^{T}\Bf{A}$. Arrange the nonzero eigenvalues in descending order (counting multiplicity) \[ \mu_{1}\geq \mu_{2}\geq\dots\geq\mu_{r}>0=\mu_{r+1}=\dots=\mu_{n} \]
+\item Let $\sigma_{i}=\sqrt{\mu_{i}},i=1,\dots,r$, \[ \sigma_{1}=\sqrt{\mu_{1}} \geq \sigma_{2}=\sqrt{\mu_{2}} \geq\dots\geq \sigma_{r}=\sqrt{\mu_{r}} \] These are the positive \textbf{singular values} of \textbf{A}. Set \[ \Bf{\Sigma} = \begin{pmatrix} \begin{matrix} \sigma_{1} & 0 & \cdots & 0\\ 0 & \sigma_{2} & \cdots & 0\\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \sigma_{r} \end{matrix}  & \Bf{0}_{r\times(n-r)} \\ \Bf{0}_{(m-r)\times r} & \Bf{0}_{(m-r)\times(n-r)} \end{pmatrix}\]
+\item Proceed to find an orthonormal basis $\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{n}\}$ of \R{n} consisting of eigenvectors of $\Bf{A}^{T}\Bf{A}$ (section 6.3) such that $\Bf{v}_{i}$ is an eigenvector associated to $\mu_{i}$. Set \[\Bf{V}=(\mathbf{v}_{1}\q\mathbf{v}_{2}\q\dots\q\mathbf{v}_{n}).\]
+\item Let $\Bf{u}_{i}=\frac{1}{\sigma_{i}}\Bf{Av}_{i}$ for $i=1,\dots,r$. Then the set $\{\mathbf{u}_{1},\dots,\mathbf{u}_{r}\}$ is an orthonormal basis for the column space of \textbf{A}. If $r=m$, set $\Bf{U}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{r})$.\br 
+Otherwise, extend $\{\mathbf{u}_{1},\dots,\mathbf{u}_{r}\}$ to an orthonormal basis for \R{m} as such. Find a basis for the solution space of \[ (\mathbf{u}_{1}\q\dots\q\mathbf{u}_{r})^{T}\Bf{x}=\Bf{0} \]\\ Perform Gram-Schmidt process on the basis found to obtain an orthonormal set $\{\mathbf{u}_{r+1},\dots,\mathbf{u}_{m}\}$. This set is an orthonormal basis for the orthogonal complement of the column space of \textbf{A}.\br
+Then $\{\mathbf{u}_{1},\dots,\mathbf{u}_{r},\mathbf{u}_{r+1},\dots,\mathbf{u}_{m}\}$ is an orthonormal basis for \R{m}. Set \[\Bf{U}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{n}).\]
+\item Then \[ \Bf{A}=\Bf{U\Sigma V}^{T}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{n})\begin{pmatrix} \begin{matrix} \sigma_{1} & 0 & \cdots & 0\\ 0 & \sigma_{2} & \cdots & 0\\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \sigma_{r} \end{matrix}  & \Bf{0}_{r\times(n-r)} \\ \Bf{0}_{(m-r)\times r} & \Bf{0}_{(m-r)\times(n-r)} \end{pmatrix}\begin{pmatrix}\Bf{v}_{1}^{T}\\ \Bf{v}_{2}^{T} \\ \vdots \\ \Bf{v}_{n}^{T} \end{pmatrix} \]
+\end{enumerate}
+}
+
+\note{
+\[\Bf{\Sigma}^{T}\Bf{\Sigma}=\begin{pmatrix}
+\mu_{1} & 0 & \dots & 0 & \dots & 0 \\
+0 & \mu_{2} & \dots & 0 & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & \mu_{r} & \dots & 0 \\
+\vdots & \vdots & \ddots & \vdots & \ddots & \vdots \\
+0 & 0 & \dots & 0 & \dots & \mu_{n} \\
+\end{pmatrix}\] where $\mu_{i},i=1,\dots,n$ is the eigenvalues of $\Bf{A}^{T}\Bf{A}$; that is $\Bf{A}^{T}\Bf{A}=\Bf{P\Sigma}^{T}\Bf{\Sigma P}^{T}$, where $\Bf{P}=(\mathbf{v}_{1}\q\mathbf{v}_{2}\q\dots\q\mathbf{v}_{n})$ and $\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{n}\}$ be an orthonormal basis for \R{n} of eigenvectors of $\Bf{A}^{T}\Bf{A}$.
+}
+
+\note{
+$\Bf{Av}_{i}\not=\Bf{0}$ for all $i\leq r$ and $\Bf{Av}_{i}=\Bf{0}$ for all $i>r$.
+}
+
+\qn{
+$rank(\Bf{A})=n$ if and only if all the singular values of \textbf{A} are positive. (?) \br
+$rank(\Bf{A})=m$  if and only if all the singular values of $\Bf{A}^{T}$ are positive. (?)
+}
+
+\note{
+If \textbf{A} is a symmetric matrix, then the singular values of \textbf{A} are the absolute value of the eigenvalues of \textbf{A}.
+}
 
 \chapter{7 Linear Transformation}
 \sectiontitle{7.1 Introduction to Linear Transformation}
