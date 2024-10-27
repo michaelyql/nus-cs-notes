@@ -1337,6 +1337,7 @@ The reduced row-echelon form of \textbf{A} is
 
 %:[HIDE] Ch 4
 %\end{comment} 
+%\begin{comment}
 
 % ========================== Chapter 5 ==========================
 \chapter{Chapter 5: Orthogonality and Least Square Solution}
@@ -1777,10 +1778,134 @@ $rank(\Bf{A})=m$  if and only if all the singular values of $\Bf{A}^{T}$ are pos
 \note{
 If \textbf{A} is a symmetric matrix, then the singular values of \textbf{A} are the absolute value of the eigenvalues of \textbf{A}.
 }
+%\end{comment}
 
 \chapter{7 Linear Transformation}
+
 \sectiontitle{7.1 Introduction to Linear Transformation}
+
+\defn{
+A mapping (function) $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$, is a \textbf{linear transformation} if for all vectors \textbf{u, v} in \R{n}, and scalars $\alpha, \beta$
+, \[ T(\alpha\Bf{u}+\beta\Bf{v})=\alpha T(\Bf{u})+\beta T(\Bf{v})\] The Euclidean space \R{n} is called the \textbf{domain} of the mapping, and the Euclidean space \R{m} is called the \textbf{codomain} of the mapping. \br Equivalently, a mapping $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$, is a \textbf{linear transformation} if it satisfies the following properties.
+\begin{enumerate}
+\item For any vector \textbf{u} in \R{n} and scalar $\alpha$, \[ T(\alpha \Bf{u})=\alpha T(\Bf{u}) \]
+\item For any vectors \textbf{u, v} in \R{n}, \[ T(\Bf{u+v})=T(\Bf{u})+T(\Bf{v}) \]
+\end{enumerate} 
+By induction, we have that for any vectors $\Bf{u}_{1},\Bf{u}_{2}\dots,\Bf{u}_{k}$ in \R{n} and scalars $c_{1},c_{2},\dots,c_{k}$, \[ T(c_{1}\Bf{u}_{1}+c_{2}\Bf{u}_{2}+\dots+c_{k}\Bf{u}_{k}) = c_{1}T(\Bf{u}_{1})+ c_{2}T(\Bf{u}_{2})+\dots+ c_{k}T(\Bf{u}_{k}) \]
+Any $m\times n$ matrix \textbf{A} defines a linear transformation $T_{\Bf{A}}:\mathbb{R}^{n} \rightarrow \mathbb{R}^{m}$ by multiplication, \[ T_{\Bf{A}}(\Bf{u})=\Bf{Au} \text{ for any } \Bf{u}\in \mathbb{R}^{n} \]
+A mapping  $\Bf{T}:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is \textbf{not a linear transformation} if any of the following statements hold.
+\begin{enumerate}
+\item \textbf{T} does not map the zero vector to the zero vector, $\Bf{T(0)}\not=\Bf{0}$.
+\item There is a scalar $\alpha$ and a vector \textbf{u} in \R{n} such that $\Bf{T}(\alpha\Bf{u})\not=\alpha\Bf{T(u)}$.
+\item There are vectors \textbf{u, v} in \R{n} such that $\Bf{T(u+v)\not=T(u)+T(v)}$.
+\end{enumerate}
+}
+
+\theo{(Standard matrix of linear transformation)\br
+A mapping $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is a \textbf{linear transformation} if and only if there is a \textbf{unique} $m\times n$ matrix \textbf{A} such that \[ T(\Bf{u})=\Bf{Au}\q\text{for all vectors \textbf{u} in }\mathbb{R}^{n}.\]
+The matrix \textbf{A} is given by \[ \Bf{A}=(T(\Bf{e}_{1})\q T(\Bf{e}_{2})\q\dots\q T(\Bf{e}_{n}))\] where $E=\{\Bf{e}_{1},\Bf{e}_{2},\dots,\Bf{e}_{n}\}$ is the \textbf{standard basis} for \R{n}. That is, the $i$-th column of \textbf{A} is $T(\Bf{e}_{1})$, for $i=1,\dots,n$.
+}
+
+\defn{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. The unique $m\times n$ matrix \textbf{A} such that \[ T(\Bf{u})=\Bf{Au}\q\text{for all \textbf{u} in }\mathbb{R}^{n}\] is called the \textbf{standard matrix}, or \textbf{matrix representation} of $T$.
+}
+
+\defn{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation} and $S = \{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{n}\}$ be a basis for \R{n}. The \textbf{representation of} $T$ \textbf{with respect to basis} $S$ , denoted as $[T]_{S}$, is defined to be the $m\times n$ matrix \[[T]_{S}=(T(\Bf{u}_{1})\q T(\Bf{u}_{2})\q\dots\q T(\Bf{u}_{n}))\]
+We are only able to find the standard matrix or the formula of a linear transformation $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ if and only if we are given the image of $T$ on a basis of \R{n}.
+}
+
+\theo{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a linear transformation and $S = \{\mathbf{u}_{1},\mathbf{u}_{2},\dots,\mathbf{u}_{n}\}$ be a basis for \R{n}. Then for any vector \textbf{v} in \R{n} , \[ T(\Bf{v})=[T]_{S}[\Bf{v}]_{S}\]
+that is, the image $T(\Bf{v})$ is the product of the representation of $T$ with respect to basis $S$ with the coordinates \textbf{v} with respect to basis $S$.\br
+Moreover, if \textbf{P} is the transition matrix from the standard basis $E$ of \R{n} to basis $S$, then the standard matrix \textbf{A} of $T$ is given by \[ \Bf{A} = [T]_{S}\Bf{P} \]
+}
+
 \sectiontitle{7.2 Range and Kernel of Linear Transformation}
+
+\defn{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. The \textbf{range} of $T$ is \[\text{R}(T)=T(\mathbb{R}^{n})=\{\;\Bf{v}\in\mathbb{R}^{m}\;|\;\Bf{v}=T(\Bf{u})\text{ for some }\Bf{u}\in\mathbb{R}^{n}\;\}\]
+}
+
+\theo{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. The \textbf{range} of $T$ is a subspace.\br Let \textbf{A} be the standard matrix of $T$. Then the range of $T$ is the column space of \textbf{A}, \[ \text{R}(T)=\{\;\Bf{v}=T(\Bf{u})\;|\;\Bf{u}\in\mathbb{R}^{n}\;\}=\{\; \Bf{v}=\Bf{Au}\;|\;\Bf{u}\in\mathbb{R}^{n}\;\}=\text{Col}(\Bf{A})\]
+}
+
+\defn{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. The \textbf{rank} of $T$ is the dimension of the range of $T$ \[\text{rank}(T)=\text{dim(R(}T))\] Let \textbf{A} be the standard matrix of $T$. Then the rank of $T$ is equal to the rank of \textbf{A}, \[\text{rank}(T)=\text{dim(R(}T))=\text{dim(Col(}\Bf{A}))=\text{rank}(\Bf{A})\]
+}
+
+\defn{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. The set of all vectors in \R{n} that maps to the zero vector \textbf{0} by $T$ is called the \textbf{kernel} of $T$, and is denoted as \[\text{Ker}(T)=\{\;\Bf{u}\in\mathbb{R}^{n}\;|\;T(\Bf{u})=\Bf{0}\;\}\]
+}
+
+\theo{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. The \textbf{kernel} of $T$ is a subspace.\br Let \textbf{A} be the standard matrix of $T$. Then the kernel of $T$ is the nullspace of \textbf{A}, \[ \text{ker}(T)=\{\;\Bf{u}\in\mathbb{R}^{n}\;|\;\Bf{Au}=T(\Bf{u})=\Bf{0}\;\}=\text{Null}(\Bf{A}).\]
+}
+
+\defn{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. The \textbf{nullity} of $T$ is the \textbf{dimension} of the kernel of $T$, \[ \text{nullity}(T)=\text{dim(Ker}(T))\] 
+Let \textbf{A} be the standard matrix of $T$. Then the nullity of $T$ is equal to the nullity of \textbf{A}, \[ \text{nullity}(T)=\text{dim(Ker}(T))=\text{dim(Null}(\Bf{A}))=\text{nullity}(\Bf{A}) \]
+}
+
+\defn{
+A mapping $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is \textbf{injective}, or \textbf{one-to-one} if for every vector \textbf{v} in the range of $T$, $\Bf{v}\in\text{R}(T)$, there is a \textbf{unique u} in \R{n} such that $T(\Bf{u})=\Bf{v}$. \br Alternatively, $T$ is injective if whenever $T(\Bf{u}_{1})=T(\Bf{u}_{2})$, then $\Bf{u}_{1}=\Bf{u}_{2}$.
+}
+
+\theo{
+A \textbf{linear transformation} $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is \textbf{injective} if and only if the kernel is \textbf{trivial}, $\text{ker}(T)=\{\Bf{0}\}$.\br Let \textbf{A} be the standard matrix of $T$. Then $T$ is injective if and only if the homogeneous system \textbf{Ax = 0} has only the trivial solution.
+}
+
+\theo{(Full Rank Equals Number of Columns)\br
+Suppose \textbf{A} is a $m\times n$ matrix. The following statements are equivalent.
+\begin{enumerate}
+	\item \textbf{A} is full rank, where the rank is equal to the number of columns, $rank(\Bf{A})=n$.
+	\item The rows of \textbf{A} spans \R{n}, $\text{Row(\textbf{A})=}$ \R{n}.
+	\item The columns of \textbf{A} are linearly independent.
+	\item The homogeneous system \textbf{Ax = 0} has only the trivial solution, that is, $Null(\Bf{A})=\{\Bf{0}\}$.
+	\item $\Bf{A}^{T}\Bf{A}$ is an invertible matrix of order $n$.
+	\item \textbf{A} has a left inverse.
+	\item The linear transformation $T_{\Bf{A}}:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$, $T_{\Bf{A}}(\Bf{v})=\textbf{Av}$ defined by \textbf{A} is injective.
+\end{enumerate}
+}
+
+\note{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a linear transformation. If $T$ is injective, then necessarily $n\leq m$.
+}
+
+\defn{
+A \textbf{linear transformation} $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is \textbf{surjective} or \textbf{onto} if for every \textbf{v} in the codomain \R{m}, \textbf{there exists} a \textbf{u} in the domain \R{n} such that $T(\Bf{u})=\Bf{v}$. Or equivalently, $T$ is surjective if the range is the codomain, $\text{R}(T)=$ \R{m}.\br Let \textbf{A} be the standard matrix of $T$. Then $T$ is surjective if and only if the column space of \textbf{A} is equal to \R{m}. This means that the rank of \textbf{A} is equal to the number of rows.
+}
+
+\theo{(Full Rank Equals Number of Rows)\br
+Suppose \textbf{A} is a $m\times n$ matrix. The following statements are equivalent.
+\begin{enumerate}
+	\item \textbf{A} is full rank, where the rank is equal to the number of columns, $rank(\Bf{A})=m$.
+	\item The columns of \textbf{A} spans \R{m}, $\text{Col(\textbf{A})=}$ \R{m}.
+	\item The rows of \textbf{A} are linearly independent.
+	\item The linear system \textbf{Ax = b} is consistent for every \textbf{b} $\in$ \R{m}.
+	\item $\Bf{A}\Bf{A}^{T}$ is an invertible matrix of order $m$.
+	\item \textbf{A} has a right inverse.
+	\item The linear transformation $T_{\Bf{A}}:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$, $T_{\Bf{A}}(\Bf{v})=\textbf{Av}$ defined by \textbf{A} is surjective.
+\end{enumerate} 
+}
+
+\note{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a linear transformation. If $T$ is surjective, then necessarily $n\geq m$.
+}
+
+\theo{
+Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformation}. Then $T$ is both \textbf{injective} and \textbf{surjective} if and only if $n=m$ and the matrixrepresentation of $T$ is \textbf{invertible}.
+}
+
+\theo{(Equivalent statements for invertibility)\br
+15. The \textbf{linear transformation} $T_{\Bf{A}}:\mathbb{R}^{n} \rightarrow \mathbb{R}^{m}$, $T_{\Bf{A}}(\Bf{v})=\Bf{Av}$ defined by \textbf{A} is \textbf{injective}.\br
+15. The \textbf{linear transformation} $T_{\Bf{A}}:\mathbb{R}^{n} \rightarrow \mathbb{R}^{m}$, $T_{\Bf{A}}(\Bf{v})=\Bf{Av}$ defined by \textbf{A} is \textbf{surjective}.
+}
+
+\note{
+A linear transformation $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is \textbf{bijective} if it is both \textbf{injective} and \textbf{surjective}. $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is bijective if and only if there is a linear transformation $S:\mathbb{R}^{n}\rightarrow\mathbb{R}^{n}$ such that \[T(S(\Bf{x}))=\Bf{x}\q\text{and}\q S(T(\Bf{x}))=\Bf{x}\q\text{for all }\Bf{x}\in\mathbb{R}^{n}\]
+}
 
 \end{document}
 
