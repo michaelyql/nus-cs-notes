@@ -149,7 +149,7 @@
 \hbadness = 10000
 
 %:[HIDE] Ch1-3
-\begin{comment}
+%\begin{comment}
 % ========================== Chapter 1 ==========================
 \chapter{Chapter 1: Linear Systems}
 
@@ -861,6 +861,14 @@ Let \textbf{A} be a \textbf{square} matrix and \textbf{adj(A)} be its \textbf{ad
 \corr{(Adjoint formula for inverse)\\\;\\
 Let \textbf{A} be an \textbf{invertible} matrix. Then the \textbf{inverse} of \textbf{A} is given by \[\textbf{A}^{-1}=\frac{1}{\text{det}(\Bf{A})}\Bf{adj(A)}\]}
 
+\note{
+For any square matrix \textbf{A}, $\Bf{A}^{2}\not=-\Bf{I}$ (False) \\
+Take \textbf{A} = [0 -1; 1 0]\br
+For any square matrix \textbf{A}, \textbf{A = 0} iff \textbf{adj(A) = 0} (False) \\
+Take \textbf{A} = [1 1 1; 1 1 1; 1 1 1]\br
+
+}
+
 % ========================== Chapter 3 ==========================
 \chapter{Chapter 3: Euclidean Vector Spaces}
 
@@ -1175,7 +1183,7 @@ Let $V$ be a subspace of \R{n}. Suppose $S =  \{ \Bf{u}_{1}  ,\dots, \Bf{u}_{k} 
 Suppose $S = \{ \Bf{u}_{1},\dots, \Bf{u}_{k}\}$ and $T = \{ \Bf{v}_{1},\dots, \Bf{v}_{k} \}$ are \textbf{bases} for a subspace $V$ of \R{n}. Let \textbf{P} be the \textbf{transition matrix from $T$ to $S$}. Then $\Bf{P}^{-1}$ is the \textbf{transition matrix from $S$ to $T$}.}
 
 %:[HIDE] Ch 1-3
-\end{comment} 
+%\end{comment} 
 
 %:[HIDE] Ch 4
 %\begin{comment}
@@ -1332,13 +1340,18 @@ The reduced row-echelon form of \textbf{A} is
 0 & \dots & 0 & \dots & 0 & \dots & 1 & \dots \\
 \end{pmatrix}
 \]
+}
 
+\note{
+If \textbf{A} and \textbf{B} are order $n$ square matrices and $\Bf{AB=0}$, then rank(\textbf{A}) + rank(\textbf{B}) $\leq n$.\br
+$\Bf{AB}=\Bf{A}(\Bf{b}_{1}\q \Bf{b}_{2} \q\dots\q \Bf{b}_{n})=\Bf{0}$ $\Rightarrow$ Col(\textbf{B}) $\in$ Null(\textbf{A}) $\Rightarrow$ nullity(\textbf{A}) $\geq$ rank(\textbf{B}) $\Rightarrow$ $n - \text{rank}(\Bf{A}) \geq$ rank(\textbf{B}) $\Rightarrow$ rank(\textbf{A}) + rank(\textbf{B}) $\leq n$
 }
 
 %:[HIDE] Ch 4
 %\end{comment} 
-%\begin{comment}
 
+%:[HIDE] Ch 5
+%\begin{comment}
 % ========================== Chapter 5 ==========================
 \chapter{Chapter 5: Orthogonality and Least Square Solution}
 
@@ -1442,6 +1455,24 @@ A square matrix \textbf{A} of order $n$ is orthogonal if the columns or rows of 
 The columns and/or columns need to form an orthonormal basis, not an orthogonal basis, in order for \textbf{A} to be orthogonal.
 }
 
+\note{
+Let \textbf{A} be an orthogonal matrix of order $n$ and \textbf{u, v} be any two vectors in \R{n}. Then \br
+1. $\parallel\Bf{u}\parallel=\parallel\Bf{Au}\parallel$\\
+Proof: $(\Bf{Au})\cdot(\Bf{Av})=\Bf{u}^{T}\Bf{A}^{T}\Bf{Av}=\Bf{u}^{T}\Bf{v}=\Bf{u}\cdot\Bf{v}$. Hence $\parallel\Bf{Au}\parallel=\sqrt{(\Bf{Au})\cdot(\Bf{Au})}=\sqrt{\Bf{u}\cdot\Bf{u}}=\parallel\Bf{u}\parallel$\br
+2. $d(\Bf{u,v})=d(\textbf{Au},\Bf{Av})$\\
+Proof: $d(\Bf{Au},\Bf{Av})=\parallel\Bf{Au}-\Bf{Av}\parallel=\parallel\Bf{A}(\Bf{u-v})\parallel=\parallel\Bf{u-v}\parallel=d(\Bf{u,v})$\br
+3. the angle between \textbf{u} and \textbf{v} is equal to the angle between \textbf{Au} and \textbf{Av}\\
+Proof: $\frac{\Bf{Au}\cdot\Bf{Av}}{||\Bf{Au}||\;||\Bf{Av}||}=\frac{\Bf{u}\cdot\Bf{v}}{||\Bf{u}||\;||\Bf{v}||}$. Taking cosine on both sides will give the same angle.
+}
+
+\note{
+Let \textbf{A} be an orthogonal matrix of order $n$. Let $S=\{\Bf{u}_{1},\Bf{u}_{2},\dots,\Bf{u}_{k}\}$ and define $T=\{\Bf{Au}_{1},\Bf{Au}_{2},\dots,\Bf{Au}_{k}\}$. \br
+If $S$ is orthogonal, then $T$ is orthogonal.\\
+Proof: If \textbf{A} is an orthogonal matrix, then $\Bf{Au}\cdot\Bf{Av}=\Bf{u}^{T}\Bf{A}^{T}\Bf{Av}=\Bf{u}\cdot\Bf{v}$. So for any two vectors in $T$, $\Bf{Au}_{i}\cdot\Bf{Au}_{j}=\Bf{u}_{i}\cdot\Bf{u}_{j}=0$ for $i\not=j$. So $T$ is an orthogonal set.\br
+If $S$ is orthonormal, then $T$ is orthonormal. \\
+Proof: $\Bf{Au}_{i}\cdot\Bf{Au}_{j}=\Bf{u}_{i}\cdot\Bf{u}_{j}$. So if $i=j$, $\Bf{Au}_{i}\cdot\Bf{Au}_{j}=\Bf{u}_{i}\cdot\Bf{u}_{j}=1$
+}
+
 \sectiontitle{5.3 Orthogonal Projection}
 
 \theo{Orthogonal projection theorem\br
@@ -1510,7 +1541,7 @@ Let \textbf{A} be a $m\times n$ matrix with \textbf{linearly independent} column
 }
 
 \corr{
-Suppose \textbf{A} is a $m\times n$ matrix with \textbf{linearly independent} columns, i.e. $rank(\Bf{A})=n$. Then $\Bf{A}^{T}\Bf{A}$ is invertible, and \textbf{A} has a \textbf{left inverse}; that is, there is a \textbf{B} such that $\Bf{BA}=\Bf{A}_{n}$
+Suppose \textbf{A} is a $m\times n$ matrix with \textbf{linearly independent} columns, i.e. $rank(\Bf{A})=n$. Then $\Bf{A}^{T}\Bf{A}$ is invertible, and \textbf{A} has a \textbf{left inverse}; that is, there is a \textbf{B} such that $\Bf{BA}=\Bf{I}_{n}$
 }
 
 \sectiontitle{5.5 Least Square Approximation}
@@ -1561,6 +1592,10 @@ Suppose $rank(\Bf{A})=$ number of columns of \textbf{A}. Which of the statements
 Full rank implies $\Bf{A}^{T}\Bf{A}$ is invertible. 
 }
 
+%\end{comment}
+%:[HIDE] Ch5
+%:[HIDE] Ch6
+%\begin{comment}
 
 \chapter{6 Eigenanalysis}
 \sectiontitle{6.1 Eigenvalues and Eigenvectors}
@@ -1593,6 +1628,60 @@ If \textbf{A} and \textbf{B} are row equivalent order $n$ square matrices, if $\
 
 \note{
 Let \textbf{A} be a $n\times n$ matrix. The characteristic polynomial of \textbf{A} is equal to the characteristic polynomial of $\Bf{A}^{T}$. Hence \textbf{A} and $\Bf{A}^{T}$ has the same eigenvalues.\br Let $\lambda$ be an eigenvalue of \textbf{A}. The geometric multiplicity of $\lambda$ as an eigenvalue of \textbf{A} is equal to its geometric multiplicity as an eigenvalue of $\Bf{A}^{T}$.
+}
+
+\note{Let \textbf{A} be a matrix such that $\Bf{A}^{T}=-\Bf{A}$. \br(a) If $\lambda$ is an eigenvalue of \textbf{A}, then $\lambda = 0$.\br
+$\Bf{A}^{T}\Bf{v}=-\Bf{Av}\Rightarrow \text{ (Take transpose of both sides) } \Bf{v}^{T}\Bf{A}=-\Bf{v}^{T}\Bf{A}^{T}\Rightarrow \text{ (Post multiply both sides by \textbf{v}) } \Bf{v}^{T}\Bf{Av}=-\Bf{v}^{T}\Bf{A}^{T}\Bf{v} \Rightarrow \Bf{v}^{T}(\lambda\Bf{v})=-\Bf{v}^{T}(\lambda\Bf{v})\Rightarrow \lambda\parallel\Bf{v}\parallel^{2}=-\lambda\parallel\Bf{v}\parallel^{2}\Rightarrow \lambda = 0$ \br
+(b) \textbf{A} is diagonalizable iff \textbf{A = 0}.\br
+($\Rightarrow$) If \textbf{A} is diagonalizable, $\Bf{A}=\Bf{PDP}^{-1}=\Bf{P0P}^{-1}=\Bf{0}$ since eigenvalues of \textbf{A} can only be 0. \\
+($\Leftarrow$) If \textbf{A = 0}, then $\Bf{A}=\Bf{I0I}^{-1}$, so \textbf{A} is diagonalizable.
+}
+
+\note{
+$\lambda$ is an eigenvalue of \textbf{A} iff it is an eigenvalue of $\Bf{A}^{T}$. \\
+Proof: $\text{det(}x\Bf{I-A}\text{)}=\text{det(}(x\Bf{I-A})^{T}\text{)}=\text{det(}(x\Bf{I})^{T}-\Bf{A}^{T})=\text{det}(x\Bf{I}-\Bf{A}^{T})$\br
+
+If \textbf{A} is diagonalizable, then $\Bf{A}^{T}$ is diagonalizable. \\ 
+Proof: $\Bf{A=PDP}^{-1}\Rightarrow\Bf{A}^{T}=(\Bf{PDP}^{-1})^{T}=(\Bf{P}^{-1})^{T}\Bf{D}^{T}\Bf{P}^{T}=\Bf{QDQ}^{-1}$\br
+
+If \textbf{v} is an eigenvector of \textbf{A} associated to eigenvalue $\lambda$, then \textbf{v} is an eigenvector of $\Bf{A}^{k}$ associated to eigenvalue $\lambda^{k}$ for any $k\in\mathbb{Z}^{+}$.\\
+Proof: $\Bf{A}^{k}\Bf{v}=\Bf{A}^{k-1}\Bf{Av}=\lambda\Bf{A}^{k-2}\Bf{Av}=\dots=\lambda^{k-1}\Bf{Av}=\lambda^{k}\Bf{v}$. Since $\Bf{v}\not=\Bf{0}$, $\lambda^{k}$ is an eigenvalue of $\Bf{A}^{k}$.\br
+
+If \textbf{A} is invertible, \textbf{v} is an eigenvector of $\Bf{A}^{k}$ associated to eigenvalue $\lambda^{k}$ for any negative integer $k$.\\
+Proof: $\Bf{Av}=\lambda\Bf{v}\Rightarrow \text{ (premulitply by inverse) } \Bf{A}^{-1}\Bf{Av}=\Bf{A}^{-1}\lambda\Bf{v}\Rightarrow \Bf{v}=\lambda\Bf{A}^{-1}\Bf{v}\Rightarrow\frac{1}{\lambda}\Bf{v}=\Bf{A}^{-1}\Bf{v}$, so $\lambda^{-1}$ is an eigenvalue of $\Bf{A}^{-1}$. Then for any negative $k$, let $k=-m$, $\Bf{A}^{k}\Bf{v}=(\Bf{A}^{-1})^{m}\Bf{v}=\lambda^{-m}\Bf{v}$ \br
+
+A square matrix is \emph{nilpontent} iff there is a positive integer $k$ such that $\Bf{A}^{k}=\Bf{0}$. If \textbf{A} is nilpotent, then 0 is the only eigenvalue.\\
+Proof: If $\Bf{A}^{k}=\Bf{0}$ then $\Bf{A}^{k}\Bf{v}=\Bf{0v}=\Bf{0}$. Since \textbf{v} is a non-zero vector, the only eigenvalue is 0.\br
+
+Let $\Bf{A}_{n\times n}$ have only one eigenvalue $\lambda$ with algebraic multiplicity $n$. Then \textbf{A} is diagonalizable iff \textbf{A} is a scalar matrix, $\Bf{A}=\lambda\Bf{I}$.\\
+Proof: If \textbf{A} is diagonalizable, then $\Bf{A}=\Bf{PDP}^{-1}$, and the entries of \textbf{D} are all $\lambda$, i.e. $\Bf{D}=\lambda\Bf{I}$. Hence $\Bf{A}=\Bf{P}\lambda\Bf{I}\Bf{P}^{-1}=\lambda\Bf{PIP}^{-1}=\lambda\Bf{I}$.\br
+
+The only diagonalizable nilpotent matrix is the zero matrix. \\
+Proof: Let \textbf{A} be a nilpotent matrix. Then 0 is the only eigenvalue. If \textbf{A} is diagonalizable, then $\Bf{A}=\Bf{P}\text{diag}(0,0,\dots,0)\Bf{P}^{-1}=\Bf{0}$.
+}
+
+\note{
+If \textbf{A} and \textbf{B} are similar matrices, i.e. $\Bf{A}=\Bf{PBP}^{-1}$ for some invertible \textbf{P}, then the characteristic polynomials of \textbf{A} and \textbf{B} are equal.\br
+Proof: $\text{det}(x\Bf{I-A})=\text{det}(\Bf{P})\text{det}(\Bf{P})^{-1}\text{det}(x\Bf{I-A})=\text{det}(\Bf{P})\text{det}(x\Bf{I-A})\text{det}(\Bf{P})^{-1}=\text{det}(\Bf{P}(x\Bf{I-A})\Bf{P}^{-1})=\text{det}(x\Bf{PIP}^{-1}-\Bf{PAP}^{-1})=\text{det}(x\Bf{I-B})$
+}
+
+\note{If the characteristic polynomial of \textbf{A} and \textbf{B} are equal, we cannot conclude that \textbf{A} and \textbf{B} are similar matrices.\br
+E.g. [1 1; 0 1] and [1 0; 0 1] have the same characteristic polynomial $(x-1)^{2}$ but for any invertible matrix \textbf{P}, $\Bf{PIP}^{-1}=\Bf{I}\not=$[1 1; 0 1]
+}
+
+\note{If \textbf{A} and \textbf{B} are $n\times n$ matrices with the same determinant, it is not true that their characteristic polynomials are equal. \\
+E.g. A=[1 0; 0 0] and B=[2 0; 0 0] have the same determinant 0, but their characteristic polynomials are different.}
+
+\note{
+If \textbf{A} is a $2\times 2$ matrix, its characteristic polynomial is $x^{2}-tr(\Bf{A})+\text{det}(\Bf{A})$ where $tr(\Bf{A})$ is the sum of diagonal entries of \textbf{A}.\br
+Proof: Write \textbf{A}=[a b; c d]. Then $tr(\Bf{A})=a+d$ and det(\textbf{A}) = $ad-bc$. $\text{det}(x\Bf{I-A})=(x-a)(x-d)-bc=x^{2}-(a+d)x+ad-bc=x^{2}-tr(\Bf{A})x+\text{det}(\Bf{A})$\br
+
+If \textbf{A} is an $n\times n$ matrix and $p(x)=x^{n}+a_{n-1}x^{n-1}+\dots+a_{1}x+a_{0}$, then $a_{0}=p(0)=\text{det}(0\Bf{I-A})=\text{det}(-\Bf{A})=(-1)^{n}\text{det}(\Bf{A})$
+}
+
+\note{
+If \textbf{AB = BA}, and \textbf{v} is an eigenvector of \textbf{B}, then \textbf{Av} is also an eigenvector of \textbf{B}.\br
+Proof: $\Bf{Bv}=\lambda\Bf{v}\Rightarrow \Bf{ABv}=\Bf{B(Av)}=\lambda(\Bf{Av})$
 }
 
 \sectiontitle{6.2 Diagonalizaton}
@@ -1651,6 +1740,10 @@ Then \[ \Bf{A} = \Bf{PDP}^{-1} = (\Bf{u}_{1}\q\Bf{u}_{2}\q\dots\q\Bf{u}_{n}) \be
 Suppose \textbf{A} is diagonalizable. Which of the following statement(s) is/are true?\br
 If the diagonal matrix \textbf{D} is fixed, then the invertible matrix \textbf{P} is fixed. \false \br
 If the invertible matrix \textbf{P} is fixed, then the diagonal matrix \textbf{D} is fixed. \true
+}
+
+\note{If \textbf{A} is diagonalizable, then there exists a \textbf{B} such that $\Bf{B}^{3}=\Bf{A}$.\br
+Proof: $\Bf{A}=\Bf{PDP}^{-1}$. Let \textbf{Q} be the diagonal matrix \textbf{D} but with all the entries cube rooted. Then $\Bf{A}=\Bf{PQ}^{3}\Bf{P}^{-1}=\Bf{B}^{3}$, $\Bf{B}=\Bf{PQP}^{-1}$
 }
 
 \sectiontitle{6.3 Orthogonally Diagonalizable}
@@ -1750,8 +1843,8 @@ Let \textbf{A} be a $m\times n$ matrix with $rank(\Bf{A})=r$.
 \item Proceed to find an orthonormal basis $\{\mathbf{v}_{1},\mathbf{v}_{2},\dots,\mathbf{v}_{n}\}$ of \R{n} consisting of eigenvectors of $\Bf{A}^{T}\Bf{A}$ (section 6.3) such that $\Bf{v}_{i}$ is an eigenvector associated to $\mu_{i}$. Set \[\Bf{V}=(\mathbf{v}_{1}\q\mathbf{v}_{2}\q\dots\q\mathbf{v}_{n}).\]
 \item Let $\Bf{u}_{i}=\frac{1}{\sigma_{i}}\Bf{Av}_{i}$ for $i=1,\dots,r$. Then the set $\{\mathbf{u}_{1},\dots,\mathbf{u}_{r}\}$ is an orthonormal basis for the column space of \textbf{A}. If $r=m$, set $\Bf{U}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{r})$.\br 
 Otherwise, extend $\{\mathbf{u}_{1},\dots,\mathbf{u}_{r}\}$ to an orthonormal basis for \R{m} as such. Find a basis for the solution space of \[ (\mathbf{u}_{1}\q\dots\q\mathbf{u}_{r})^{T}\Bf{x}=\Bf{0} \]\\ Perform Gram-Schmidt process on the basis found to obtain an orthonormal set $\{\mathbf{u}_{r+1},\dots,\mathbf{u}_{m}\}$. This set is an orthonormal basis for the orthogonal complement of the column space of \textbf{A}.\br
-Then $\{\mathbf{u}_{1},\dots,\mathbf{u}_{r},\mathbf{u}_{r+1},\dots,\mathbf{u}_{m}\}$ is an orthonormal basis for \R{m}. Set \[\Bf{U}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{n}).\]
-\item Then \[ \Bf{A}=\Bf{U\Sigma V}^{T}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{n})\begin{pmatrix} \begin{matrix} \sigma_{1} & 0 & \cdots & 0\\ 0 & \sigma_{2} & \cdots & 0\\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \sigma_{r} \end{matrix}  & \Bf{0}_{r\times(n-r)} \\ \Bf{0}_{(m-r)\times r} & \Bf{0}_{(m-r)\times(n-r)} \end{pmatrix}\begin{pmatrix}\Bf{v}_{1}^{T}\\ \Bf{v}_{2}^{T} \\ \vdots \\ \Bf{v}_{n}^{T} \end{pmatrix} \]
+Then $\{\mathbf{u}_{1},\dots,\mathbf{u}_{r},\mathbf{u}_{r+1},\dots,\mathbf{u}_{m}\}$ is an orthonormal basis for \R{m}. Set \[\Bf{U}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{m}).\]
+\item Then \[ \Bf{A}=\Bf{U\Sigma V}^{T}=(\mathbf{u}_{1}\q\mathbf{u}_{2}\q\dots\q\mathbf{u}_{m})\begin{pmatrix} \begin{matrix} \sigma_{1} & 0 & \cdots & 0\\ 0 & \sigma_{2} & \cdots & 0\\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & \sigma_{r} \end{matrix}  & \Bf{0}_{r\times(n-r)} \\ \Bf{0}_{(m-r)\times r} & \Bf{0}_{(m-r)\times(n-r)} \end{pmatrix}\begin{pmatrix}\Bf{v}_{1}^{T}\\ \Bf{v}_{2}^{T} \\ \vdots \\ \Bf{v}_{n}^{T} \end{pmatrix} \]
 \end{enumerate}
 }
 
@@ -1771,14 +1864,18 @@ $\Bf{Av}_{i}\not=\Bf{0}$ for all $i\leq r$ and $\Bf{Av}_{i}=\Bf{0}$ for all $i>r
 }
 
 \qn{
-$rank(\Bf{A})=n$ if and only if all the singular values of \textbf{A} are positive. (?) \br
-$rank(\Bf{A})=m$  if and only if all the singular values of $\Bf{A}^{T}$ are positive. (?)
+$rank(\Bf{A})=n$ if and only if all the singular values of \textbf{A} are positive. \br
+$rank(\Bf{A})=m$  if and only if all the singular values of $\Bf{A}^{T}$ are positive.
 }
 
 \note{
 If \textbf{A} is a symmetric matrix, then the singular values of \textbf{A} are the absolute value of the eigenvalues of \textbf{A}.
 }
+
 %\end{comment}
+%:[HIDE] Ch6
+%:[HIDE] Ch7
+%\begin{comment}
 
 \chapter{7 Linear Transformation}
 
@@ -1880,7 +1977,7 @@ A \textbf{linear transformation} $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is 
 \theo{(Full Rank Equals Number of Rows)\br
 Suppose \textbf{A} is a $m\times n$ matrix. The following statements are equivalent.
 \begin{enumerate}
-	\item \textbf{A} is full rank, where the rank is equal to the number of columns, $rank(\Bf{A})=m$.
+	\item \textbf{A} is full rank, where the rank is equal to the number of rows, $rank(\Bf{A})=m$.
 	\item The columns of \textbf{A} spans \R{m}, $\text{Col(\textbf{A})=}$ \R{m}.
 	\item The rows of \textbf{A} are linearly independent.
 	\item The linear system \textbf{Ax = b} is consistent for every \textbf{b} $\in$ \R{m}.
@@ -1906,6 +2003,8 @@ Let $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ be a \textbf{linear transformati
 \note{
 A linear transformation $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is \textbf{bijective} if it is both \textbf{injective} and \textbf{surjective}. $T:\mathbb{R}^{n}\rightarrow\mathbb{R}^{m}$ is bijective if and only if there is a linear transformation $S:\mathbb{R}^{n}\rightarrow\mathbb{R}^{n}$ such that \[T(S(\Bf{x}))=\Bf{x}\q\text{and}\q S(T(\Bf{x}))=\Bf{x}\q\text{for all }\Bf{x}\in\mathbb{R}^{n}\]
 }
+%:[HIDE] Ch 7
+%\end{comment}
 
 \end{document}
 
