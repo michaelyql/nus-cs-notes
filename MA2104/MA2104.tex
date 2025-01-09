@@ -1,0 +1,155 @@
+\documentclass[11pt]{article}
+
+%:Packages
+\usepackage{geometry}                	                  
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts} 	  % \mathbb commands
+\usepackage{enumitem} 	  % control description indentation
+\usepackage{tcolorbox}
+\usepackage{mathtools}
+
+%:Cover Page
+\begin{document}
+\title{Notes for MA2104, AY24/25 Sem 2}
+\author{Michael Yang}
+\date{9 Jan 2025}
+\maketitle
+
+%:Custom Commands
+
+\newcommand{\R}[1]{\mbox{$\mathbb{R}^{#1}$}}  % R^n
+\newcommand{\Bf}[1]{\mathbf{#1}}
+\newcommand{\Bb}[1]{\mathbb{#1}}
+\newcommand{\q}{\quad}
+\newcommand{\qq}{\qquad}
+\newcommand{\br}{\\\;\\}
+
+\newcommand{\sectiontitle}[1]{% Section title
+\begin{flushleft}\large{\textbf{#1}}\end{flushleft}} 
+
+\newcommand{\chapter}[1]{% New chapter
+\newpage
+\section*{#1}
+\hrule
+\vspace{0.3cm}
+}
+
+\newcommand{\vv}[1]{%
+\langle 
+{#1}
+\rangle
+}
+
+%:Margins
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=2cm} 
+
+\chapter{3-Dimensional Space}
+
+\sectiontitle{Equations of Lines}
+
+Vector Form of the equation of a line
+
+\[ \vec{r}=\vec{r_{0}}+t\vec{v}=\vv{x_{0},y_{0},z_{0}}+t\vv{a,b,c} \] 
+
+\[ \vv{x,y,z}=\vv{x_{0}+ta,y_{0}+tb,z_{0}+tc} \] \\
+
+Parametric Form of the equation of a line
+
+\begin{align*}
+x&=x_{0}+ta \\
+y&=y_{0}+tb \\
+z&=z_{0}+tc \\
+\end{align*}
+
+Symmetric Equations of the line
+
+\[ \frac{x-x_{0}}{a}=\frac{y-y_{0}}{b}=\frac{z-z_{0}}{c} \]
+
+\sectiontitle{Equations of Planes}
+
+Vector Equation of Plane
+
+\[ \vec{n} \cdot (\vec{r}-\vec{r_{0}}) = 0 \qq \Rightarrow \qq \vec{n} \cdot \vec{r} = \vec{n}\cdot \vec{r_{0}} \]
+
+\[ \vv{a,b,c}\cdot (\vv{x,y,z}-\vv{x_{0},y_{0},z_{0}}) = 0 \] 
+
+\[ \vv{a,b,c}\cdot\vv{x-x_{0},y-y_{0},z-z_{0}} = 0 \] \\
+
+Scalar Equation of Plane
+
+\[ a(x-x_{0})+b(y-y_{0})+c(z-z_{0})=0 \]
+
+\[ ax+by+cz=d\]
+
+where $d=ax_{0}+by_{0}+cz_{0}$ \\
+
+If $\vec{a}$ and $\vec{b}$ are parallel: $\vec{a}\times\vec{b}=\vec{0}$ \\
+
+If $\vec{a}$ and $\vec{b}$ are orthogonal: $\vec{a}\cdot\vec{b}=0$ \\
+
+\sectiontitle{Quadric Surfaces}
+
+Quadric surfaces are the graphs of any equation that can be put into the general form
+
+\[ Ax^{2}+By^{2}+Cz^{2}+Dxy+Exz+Fyz+Gx+Hy+Iz+J=0 \]
+
+where $A$ to $J$ are constants \\
+
+Ellipsoid
+
+\[\frac{x^{2}}{a^{2}}+\frac{y^{2}}{b^{2}}+\frac{z^{2}}{c^{2}} = 1\] 
+
+If $a=b=c$, it is a sphere \\
+
+Cone / Hourglass
+
+\[ \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = \frac{z^{2}}{c^{2}} \qq \text{(Open up on the z-axis)} \]
+\[ \frac{y^{2}}{b^{2}} + \frac{z^{2}}{c^{2}} = \frac{x^{2}}{a^{2}} \qq \text{(Open up on the x-axis)} \]
+\[ \frac{x^{2}}{a^{2}} + \frac{z^{2}}{c^{2}} = \frac{y^{2}}{b^{2}} \qq \text{(Open up on the y-axis)} \] \\
+
+Cylinder
+
+\[ \frac{x^{2}}{a^{2}}+\frac{y^{2}}{b^{2}}=1\]
+
+If $a=b$ we have a cylinder whose cross section is a circle
+
+\[ x^{2}+y^{2}=r^{2}\]
+
+The cylinder will be centered on the axis corresponding to the variable that does not appear in the equation. 
+
+In two dimensions it is a circle, but in three dimensions it is a cylinder.\\
+
+Hyperboloid of One Sheet
+
+\[ \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} - \frac{z^{2}}{c^{2}} = 1\]
+
+The variable with the negative in front of it will give the axis along which the graph is centered.\\
+
+Hyperboloid of Two Sheets
+
+\[ -\frac{x^{2}}{a^{2}} - \frac{y^{2}}{b^{2}} + \frac{z^{2}}{c^{2}} = 1 \]
+
+The variable with the positive in front of it will give the axis along which the graph is centered. 
+
+The only difference between the hyperboloid of one sheet and the hyperboloid of two sheets is the signs.
+
+Elliptic Paraboloid
+
+\[ \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = \frac{z}{c} \]
+
+The variable that isn’t squared determines the axis upon which the paraboloid opens up. 
+
+The sign of $c$ will determine the direction that the paraboloid opens.
+
+If $c$ is positive then it opens up and if $c$ is negative then it opens down.
+
+Hyperbolic Paraboloid
+
+\[ \frac{x^{2}}{a^{2}} - \frac{y^{2}}{b^{2}} = \frac{z}{c} \]
+
+For both types of paraboloids, the surface can be easily moved up or down by adding/subtracting a constant.\\
+
+\sectiontitle{Multivariable Functions}
+
+\end{document}
