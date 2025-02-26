@@ -1,0 +1,186 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{geometry}
+\newgeometry{left=0.25cm, right=0.25cm, top=0.8cm, bottom=0.5cm} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\usepackage[hidelinks]{hyperref}
+\usepackage{newtxmath}
+\usepackage{titlesec}
+
+\begin{document}
+
+\singlespacing
+
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{\vspace{-0.8cm}\faGithub\;\href{https://github.com/michaelyql}{michaelyql}}
+
+\begin{multicols*}{3}
+
+\subsubsection*{\underline{Vectors}}
+\textbf{Length of Vector}: $||u||=\sqrt{u_1^2+u_2^2+u_3^2}$.\\
+\textbf{Dot Product of Two Vectors}: $a\cdot b=a_1b_1 +a_2b_2 +a_3b_3$ where $a=\langle a_1,a_2,a_3\rangle$ and $b=\langle b_1,b_2,b_3\rangle$ \\
+\textbf{Dot Product Angle Formula}: $a \cdot b = ||a|| \;||b|| cos \theta$. Two non-zero vectors $a$ and $b$ are \textbf{orthogonal} iff $a\cdot b=0$. They have the same direction if $\theta=0$, opposite direction if $\theta=\pi$, perpendicular if $\theta=\frac{\pi}{2}$. \\
+\textbf{Projection}: $\text{comp}_ab=||b||cos\theta=\frac{a\cdot b}{||a||}$. $\text{proj}_ab=\text{comp}_ab\times \frac{a}{||a||}=\frac{a\cdot b}{a\cdot a}a$\\
+\textbf{Cross Product}: $a\times b=\begin{vmatrix} i & j & k \\ a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \end{vmatrix}$ $= (a_2b_3-a_3b_2)i - (a_1b_3-a_3b_1)j + (a_1b_2-a_2b_1)k$. The vector $a\times b$ is orthogonal to both $a$ and $b$. We can use cross product to find the \textbf{area of a parallelogram}, or to find the \textbf{distance from a point to a line} in $\mathbb{R}^3$. \\
+\textbf{Properties of cross product}: If $a$, $b$ and $c$ are vectors and $d$ is a scalar, then \\ (i) $a\times b=-b\times a$\\
+(ii) $(da)\times b=d(a\times b)=a\times(db)$\\
+(iii) $a\times(b+c)=a\times b+a\times c$\\
+(iv) $(a+b)\times c = a\times c + b\times c$\\
+\textbf{Cross product angle formula}: $||a \times b|| = ||a|| \; ||b|| sin \theta$. \\
+\textbf{Distance from Q to line through P and R}: $$||PQ||sin\theta=\frac{||PQ\times PR||}{||PR||}$$ 
+\textbf{Scalar Triple Product}: $a\cdot(b\times c)=\begin{vmatrix}a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{vmatrix}$. If $\theta$ is the angle between $a$ and $b\times c$, then the height $h$ of the parallelepiped is $h=||a|| \cdot|cos\theta|$ and the volume of the parallelepiped is $V=|a\cdot(b\times c)|$. The area of the base parallelogram is $A=||b\times c||$ \\
+\textbf{Find if vectors are coplanar}: Check if the volume of the parallelepiped determined by the vectors is equal to 0: $|a\cdot (b\times c)| = 0$\\
+\textbf{Parametric Equation of Line}: $x=x_0+at$, $y=y_0+bt$, $z=z_0+ct$\\ 
+\textbf{Vector Equation of Plane}: $n\cdot (r-r_0)=n\cdot \langle x-a,y-b,z-c \rangle=0$ or $n\cdot r=n\cdot r_0$\\
+\textbf{Linear Equation of Plane}: $ax+by+cz=d$ where $d=ax_0+by_0+cz_0$.\\
+\textbf{Parallel Planes}: Two planes are parallel if their normal vectors are parallel. If two planes are not parallel, then they intersect in a straight line. The angle between the two planes is the angle $\theta$ between their normal vectors. \\
+\textbf{Derivative of Vector-valued Function}: Let $r(t) = \langle f(t),g(t),h(t)\rangle$ and suppose that the components $f$, $g$ and $h$ are all differentiable at $t = a$. Then $r$ is differentiable at $t = a$ and its derivative is given by $r'(a) = \langle f'(a), g'(a), h'(a)\rangle$.\\
+\textbf{Derivative Rules}: Suppose $r(t)$ and $s(t)$ are differentiable vector-valued functions, $f(t)$ is a differentiable scalar function and $c$ is a scalar constant. Then\\
+$\frac{d}{dt}(r(t)+s(t))=r'(t)+s'(t)$\\
+$\frac{d}{dt}(cr(t))=cr'(t)$\\
+$\frac{d}{dt}(f(t)r(t))=f'(t)r(t)+f(t)r'(t)$\\
+$\frac{d}{dt}(r(t)\cdot s(t))=r'(t)\cdot s(t)+r(t)\cdot s'(t)$\\
+$\frac{d}{dt}(r(t) \times  s(t))=r'(t) \times s(t)+r(t) \times s'(t)$\\
+\textbf{Arc Length Formula}: Let $C$ be the curve given by $r(t) =\langle f(t),g(t),h(t)\rangle$, $a \leq t \leq b$ where $f'$, $g'$ and $h'$ are continuous. If $C$ is traversed exactly once as $t$ increases from $a$ to $b$, then its length is $s=\int_a^b\sqrt{f'(t)^2+g'(t)^2+h'(t)^2 dt}=\int_b^a||r'(t)||dt$. This only applies for \textbf{smooth} curves. 
+\subsubsection*{\underline{Surfaces}}
+\textbf{Level Curve}: $f(x,y)=k$\\
+\textbf{Contour Plots}: Numerous $f(x,y)=k$\\
+\textbf{Cylinders}: A surface is a cylinder if there is a plane $P$ s.t. all planes parallel to $P$ intersect the surface in the same curve. \\
+\textbf{Quadric Surface}: $Ax^2+By^2+Cz^2+J=0$ or $Ax^2+By^2+Iz=0$\\
+\textbf{Elliptic paraboloid}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}=\frac{z}{c}$ (symmetric about $z$-axis)\\
+\textbf{Hyperbolic paraboloid}: $\frac{x^2}{a^2}-\frac{y^2}{b^2}=\frac{z}{c}$\\
+\textbf{Ellipsoid}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$ \\
+\textbf{Elliptic cone}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=0$ \\
+\textbf{Hyperboloid of one sheet}:  $\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=1$ \\
+\textbf{Hyperboloid of two sheets}:$\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=-1$  \\
+\textbf{Level Surface}: $f(x,y,z)=k$
+\subsubsection*{\underline{Limits and Continuity}}
+\textbf{Definition of Limit}: $\lim_{(x,y)\to(a,b)}f(x,y)=L$ if for any $\epsilon>0$, $\exists\;\delta>0$ s.t. $|f(x,y)-L|<\epsilon$ when $0<\sqrt{(x-a)^2+(y-b)^2}<\delta$ \\
+\textbf{Show limit does not exist}: If $f(x,y)$ approaches $L_1$ along path $P_1$ and $L_2$ along path $P_2$ and $L_1\not=L_2$ then $lim_{(x,y)\to(a,b)}f(x,y)$ does not exist.\\
+\textbf{Limit Theorems}: Suppose $f(x,y)$ and $g(x,y$) both have limits as $(x,y)$ approaches $(a, b)$. Then $\lim (f(x,y)\pm g(x,y))=\lim f(x,y)\pm \lim g(x,y)$, $\lim f(x,y)g(x,y)=(\lim f(x,y))(\lim g(x,y))$, and $\lim \frac{f(x,y)}{g(x,y)}=\frac{\lim f(x,y)}{\lim g(x,y)}$ provided $\lim g(x,y)\not=0$\\
+\textbf{Squeeze}: Suppose $|f(x,y) - L| \leq g(x,y)$ for all $(x,y)$ in the interior of some circle centered at $(a, b)$, except possible at $(a, b)$. If $lim_{(x,y)\to(a,b)}g(x,y)=0$, then $\lim_{(x,y)\to (a,b)}f(x,y)=L$ \\
+\textbf{Definition of Continuity}: $f$ is continuous at $(a,b)$ if $\lim_{(x,y)\to(a,b)}f(x,y)=f(a,b)$. This is the \textbf{substitution} property. If $f(x,y)$ is not continuous at $(a,b)$, then we call $(a,b)$ a
+discontinuity (point) of $f$. $f$ is said to be continuous on $D \subseteq \mathbb{R}^2$ if $f$ is continuous at each point in $D$. \\
+\textbf{Continuity Theorems}: If $f(x,y)$ and $g(x,y)$ are continuous at $(a,b)$, then $f\pm g,f \cdot g$ are all continuous at $(a, b)$. Further, $\frac{f}{g}$ is continuous at $(a, b)$, provided $g(a, b)\not= 0$. Polynomial, Trigonometric, Exponential and Rational functions in $x$ and $y$ are continuous \textbf{in its domain}. \\
+\textbf{Continuity and Composition}: Suppose $f(x,y)$ is continuous at $(a,b)$ and $g(x)$ is continuous at $f (a, b)$. Then $h(x,y) = (g\circ f)(x,y) = g(f(x,y))$  is continuous at $(a, b)$.
+\subsubsection*{\underline{Partial Derivatives}}
+\textbf{Partial Derivative}: If $f$ is a function of two variables, its partial derivatives are the functions $f_x$ and $f_y$ defined by $f_x(x,y)=\lim_{h\to0}\frac{f(x+h,y)-f(x,y)}{h}=\frac{\partial f}{\partial x}$ and $f_y(x,y)=\lim_{h\to0}\frac{f(x,y+h)-f(x,y)}{h}=\frac{\partial f}{\partial y}$\\
+\textbf{Clairaut's Theorem}: Suppose $f$ is defined on a disk $D$ that contains $(a, b)$. If the functions $f_{xy}$ and $f_{yx}$ are both continuous on $D$, then
+$f_{xy}(a, b) = f_{yx}(a, b)$. So long as the number of the same variable occurring in the subscript are the same, the corresopnding partial derivatives are the same. E.g. $f_{xxyyzz}=f_{xyzxyz}$. \\
+\textbf{Equation of Tangent Plane}: Suppose $f(x,y)$ has continuous first partial derivatives at $(a,b)$. A normal vector to the tangent plane is $\langle f_x(a,b), f_y(a,b), 1\rangle$. Further, an equation of the tangent plane is given by $$f_x(a,b)(x-a)+f_y(a,b)(y-b)-(z-f(a,b))=0$$ or $z=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)$.\\
+\textbf{Increment}: Let $z = f(x,y)$. Suppose $\Delta x$ and $\Delta y$ are increments in the independent variable $x$ and $y$ respectively from a fixed point $(a, b)$. Then the increment in $z$ at $(a, b)$ is defined by $$\Delta z = f(a+\Delta x, b+\Delta y)-f(a,b)$$
+\textbf{Differentiable - Two Variable}: Let $z = f(x,y)$. We say that $f$ is differentiable at $(a, b)$ if the tangent plane at $(a, b)$ is a \textbf{good} approximation to $f$ at points close to \textbf{(a, b)}. Formally, $f$ is differentiable if we can write $$\Delta z=f_x(a,b)\Delta x+f_y(a,b)\Delta y+\epsilon_1\Delta x+\epsilon_2\Delta y$$ where $\epsilon_1$ and $\epsilon_2$ are functions of $\Delta x$ and $\Delta y$ and $\epsilon_1, \epsilon_2\to 0$ as $(\Delta x, \Delta y)\to (0,0)$. We say that $f$ is differentiable on a region $R\subseteq \mathbb{R}^2$ if $f$ is differentiable at every point in $R$. \\
+\textbf{Linear Approximation}: Suppose $z = f (x , y )$ is differentiable at $(a, b)$. Let $\Delta x$ and $\Delta y$ be small increments in $x$ and $y$ respectively from $(a, b)$. Then $\Delta z\approx f_x(a,b)\Delta x+f_y(a,b)\Delta y$. I.e. if $\Delta x$, $\Delta y$ are small, then, provided $f(x,y)$ is differentiable, $f(a+\Delta x,b+\Delta y)\approx$ $$ f(a,b)+f_x(a,b)\Delta x+f_y(a,b)\Delta y$$ 
+As $\Delta x$, $\Delta y\to (0,0)$, tangent plane gets closer to the surface \\
+\textbf{Useful Facts}: \\
+$f_x$ and $f_y$ continuous $\Rightarrow$ $f$ differentiable \\
+$f_x$ and $f_y$ continuous $\not\Leftarrow$ $f$ differentiable \\
+$f$ differentiable $\Rightarrow$ $f$ continuous \\
+$f$ differentiable $\not\Leftarrow$ $f$ continuous \\
+$f_x$ and $f_y$ exist $\not\Rightarrow$ $f$ differentiable \\
+$f_x$ and $f_y$ exist $\Leftarrow$ $f$ differentiable \\
+\textbf{Chain Rule - General Version}: Suppose that $u$ is a differentiable function of $n$ variables $x_,\dots , x_n$, and each $x_j$ is a differentiable function of $m$ variables $t_1,\dots,t_m$. Then $u$ is a function of $t_1,\dots,t_m$ and $$\frac{\partial u}{\partial t_i}=\frac{\partial u}{\partial x_1}\frac{\partial x_1}{\partial t_i}+\frac{\partial u}{\partial x_2}\frac{\partial x_2}{\partial t_i}+\dots+\frac{\partial u}{\partial x_n}\frac{\partial x_n}{\partial t_i}$$ for each $i=1,\dots,m$ \\
+\textbf{Implicit Differentiation - Two Independent Variables}: Suppose the equation $F(x,y,z) = 0$, where $F$ is differentiable, defines $z$ \textbf{implicitly} as a differentiable function of $x$ and $y$. Then, $$\frac{\partial z}{\partial x}=-\frac{F_x(x,y,z)}{F_z(x,y,z)},\frac{\partial z}{\partial y}=-\frac{F_y(x,y,z)}{F_z(x,y,z)}$$ provided $F_z(x,y,z)\not=0$. \\
+\textbf{Directional Derivative}: The directional derivative of $f(x,y)$ at $(x_0,y_0)$ in the direction of unit vector $u = \langle a, b\rangle $ is $D_uf(x_0,y_0)=$ $$\lim_{h\to 0}\frac{f(x_0+ha,y_0+hb)-f(x_0,y_0)}{h}$$ provided this limit exists. This can be extended to 3 variables. \\
+\textbf{Computing Directional Derivative}: If $f(x,y)$ is a differentiable function, then $f$ has a directional derivative in the direction of any unit vector $u = \langle a, b\rangle$ and
+$D_uf(x,y) = f_x(x,y)a + f_y(x,y)b$. We can rewrite it in terms of vectors:
+$$D_uf(x,y) = \langle f_x,f_y\rangle \cdot \langle a,b\rangle = \langle f_x,f_y\rangle \cdot u$$
+\textbf{Gradient}: $\nabla f(x,y)=\langle f_x,f_y\rangle =fxi+fyj= \frac{\partial f}{\partial x}i + \frac{\partial f}{\partial y}j$
+provided both partial derivatives exist. Thus $D_uf(x,y)=\nabla f(x,y)\cdot u$ 
+\subsubsection*{\underline{Gradient}}
+\textbf{Level Curve/Surface vs $\nabla F$}: Suppose $f(x,y)$ is a differentiable function of $x$ and $y$ at $(x_0, y_0)$ and $\nabla f(x_0,y_0)\not=0$. Then $\nabla f(x_0,y_0)\not=0$ is \textbf{normal to the level curve} $f(x,y)=k$ that contains the point $(x_0, y_0)$. Similarly for $F(x,y,z)$, the gradient is normal to the level \textbf{surface} at $(x_0, y_0, z_0)$. \\
+\textbf{Tangent Plane to Level Surface}: $F(x_0,y_0,z_0)\cdot\langle x-x_0,y-y_0,z-z_0\rangle=0$\\
+\textbf{Maximizing Rate of Increase/Decrease of F}: Suppose $f$ is a differentiable function of two or three variables. Let $P$ denote a given point. Assume $\nabla f(P)\not=0$. Let \textbf{u} be a unit vector making an angle $\theta$ with $\nabla f$. Then $\text{D}_uf(P)=||\nabla f(P)||cos\theta$. $\nabla f(P)$ points in direction of \textbf{maximum} rate of change of $f$ at $P$. $-\nabla f(P)$ points in direction of \textbf{minimum} rate of change of $f$ at $P$.\\
+\textbf{Local extremum}: If $f$ has a local maximum or minimum at $(a, b)$ and the first-order derivatives of $f$ exist there, then $f_x(a,b) = f_y(a,b) = 0.$ \\
+\textbf{Critical/Stationary Point}: Let $f(x,y): D \to \mathbb{R}$. Then a point $(a,b)$ is called a \textbf{critical point} of $f$ if
+$f_x(a,b) = 0$ and $f_y(a,b) = 0$. But being a critical point does not mean it is a local min/max. \\
+\textbf{Saddle Point}: Let $f(x,y): D \to \mathbb{R}$. A point $(a,b)$ is called a \textbf{saddle point} of $f$ if 1. it is a critical point, and 2. every open disk centered at $(a,b)$ contains points
+$(x,y) \in D$ for which $f(x,y) < f(a,b)$ and points $(x,y) \in D$ for which $f(x,y) > f(a,b)$.\\
+\textbf{Second Derivative Test}: Let $D=D(a,b)=f_{xx}(a,b)-f_{yy}(a,b)-[f_{xy}(a,b)]^2$. If $D>0$ and $f_{xx}(a,b)>0$, then $(a,b)$ is a local minimum. If $D>0$ and $f_{xx}(a,b)<0$, then $(a,b)$ is a local maximum. If $D<0$ then $(a,b)$ is a saddle point. If $D=0$ then the point may be a min, max or saddle point.\\
+\textbf{Closed Set}: A set $R\subseteq\mathbb{R}^2$ is \textbf{closed} if it contains all its boundary points. (A \textbf{boundary point} of $R$ is a point $(a, b)$ such that every disk with center $(a, b)$ contains points in $R$ and also points in $\mathbb{R}^2 \setminus R$).\\
+\textbf{Bounded Set}: A set $R\subseteq\mathbb{R}^2$ is \textbf{bounded} if it is contained within some disk. In other words, it is finite in extent.\\
+\textbf{Extreme Value Theorem}: If $f(x,y)$ is continuous on a closed and bounded set $D\subseteq\mathbb{R}^2$, then $f$ attains an absolute maximum value $f(x_1, y_1)$, AND
+an absolute minimum value $f(x_2, y_2)$ at some points $(x1, y1)$ and $(x2, y2)$ in $D$.\\
+\textbf{Lagrange Multiplier – Two Variables}: Suppose $f(x,y)$ and $g(x,y)$ are differentiable functions such that $\nabla g(x, y) \not= 0$ on the constraint curve $g(x, y) = k$.
+Suppose that the minimum/maximum value of $f(x,y)$ subject to the constraint $g(x, y) = k$ occurs at $(x_0, y_0)$. Then $\nabla f(x_0,y_0)=\lambda \nabla g(x_0,y_0)$ 
+for some constant $\lambda$ (called a \textbf{Lagrange Multiplier}). 
+
+\noindent\hrulefill\\
+{\centering
+\textbf{Common Integrals} \par
+}
+\vspace{-0.5cm}\begin{flushleft}
+$\int x^ndx=\frac{1}{n+1}x^{n+1}+c,n\not=1$ \\
+$\int \frac{1}{ax+b}dx=\frac{1}{a}\ln|ax+b|+c$\\
+$\int \cos (u)du=\sin(u)+c$ \\
+$\int \sin (u)du=-\cos(u)+c$ \\
+$\int \sec^2 (u)du=\tan(u)+c$ \\
+$\int \sec(u)\tan(u)du=\sec(u)+c$ \\
+$\int \tan(u)du=-\ln|cos(u)|+c=\ln|\sec(u)|+c$ \\
+$\int \csc(u)\cot(u)du=-\csc(u)+c$ \\
+$\int \csc^2(u)du=-\cot(u)+c$ \\
+$\int \cot(u)du=\ln|\sin(u)|+c=-\ln|\csc(u)|+c$ \\
+$\int \csc(u)du=\ln|\csc(u)-\cot(u)|+c$ \\
+$\int \sec(u)du=\ln|\sec(u)+\tan(u)|+c$ \\
+$\int \cot(u)du=\ln|\sin(u)|+c=-\ln|\csc(u)|+c$ \\
+$\int e^udu=e^u+c$ \\
+$\int a^udu=\frac{a^u}{\ln(a)}+c$ \\
+$\int \ln(u)du=u\ln(u)-u+c$ \\
+$\int ue^udu=(u-1)e^u+c$ \\
+$\int \frac{1}{u\ln(u)}du=\ln|\ln(u)|+c$ \\
+$\int \frac{1}{\sqrt{a^2-u^2}}du=\sin^{-1}(\frac{u}{a})+c$ \\
+$\int \frac{1}{a^2+u^2}du=\frac{1}{a}\tan^{-1}(\frac{u}{a})+c$ \\
+$\int \frac{1}{u\sqrt{u^2-a^2}}du=\frac{1}{a}\sec^{-1}(\frac{u}{a})+c$ \\
+$\int \sin^{-1}(u)du=u\sin^{-1}(u)+\sqrt{1-u^2}+c$ \\
+$\int \tan^{-1}(u)du=u\tan^{-1}(u)-\frac{1}{2}\ln(1+u^2)+c$ \\
+$\int \cos^{-1}(u)du=u\cos^{-1}(u)-\sqrt{1-u^2}+c$ \\
+$\int \frac{1}{a^2-u^2}du=\frac{1}{2a}\ln|\frac{u+a}{u-a}|+c$ \\
+$\int \frac{1}{u^2-a^2}du=\frac{1}{2a}\ln|\frac{u-a}{u+a}|+c$ \\
+$\int \sqrt{a^2+u^2}du=\frac{u}{2}\sqrt{a^2+u^2}+\frac{a^2}{2}\ln|u+\sqrt{a^2+u^2}|+c$ \\
+$\int \sqrt{u^2-a^2}du=\frac{u}{2}\sqrt{u^2-a^2}-\frac{a^2}{2}\ln|u+\sqrt{u^2-a^2}|+c$ \\
+$\int \sqrt{a^2-u^2}du=\frac{u}{2}\sqrt{a^2-u^2}+\frac{a^2}{2}\sin^{-1}(\frac{u}{a})+c$ \\
+\textbf{Integration by Parts}: $\int udv=uv-\int vdu$. LIATE (Order to differentiate): Log/Inverse Trig/Algebraic/Trig/Exp\\
+\textbf{Partial Fractions}: $\int\frac{P(x)}{Q(x)}dx$ where degree of $P(x)<$ degree of $Q(x)$ 
+\vspace{-0.1cm}$$\frac{px+q}{(x-a)(x-b)},a\not=b\to\frac{A}{x-a}+\frac{B}{x-b}$$\\
+\vspace{-0.3cm}$$\frac{px+q}{(x-a)^2}\to\frac{A}{x-a}+\frac{B}{(x-a)^2}$$\\
+\vspace{-0.5cm}$$\frac{px^2+qx+r}{(x-a)(x-b)(x-c)}=\frac{A}{x-a}+\frac{B}{x-b}+\frac{C}{x-c}$$\\
+\vspace{-0.5cm}$$\frac{px^2+qx+r}{(x-a)^2(x-b)}\to\frac{A}{x-a}+\frac{B}{(x-a)^2}+\frac{C}{x-b}$$\\
+\vspace{-0.5cm}$$\frac{px^2+qx+r}{(x-a)(x^2+bx+c)}\to\frac{A}{x-a}+\frac{Bx+C}{x^2+bx+c}$$\\
+\end{flushleft}
+
+{\centering
+\textbf{Common Derivatives} \par
+}
+\begin{flushleft}
+$\frac{d}{dx}a^x=a^x\ln(a)$\\
+$\frac{d}{dx}\ln(g(x))=\frac{g'(x)}{g(x)}$\\
+$\frac{d}{dx}\ln(x)=\frac{1}{x}$\\
+$\frac{d}{dx}\log_a(x)=\frac{1}{x\ln(a)}, x>0$\\
+$\frac{d}{dx}e^{g(x)}=g'(x)e^{g(x)}$\\
+$\frac{d}{dx}\tan(x)=\sec^2(x)$\\
+$\frac{d}{dx}\csc(x)=-\csc(x)\cot(x)$\\
+$\frac{d}{dx}\sec(x)=\sec(x)\tan(x)$\\
+$\frac{d}{dx}\cot(x)=-\csc^2(x)$\\
+$\frac{d}{dx}\sin^{-1}(x)=\frac{1}{\sqrt{1-x^2}}$\\
+$\frac{d}{dx}\cos^{-1}(x)=-\frac{1}{\sqrt{1-x^2}}$\\
+$\frac{d}{dx}\tan^{-1}(x)=\frac{1}{1+x^2}$\\
+% \textbf{Quotient Rule}: $$(\frac{f(x)}{g(x)})'=\frac{f'(x)g(x)-f(x)g'(x)}{(g(x))^2}$$
+
+\end{flushleft}
+
+\end{multicols*}
+
+\end{document}
+

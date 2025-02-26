@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{geometry}
+\newgeometry{left=0.25cm, right=0.25cm, top=0.8cm, bottom=0.5cm} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\usepackage[hidelinks]{hyperref}
+\usepackage{newtxmath}
+\usepackage{titlesec}
+
+\begin{document}
+
+\titlespacing*{\subsubsection}{0pt}{1pt}{1pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{\vspace{-0.8cm}\faGithub\;\href{https://github.com/michaelyql}{michaelyql}}
+
+\begin{multicols*}{3}
+
+\subsubsection*{\underline{1 Intro to OS}}
+\textbf{Use of OS}: \textbf{Abstraction} over hardware: no need to care about low level details. \textbf{Resource allocator}: allow programs to execute simultaneously. \textbf{Control program}: prevent errors and enforce security. \\
+\textbf{OS Structures}: \textit{Monolithic} (kernel is one big program) - Unix, \textit{Microkernel} (very small, provides only basic functions - IPC, scheduling, interrupt handler. File system / Process management handled etc. by user), \textit{Layered System} (generalization of monolithic system), \textit{Client-Server model} (variation of microkernel) \\
+\textbf{Virtual Machines} (hypervisor): Software emulation (virtualization) of hardware. Allows running several OS on the same hardware. Type 1: bare metal, direct access to hardware. Type 2: app installed on host OS. 
+\subsubsection*{\underline{2 Process Abstraction}}
+\textbf{Memory Context}: Text, Data, Stack, Heap. \textbf{Hardware Context}: GPR, PC, SP, FP. \textbf{OS Context}: Process ID, Process State, PCB, Process Table  \\
+\textbf{Function Call Convention}: Different ways to set up/tear down a stack frame (Caller/Callee). There is no universal convention. \\
+\textbf{Stack Frame}: Local variables, Parameters, Saved Registers, Saved SP, Saved FP, Return PC. \textbf{Stack Pointer}: Points to top of the stack. \textbf{Frame Pointer}: Points to a fixed location in a stack frame. The usage of FP is platform dependent. \\
+\textbf{Saved Registers}: When GPRs are all used up, use memory to hold their values, restore them afterwards. A.k.a \textbf{register spilling} \\
+\textbf{Process States}: New, Ready, Running, Blocked, Terminated \\
+\textbf{State Transitions}: \textit{Create} (nil $\to$ New), \textit{Admit} (New $\to$ Ready), \textit{Switch} (Ready $\to$ Running / Running $\to$ Ready (preempted/give up voluntarily)), \textit{Wait} (Running $\to$ Blocked), \textit{Event occur} (Blocked $\to$ Ready) \\
+\textbf{Process Control Block} (PCB): A.k.a process table entry (PTE). The entire execution context for a process. Kernel maintains PCB for all processes \\
+\textbf{Process Table}: A table for storing PCBs \\
+\textbf{System Calls}: switch from user to kernel mode. In C/C++, library version with the \textit{same name} acts as a \textbf{function wrapper}. User friendly library version acts as a \textbf{function adapter}. General mechanism: user makes library call $\to$ Place syscall number in a register $\to$ Execute \textbf{TRAP} (switch to kernel mode) $\to$ Find syscall handler using syscall number $\to$ Execute handler $\to$ Return control to library call, switch back to user mode \\
+\textbf{Exceptions}: E.g. Divide by 0, overflow, Illegal memory access. \textbf{Synchronous} (due to program execution). An exception handler is called; similar to forced function call. \textbf{Interrupts}: hardware related, e.g. timer, keyboard pressed (\textbf{asynchronous)}. Program is suspended. \textbf{Interrupt} handler is invoked \\
+\textbf{unistd.h}: fork, execl. \textbf{stdlib.h}: exit. \textbf{sys/types.h, sys/wait.h}: wait\\
+\texttt{int fork()}: Returns PID of newly created process (for parent) or 0 (for child). Duplicates parent.\\
+\texttt{int execl(const char *path, const char *arg0, ..., NULL)}: \textbf{Replaces} current process. \texttt{NULL} used to indicate end of arg list. \\
+\textbf{Master Process}: \texttt{init} (root), PID = 1, created by kernel at boot time.\\
+\texttt{void exit(int status)}: Status returned to parent. 0 for success, !0 for error. The function \textbf{does not return}. Most resources are released e.g. FD, but PID/status/CPU time is needed. \texttt{exit} is implicitly called. \\
+\texttt{int wait(int *status)}: Returns PID of terminated child. \texttt{status} is exit status of child. Use \texttt{NULL} if don't need. Blocking. This frees everything not cleared by \texttt{exit}. Kills zombies. Variants: \texttt{waitpid}, \texttt{waitid}\\
+\textbf{Zombie Process}: On process exit, child becomes a zombie. If parent terminates before child: \texttt{init} becomes pseudo parent. If child terminates before parent but no \texttt{wait}: child becomes zombie, fills up process table
+\subsubsection*{\underline{3 Process Scheduling}}
+\textbf{Scheduling}: If n(ready to run process) $>$ n(CPU), which should be chosen? Multiple ways to allocate, influenced by \textit{process environment} and scheduling algorithm \\
+\textbf{Types of Process Environment}: 1. \textit{Batch Processing}: No user interaction, no need to be responsive, 2. \textit{Interactive}: User interacts with system, should be responsive and consistent in response time, 3. \textit{Real Time Processing}: Have deadline to meet, usually periodic\\ 
+\textbf{Criteria for Scheduling Algorithms}: 1. \textit{Fairness}: All processes/users should get a fair share of CPU time and have no starvation, 2. \textit{Balance}: All parts of the system should be utilized\\
+\textbf{Types of Scheduling Policies}: 1. \textit{Non-preemptive} (Cooperative): A process stays scheduled until it blocks OR gives up CPU voluntarily, 2. \textit{Preemptive}: A process is given a fixed time quota to run; at the end of the quota, another process is picked \\
+\textbf{Batch Processing}: Criteria: \textit{Turnaround time} (total time taken) i.e. Exit - Arrival. Related to \textbf{waiting time} (waiting for CPU). \textit{Throughput}: No. of tasks finished per unit time. \textit{CPU utilization}: Percentage of time CPU is working on a task. \textit{Burst Time}: time in execution \\
+\textbf{FCFS}: Executed in the order processes arrive; Guaranteed to have no starvation. Downside: \textit{Convoy effect} - whole system slows down due to a few slow processes. E.g. CPU bound task blocks I/O tasks. Performs best when jobs arrive in order of shortest to longest CPU time. \\
+\textbf{SJF}: Select task with smallest total CPU time - needs to know CPU time in advance. Can be guessed through previous CPU bound phases. \textbf{Exponential Average}: \texttt{Predicted$_{n+1}$ = $\alpha$Actual$_n$ + $(1-\alpha)$Predicted$_n$ } \\
+\textbf{SRT}: A \textit{preemptive} variation of SJF; select job with shortest remaining/expected time. New job with shorter remaining time can preempt current job. Good for short jobs that arrive late. \\
+\textbf{Criteria for Interactive Systems}: 1. \textit{Response time}: time between request and response (start execute - arrive time), 2. \textit{Predictability}: Variation in response time; less variation = more predictable. Preemptive algorithms are used to ensure good response time $\to$ scheduler runs periodically. \textbf{Timer Interrupt}: goes off periodically based on clock. Cannot be intercepted by any other program. Interrupt handler invokes scheduler. \textbf{Time Quantum}: Execution duration given to a process. Can be constant or variable. \textit{Must} be multiples of interrupt interval. \\
+\textbf{Round Robin}: Preemptive version of FCFS. Response time guarantee: Given $n$ tasks and quantum $q$, wait time is bounded by $(n-1)q$. Timer interrupt needed. The choice of quantum is important - \textbf{Big quantum}: better CPU utilization, longer wait time, behave more like FCFS, longer response time. \textbf{Small quantum}: bigger overhead (worse CPU utilization), shorter wait time. Performs same as FCFS when length of jobs are all the same and time quantum is never hit. Performs poorly for long jobs when there are many context switches (larger T/A time). \\
+\textbf{Priority Scheduling}: \textit{Preemptive version}: Higher priority process can preempt running process with lower priority. \textit{Non-preemptive version}: Late coming high priority process has to wait for next round of scheduling. \textbf{Cons}: low priority process can starve, high priority process hogs CPU. Solutions: decrease priority over time/fix a time quantum. \\
+\textbf{MLFQ}: If Prio(A) $>$ Prio(B), A runs. If Prio(A) $==$ Prio(B), A and B run in RR. New job $\to$ highest prio. If a job uses its the full quantum $\to$ prio reduced. Else, prio retained. Processes that game the system: calculated the accumulated CPU time used and reduce priority if CPU usage exceeds time quantum. Periodically bump up priority so a process doesn't get stuck in the lowest priority. \\
+\textbf{Lottery Scheduling}: Each process has X tickets, wins X\% of the time. \textbf{Responsive}: newly created process participates in the next lottery. \textbf{Good level of control}: parent can distribute tickets to its children. An important process can be given more tickets, proportional to their usage. Each \textit{resource} can have its own set of tickets. 
+\subsubsection*{\underline{4 Process Alternative: Threads}}
+\textbf{Motivation}: Processes are expensive: memory duplication, context switch overhead, IPC is hard\\ 
+\textbf{Unique thread info}: thread id, registers (GPR and special), stack \\
+\textbf{Benefits of Threads}: 1. \textit{Economy}: less resources required to manage threads compared to processes , 2. \textit{Resource sharing}: thread share resources, no need to duplicate or have additional mechanism to pass information around , 3: \textit{Responsiveness}: program appears more responsive, 4. \textit{Scalability}: take advantage of multiple CPUs \\ 
+\textbf{Problems of Threads}: Parallel execution of threads = parallel system call leading to synchronization issues \\
+\textbf{User Thread}: Implemented by a user library. Kernel is not aware of threads in the process. \textbf{Pros}: Can have multithreaded program on \textbf{any} OS; thread operations are just library calls; More flexible and configurable e.g. custom thread scheduling policy. \textbf{Cons}: OS not aware of threads, scheduling is done at process level. One thread blocked $\to$ process blocked $\to$ all threads blocked. Cannot exploit multiple CPUs.  \\
+\textbf{Kernel Thread}: Thread is implemented in the OS; thread operations handled via \textbf{system calls}. Thread-level scheduling is possible; kernel schedules by threads instead of processes. Kernel may make use of threads for its own execution. \textbf{Pros}: Kernel scheduling - more than 1 thread of the same process can run on multiple CPUs. \textbf{Cons}: Thread operations is now a system call; slower. Generally less flexible, used by all multithreaded programs. If implemented with many features: expensive, overkill. Too little features: not flexible enough for some programs \\
+\textbf{Hybrid Model}: Have both user + kernel threads. OS schedule on kernel threads only; user thread \textbf{binds} to a kernel thread. \\
+\textbf{POSIX Threads (pthread)}: \texttt{\#include <pthread.h>}. Compilation: \texttt{gcc XX.c -lpthread}. Datatypes: \texttt{pthread\_t} (thread ID type), \texttt{pthread\_attr} (thread attributes type) \\
+\textbf{pthread Creation}: \texttt{int pthread\_create(\\ pthread\_t *tidCreated, \\ const pthread\_attr\_t *threadAttributes, \\ void* (*startRoutine) (void*), \\ void *argForStartRoutine) } \\ Returns 0 for success, !0 for errors. \texttt{tidCreated}: thread id for created thread, \texttt{threadAttributes}: control behaviour of the new thread, \texttt{startRoutine}: function pointer to the function to be executed, \texttt{argForStartRoutine}: arguments to the start routine function  \\
+\textbf{pthread Termination}: \\ \texttt{void pthread\_exit(void* exitValue)} \\ \texttt{exitValue}: value to be returned to whoever synchronize with this thread. If \texttt{pthread\_exit()} is not used, a pthread will automatically terminate when the end of \texttt{startRoutine} is reached. In this case, there is no way to return an exit value. \\
+\textbf{pthread Synchronization}: \\ \texttt{int pthread\_join(pthread\_t threadID, \\ void ** status)} \\ Returns 0 for success, !0 for errors. \texttt{threadID}: the thread to wait for. \texttt{status}: Exit value returned by thread. \\
+\textbf{Resources shared}: 1. Code (text) segment, 2. Global (static) data, 3. Heap memory, 4. Open files (file descriptors), 5. Current Working Directory, 6. Signal handlers, 7. Process address space \\ 
+\textbf{Thread switch}: Registers (just FP and SP pointers), stack (for function calls and local variables). Much ``lighter'' than process.
+\subsubsection*{\underline{5 Inter-Process Communication (IPC)}}
+\textbf{Motivation}: Memory space is independent, hard to share information across processes \\
+\textbf{Common Mechanisms}: 1. \textit{Shared Memory}, 2. \textit{Message Passing}. \textbf{Unix-specific Mechanisms}: 1. \textit{Pipe}, 2. \textit{Signal} \\
+\textbf{Shared Memory}: Lifecycle: shmget $\to$ shmat $\to$ shmdt $\to$ shmctl. Pros: efficient, easy to use. Cons: synchronization, harder to implement \\
+\textbf{Message Passing}: P1 sends message to P2, P2 receives message. Send/receive usually provided as system call. Additional Properties: \textit{Naming} (how to identify the other party), \textit{Synchronization} (sync/async send/receive). Messages are stored in kernel memory space. \\
+\textbf{Direct Communication}: Explicitly name the other party (sender/receiver) e.g. \texttt{Send(P2, Msg)} - send to P2, \texttt{Receive(P1, Msg)} - receive from P1. There is only \textbf{one} link between sender/receiver \\ 
+\textbf{Indirect Communication}: Send to mailbox/port. \texttt{Send(MB, Msg)} - send to MB, \texttt{Receive(MB, Msg)} - receive from MB. One mailbox can be shared among \textbf{several} processes. Pros: portable, easier synchronization. Cons: inefficient, hard to use \\
+\textbf{Types of message passing:} 1. \textit{Blocking} primitives (synchronous, wait until send/receive), 2. \textit{Non-blocking} primitives, (asynchronous, fire and forget). \\
+\textbf{Unix Pipes}: stdin/stdout/stderr. \texttt{|} is known as \textbf{piping}. General idea: create a communication channel with 2 ends, pipe the results from one process to another (Producer/Consumer relationship). Pipes function as \textbf{circular bounded byte buffer} with \textit{implicit synchronization} - Writers wait when buffer is full, readers wait when buffer is empty. Variants: multiple readers/writers, half-duplex (unidirectional), full-duplex (bidirectional). Import from \texttt{\#include <unistd.h>}. Syntax: \texttt{int pipe(int fd[])}. Returns 0 for success, !0 for error. An \textbf{array} of file descriptors is returned. \texttt{fd[0]} for reading end (read from here), \texttt{fd[1]} for writing end (write to here) \\
+\textbf{Unix Signals}: e.g. \texttt{SIGINT}, \texttt{SIGSEGV}, \texttt{SIG\_ERR}. An asynchronous notification regarding an event, sent to a process/thread. The recipient of the signal must handle the signal by 1. a default set of handlers, or 2. user supplied handler. Common signals: Kill, Stop, Continue, memory error, Arithmetic error etc. 
+\subsubsection*{\underline{6 Synchronization}}
+\textbf{Race Condition}: Result of executing concurrent programs is non-deterministic, based on the order in which resources are accessed. \\
+\textbf{Solution to RC}: \textit{Critical Section} (CS) – at any point in time, only \textbf{one} process can execute in the CS while others are prevented from entering.\\
+\textbf{Properties of Correct CS Implementation}: (1) \textit{Mutual Exclusion}: one process in CS at any time, rest cannot enter, (2) \textit{Progress}: if no process is in CS, one waiting processes should be granted access, (3) \textit{Bounded Wait}: upper bound on wait time, will eventually enter CS, (4) \textit{Independence}: processes not in CS should not block other processes \\
+\textbf{Symptoms of Incorrect CS Impl}: (1) \textit{Deadlock}: All processes blocked, no progress, (2) \textit{Livelock}: Processes keep changing state to avoid deadlock but make no progress; usually related to deadlock avoidance mechanism, (3) \textit{Starvation}: Some processes are blocked forever \\
+\textbf{Levels of CS Impl}: 1. Assembly level, 2. High Level Language (HLL), 3. High Level Abstraction \\
+\textbf{Assembly Level}: \texttt{TestAndSet Register, MemoryLocation}: Loads the current content in \texttt{MemoryLocation} into \texttt{Register} and stores 1 into \texttt{MemoryLocation}. This is a single machine instruction i.e. atomic. To enter CS: continue checking while \texttt{TestAndSet(Lock)} returns 1. Before exiting: set \texttt{*Lock = 0}. Pros: it is a correct CS impl. Cons: \textbf{busy waiting}, wasteful of processing power \\
+\textbf{HLL Impl (Peterson's Algorithm)}: \texttt{want[n]} array and \texttt{turn} variable. Assumption: writing to \texttt{turn} is atomic. Cons: busy waiting, too low level, not general enough \\
+
+
+\end{multicols*}
+
+\end{document}
+
