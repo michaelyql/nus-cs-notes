@@ -1,0 +1,144 @@
+\documentclass[12pt]{extarticle}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{geometry}
+\newgeometry{left=0.75cm, right=0.75cm, top=1cm, bottom=1cm} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\begin{document}
+
+\doublespacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{\vspace{-0.8cm}\faGithub\;\href{https://github.com/michaelyql}{michaelyql}}
+
+
+\subsection*{Erdős-Szekeres Theorem}
+Every sequence of length $n^2+1$ has a monotonic subsequence of length at least $n+1$. Furthermore, there exists sequences of $n^2$ numbers that do not have a monotonic subsequence of length $n+1$. \\
+Monotonic sequence: non-increasing or non-decreasing sequence e.g. [1,3,5,5], [-1,-3,-3]\\ 
+Proof by Pigeonhole Principle (PHP): \\
+Given a sequence $a_1,a_2,\dots,a_{n^2+1}$, make a table $$\begin{matrix}a_1 & a_2 & \dots & a_{n^2+1}\\ \hline d_1 & d_2 & \dots & d_{n^2+1}\\ \hline e_1 & e_2 & \dots & e_{n^2+1} \end{matrix}$$
+where $d_i$ = length of longest \textbf{non-increasing} subsequence starting at $a_i$ and $e_i$ = length of longest \textbf{non-decreasing} subsequence starting at $a_i$. \\
+For $i\not=j$, it is not possible for $d_i=d_j$ and $e_i=e_j$ at the same time. (Proposition 1) \\
+Case 1: if $a_i<a_j$, you can prepend $a_i$ to the longest non-decreasing subsequence starting at $a_j$, so $e_i\geq e_j+1$. \\
+Case 2: if $a_i\geq a_j$, you can prepend $a_i$ to the longest non-increasing subsequence starting at $a_j$, so $d_i \geq d_j+1$.\\
+Assume that there are no monotonic subsequences of length $n+1$, i.e. the longest monotone subsequence is of length $n$. Then the possible values of $d_i$ and $e_i$ range from 1 to $n$. Then there are a total of $n^2$ possible distinct pairs $(d_i,e_i)$ for $1\leq d_i,e_i\leq n$. But there are $n^2+1$ pairs in total. By PHP, at least two pairs $(d_i,e_i)$ and $(d_j,e_j)$ where $i\not=j$ have the same values, i.e. $d_i=d_j$ and $e_i=e_j$, which cannot be true by Proposition 1. Hence, our initial assumption that there exist no monotonic subsequence of length $n+1$ is wrong.\\
+Consider the sequence $$\begin{matrix}
+    n,n-1,n-2,\dots,1,\\
+    2n,2n-1,\dots,n+1,\\
+    3n,3n-1,\dots,2n+1,\\
+    \vdots\\
+    n^2,n^2-1,\dots,n^2-n+1
+\end{matrix}$$
+The longest monotonic subsequence is of length $n$ (decreasing across a row or increasing down a column). You can guarantee a monotonic subsequence of length $n+1$ by adding just one more term. But for $n^2$ terms, you cannot guarantee that it has a monotonic subsequence of length $n+1$.\\
+\textbf{Dilworth's Lemma} is a generalization of the Erdős-Szekeres Theorem. \textbf{Ramsey's Theorem} is a generalization of Dilworth's Lemma. 
+
+\subsection*{Ramsey Theory}
+On a social media platform, two people can be friends or not. Pick 6 arbitary users. Ramsey's Theory says that we can always find a group of 3 users who are all friends with the other two, or a group of 3 users which none of them are friends with each other, or both. \\
+Reformulating using graphs: Construct a graph with 6 vertices, one for each person. Use a blue edge between two vertices if two people are friends and a red edge if they are not. The resulting graph is $K_6$ (a complete graph of order 6) with coloured edges. The claim is that there exists at least one \textbf{monochromatic triangle}, i.e. a triangle with all 3 edges of the same colour.\\
+\textbf{Arrow Notation}:\\
+Claim: If you colour the edges of $K_6$ arbitrarily with red and blue, you are guaranteed a red $K_3$ or a blue $K_3$. Shorthand: $K_6\to K_3,K_3$. \\
+Proof: Consider any vertex $a$ in the graph. It has 5 coloured edges. WLOG, by PHP, it will have at least 3 red (or 3 blue) edges. (If it has less than 3 red edges, then it has at least 3 blue edges, since all edges must be coloured, vice versa). Let the vertices at ends of these 3 red edges be $b$, $c$ and $d$. Since the edge $(a,b)$ and $(a,c)$ are red, then the edge $(b,c)$ must be blue. Similarly, $(a,d)$ is red, so $(b,d)$ must be blue. And lastly, $(c,d)$ must be blue as well. Then the triangle formed by $(b,c)$, $(c,d)$ and $(b,d)$ are all blue, thus forming a monochromatic triangle.\\
+Proposition: $K_5\not\rightarrow K_3,K_{3}$ i.e. it is possible to colour the edges of $K_{5}$ with red and blue such that there is no red or blue $K_{3}$. So 6 is a ``threshold''. Denote this by $r(3,3)=6$. $r(3,3)$ is a \textbf{Ramsey number}. \\
+Frank Ramsey's main idea was that, in a complex and large enough system, you can find any pattern - there is order in chaos. $r(a,b)$ is the threshold where your `wish' for a pattern of $(a,b)$ comes true. So $r(5,8)$ is the smallest $n$ such that $K_{n}\to K_{5},K_{8}$. In general, $K_{s}\to K_{n},K_{m}$ is a claim (which could be true or false) that if you arbitrarily colour the edges of $K_{s}$ using two colours, red or blue, then you are \textbf{guaranteed} either a blue $K_{n}$ or a red $K_{m}$ (or both). \\
+Some properties and notation: 
+\begin{enumerate}
+\item $r(n)=r(n,n)$
+\item $r(n,m)=r(m,n)$
+\item $r(1,m)=1$
+\item $r(2,m)=m$ for $m>1$ (Use blue at least once, or use red everywhere)
+\end{enumerate}
+$K_{5}\not \to K_{2},K_{6}$, because even though you can get a blue $K_{2}$, you are not guaranteed a red $K_{6}$, since a red $K_{6}$ is cannot be formed.\\
+$r(2,2)=2$, $r(3,3)=6$, $r(4,4)=18$, $r(5,5)=?$ \\
+$r(5,5)$ is unknown, but has been proven to lie between $43\leq r(5,5)\leq 48$ (most recently proven to be $\leq 46$ by computation, arXiv:2409.15709). Most Ramsey numbers are unknown. $36\leq r(4,6)\leq 40$, $102\leq r(6,6)\leq 161$. Erdős' fable: \begin{quote} ``If an alien force, vastly more powerful than us, landing on Earth and demanding the value of R(5,5) or they will destroy our planet, we should marshal all our computers and mathematicians and attempt to find the value. But if they ask for R(6,6), we should attempt to destroy the aliens.'' \end{quote} 
+Formally, Ramsey's Theorem says that, for each pair of positive integers $k$ and $l$ there exists an integer $R(k,l)$ (known as the Ramsey number) such that any graph with $R(k,l)$ nodes contains a \textbf{clique} with at least $k$ nodes or an \textbf{independent set} with at least \emph{l} nodes.\\
+Another statement of the theorem is that for integers $k,l\geq2$, there exists a least positive integer $R(k,l)$ such that no matter how the complete graph $K_{R(k,l)}$ is two-colored, it will contain a green subgraph $K_k$ or a red subgraph $K_l$.
+
+\subsection*{Vieta's Formula}
+Let $P(X)=a_{n}x^{n}+a_{n-1}x^{n-1}+\dots+a_{1}x^{1}+a_{0}$ be any polynomial with complex coefficients with roots $r_{1},r_{2},\dots,r_{n}$ and let $s_{j}$ be the $j^{th}$ elementary symmetric polynomial of the roots. Then 
+\begin{gather*}
+s_{1}=r_{1}+r_{2}+\dots+r_{n}=-\frac{a_{n-1}}{a_{n}}\\
+s_{2}=r_{1}r_{2}+r_{2}r_{3}+\dots+r_{n-1}r_{n}=\frac{a_{n-2}}{a_{n}}\\
+\vdots \\
+s_{n}=r_{1}r_{2}r_{3}\dots r_{n}=(-1)^{n}\frac{a_{0}}{a_{n}}
+\end{gather*}
+This can be compactly summarized as $s_{j}=(-1)^{j}\frac{a_{n-j}}{a_{n}}$ for some $j$ such that  $1\leq j\leq n$.\\
+For quadratic equations, if $f(x)=ax^{2}+bx+c$ with roots $\alpha$ and $\beta$, then $\alpha+\beta=-\frac{b}{a}$, $\alpha\beta=\frac{c}{a}$. If the sum and product of roots are given, then $x^{2}-(\alpha+\beta)x+(\alpha\beta)=x^{2}-bx+c=0$. Then using the discriminant formula,  $D=b^{2}-4ac$, the roots will be $\alpha=\frac{b-\sqrt{D}}{2}$ and $\beta=\frac{b+\sqrt{D}}{2}$. If $D<0$, there are no real roots. If $D=0$, $\alpha=\beta$.
+
+\subsection*{LCM Sum Function}
+Given $n$, calculate the sum $LCM(1,n)+LCM(2,n)+\dots+LCM(n,n)$ where $LCM(i,n)$ denotes the least common multiple of $i$ and $n$.
+$$S(n)=\frac{n}{2}(\sum_{d|n}(\phi(d)\times d)+1)$$ where $\phi(n)$ is Euler's totient function which calculates the number of positive integers less than or equal to $n$ which are coprime with $n$.\\
+Proof (taken from https://forthright48.com/spoj-lcmsum-lcm-sum/): \\
+Let $S(n)=LCM(1,n)+\dots+LCM(n,n)$.
+\begin{align*}
+&S(n)-LCM(n,n)=LCM(1,n)+\dots+LCM(n-1,n) \\
+&S(n)-n=LCM(1,n)+\dots+LCM(n-1,n)\\
+&S(n)-n=LCM(n-1,n)+\dots+LCM(1,n)\\
+&2(S(n)-n)=(LCM(1,n)+LCM(n-1,n))+\dots+(LCM(n-1,n)+LCM(1,n))\\
+&\text{Let }x=LCM(a,n)+LCM(n-a,n)=\frac{an}{gcd(a,n)}+\frac{(n-a)n}{gcd(n-a,n)}
+\end{align*}
+If $c$ divides $a$ and $b$, then $c$ divides $a+b$ and $a-b$. So if $g=gcd(a,n)$ divides $a$ and $n$, then $g$ also divides $n-a$. So $gcd(a,n)=gcd(n-a,n)$. Then $$x=\frac{an+(n-a)n}{gcd(a,n)}=\frac{an+n^{2}-an}{gcd(a,n)}=\frac{n^{2}}{gcd(a,n)}$$
+Substituting in, 
+\begin{align*}
+&2(S(n)-n)=\sum_{i=1}^{n-1}\frac{n^{2}}{gcd(i,n)}\\
+&2(S(n)-n)=n\sum_{i=1}^{n-1}\frac{n}{gcd(i,n)}\\
+\end{align*}
+Since $g=gcd(i,n)$ divides $n$, we can list the possible values of $gcd(i,n)$ by finding the divisors of $n$. The number of times that $d=gcd(i,n)$ occurs is $\phi(\frac{n}{d})$. This is because $gcd(i,n)=d$ can be rewritten as $gcd(kd,n)=d$ for some $k$. Dividing throughout by $d$, $gcd(k,\frac{n}{d})=1$. The number of positive integers that are coprime with $\frac{n}{d}$, i.e. $gcd(k, \frac{n}{d})=1$ is exactly $\phi(\frac{n}{d})$. Hence
+\begin{align*}
+&2(S(n)-n)=n\sum_{i=1}^{n-1}\frac{n}{gcd(i,n)}\\
+&2(S(n)-n)=n\sum_{d|n,d\not=n}\phi(\frac{n}{d})\times\frac{n}{d}\\
+&\text{Let $d'=\frac{n}{d}$, then } 2(S(n)-n)=n\sum_{d'|n,d'\not=1}\phi(d')\times d'\\
+&\text{since $d'=\frac{n}{d}$ is also a divisor of }n\\
+&2(S(n)-n)=n\sum_{d|n,d\not=1}\phi(d)\times d\\
+&2(S(n)-n)=n(\sum_{d|n}(\phi(d)\times d)-1) \text{ (since $\phi(1)\times1=1$)}\\
+&2(S(n)-n)=n\sum_{d|n}(\phi(d)\times d)-n\\
+&2S(n)=n+n\sum_{d|n}(\phi(d)\times d)\\
+&2S(n)=n(\sum_{d|n}(\phi(d)\times d)+1)\\
+&\therefore S(n)=\frac{n}{2}(\sum_{d|n}(\phi(d)\times d)+1)
+\end{align*}
+The sequence of LCM sum values can be found at https://oeis.org/A051193.\\
+Computation wise, we can first precompute the values of $\phi(d)$, then iterate through the divisors of $n$.\\
+See LightOJ: LCM Extreme (https://lightoj.com/problem/lcm-extreme)
+
+\subsection*{Euler's Totient Function}
+
+\subsection*{Convolution}
+$$(f*g)(t) := \int_{-\infty}^{\infty}f(x)g(t-x)dx$$
+\subsubsection*{Dirichlet Convolution}
+$$(f*g)(n)=\sum_{d|n}f(d)g(\frac{n}{d})$$
+For the identity function $I(n)=n$ and the constant function $\mathbf{1}(n)=1$, for all natural numbers $n$, $$(I * \mathbf{1})(n)=\sum_{d|n}I(d)\mathbf{1}(\frac{n}{d})=\sum_{d|n}d\cdot 1=\sum_{d|n}d=\sigma(n)$$ where $\sigma(n)$ is the sum of the positive divisors of $n$. We write $I*\mathbf{1}=\sigma$\\
+Properties:
+\begin{enumerate}
+\item Convolution is commutative: $f*g=g*f$
+\item It is associative: $(f*g)*h=f*(g*h)$
+\item It is distributive over addition: $f*(g+h)=(f*g)+(f*h)$
+\item It has an identity: define $e(n)=\lfloor\frac{1}{n}\rfloor=\begin{cases}1 \text{ if } n=1 \\ 0 \text{ otherwise} \end{cases}$. Then $e*f=f*e=f$ for any $f$.
+\item The Dirichlet convolution of two multiplicative functions is multiplicative.
+\end{enumerate}
+\subsubsection*{Sum Convolution}
+\subsubsection*{GCD Convolution}
+\subsubsection*{Circular Convolution}
+\subsubsection*{Discrete Convolution}
+\subsubsection*{Laplace Transform}
+\subsubsection*{Fourier Transform}
+\subsubsection*{Z-Transform}
+
+% https://codeforces.com/blog/entry/112346
+% https://codeforces.com/blog/entry/119082
+% https://betterexplained.com/articles/intuitive-convolution/
+% https://codeforces.com/blog/entry/117635
+% https://codeforces.com/blog/entry/91632?#comment-802482
+
+
+\end{document}

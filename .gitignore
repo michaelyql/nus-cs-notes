@@ -4,4 +4,5 @@
 *.gz
 *.bbl
 *.blg
+*.out
 CP
