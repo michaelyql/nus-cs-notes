@@ -111,6 +111,12 @@ The sequence of LCM sum values can be found at https://oeis.org/A051193.\\
 Computation wise, we can first precompute the values of $\phi(d)$, then iterate through the divisors of $n$.\\
 See LightOJ: LCM Extreme (https://lightoj.com/problem/lcm-extreme)
 
+\subsection*{GCD Sum Function}
+
+% https://codeforces.com/blog/entry/57148
+% https://math.stackexchange.com/questions/2081440/understanding-gauss-theoremn-sum-dn-phid
+% https://medium.com/@iamcrypticcoder/a-few-problems-to-remember-of-gcd-and-lcm-a4882cd81094
+
 \subsection*{Euler's Totient Function}
 
 \subsection*{Convolution}
@@ -140,5 +146,30 @@ Properties:
 % https://codeforces.com/blog/entry/117635
 % https://codeforces.com/blog/entry/91632?#comment-802482
 
+
+\subsubsection*{Division Algorithm}
+For $a,b\in\mathbb{Z}$ and $b>0$, we can always write $a=qb+r$ where $0\leq r<b$ and $q\in\mathbb{Z}$. Moreover, given $a,b$, there is only one pair $q,r$ which satisfy the constraints.
+\subsubsection*{Bezout's Identity}
+Let $a$ and $b$ be integers with greatest common divisor $d$. Then there exist integers $x$ and $y$ such that $ax + by = d$. Moreover, the integers of the form $az + bt$ are exactly the multiples of $d$.
+\subsubsection*{Euclidean Algorithm for GCD}
+Define $gcd(a,b)=\max\{k>0:(k|a)\text{ and }(k|b)\}$. \\
+Also define $gcd(0,p)=p$ and $gcd(0,0)=0$ to preserve the associativity of $gcd$.\\
+Since the function is associative, $gcd(a,b,c)=gcd(a,gcd(b,c))$.\\
+If $g$ divides $a$ and $b$, then $g$ also divides $a-b$.\\
+If $g$ divides $a-b$ and $b$, then it also divides $a=(a-b)+b$.\\
+So the set of common divisors coincide.\\
+$b$ is subtracted from $a$ at least $\lfloor\frac{a}{b}\rfloor$ times before $a$ becomes smaller than $b$, at which point we can swap the two, i.e. $gcd(a,b)=gcd(a-b,b)$. To speed it up, $$gcd(a,b)=\begin{cases}a, &\text{if }b=0\\gcd(b,a \text{ mod }b),&\text{otherwise} \end{cases}$$
+\subsubsection*{Extended Euclidean Algorithm}
+The Euclidean Algorithm computes the GCD for two numbers $a$ and $b$. The Extended Euclidean Algorithm finds a way to represent the GCD as a linear combination of $a$ and $b$, i.e. $ax+by=gcd(a,b)$. Since the Euclidean Algorithm ends with $a=g$ and $b=0$, for the base case, $x=1$ and $y=0$, so that $ax+by=g\cdot 1+0\cdot 0=g$.\\
+Now we want to transition from $(b, a\text{ mod } b)$ back to $(a,b)$. Assume we know $(x_{1}, y_{1})$ for $(b, a\text{ mod } b)$, then $b\cdot x_{1}+(a \text{ mod }b )\cdot y_{1}=g$.\\
+So $b\cdot x_{1}+(a-\lfloor\frac{a}{b}\rfloor\cdot b)\cdot y_{1}=g$\\
+Rearranging, $g=a\cdot y_{1}+b\cdot(x_{1}-y_{1}\cdot\lfloor\frac{a}{b}\rfloor)$. So $\begin{cases}x=y_{1}\\ y=x_{1}-y_{1}\cdot\lfloor\frac{a}{b}\rfloor\end{cases}$
+\subsubsection*{Lowest Common Multiple}
+$$lcm(a,b)=\frac{a\cdot b}{gcd(a,b)}$$
+\subsubsection*{Diophantine Equations}
+Diophantine equation = an equation where solutions are restricted to integers. For example, $ax+by=c$, $w^{3}+x^{3}=y^{3}+z^{3}$, $x^{n}+y^{n}=z^{n}$ (Fermat's Last Theorem).
+\subsubsection*{Linear Diophantine Equation}
+$ax+by=c$ has solutions iff $c$ is a multiple of $gcd(a,b)$. If $(x,y)$ is a solution, then $(x+kv, y-ku)$ are also solutions for any arbitrary $k$ where $u$ and $v$ are the quotients of $a$ and $b$ divided by $gcd(a,b)$.
+\subsubsection*{Digital Roots}
 
 \end{document}
