@@ -6,3 +6,5 @@
 *.blg
 *.out
 CP
+_minted*
+*.listing

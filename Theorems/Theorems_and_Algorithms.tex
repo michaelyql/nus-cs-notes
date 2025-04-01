@@ -13,6 +13,37 @@
 \usepackage{fontawesome}
 \usepackage[hidelinks]{hyperref}
 \usepackage{titlesec}
+\usepackage{tcolorbox}
+
+\definecolor{azure}{rgb}{0.94, 1.0, 1.0}
+\definecolor{bgdark}{rgb}{0.14, 0.15, 0.17}
+
+\tcbuselibrary{minted}
+\tcbset{listing engine=minted}
+
+\newtcblisting{cpp}{%
+colback=bgdark,
+colupper=white,
+% colframe=azure,
+listing only,
+minted language=c++,
+minted options={
+	tabsize=2,
+	fontsize=\small,
+	breaklines, 
+	autogobble, 
+	mathescape, 
+	% linenos, % enable line numbers
+	fontsize=\footnotesize, % font size, \footnotesize is default, options are \small or \large
+	baselinestretch=1.5, % spacing between lines
+	% numbersep=12pt, % spacing of code from line numbers 
+	% frame=leftline, % left border before line numbers
+	% framesep=12pt, % spacing of code from left border
+},
+% left=1cm % left padding
+}
+
+\usemintedstyle{native} % Use 'pygmentize -L styles' and choose from there
 
 \begin{document}
 
@@ -146,7 +177,7 @@ Properties:
 % https://codeforces.com/blog/entry/117635
 % https://codeforces.com/blog/entry/91632?#comment-802482
 
-
+\subsection*{Algebra}
 \subsubsection*{Division Algorithm}
 For $a,b\in\mathbb{Z}$ and $b>0$, we can always write $a=qb+r$ where $0\leq r<b$ and $q\in\mathbb{Z}$. Moreover, given $a,b$, there is only one pair $q,r$ which satisfy the constraints.
 \subsubsection*{Bezout's Identity}
@@ -164,6 +195,23 @@ The Euclidean Algorithm computes the GCD for two numbers $a$ and $b$. The Extend
 Now we want to transition from $(b, a\text{ mod } b)$ back to $(a,b)$. Assume we know $(x_{1}, y_{1})$ for $(b, a\text{ mod } b)$, then $b\cdot x_{1}+(a \text{ mod }b )\cdot y_{1}=g$.\\
 So $b\cdot x_{1}+(a-\lfloor\frac{a}{b}\rfloor\cdot b)\cdot y_{1}=g$\\
 Rearranging, $g=a\cdot y_{1}+b\cdot(x_{1}-y_{1}\cdot\lfloor\frac{a}{b}\rfloor)$. So $\begin{cases}x=y_{1}\\ y=x_{1}-y_{1}\cdot\lfloor\frac{a}{b}\rfloor\end{cases}$
+
+\begin{cpp}
+int gcd(int a, int b, int& x, int& y) {
+    if (b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    int x1, y1;
+    int d = gcd(b, a % b, x1, y1);
+    x = y1;
+    y = x1 - y1 * (a / b);
+    return d;
+}
+\end{cpp}
+
+
 \subsubsection*{Lowest Common Multiple}
 $$lcm(a,b)=\frac{a\cdot b}{gcd(a,b)}$$
 \subsubsection*{Diophantine Equations}
