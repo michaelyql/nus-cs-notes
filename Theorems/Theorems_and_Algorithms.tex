@@ -17,14 +17,21 @@
 
 \definecolor{azure}{rgb}{0.94, 1.0, 1.0}
 \definecolor{bgdark}{rgb}{0.14, 0.15, 0.17}
+\definecolor{bgatom-light}{rgb}{0.98,0.98,0.98}
 
 \tcbuselibrary{minted}
 \tcbset{listing engine=minted}
 
+% Use 'pygmentize -L styles' and choose from there
+% Light modes: arduino, tango, solarized-light
+% Dark modes: nord, nord-darker, github-dark, gruvbox-dark
+\usemintedstyle{solarized-light} 
+
 \newtcblisting{cpp}{%
-colback=bgdark,
-colupper=white,
-% colframe=azure,
+% colback=bgdark,
+colback=bgatom-light,
+% colupper=black, % line number colour
+colframe=gray!10,
 listing only,
 minted language=c++,
 minted options={
@@ -35,15 +42,13 @@ minted options={
 	mathescape, 
 	% linenos, % enable line numbers
 	fontsize=\footnotesize, % font size, \footnotesize is default, options are \small or \large
-	baselinestretch=1.5, % spacing between lines
+	baselinestretch=1.1, % spacing between lines
 	% numbersep=12pt, % spacing of code from line numbers 
 	% frame=leftline, % left border before line numbers
 	% framesep=12pt, % spacing of code from left border
 },
 % left=1cm % left padding
 }
-
-\usemintedstyle{native} % Use 'pygmentize -L styles' and choose from there
 
 \begin{document}
 
@@ -177,12 +182,12 @@ Properties:
 % https://codeforces.com/blog/entry/117635
 % https://codeforces.com/blog/entry/91632?#comment-802482
 
-\subsection*{Algebra}
-\subsubsection*{Division Algorithm}
+\subsection*{Division Algorithm}
 For $a,b\in\mathbb{Z}$ and $b>0$, we can always write $a=qb+r$ where $0\leq r<b$ and $q\in\mathbb{Z}$. Moreover, given $a,b$, there is only one pair $q,r$ which satisfy the constraints.
-\subsubsection*{Bezout's Identity}
-Let $a$ and $b$ be integers with greatest common divisor $d$. Then there exist integers $x$ and $y$ such that $ax + by = d$. Moreover, the integers of the form $az + bt$ are exactly the multiples of $d$.
-\subsubsection*{Euclidean Algorithm for GCD}
+\subsection*{Bezout's Identity}
+Let $a$ and $b$ be integers with greatest common divisor $d$. Then there exist integers $x$ and $y$ such that $ax + by = d$. Moreover, the integers of the form $az + bt$ are exactly the multiples of $d$. In general,
+$$\text{If }gcd(a_{1},a_{2},\dots,a_{n})=d, \text{ then }\exists x_{1},x_{2},\dots,x_{n} \in\mathbb{Z} \text{ s.t. } d=a_{1}x_{1}+a_{2}x_{2}+\dots+a_{n}x_{n}$$ where $d$ is the smallest number of this form, and every number of this form is a multiple of $d$.
+\subsection*{Euclidean Algorithm for GCD}
 Define $gcd(a,b)=\max\{k>0:(k|a)\text{ and }(k|b)\}$. \\
 Also define $gcd(0,p)=p$ and $gcd(0,0)=0$ to preserve the associativity of $gcd$.\\
 Since the function is associative, $gcd(a,b,c)=gcd(a,gcd(b,c))$.\\
@@ -190,7 +195,7 @@ If $g$ divides $a$ and $b$, then $g$ also divides $a-b$.\\
 If $g$ divides $a-b$ and $b$, then it also divides $a=(a-b)+b$.\\
 So the set of common divisors coincide.\\
 $b$ is subtracted from $a$ at least $\lfloor\frac{a}{b}\rfloor$ times before $a$ becomes smaller than $b$, at which point we can swap the two, i.e. $gcd(a,b)=gcd(a-b,b)$. To speed it up, $$gcd(a,b)=\begin{cases}a, &\text{if }b=0\\gcd(b,a \text{ mod }b),&\text{otherwise} \end{cases}$$
-\subsubsection*{Extended Euclidean Algorithm}
+\subsection*{Extended Euclidean Algorithm}
 The Euclidean Algorithm computes the GCD for two numbers $a$ and $b$. The Extended Euclidean Algorithm finds a way to represent the GCD as a linear combination of $a$ and $b$, i.e. $ax+by=gcd(a,b)$. Since the Euclidean Algorithm ends with $a=g$ and $b=0$, for the base case, $x=1$ and $y=0$, so that $ax+by=g\cdot 1+0\cdot 0=g$.\\
 Now we want to transition from $(b, a\text{ mod } b)$ back to $(a,b)$. Assume we know $(x_{1}, y_{1})$ for $(b, a\text{ mod } b)$, then $b\cdot x_{1}+(a \text{ mod }b )\cdot y_{1}=g$.\\
 So $b\cdot x_{1}+(a-\lfloor\frac{a}{b}\rfloor\cdot b)\cdot y_{1}=g$\\
@@ -212,12 +217,235 @@ int gcd(int a, int b, int& x, int& y) {
 \end{cpp}
 
 
-\subsubsection*{Lowest Common Multiple}
+\subsection*{Lowest Common Multiple}
 $$lcm(a,b)=\frac{a\cdot b}{gcd(a,b)}$$
-\subsubsection*{Diophantine Equations}
+\subsection*{Diophantine Equations}
 Diophantine equation = an equation where solutions are restricted to integers. For example, $ax+by=c$, $w^{3}+x^{3}=y^{3}+z^{3}$, $x^{n}+y^{n}=z^{n}$ (Fermat's Last Theorem).
-\subsubsection*{Linear Diophantine Equation}
+\subsection*{Linear Diophantine Equation}
 $ax+by=c$ has solutions iff $c$ is a multiple of $gcd(a,b)$. If $(x,y)$ is a solution, then $(x+kv, y-ku)$ are also solutions for any arbitrary $k$ where $u$ and $v$ are the quotients of $a$ and $b$ divided by $gcd(a,b)$.
-\subsubsection*{Digital Roots}
+\subsection*{Digital Roots}
+\subsection*{Prime Factorization Theorem (Fundamental Theorem of Arithmetic)}
+Every integer greater than 1 can be represented uniquely as a product of prime powers. 
+$$n=p_{1}^{\alpha_{1}}p_{2}^{\alpha_{2}}\dots p_{k}^{\alpha_{k}}$$ 
 
-\end{document}
+% Helpful Statements for Number Theory: https://codeforces.com/topic/123865/en13
+
+\section*{Prime Counting Function}
+\subsection*{Sieve of Erastosthenes}
+\begin{cpp}
+vector<int> primes;
+void sieve(n) {
+	vector<bool> isPrime(n + 1);
+	for (int i = 2; i * i <= n; i++) {
+		if (isPrime[i]) {
+			for (int j = i * i; j <= n; j += i) isPrime[j] = false;
+		}
+	}
+	for (int i = 2; i <= n; i++) {
+		if (isPrime[i]) primes.push_back(i);
+	}
+}
+\end{cpp}
+Any composite number can be written as $a\times b$, where $a$ and $b$ are factors of $n$. If both of them were greater than $\sqrt{n}$, then $ab>n$ which is a contradiction. The algorithm iterates until \texttt{i * i <= n}, since all primes less than \texttt{i} and their multiples would have been marked as non-prime in previous iterations. The time complexity is $O(n \log \log n)$, bounded by the prime harmonic series.
+$$\sum_{p\text{ prime}}\frac{1}{p}=\frac{1}{2}+\frac{1}{3}+\frac{1}{5}+\frac{1}{7}+\dots=\infty$$
+\subsection*{Linear Sieve}
+The idea is to mark numbers with their smallest prime factor. For example, $3\times 7=21$, it's smallest prime factor is 3, so we can mark \texttt{spf[21]=3}.
+\begin{cpp}
+const int N = 2e5 + 7;
+bool isPrime[N];
+vector<int> primes;
+int spf[N];
+
+void fast_sieve() {
+	rep(i, 2, N) isPrime[i] = true;
+	for (int i = 2; i < N; i++) {
+		if (isPrime[i]) {
+			primes.push_back(i);
+			spf[i] = i;
+		}
+		
+		for (int j = 0; j < primes.size() && i * primes[j] < N && primes[j] <= spf[i]; j++) {
+			isPrime[i * primes[j]] = false;
+			spf[i * primes[j]] = primes[j];
+		}
+	}
+}
+\end{cpp}
+\subsection*{Legendre's Formula}
+\subsection*{Number of Divisors}
+$$\tau(n)=\prod_{i=1}^{k}(\alpha_{i}+1)$$
+\begin{cpp}
+long long numberOfDivisors(long long num) {
+    long long total = 1;
+    for (int i = 2; (long long)i * i <= num; i++) {
+        if (num % i == 0) {
+            int e = 0;
+            do {
+                e++;
+                num /= i;
+            } while (num % i == 0);
+            total *= e + 1;
+        }
+    }
+    if (num > 1) {
+        total *= 2;
+    }
+    return total;
+}
+\end{cpp}
+\subsection*{Sum of Divisors}
+\begin{align*}
+\sigma(n)&=(1+p_{1}+p_{1}^{2}+\dots+p_{1}^{\alpha_{1}})+p_{2}(1+p_{1}+p_{1}^{2}+\dots+p_{1}^{\alpha_{1}})+p_{2}^{2}(1+p_{1}+\dots)+\dots\\
+&=(1+p_{1}+p_{1}^{2}+\dots+p_{1}^{\alpha_{1}})\cdot(1+p_{2}+p_{2}^{2}+\dots+p_{2}^{\alpha_{2}})\cdot(\dots)\\
+&=\prod_{i=1}^{k}(1+p_{i}+p_{i}^{2}+\dots+p_{i}^{\alpha_{i}})\\
+&=\prod_{i=1}^{k}\frac{p_{i}^{\alpha_{i}+1}-1}{p_{i}-1}
+\end{align*}
+\begin{cpp}
+long long SumOfDivisors(long long num) {
+    long long total = 1;
+
+    for (int i = 2; (long long)i * i <= num; i++) {
+        if (num % i == 0) {
+            int e = 0;
+            do {
+                e++;
+                num /= i;
+            } while (num % i == 0);
+
+            long long sum = 0, pow = 1;
+            do {
+                sum += pow;
+                pow *= i;
+            } while (e-- > 0);
+            total *= sum;
+        }
+    }
+    if (num > 1) {
+        total *= (1 + num);
+    }
+    return total;
+}
+\end{cpp}
+\subsection*{Product of Divisors}
+$$\mu(n)=\prod_{d|n}d=\begin{cases}n^{\tau(n)/2},&\text{if $\tau(n)$ is even, i.e. $n$ is not a perfect square} \\ n^{(\tau(n)-1)/2}\cdot\sqrt{n},&\text{if $\tau(n)/2$ is odd, i.e. $n$ is a perfect square}  \end{cases}$$
+$\tau(n)$ gives the number of factors of $n$. For each divisors of $n$, it can be ``paired'' with $\frac{n}{d}$, so there are, in total, $\tau(n)/2$ such pairs whose product is exactly $n$.
+\subsection*{Perfect Number}
+A perfect number $n$ is a number such that $n=\sigma(n)-n$, i.e. $n$ is equal to the sum of its divisors from 1 to $n-1$. E.g. $28=1+2+4+7+14$
+\subsection*{Euler's Totient Function}
+For $n=p_{1}^{\alpha_{1}}p_{2}^{\alpha_{2}}\dots p_{k}^{\alpha_{k}}$
+$$\phi(n)=n(1-\frac{1}{p_{1}})(1-\frac{1}{p_{2}})\dots(1-\frac{1}{p_{k}})=\prod_{i=1}^{k}p_{i}^{\alpha_{i}-1}(p_{i}-1)$$
+where $\phi(n)$ denotes the number of positive integers less than or equal to $n$ that are \emph{coprime} with $n$, i.e. $gcd(i, n)=1$. 
+\begin{cpp}
+int phi(int n) { // O(sqrt(n))
+    int result = n;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            while (n % i == 0)
+                n /= i;
+            result -= result / i;
+        }
+    }
+    if (n > 1)
+        result -= result / n;
+    return result;
+}
+
+void phi_1_to_n(int n) { // O(n log log n)
+    vector<int> phi(n + 1);
+    for (int i = 0; i <= n; i++)
+        phi[i] = i;
+
+    for (int i = 2; i <= n; i++) {
+        if (phi[i] == i) {
+            for (int j = i; j <= n; j += i)
+                phi[j] -= phi[j] / i;
+        }
+    }
+}
+\end{cpp}
+For prime numbers, $$\phi(p)=p-1$$\\
+For powers of prime numbers, $$\phi(p^{k})=p^{k-1}(p-1)$$ \\
+The function is multiplicative. For any two coprime numbers $a$ and $b$, $$\phi(ab)=\phi(a)\phi(b)$$
+For semiprime numbers $s=pq$, $$\phi(s)=\phi(p)\phi(q)=(p-1)(q-1)=pq-p-q+1=n-(p+q)+1$$
+The function can be used to calculate the sum of divisors. 
+$$\sum_{d|n}\phi(d)=n$$
+\begin{cpp}
+void phi_1_to_n(int n) { // O(n log n))
+    vector<int> phi(n + 1);
+    phi[0] = 0;
+    phi[1] = 1;
+    for (int i = 2; i <= n; i++)
+        phi[i] = i - 1;
+
+    for (int i = 2; i <= n; i++)
+        for (int j = 2 * i; j <= n; j += i)
+              phi[j] -= phi[i];
+}
+\end{cpp}
+\subsection*{Totient Numbers}
+A totient number is a value of Euler's totient function: that is, an $m$ for which there is at least one $n$ for which $\phi(n) = m$. \\
+The \emph{valency} or \emph{multiplicity} of a totient number m is the number of solutions to this equation. \\
+A nontotient is a natural number which is not a totient number.\\
+Every odd integer exceeding 1 is trivially a nontotient.\\
+There are infinitely many even nontotients, and every positive integer has a multiple which is an even nontotient.\\
+Ford (1999) proved that for every integer $k \geq 2$ there is a totient number $m$ of multiplicity $k$: that is, for which the equation $\phi(n) = m$ has exactly $k$ solutions.\\
+However, no number $m$ is known with multiplicity $k = 1$. Carmichael's totient function \textit{conjecture} is the statement that there is no such $m$ (For every $n$ there is at least one other integer $m\not=n$ such that $\phi(m)=\phi(n)$). \\
+A \emph{perfect totient number} is an integer that is equal to the sum of its iterated totients. That is, we apply the totient function to a number $n$, apply it again to the resulting totient, and so on, until the number 1 is reached, and add together the resulting sequence of numbers; if the sum equals $n$, then $n$ is a perfect totient number. For example, $\phi(9)=6$, $\phi(6)=2$, $\phi(2)=1$, $9=6+2+1$, so 9 is a perfect totient number.
+$$\phi^{i}(n)=\begin{cases}\phi(n)&\text{if }i = 1\\\phi(\phi^{i-1}(n))&\text{ if }i\geq 2 \end{cases}$$
+Then if $c$ is the integer such that $\phi^{c}(n)=2$, $n$ is a perfect totient number if $$n=\sum_{i=1}^{c+1}\phi^{i}(n)$$
+It can be observed that many perfect totient are multiples of 3; in fact, 4375 is the smallest perfect totient number that is not divisible by 3. All powers of 3 are perfect totient numbers, as may be seen by induction using the fact that
+$$\phi(3^{k})=\phi(2\times 3^{k})=2\times 3^{k-1}$$
+\subsection*{Euler's Theorem}
+If $a$ and $n$ are coprime, 
+$$a^{\phi(n)}\equiv 1 \mod n$$
+The special case where $n$ is prime is called Fermat's Little Theorem.
+See \begin{verbatim}https://www.youtube.com/watch?v=5pswKNgVZSg&t=159s&ab_channel=MuPrimeMath\end{verbatim} 
+for an elegant proof.
+\subsection*{Other Formulae of Totient Function}
+$$a\;|\;b\Rightarrow \phi(a)\;|\;\phi(b)$$
+$$m\;|\;\phi(a^{m}-1)$$
+$$\phi(mn)=\phi(m)\phi(n)\cdot\frac{d}{\phi(d)}\text{ where }d=gcd(m,n)$$
+$$\phi(2m)=\begin{cases}2\phi(m) &\text{if $m$ is even} \\ \phi(m)&\text{if $m$ is odd}\end{cases}$$
+$$\phi(lcm(m,n))\cdot \phi(gcd(m,n))=\phi(m)\cdot\phi(n) \text{, from } lcm(m,n)\cdot gcd(m,n)=m\cdot n$$
+$$\phi(n) \text{ is even for }n\geq 3. \text{ If $n$ has $r$ distinct odd prime factors, }2^{r}\;|\;\phi(n)$$
+$$\frac{\phi(n)}{n}=\frac{\phi(\text{rad}(n))}{\text{rad}(n)}\text{, where rad$(n)$ is the radical of $n$ (product of all distinct primes of $n$)}$$
+$$\sum_{d|n}\frac{\mu^{2}(d)}{\phi(d)}=\frac{n}{\phi(n)}$$
+$$\sum_{\substack{1\leq k\leq n-1 \\ gcd(k,n)=1}}k=\frac{1}{2}n\phi(n) \text{ for }n > 1$$
+Euler's totient function is a type of \textbf{Arithmetic Function}.
+\subsection*{Carmichael Function}
+\subsection*{Totient Summary Function}
+\subsection*{Ramanujan's Sum}
+\subsection*{Menon's Identity}
+$$\sum_{\substack{1\leq k\leq n \\ gcd(k,n)=1}}\gcd(k-1,n)=\phi(n)d(n)$$
+where $d(n)$ is the number of divisors of $n$.
+\subsection*{Fermat's Little Theorem}
+If $p$ is a prime number, then for any integer $a$, the number $ap - a$ is an integer multiple of $p$. 
+$$a^{p}\equiv a \mod p$$
+If $a$ and $p$ are coprime, then $a^{p-1}-1$ is an integer multiple of $p$, 
+$$a^{p-1}\equiv 1 \mod p$$
+Combinatorial proof: Suppose there is a necklace of $p$ beads, each of which can be coloured any one of $a$ colours. Then there are in total $a\cdot a\dots a=a^{p}$ ways to colour the beads. There are exactly $a$ ways where all the beads are of the same colour. For each of the remaining $a^{p}-a$ ways, there are $p-1$ configurations that are rotationally equivalent to that configuration, which form a group of $p$ configurations. Hence $a^{p}-a$ must be divisible by $p$. Hence $a^{p}\equiv a \mod p$. \\
+Fermat's little theorem is the basis for the Fermat primality test.
+\subsection*{Pseudoprimes}
+\subsection*{Prime Powers}
+\section*{Primality Tests}
+(From Wikipedia) A primality test is an algorithm for determining whether an input number is prime. Unlike integer factorization, primality tests do not generally give prime factors, only stating whether the input number is prime or not. Factorization is thought to be a computationally difficult problem, whereas primality testing is comparatively easy (its running time is polynomial in the size of the input). Some primality tests prove that a number is prime, while others like Miller–Rabin prove that a number is composite. Therefore, the latter might more accurately be called compositeness tests instead of primality tests.
+\subsection*{Fermat's Primality Test}
+\subsection*{Miller-Rabin Primality Test}
+\section*{Integer Factorization}
+\subsection*{Trial Division}
+\subsection*{Fermat's Factorization Method}
+\subsection*{Pollard-Rho}
+\subsection*{Quadratic Sieve}
+\subsection*{Elliptic Curve Factorization}
+\subsection*{General Number Field Sieve}
+\section*{Modular Arithmetic}
+\subsection*{Modular Inverse}
+\subsection*{Chinese Remainder Theorem}
+\section*{Arithmetic Functions}
+\subsection*{Divisor Sum}
+\section*{Group Theory}
+\subsection*{Abelian Group}
+\section*{Ring Theory}
+
+
+\end{document} 
