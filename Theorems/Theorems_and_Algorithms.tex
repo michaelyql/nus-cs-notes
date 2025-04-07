@@ -50,6 +50,31 @@ minted options={
 % left=1cm % left padding
 }
 
+
+\newtcblisting{python}{%
+% colback=bgdark,
+colback=bgatom-light,
+% colupper=black, % line number colour
+colframe=gray!10,
+listing only,
+minted language=python,
+minted options={
+	tabsize=2,
+	fontsize=\small,
+	breaklines, 
+	autogobble, 
+	mathescape, 
+	% linenos, % enable line numbers
+	fontsize=\footnotesize, % font size, \footnotesize is default, options are \small or \large
+	baselinestretch=1.1, % spacing between lines
+	% numbersep=12pt, % spacing of code from line numbers 
+	% frame=leftline, % left border before line numbers
+	% framesep=12pt, % spacing of code from left border
+},
+% left=1cm % left padding
+}
+
+
 \begin{document}
 
 \doublespacing
@@ -152,8 +177,6 @@ See LightOJ: LCM Extreme (https://lightoj.com/problem/lcm-extreme)
 % https://codeforces.com/blog/entry/57148
 % https://math.stackexchange.com/questions/2081440/understanding-gauss-theoremn-sum-dn-phid
 % https://medium.com/@iamcrypticcoder/a-few-problems-to-remember-of-gcd-and-lcm-a4882cd81094
-
-\subsection*{Euler's Totient Function}
 
 \subsection*{Convolution}
 $$(f*g)(t) := \int_{-\infty}^{\infty}f(x)g(t-x)dx$$
@@ -363,6 +386,29 @@ void phi_1_to_n(int n) { // O(n log log n)
     }
 }
 \end{cpp}
+\begin{python}
+from math import floor
+
+def prime_factors(n):
+    """Returns a list of distinct prime factors of n."""
+    i = 2
+    factors = set()
+    while i * i <= n:
+        while n % i == 0:
+            factors.add(i)
+            n //= i
+        i += 1
+    if n > 1:
+        factors.add(n)
+    return list(factors)
+
+def euler_totient(n): # O(sqrt(n))
+    primes = prime_factors(n)
+    result = n
+    for p in primes:
+        result *= (1 - 1 / p)
+    return int(result)
+\end{python}
 For prime numbers, $$\phi(p)=p-1$$\\
 For powers of prime numbers, $$\phi(p^{k})=p^{k-1}(p-1)$$ \\
 The function is multiplicative. For any two coprime numbers $a$ and $b$, $$\phi(ab)=\phi(a)\phi(b)$$
@@ -427,6 +473,8 @@ Combinatorial proof: Suppose there is a necklace of $p$ beads, each of which can
 Fermat's little theorem is the basis for the Fermat primality test.
 \subsection*{Pseudoprimes}
 \subsection*{Prime Powers}
+\subsection*{Primorial Primes}
+A primorial prime is a prime number of the form $p_{n}$\#$+1$, where $p_{n}$\# is the product of the first $n$ prime numbers. 
 \section*{Primality Tests}
 (From Wikipedia) A primality test is an algorithm for determining whether an input number is prime. Unlike integer factorization, primality tests do not generally give prime factors, only stating whether the input number is prime or not. Factorization is thought to be a computationally difficult problem, whereas primality testing is comparatively easy (its running time is polynomial in the size of the input). Some primality tests prove that a number is prime, while others like Miller–Rabin prove that a number is composite. Therefore, the latter might more accurately be called compositeness tests instead of primality tests.
 \subsection*{Fermat's Primality Test}
@@ -440,12 +488,87 @@ Fermat's little theorem is the basis for the Fermat primality test.
 \subsection*{General Number Field Sieve}
 \section*{Modular Arithmetic}
 \subsection*{Modular Inverse}
+Find an integer $x$ such that $a\cdot x \equiv 1 \mod m$. Denote the modular inverse with $x^{-1}$.\\
+This is equivalent to saying $a\cdot x + m\cdot y = 1$. This is a Linear Diophantine equation in two variables, where $\gcd(a,b)=1$. Taking modulo $m$ on both sides of the equation, it reduces to $a\cdot x \equiv 1 \mod m$. Thus we can find $x^{-1}$ by the Extended Euclidean Algorithm. 
+\begin{cpp}
+int x, y;
+int g = extended_euclidean(a, m, x, y);
+if (g != 1) {
+    cout << "No solution!";
+}
+else {
+    x = (x % m + m) % m;
+    cout << x << endl;
+}
+\end{cpp}
+For prime modulus $m$, $$a^{m-2}\equiv a^{-1} \mod m$$
+For an arbitrary $m$ but $a$ is coprime with $m$, $$a^{\phi(m)-1}\equiv a^{-1} \mod m$$
+The modular inverse can then be computed by binary exponentiation.
+\begin{cpp}
+ll bpow(ll a, ll b) {
+	a %= MOD;
+	ll res = 1;
+	while (b > 0) {
+		if (b & 1) res = res * a % MOD;
+		b >>= 1;
+		a = a * a % MOD;
+	}
+	return res;
+}
+\end{cpp}
+We can also find the modular inverse using Euclidean Division. Given prime modulus $m > a$, $m=k\cdot a + r$, where $k=\lfloor\frac{m}{a}\rfloor$ and $r=m \mod a$, then \\
+$\Leftrightarrow 0\equiv k\cdot a+r \mod m$ \\
+$\Leftrightarrow r\equiv -k\cdot a\mod m$ \\
+$\Leftrightarrow r\cdot a^{-1}\equiv -k\mod m$\\
+$\Leftrightarrow a^{-1}\equiv -k\cdot r^{-1}\mod m$\\
+This only holds if $m$ is prime, as otherwise $r^{-1}$ is not guaranteed to exist.
+\begin{cpp}
+int inv(int a) {
+  return a <= 1 ? a : m - (long long)(m/a) * inv(m % a) % m;
+}
+\end{cpp}
+The run time is between $O(\frac{\log m}{\log \log m})$ and $O(m^{\frac{1}{3}-\frac{2}{177}+\epsilon})$. In practice this implementation is fast, e.g. for the modulus $10^9 + 7$ it will always finish in less than 50 iterations. 
+We can precompute the modular inverse for every number in the range $[1,m-1]$ in $O(m)$. 
+\begin{cpp}
+inv[1] = 1;
+for(int a = 2; a < m; ++a)
+    inv[a] = m - (long long)(m/a) * inv[m%a] % m;
+\end{cpp}
+\subsection*{Factorial Modulo}
+% https://stackoverflow.com/questions/9727962/fast-way-to-calculate-n-mod-m-where-m-is-prime
 \subsection*{Chinese Remainder Theorem}
 \section*{Arithmetic Functions}
 \subsection*{Divisor Sum}
 \section*{Group Theory}
 \subsection*{Abelian Group}
 \section*{Ring Theory}
+
+\newpage
+\section*{Combinatorics}
+\subsection*{(Restricted) Inclusion-Exclusion Principle}
+To compute the size of a union of multiple sets, it is necessary to sum the sizes of these sets \textbf{separately}, and then subtract the sizes of all \textbf{pairwise} intersections of the sets, then add back the size of the intersections of \textbf{triples} of the sets, subtract the size of \textbf{quadruples} of the sets, and so on, up to the intersection of \textbf{all} sets.
+$$\Bigg|\bigcup_{i=1}^{n}A_{i}\Bigg| =\sum_{i=1}^{n}|A_{i}|-\sum_{1\leq i\leq j\leq n} |A_{i}\cap A_{j}|+\sum_{1\leq i\leq j\leq k\leq n}|A_{i}\cap A_{j}\cap A_{k}|-\dots+(-1)^{n-1}|A_{1}\cap\dots\cap A_{n}|$$
+It can be used to solve tasks asking to ``find the number of ways''.
+\subsection*{Inclusion-Exclusion Principle}
+Assume we are given a set $X$ called the \emph{universe}, and a set $E=\{e_{1},e_{2},\dots,e_{n}\}$ of \textbf{properties} that the elements of $X$ may or may not possess. Let $A_{i}$ be the subset of elements that possess the property $e_{i}$ (elements in this set may possess other properties as well). Then $| X\setminus \bigcup_{i=1}^{n}A_{i} |$ is the number of elements that possess none of the properties. Use the notation $$N_{\supseteq T}:=\text{\#}\{x\in X:x \text{ possesses \emph{at least} the properties of }T\}$$
+$$N_{= T}:=\text{\#}\{x\in X:x \text{ possesses \emph{precisely} the properties of }T\}$$
+$$N_{=\emptyset}=\sum_{T\subseteq E}(-1)^{|T|}N_{\supseteq T}=\sum_{k=0}^{n}(-1)^{k}\sum_{T:|T|=k}N_{\supseteq T}$$
+When $N_{\supseteq T}$ depends only on the size $|T|=k$, we can write $N_{\supseteq T}=N_{\geq k}$ for $|T|=k$, and call $E$ a \emph{homogeneous} set of properties. 
+$$N_{=\emptyset}=N_{=0}=\sum_{k=0}^{n}(-1)^{k}{n\choose k} N_{\geq k}$$
+(since it doesn't matter what properties $T$ includes as long as $|T|=k$, so we can choose any $k$ out of the $n$ properties, thus we have to multiply $N_{\geq k}$ by $n\choose k$).
+By letting $e_{i}=\{i\in A_{i}\}$, we arrive at the restricted IEP.
+\subsection*{Tasks} 
+(3rd Lebanese Collegiate Programming Contest - Task 4135) \\ 
+Given an integer $N$ and a range $[L, R]$, find the number of integers $L\leq x\leq R$ such that $x$ is coprime with $N$, i.e. $\gcd(x, N) = 1$. Constraints: $1\leq N \leq 10^{9}$, $1\leq L\leq R\leq 10^{15}$.\\
+
+\noindent (HackerRank - K-Inversion Permutations)\\
+Given an integer $N$, find the number of permutations of length $N$ that have exactly $K$ inversions mod $10^{9}+7$. (An inversion for a permutation $\pi$ is defined as an ordered pair $(i, j)$ such that $i<j$ and $\pi(i)>\pi(j)$). Constraints: $1\leq N\leq 10^{5}$, $1\leq K\leq \min(10^{5},{n\choose 2})$.\\
+
+\noindent (2018 Multi-University Training Contest 8, HDU OJ - Character Encoding)\\
+Given an encoding system of a list of characters of size $n$ where each character is assigned a number between 0 and $n-1$, how many different words of length $m$ are there such that the sum of the encoded numbers of characters in that word is equal to $k$ (mod 998244353)? Constraints: $1\leq T\leq 400$, $1\leq n,m\leq 10^{5}, 0\leq k\leq 10^{5}$. The sum of $n$, sum of $m$, and sum of $k$ don't exceed $5\times 10^{6}$.
+
+\newpage
+\section*{Subset Sum}
 
 
 \end{document} 
