@@ -557,7 +557,7 @@ When $N_{\supseteq T}$ depends only on the size $|T|=k$, we can write $N_{\supse
 $$N_{=\emptyset}=N_{=0}=\sum_{k=0}^{n}(-1)^{k}{n\choose k} N_{\geq k}$$
 (since it doesn't matter what properties $T$ includes as long as $|T|=k$, so we can choose any $k$ out of the $n$ properties, thus we have to multiply $N_{\geq k}$ by $n\choose k$).
 By letting $e_{i}=\{i\in A_{i}\}$, we arrive at the restricted IEP.
-\subsection*{Tasks} 
+\subsubsection*{Tasks} 
 (3rd Lebanese Collegiate Programming Contest - Task 4135) \\ 
 Given an integer $N$ and a range $[L, R]$, find the number of integers $L\leq x\leq R$ such that $x$ is coprime with $N$, i.e. $\gcd(x, N) = 1$. Constraints: $1\leq N \leq 10^{9}$, $1\leq L\leq R\leq 10^{15}$.\\
 
@@ -567,8 +567,60 @@ Given an integer $N$, find the number of permutations of length $N$ that have ex
 \noindent (2018 Multi-University Training Contest 8, HDU OJ - Character Encoding)\\
 Given an encoding system of a list of characters of size $n$ where each character is assigned a number between 0 and $n-1$, how many different words of length $m$ are there such that the sum of the encoded numbers of characters in that word is equal to $k$ (mod 998244353)? Constraints: $1\leq T\leq 400$, $1\leq n,m\leq 10^{5}, 0\leq k\leq 10^{5}$. The sum of $n$, sum of $m$, and sum of $k$ don't exceed $5\times 10^{6}$.
 
+\subsection*{Lucas' Theorem}
+$${m\choose n}=\prod_{i=0}^{k}{m_{i}\choose n_{i}}\;\mod p$$
+where $p$ is a prime, $m=m_{k}p^{k}+m_{k-1}p^{k-1}+\dots+m_{1}p+m_{0}$ and $n=n_{k}p^{k}+n_{k-1}p^{k-1}+\dots+n_{1}p+n_{0}$ are the base $p$ expansions of $m$ and $n$ respectively, and ${m\choose n}=0$ if $m<n$\\
+A binomial coefficient $m\choose n$ is divisible by a prime $p$ if and only if at least one of the base $p$ digits of $n$ is greater than the corresponding digit of $m$.\\
+In particular, $m\choose n$ is odd iff the bits in the binary expasion of $n$ are a subset of the bits of $m$, i.e. $n\&m==n$
+\begin{cpp}
+// Precomputing parity of nCk mod 2
+int MAX_N = 1e6 + 5;
+int c[MAX_N]; // c[n] is the power of 2 in n!
+
+c[0] = c[1] = 0;
+for (int i = 2; i <= MAX_N; i++) {
+	c[i] = c[i - 1];
+	int x = i;
+	while (x % 2 == 0) {
+		x /= i;
+		c[i]++;
+	}	
+}
+// if c[n] == c[i] + c[n - i], then the parity is 1, else the parity is 0
+\end{cpp}
+\subsection*{Binomial Coefficients}
+\subsubsection*{Recursive Formula}
+$${n\choose k}={n-1\choose k-1}+{n-1\choose k}$$
+Base case: ${n\choose 0}={n\choose n}=1$
+\subsubsection*{Multiplicative Formula}
+$${n\choose k}=\frac{n^{\underline{k}}}{k!}=\frac{n(n-1)(n-2)\dots(n-(k-1))}{k(k-1)(k-2)\dots 1}=\prod_{i}^{k}\frac{n+1-i}{i}$$
+\subsection*{Mean Value Theorem}
+\subsection*{Generating Functions}
+\subsection*{Split $2n$ elements into $n$ unordered pairs}
+$$\frac{(2n)!}{n!\cdot 2^{n}}$$
+Arrange the $2n$ elements in a sequence $a_{1},a_{2},\dots,a_{2n-1},a_{2n}$. There are $(2n)!$ such permutations of sequences. \\
+Form pairs between $(a_{1}, a_{2}), (a_{3},a_{4}),\dots,(a_{2n-1},a_{2n})$. For each pair, their internal order does not matter. $(a_{1},a_{2})$ is the same pairing as $(a_{2},a_{1})$. So divide  by $2^{n}$.\\
+Then for each of the $n$ pairs, their relative order doesn't matter, so divide by $n!$.
+\subsection*{Permutation Involution}
+
 \newpage
 \section*{Subset Sum}
-
+\section*{MEX (Minumum Excluded Value)}
+\begin{cpp}
+// O(n) implementation for relatively small n (<=1e8)
+int mex(vector<int>& a) {
+	int n = a.size();
+	vector<bool> mark(n + 1, false);
+	for (int x : a) {
+		if (x < n) mark[x] = true;
+	}
+	for (int i = 0; i <= n; i++) {
+		if (!mark[i]) return i;
+	}
+	return n + 1; // theoretically unreachable
+}
+\end{cpp}
+\subsection*{Properties of XOR}
+The minimum XOR pair of an array can be found by first sorting the array, then only comparing adjacent elements in the sorted array. Intuition: elements close together in terms of magnitude and value will have fewer different bits. 
 
 \end{document} 
