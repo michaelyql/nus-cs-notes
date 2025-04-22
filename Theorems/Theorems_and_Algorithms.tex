@@ -565,7 +565,10 @@ Given an integer $N$ and a range $[L, R]$, find the number of integers $L\leq x\
 Given an integer $N$, find the number of permutations of length $N$ that have exactly $K$ inversions mod $10^{9}+7$. (An inversion for a permutation $\pi$ is defined as an ordered pair $(i, j)$ such that $i<j$ and $\pi(i)>\pi(j)$). Constraints: $1\leq N\leq 10^{5}$, $1\leq K\leq \min(10^{5},{n\choose 2})$.\\
 
 \noindent (2018 Multi-University Training Contest 8, HDU OJ - Character Encoding)\\
-Given an encoding system of a list of characters of size $n$ where each character is assigned a number between 0 and $n-1$, how many different words of length $m$ are there such that the sum of the encoded numbers of characters in that word is equal to $k$ (mod 998244353)? Constraints: $1\leq T\leq 400$, $1\leq n,m\leq 10^{5}, 0\leq k\leq 10^{5}$. The sum of $n$, sum of $m$, and sum of $k$ don't exceed $5\times 10^{6}$.
+Given an encoding system of a list of characters of size $n$ where each character is assigned a number between 0 and $n-1$, how many different words of length $m$ are there such that the sum of the encoded numbers of characters in that word is equal to $k$ (mod 998244353)? Constraints: $1\leq T\leq 400$, $1\leq n,m\leq 10^{5}, 0\leq k\leq 10^{5}$. The sum of $n$, sum of $m$, and sum of $k$ don't exceed $5\times 10^{6}$.\\
+
+\noindent (CF 1953D Exam in MAC)\\
+Given a set of $n$ positive integers and a positive integer $c$, find the number of pairs $(x,y)$ such that $x+y$ is not in $S$ and $y-x$ is not in $S$, for $1\leq x\leq y\leq c$. Constraints: $1\leq n\leq 3\cdot 10^{5}$, $1\leq c\leq 10^{9}$.
 
 \subsection*{Lucas' Theorem}
 $${m\choose n}=\prod_{i=0}^{k}{m_{i}\choose n_{i}}\;\mod p$$
@@ -596,12 +599,21 @@ Base case: ${n\choose 0}={n\choose n}=1$
 $${n\choose k}=\frac{n^{\underline{k}}}{k!}=\frac{n(n-1)(n-2)\dots(n-(k-1))}{k(k-1)(k-2)\dots 1}=\prod_{i}^{k}\frac{n+1-i}{i}$$
 \subsection*{Mean Value Theorem}
 \subsection*{Generating Functions}
+\subsection*{Coefficient Extraction}
 \subsection*{Split $2n$ elements into $n$ unordered pairs}
-$$\frac{(2n)!}{n!\cdot 2^{n}}$$
+$$\frac{(2n)!}{n!\cdot 2^{n}}=(2n-1)!!$$
 Arrange the $2n$ elements in a sequence $a_{1},a_{2},\dots,a_{2n-1},a_{2n}$. There are $(2n)!$ such permutations of sequences. \\
 Form pairs between $(a_{1}, a_{2}), (a_{3},a_{4}),\dots,(a_{2n-1},a_{2n})$. For each pair, their internal order does not matter. $(a_{1},a_{2})$ is the same pairing as $(a_{2},a_{1})$. So divide  by $2^{n}$.\\
 Then for each of the $n$ pairs, their relative order doesn't matter, so divide by $n!$.
 \subsection*{Permutation Involution}
+\subsection*{Bijection / Method of Correspondence}
+\subsection*{Dyke Paths}
+\subsection*{Counting in Two Ways / Double Counting}
+\subsection*{Coloring Method}
+\subsection*{Evaluation Method}
+\subsection*{Reduction to Absurdity}
+\subsection*{Local Adjustment Method}
+\subsection*{Construction Method}
 
 \newpage
 \section*{Subset Sum}
