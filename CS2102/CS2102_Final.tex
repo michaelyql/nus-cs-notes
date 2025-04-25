@@ -1,0 +1,169 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{geometry}
+\newgeometry{left=0.25cm, right=0.25cm, top=0.8cm, bottom=0.5cm} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+
+\begin{document}
+
+\titlespacing*{\subsubsection}{0pt}{1pt}{1pt}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{\vspace{-0.8cm}\faGithub\;\href{https://github.com/michaelyql}{michaelyql}}
+
+{\small
+\begin{multicols*}{3}
+\subsubsection*{\underline{1 Creating and Populating Tables}}
+\textbf{Basic types}: \texttt{int | numeric(precision, scale) | varchar(n) | text | date | boolean }\\
+\textbf{Integrity Constraints}: \texttt{not null, primary key, unique, foreign key, check} \\
+\textbf{Good Practices}: Avoid not null, justify cascade, Defer constraint checks until end of transaction
+\subsubsection*{\underline{2 Simple Queries}}
+\textbf{Cases}: \texttt{case when ... then ... else ... end;}\\
+\textbf{Null}: has the value of `unknown', comparator (\texttt{< > <> = >= <=}) and arithmetic operations return null. \texttt{null is null} is true. \texttt{1 is null} is false. \texttt{null is not null} is false. \texttt{1 is not null} is true. \texttt{coalesce(x1, x2, ...)} returns the first non-null of its arguments. \\
+\textbf{Count}: \texttt{count(*)} counts null values. \texttt{count(col)} does not count null values. \\
+\textbf{Cartesian Product}: \texttt{cross join}
+\subsubsection*{\underline{3 Algebraic and Aggregate Queries}}
+\textbf{Aggregation Functions}: \texttt{count(), sum(), max(), min(), avg(), stddev()}. Use \texttt{distinct} to select distinct rows. Aggregation functions can be used in conditions, but not in the \texttt{where} clause. Aggregation functions can be evaluated after groups are formed (i.e. after the \texttt{where} clause) in the \texttt{having} clause. \\
+\textbf{Truncate}: \texttt{trunc(..., dp)} truncates a value to decimal places.\\
+\textbf{Renamed Columns}: \texttt{extract(col from t.c) as ...}
+\subsubsection*{\underline{4 Entity Relation Model}}
+\textbf{Aggregation}: Associating an entity set with a relationship set. \\
+\textbf{Look here convention}: cardinality describes participation of entity set it is attached to.\\
+\textbf{Convention}: If cardinality is omitted, many-to-many i.e. (0,n) is assumed\\
+\textbf{Weak entity}: can only be defined for a participation constrained by (1,1) cardinalities, a.k.a mandatory one-to-many relationships \\
+\textbf{Design advice}: avoid null values, create a separate entity set\\
+\textbf{Schema Translation Rule 1}: Every attribute must have a meaningful type\\
+\textbf{Rule 2}: Every entity set becomes a relation (i.e. table). Candidate keys should be unique not null. Candidate keys are all sets of attributes that uniquely identify the entries. There must be at least one primary key. \\
+\textbf{Rule 3}: Relationship sets are mapped to relations. The attributes of the relation consist of the attributes of the relationship set. The keys are the keys of the participating entities. \\
+\textbf{Exception 1}: One-to-many. Enforce (0,1) cardinality (upper bound). Restrict the primary key. \\
+\textbf{Exception 2}: (1,1) (one to one) cardinality (must participate) $\to$ Merge tables. \\
+\textbf{Exception 3}: Weak entity set. Merge tables, add primary key of dominant entity set. \\
+\textbf{Limitation}: Not all cardinalities can be enforced such as (1,n), but still try to enforce as much as possible.
+\subsubsection*{\underline{5 Nested Queries}}
+\textbf{Permanent Copy}: \texttt{create table <name> as (...)}\\
+\textbf{Temporary Copy}: \texttt{create temporary table <name> as (...) }\\
+\textbf{View}: \texttt{create view <viewname> as (select ...)}\\
+\textbf{Common Table Expression}: \texttt{with <table> as (select ...) select ...} \\
+\textbf{Subquery in From}: \texttt{select ... from (select ...) as ...} \\
+\textbf{Scalar Subquery}: Returns only one row and one column. \\
+\textbf{Where In, Any, All}: \texttt{where ... in | all | any (...)}  \\
+\textbf{Where Exists}: Evaluates to true if subquery has some result, false if no result \\
+\textbf{Correlated Subquery}: \texttt{.. from t1 ... where (.. where t1... = ) }. You can always use column from an outer table in an inner query. You can use subquery in select clause but it must be a scalar subquery. \texttt{select (select .. where t1... =) from t1} \\
+\textbf{Nested Queries}: \texttt{where ... ALL | ANY | EXISTS | NOT EXISTS | IN | NOT IN (...) } \\
+\textbf{Nested Having}: If you use aggregation functions on two different groupings. \texttt{... group by ... having count(*) >= all(...)}
+\subsubsection*{\underline{6 Relational Algebra}}
+\textbf{Conjunction}: $\wedge$, \textbf{Disjunction}: $\vee$\\
+\textbf{Negation}: $\neg$\\
+\textbf{Selection}: $\sigma[c](R)$ selects all rows from the relation $R$ that satisfies the condition $c$ (similar to \texttt{where} clause) \\
+\textbf{Projection}: $\pi[l](R)$ keeps only the columns specified in the ordered list $l$ and in the same order  (similar to \texttt{select} clause) \\
+\textbf{Renaming}: $\rho(R_1,R_2)$ renames $R_1$ to $R_2$. $\rho(R_1,R_2(A_1\to A_2))$ renames the relation and some of its attributes \\
+\textbf{Set Operators}: $\cup$ \texttt{union}, $\cap$ \texttt{intersect}, $-$ \texttt{except}. The two relations must be union-compatible (have the same column types) \\
+\textbf{Product}: $R_1\times R_2$ (cartesian product)\\
+\textbf{Join}: $R_1\bowtie[c] R_2$ is defined as $\sigma[c](R_1\times R_2)$, i.e. only the tuples that satisfies the condition after the cross product. Omit condition = natural join. Left outer: $\leftouterjoin$ right outer: $\rightouterjoin$ full outer: $\fullouterjoin$
+\subsubsection*{\underline{7 Stored Procedures}}
+\texttt{create [or replace] function <fn\_name> [ returns <rettype> | returns table(col\_name col\_type, ...) ] language plpgsql as \$\$ declare begin end; \$\$; }\\
+\textbf{Return single row (all columns)}: \texttt{returns <table\_name>}\\
+\textbf{Return multiple rows}: \texttt{returns setof <table\_name>}\\
+\textbf{Return new tuple}: \texttt{...(out var1 type, out var2 type) returns record as ...} Must have at least two out parameters. \\
+\textbf{No return value}: \texttt{return void} (Procedure). Need to \texttt{call} a procedure \\
+\textbf{Procedure vs Function}: Function must return something (special case is void), procedure has no return, but can use out parameter. Transaction: procedure can commit or rollback, function cannot\\
+\textbf{Variables}: \texttt{temp := val1} (Walrus operator) \\
+\textbf{Selection}: \texttt{if ... then ... else if ... else ... endif;}\\
+\textbf{Repetition}: \texttt{while ... loop ... end loop;} or \texttt{loop exit when ... end loop;} (forever loop) \\
+\textbf{Cursor}: Access individual rows returned by \texttt{select}. 1. Declare cursor, 2. open cursor, 3. fetch tuple from cursor, perform some operations, go to next tuple. 4. if tuple not found, close the cursor. Store tuples of each row in a record. \\
+\texttt{declare curs1 cursor for (select ...); record r; begin open curs; loop fetch curs into r; exit when not found; ...return next; end loop; close curs;}\\
+\textbf{Cursor Movement}: \texttt{fetch prior | first | last | absolute <row number> from <cursor> into <var> }\\
+\textbf{SQL Injection Attack}: Malicious user inserts their own code into the generated query. Prepared statements protect against this: sql statement is compiled when it is prepared. At runtime, anything is treated as a string. Same for stored functions and procedures 
+\subsubsection*{\underline{8 Triggers}}
+\texttt{create [or replace] [constraint] trigger <name> \{before|after|instead of \} \{<event> [or...]\} on <table\_name> [not deferrable | [deferrable] [initially immediate | initially deferred]] [for [each] \{row | statement\}]  [when ( condition )] execute \{function | procedure\} <function\_name> (arguments)} \\
+Event can be one of: \texttt{insert | update [of <column\_name> [, ... ]] | delete | truncate} \\
+\textbf{Rules}: \texttt{instead of} only allowed with \texttt{for each row} for views.  \texttt{before} and \texttt{after} can be used for rows/statements on tables, but must be \texttt{for each statement} for views. \texttt{truncate} only allowed with \texttt{for each statement} \\ 
+\textbf{Granularity}: \texttt{for each statement} ignores return values by trigger functions. \texttt{return null} would not make the database omit the subsequent operation. \texttt{raise exception} to abort current transaction\\
+\textbf{Conditions}: No \texttt{select} in \texttt{when()}, No \texttt{old} in \texttt{when()} for \texttt{insert}, No \texttt{new} in \texttt{when()} for \texttt{delete}, No \texttt{when()} for \texttt{instead of}\\
+\textbf{Deferred Trigger}: Check constraint at the end of a transaction. \texttt{constraint} must be used with \texttt{deferrable}. Defaults to \texttt{initially immediate}. Only works with \texttt{after} and \texttt{for each row} \\
+\textbf{Order of activation}: before statement $\to$ before row $\to$ after row $\to$ after statement. Within each category, alphabetical based on function name. If before row-level trigger returns \texttt{NULL}, then subsequent triggers \textbf{on the
+same row} are omitted (after statement not affected, other rows not affected unless they also return \texttt{NULL})\\
+\textbf{Trigger Function}: For row-level statement, return \texttt{NULL} to ignore all operations on current row. Non-\texttt{NULL} signals database to proceed as normal. Returning \texttt{NULL} skips the triggering operation but any statements executed inside may still take effect. \texttt{after} not affected by return values. \texttt{old} not available for \texttt{insert}. \texttt{new} not available for \texttt{delete}. Both available for \texttt{update}.\\
+\textbf{Syntax}: \texttt{create or replace function <fn\_name>() returns trigger language plpgsql as \$\$ ... \$\$} \\
+\textbf{Views}: Virtual table to hide complexity from users \\
+\textbf{Trigger Variables}: \texttt{OLD, NEW, TG\_OP, TG\_NAME, TG\_LEVEL, TG\_TABLE\_NAME, TG\_NARGS, TG\_ARGV}. Before triggers typically used for checking/modifying data. After triggers usually used to propagate updates to other tables or make consistency checks.
+\subsubsection*{\underline{9 Normal Forms}}
+\textbf{Definition}: A definition of minimum requirements to reduce redundancy, and improve data integrity \\
+\textbf{Purpose}: to decompose (normalize) a table to prevent anomalies (insertion, deletion, update) and to remove redundancy. When a field needs to be modified independently of other fields, it should be split into another table \\
+\textbf{Functional Dependency}: When two objects have the same values on certain fields $A_1,\dots,A_n$, they always have the same values on $B_1,\dots,B_n$\\
+A FD may hold on one table but not on another\\
+\textbf{Axiom of Reflexivity}: $AB\to A$\\
+\textbf{Axiom of Augmentation}: If $A\to B$ then $AC\to BC$\\
+\textbf{Axiom of Transitivity}: If $A\to B$ and $B\to C$ then $A\to C$\\
+\textbf{Rule of Decomposition}: If $A\to BC$, then $A\to B$ and $A\to C$\\
+\textbf{Rule of Union}: If $A\to B$ and $A\to C$, then $A\to BC$\\
+\textbf{Closure}: the set of all attributes which a certain set of attributes implies \\
+To prove that $X\to Y$, we only need to prove $\{X\}^+$ contains $Y$ \\ 
+To prove that $X\to Y$ does not hold, we only need to show that $\{X\}^+$ does not contain $Y$\\
+\textbf{Superkey}: A set of attributes in a table that decides all other attributes (All attributes must appear in its closure)\\
+\textbf{Key}: A superkey that is minimal: if we remove any attribute, it will not be a superkey anymore. A table may have multiple keys. Whether a table has redundancy depends partially on the keys \\
+\textbf{Algorithm for finding keys}: 1. Consider every attribute subset, 2. Derive the closure of each subset, 3. Identify all superkeys, 4. Identify keys. \\
+Trick 1: Check smaller attribute sets first. If you find a key, all supersets containing it will not be keys since they are not minimal)\\
+Trick 2: Any attribute that does not appear on the right of any FD must be in every key\\
+\textbf{Prime Attribute}: If an attribute appears in a key, it is a prime attribute. Otherwise, it is non-prime.
+\subsubsection*{\underline{10 Boyce-Codd NF (BCNF)}}
+1st-6th NF is increasing in strictness. 3rd NF and BCNF are always possible to satisfy and get rid of the most redundancies. \\
+\textbf{Decomposed FD}: an FD whose right hand side has only one attribute. A non-decomposed FD can always be transformed into an equivalent set of decomposed FD\\
+\textbf{Non-trivial FD}: e.g. $BC\to D$. $BC\to C$ is trivial since it is implied by reflexivity. \\
+\textbf{Algorithm to find non-trivial and decomposed FD}: 1. Consider all attribute subsets, 2. Compute their closures, 3. Remove trivial attributes, 4. Derive FDs  \\
+\textbf{BCNF}: A table is in BCNF, if every non-trivial and decomposed FD has a superkey on its left hand side. For all FDs $A_1A_2\dots A_n\to B$, $B$ can depend only on superkeys. Any dependency on non-superkeys is prohibited by BCNF. Since if $B$ depended on a non-superkey, every time that non-superkey appears, there could be duplicates of that value with B and hence redundancy \\
+\textbf{Algorithm to check BCNF}: 1. Compute the FDs for all attribute subsets, 2. Derive the keys, 3. Derive the non-trivial and decomposed FDs, 4. For each non-trivial and decomposed FD, check if its left hand side is a superkey\\
+\textbf{Simplified Check}: Compute the closure for each subset, then check for ``more but not all'' FDs (i.e. not a superkey). If such a closure exists, then the table is not in BCNF. \\
+\textbf{BCNF Decomposition}: If a table is not in BCNF, we can decompose (normalize) it into smaller tables. The decomposition may not be unique. If a table only has two attributes, it must be in BCNF, so you don't need to check them \\
+\textbf{Algorithm for BCNF Decomposition}: 1. Find a subset $X$ such that $\{X\}^+$ contains more attributes than $X$ but not all attributes, 2. Decompose the table in $R_1$ and $R_2$ such that $R_1$ has all the attributes in $\{X\}^+$, $R_2$ has all the attributes in $X$ and all the attributes not in $\{X\}^+$, 3. Repeat on $R_1$ and $R_2$ until they are in BCNF. In general, each decomposition removes at least one violation of BCNF. \\ 
+\textbf{Projecting FDs}: to derive closures on a table $R_i$ that is decomposed from $R$, 1. enumerate the attribute subsets of $R_i$, 2. For each subset, derive its closure on $R$, 3. Project each closure onto $R_i$ by removing those attributes that do not appear in $R_i$. Use the projected closures to check BCNF\\
+\textbf{Good properties of BCNF}: No update/insertion/deletion anomalies, Small redundancy, Lossless join (original table can be reconstructed from decomposed tables without losing information) \\
+\textbf{Bad properties of BCNF}: Functional dependencies may not be preserved. Need to join back tables to check for constraint integrity \\
+\textbf{Lossless}: $R_1\bowtie R_2=R$\\
+\textbf{Lossy}: $R_1\bowtie R_2\supset R$\\
+\textbf{Binary Lossless Decomposition}: $(R_1\cap R_2)\to R_1$, or $(R_1\cap R_2)\to R_2$ i.e. the common attribute(s) is a superkey of either fragment. \\
+\textbf{Lossless Decomposition}: If there is a sequence of lossless binary decompositions
+\subsubsection*{\underline{11 3NF}}
+\textbf{Dependency Preservation}: Decomposition preserves all FDs iff $S$ (original set of FDs) and $S'$ (set of FDs on decomposed tables) are equivalent i.e. they can be derived from each other \\
+\textbf{Definition}: A table satisfies 3NF iff for every non-trivial and decomposed FD, either the left hand side is a superkey, or the right hand side is a prime attribute (appears in a key) \\
+3NF is more lenient than BCNF. Satisfying BCNF = satisfying 3NF, but not vice versa. Violating 3ND = violating BCNF, but not vice versa. 3NF preserves all FDs, but can have update and deletion anomalies \\
+\textbf{3NF Check}: 1. Compute the closure of all subsets, 2. Derive keys of R, 3. For each FD, check if left hand side is a superkey, or right hand side is a prime attribute.\\
+\textbf{BCNF vs 3NF Decomposition}: BCNF performs one or more binary splits, 3NF makes only one split into two or more tables \\
+\textbf{3NF Decomposition}: 1. Derive a \textit{minimal basis} of $S$, 2. In the minimal basis, combine the FDs whose left hand sides are the same (Rule of Union), 3. Create a table for each FD remaining, 4. If none of the tables contains a key of the original table $R$, create a table that contains a key of $R$ (to ensure lossless join), 5. Remove redundant (subsumed) tables \\
+\textbf{Minimal basis}: A.k.a minimal cover.\\
+1. Every FD in the minimal basis can be derived from $S$, and vice versa. \\
+2. Every FD in the minimal basis is non-trivial and decomposed. \\
+3. No FD in the minimal basis is redundant (no FD in the minimal basis can be derived from other FDs in the minimal basis. If any is removed, $S$ cannot be derived). \\
+4. No redundant attribute on the left hand side for each FD in the minimal basis (if an attribute is removed, then $S$ cannot be derived) \\
+\textbf{Algorithm for Minimal Basis}: 1. Transform FDs so that each right hand side contains only one attribute, 2. Remove redundant attributes on the left hand side of each FD, 3. Remove redundant FDs. (Minimal basis may not be unique)  \\
+\textbf{BCNF vs 3NF}: Go for BCNF if you can find a BCNF decomposition that preserves all FDs, or if preserving FDs is not important. Else, go for 3NF.
+
+\end{multicols*}
+}
+
+\newpage
+
+
+
+\end{document}
+
