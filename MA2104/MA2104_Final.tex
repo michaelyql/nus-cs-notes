@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{geometry}
+\newgeometry{left=0.25cm, right=0.25cm, top=0.8cm, bottom=0.5cm} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\begin{document}
+
+\singlespacing
+
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{\vspace{-0.8cm}\faGithub\;\href{https://github.com/michaelyql}{michaelyql}}
+
+\setlength{\columnseprule}{0.2pt} % vertical lines between column 
+
+\footnotesize{
+\begin{multicols*}{3}
+\vphantom{}\\
+\textbf{Dot Product}: $a\cdot b=\parallel a\parallel \parallel b \parallel \cos\theta$. Orthogonal iff $a\cdot b=0$.\\
+\textbf{Component of b along a}: $\text{comp}_ab=\parallel b\parallel\cos\theta=\frac{a\cdot b}{b}$ \\
+\textbf{Projection of b onto a}: $proj_{a}b=\frac{a\cdot b}{a\cdot a}a$\\
+\textbf{Cross Product}: $a\times b=|a||b|\sin\theta$. (1) $a\times b=-b\times a$, (2) $a\times(b+c)=a\times b+a\times c$, (3) $(a+b)\times c=a\times c+b\times c$\\
+\textbf{Area of Parallelogram}: $||a\times b||$\\
+\textbf{Distance of Q to line through P and R}: $|\vec{PQ}|\sin\theta=\frac{|\vec{PQ}\times\vec{PR}|}{|\vec{PR}|}$\\
+\textbf{Scalar Triple Product}: $a\cdot (b\times c)=\begin{vmatrix}
+    a_1 & a_2 & a_3 \\
+    b_1 & b_2 & b_3 \\
+    c_1 & c_2 & c_3
+\end{vmatrix}$\\
+\textbf{Volume of Parallelepiped}: $V=|a\cdot(b\times c)|$ ($b$ and $c$ form the base)\\
+\textbf{Equation of Line}: $x=x_0+at$, $y=y_0+bt$, $z=z_0+ct$\\
+\textbf{Equations of Plane}: $ax+by+cz=d$, $n\cdot(r-r_0)=0$, $n\cdot r=n\cdot r_0$\\
+\textbf{Tangent Vector}: $r'(a)=\langle f'(a),g'(a),h'(a)\rangle$. (1) $\frac{d}{dt}(r(t)+s(t)=r'(t)+s'(t)$. (2) $\frac{d}{dt}(cr(t))=cr'(t)$. (3) $\frac{d}{dt}f(t)r(t)=f'(t)r(t)+f(t)r'(t)$. (4) $\frac{d}{dt}r(t)\cdot s(t)=r'(t)\cdot s(t)+r(t)\cdot s'(t)$. (5) $\frac{d}{dt}r(t)\times s(t)=r'(t)\times s(t)+r(t)\times s'(t)$ \\
+\textbf{Arc Length} (only for smooth curves): $s=\int_a^b\sqrt{f'(t)^2+g'(t)^2+h'(t)^2}dt=\int_a^b||r'(t)||dt$ \\
+\rule{193pt}{0.2pt}
+\textbf{Cylinder}: $x^2+y^2=k$\\
+\textbf{Elliptic Paraboloid (cup)}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}=\frac{z}{c}$\\
+\textbf{Hyperbolic Paraboloid (saddle)}: $\frac{x^2}{a^2}-\frac{y^2}{b^2}=\frac{z}{c}$\\ 
+\textbf{Ellipsoid (sphere-like)}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$\\
+\textbf{Elliptic Cone (two cups)}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=0$\\
+\textbf{Hyperboloid of One Sheet}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=1$\\
+\textbf{Hyperboloid of Two Sheets}: $\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=-1$\\
+\textbf{Limit}: does not exist if there exists two different approaches which give different values. To prove it exists, use squeeze theorem or use properties of limits. \\
+\textbf{Continuous}: If $\lim f(x,y)=f(a,b)$ as $(x,y)\to(a,b)$ then $f$ is continuous $f\pm g$. If $f$ and $g$ are continuous, $f\cdot g$, $\frac{f}{g}$, $h(x)=f(g(x))$ are continuous. Polynomial, trigonometric, exponential and rational functions are continuous in their domain.\\
+\textbf{Squeeze Theorem}: If $|f(x,y)-L|\leq g(x,y)$ for all $(x,y)$ except possibly at $(a,b)$ and $\lim g(x,y)=0$ as $(x,y)\to(a,b)$, then $\lim f(x,y)=L$. \\
+\rule{193pt}{0.2pt}
+\textbf{Partial Derivative}: $f_x(x,y)=\lim_{h\to 0}\frac{f(x+h,y)-f(x,y)}{h}$ (similarly for $y$) \\
+\textbf{Clairaut's Theorem}: $f_{xy}(a,b)=f_{yx}(a,b)$. As long as the no. of occurrences of the variable stays the same \\
+\textbf{Tangent Plane}: Normal Vector $\langle f_x(a,b),f_y(a,b),-1\rangle$, Equation: $z=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b)$ \\
+\textbf{Differentiable}: Tangent plane at $(a,b)$ is a good approximation of $f$ at points close to $(a,b)$. \\
+\textbf{Linear Approximation}: $\Delta z=f_x(a,b)\Delta x+f_y(a,b)\Delta y+\epsilon_1\Delta x+\epsilon_2 \Delta y$, where $\epsilon_1,\epsilon_2$ are functions of $\Delta x$ and $\Delta y$ and $\epsilon_1,\epsilon_2\to 0$ as $(\Delta x, \Delta y)\to(0,0)$  \\
+\textbf{Implicit Differentiation}: $F(x,y,z)=0$, $\frac{\partial z}{\partial x}=0\frac{F_x}{F_z}$, $\frac{\partial z}{\partial y}=-\frac{F_y}{F_z}$, $F_z\not=0$ \\
+\textbf{Directional Derivative}: of $f(x,y)$ in direction of unit vector $\vec{u}=\langle a,b\rangle$ is $D_uf(x,y)=\langle f_x,f_y\rangle\cdot \vec{u}$ (can be extended to 3D)\\
+\textbf{Gradient}: $\nabla f=\langle f_x,f_y\rangle$ \\
+\rule{193pt}{0.2pt}
+\textbf{Normal to Level Curve}: $\nabla f(x_0,y_0)$ is normal to the level curve $f(x,y)=k$ that contains $(x_0,y_0)$ \\
+\textbf{Tangnet Plane to Level Surface}: $\nabla F(x_0,y_0,z_0)$ is normal to the level surface $F(x,y,z)=k$. Equation: $\nabla F(x_0,y_0,z_0)\cdot \langle x-x_0,y-y_0,z-z_0\rangle=0$ \\
+\textbf{Maximum Rate of Increase/Decrease}: $D_uf=\nabla f\cdot u=|\nabla f|\cos\theta$. Max at $\theta=0$, min at $\theta=\pi$ \\
+\textbf{Critical Point}: $f_x(a,b)=0$ and $f_y(a,b)=0$. Local min/max implies critical point (but not vice versa) \\
+\textbf{Saddle Point}: $(a,b)$ is a critical point and there are points $f(x,y)>f(a,b)$ and $f(x,y)<f(a,b)$ \\
+\textbf{Closed Set}: $R\subseteq \mathbb{R}^2$ contains all its boundary points \\
+\textbf{Bounded Set}: Finite in extent (contained in a disk) \\
+\textbf{Extreme Value Theorem}: If $f(x,y)$ is continuous on a closed and bounded set $D\subseteq \mathbb{R}^2$, then there exists absolute max/min in $D$. To find abs max/min: (1) check critical points, (2) check extreme values on boundaries \\
+\textbf{Second Derivative Test}: $D(a,b)=f_{xx}(a,b)\cdot f_{yy}(a,b)-[f_{xy}(a,b)]^2$. (1) $D>0$, $f_{xx}>0$: local min. (2) $D>0$, $f_{xx}<0$: local max. (3) $D<0$: saddle. (4) $D=0$: min, max or saddle \\
+\textbf{Lagrange Multiplier}: Min/max values of $f(x,y)$ subject to constraint curve $g(x,y)=k$. (1) Find all values of $x,y$ such that  $\nabla f(x,y)=\lambda \nabla g(x,y)$ and $g(x,y)=k$. (2) The largest is the max of $f$, the smallest is min \\
+\rule{193pt}{0.2pt}
+\textbf{Double Integral over Type I Domain}: $\iint_Df(x,y)dA=\int_a^b\int_{g_1(x)}^{g_2(x)}f(x,y)dy\,dx$ \\
+\textbf{Type II}: $\iint_Df(x,y)dA=\int_c^d\int_{h_1(y)}^{h_2(y)}f(x,y)dx\,dy$ \\
+E.g. Find the volume/Evaluate $\iint_D(\dots)dA$ where $D$ is the region bounded by $\dots$\\
+\textbf{Additivity of Regions}: $\iint_Df(x,y)dA=\iint_{D_1}f(x,y)dA+\dots+\iint_{D_n}f(x,y)dA$ \\
+\textbf{Area of Plane Region}: $A(D)=\iint_D1dA$ \\   
+\rule{193pt}{0.2pt}
+\textbf{Double Integral in Polar Coordinates}
+$r^2=x^2+y^2,\quad x=r\cos\theta,\quad y=r\sin\theta$
+Replace $x$, $y$ in $f(x,y)$, integrate over $r\,dr\,d\theta$. General region: $h_1(\theta)\leq r\leq h_2(\theta)$ or $g_1(r)\leq\theta\leq g_2(r)$, integrate these out first\\
+\textbf{Triple Integral Type 1/2/3}: Convert to double integral\\
+\textbf{Volume of Solid}: $\iiint_V1dV$\\
+\textbf{Rewrite Order of Integral}: Sketch the graph first, then express boundary curves in terms of the variable to integrate over\\
+\textbf{Cylindrical Coordinates}: Polar coordinate + z-coordinate. $r^2=x^2+y^2$, $\tan\theta=\frac{y}{x}$, $z=z$.  Replacements: $x=r\cos\theta,\quad y=r\sin\theta,\quad z=z$.
+\begin{align*}
+&\iiint_Ef(x,y,z)dV\\
+&=\int_\alpha^\beta\int_{h_1(\theta)}^{h_2(\theta)}\int_{u_1(r\cos\theta,r\sin\theta)}^{u_2(r\cos\theta,r\sin\theta)}f(...)r\,dz\,dr\,d\theta
+\end{align*}
+\textbf{Spherical Coordinates}: $\theta$ (angle on $xy$-plane), $\phi$ (angle from +ve $z$ axis), $p$ (distance). $p=x^2+y^2+z^2$. Use for triple integrals for spheres or cones. Replacements: $x=p\sin\phi\cos\theta,\quad y=p\sin\phi\sin\theta,\quad z=p\cos\phi$ . 
+\begin{align*}
+    &\iiint_E f(x,y,z)dV=\\
+    &\int_c^d \int_\alpha^\beta \int_a^b f(...)p^2\sin\phi\,dp\,d\theta\,d\phi\\
+    &=\int_c^d \int_\alpha^\beta \int_{g_1(\theta,\phi)}^{g_2(\theta,\phi)} f(...)p^2\sin\phi\,dp\,d\theta\,d\phi
+\end{align*}
+\rule{193pt}{0.2pt}
+\textbf{Plane Transformation}: from $uv$-plane to $xy$-plane, $x=x(u,v)$, $y=y(u,v)$, $T:(u,v)\to(x,y)$. To find the image, check along the boundaries. E.g. $x=u^2-v^2$, $y=2uv$, $\{(u,v)|0\leq u\leq1,0\leq v\leq 1\}$ \\
+\textbf{2D Jacobian}: $x=x(u,v)$, $y=y(u,v)$, $\frac{\partial(x,y)}{\partial(u,v)}=\frac{\partial x}{\partial u}\frac{\partial y}{\partial v}-\frac{\partial x}{\partial v}\frac{\partial y}{\partial u}$. $dA=|\frac{\partial(x,y)}{\partial (u,v)}|du\,dv$. $\iint_Rf(x,y)dA=\iint_Sf(x(u,v),y(u,v))|\frac{\partial(x,y)}{\partial (u,v)}|du\,dv$\\
+E.g. Use change of variables $x=\dots,y=\dots$ to compute $\iint_R(x^2+y^2)dA$\\
+\textbf{3D Jacobian}: $dV=|\frac{\partial(x,y,z)}{\partial(u,v,w)}|du\,dv\,dw$
+\begin{align*}
+&\Big|\frac{\partial(x,y,z)}{\partial(u,v,w)}\Big|=\frac{\partial x}{\partial u}(\frac{\partial y}{\partial v}\cdot\frac{\partial z}{\partial w}-\frac{\partial y}{\partial w}\cdot\frac{\partial z}{\partial v})\\
+&-\frac{\partial x}{\partial v}(\frac{\partial y}{\partial u}\cdot\frac{\partial z}{\partial w}-\frac{\partial y}{\partial w}\cdot\frac{\partial z}{\partial u})\\
+&+\frac{\partial x}{\partial w}(\frac{\partial y}{\partial u}\cdot\frac{\partial z}{\partial v}-\frac{\partial y}{\partial v}\cdot\frac{\partial z}{\partial u})
+\end{align*}
+E.g. Find volume of solid bound by $x+y+z=1$, $x+y+z=2$, $x+2y=0$, $x+2y=1$. (Let $x=u-w$, $y=\dots$, find $\frac{\partial(x,y,z)}{\partial(u,v,w)}$, compute integral with new bounds) \\
+\rule{193pt}{0.2pt}
+\textbf{Line Integral of Scalar Field}: $\int_Cf(x,y)dS=\int_a^bf(x(t),y(t))||r'(t)||dt$. Line integral of scalar field is independent of orientation of $r(t)$. Can be extended into 3D. \\
+E.g. Evaluate $\int_Cf(\dots)dS$ where $C$ consists of the arc $C_1,C_2$ from $\dots$ \\
+\textbf{Work Done by Force Field (Line Integral of Vector Field)}: $W=\int_C F(x,y,z)\cdot T(x,y,z)dS =\int_a^bF(x(t),y(t),z(t))\cdot r'(t)dt=\int_CF\cdot dr$. $T=\frac{r'(t)}{||r'(t)||}$ is the unit tangent vector, $\frac{dS}{dt}=||r'(t)||$ \\
+Value of work done depends on orientation. $\int_CF\cdot dr=-\int_{-C}F\cdot dr$\\
+\textbf{Component Form}: $\int_CF\cdot dr=\int_C\langle P,Q,R\rangle\cdot\langle x'(t),y'(t),z'(t)\rangle dt=\int_CPdx+\int_CQdy+\int_C Rdz$\\
+\textbf{Union of Curves}: $\int_CF\cdot dr=\int_{C_1}F\cdot dr+\dots+\int_{C_n}F\cdot dr$\\
+\textbf{Fundamental Theorem for Line Integrals}: If $F=\nabla f$ for a scalar function $f$, $F$ is a conservative vector field, $f$ is the potential function, and the line integral of a conservative vector field can be evaluated knowing only $f$ at the endpoints.\\
+$\int_C\nabla f\cdot dr=f(x(b),y(b),z(b))-f(x(a),y(a),b(a))$\\
+\textbf{Test for Conservative Vector Field in the Plane}: If $F(x,y)=P(x,y)i+Q(x,y)j$ in an open and simply-connected region $D$, $\frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x}$ at each point in $D$ iff $F$ is conservative on $D$. Also can just integrating $\nabla f$ to try and obtain $F$ to show they are equal. \\
+To prove a field is not conservative, show there exists two paths with the same start and end points but different line integral values.\\
+\textbf{Test for Conservative Field in Space}: $F$ is conservative on $D$ iff $\frac{\partial R}{\partial y}=\frac{\partial Q}{\partial z}$, $\frac{\partial R}{\partial x}=\frac{\partial P}{\partial z}$ and $\frac{\partial Q}{\partial x}=\frac{\partial P}{\partial y}$ for all points in $D$\\
+\rule{193pt}{0.2pt}
+\textbf{Positive Orientation}: Single counterclockwise traversal of $C$. \\
+\textbf{Green's Theorem}: Only applies where $F$ is a two-dimensional vector field and $C$ is a piecewise smooth, simple closed curve with positive orientation. $\int_CF\cdot dr=\int_CPdx+Qdy=\iint_D(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y})dA$. Notation: $\oint_CF\cdot dr$ indicates the integral is calculated using the positive orientation. \\
+Green's Theorem relates a line integral around a simple closed curve $C$ with a double integral over the plane region $D$.\\
+E.g. Evaluate $\int_C\langle\dots\rangle dr$ where $C$ is the curve consisting of line segments...\\
+\textbf{Area of Plane Region}: $A=\int_Cx\,dy=-\int_Cy\,dx=\frac{1}{2}\int_Cx\,dy-y\,dx$ \\
+\textbf{Parametric Surface}: The set of all points $(x,y,z)$ in $\mathbb{R}^3$ such that $x=x(u,v)$, $y=y(u,v)$, $z=z(u,v)$ as $(u,v)$ varies through $D$. $r(u,v)=\langle x(u,v),y(u,v)z(u,v)\rangle$ is a parameterization of $S$.\\
+\textbf{Surface Integral of Scalar Field}: 
+$$\iint_Sf(x,y,z)dS=\lim_{m,n\to\infty}\sum_{i=1}^m\sum_{j=1}^nf(P_{ij}^*)\Delta S_{ij}$$
+$$\Delta S_{ij}\approx \parallel r_u\times r_v\parallel \Delta u\Delta v, \quad dS=\parallel r_u\times r_v\parallel du\,dv$$
+\textbf{Smooth Surface}: A surface is smooth if it has parameterization $r(u,v)$ such that $r_u$ and $r_v$ are continuous and $r_u\times r_v\not=0$ for all points in $D$. \\
+\textbf{Tangent Plane of Smooth Surface}\\
+For $r(u,v)=\langle x(u,v),y(u,v),z(u,v)\rangle$, $r_u(a,b)\times r_v(a,b)$ is normal to the tangent plane at $\langle x(a,b),y(a,b),z(a,b)\rangle$. The tangent plane can be approximated by $\parallel r_u\times r_v\parallel dv du$. \\
+\textbf{Surface Integral of Scalar Field Formula}: $\iint_S f(x,y,z)dS=\iint_Sf(x(u,v),y(u,v),z(u,v))||r_u\times r_v||dA$\\
+E.g. Evaluate $\iint_S zdS$, where $S$ is the surface whose sides are ..., bottom lies above ...\\
+\textbf{Union of Smooth Surfaces}: $\iint_Sf(x,y,z)dS=\iint_{S_1}f(x,y,z)dS+\dots+\iint_{S_n}f(x,y,z)dS$\\
+\rule{193pt}{0.2pt}
+\textbf{Surface Integral of Scalar Field with parameterization using function of two variables}: Suppose $S$ is given by $z=g(x,y)$, then a parameterization is $r(u,v)=r(x,y)=\langle x,y,g(x,y)\rangle$. Then $\iint_Sf(x,y,z)dS=\iint_D f(x,y,g(x,y))\sqrt{\frac{\partial g}{\partial x}^2+\frac{\partial g}{\partial y}^2+1}\,dA$ \\
+\textbf{Surface Area}: $Area(S)=\iint_S1dS=||r_u\times r_v||dA$ where $r_u=\langle \frac{\partial x}{\partial u},\frac{\partial y}{\partial u},\frac{\partial z}{\partial u}\rangle$ and $r_v=\langle \frac{\partial x}{\partial v},\frac{\partial y}{\partial v},\frac{\partial z}{\partial v}\rangle$\\
+E.g. find the surface area of the paraboloid $z=x^2+y^2$ that lies under the plane $z=9$. \\
+E.g. find the surface area of the intersection of $y^2+z^2=1$ and $x^2+z^2=1$. Parameterize $y^2+z^2=1$ first: $x=x$, $y=\cos\theta$, $z=\sin\theta$. Then solve $x^2+z^2\leq 1\to |x|<|\cos\theta|$. Then let $r(x,\theta)=\langle x, \cos\theta,\sin\theta\rangle$, find $r_x$ and $r_\theta$. Then $A=\int_0^{2\pi}\int_{-|\cos\theta|}^{|\cos\theta|}1\,dx\,d\theta$ \\
+\textbf{Orientable Surface}: if it is possible to define a unit normal vector $n$ at each point $(x,y,z)$ not on the boundary of the surface such that $n$ is a continuous function of $(x,y,z)$ (has a top/bottom, inside/outside). $n=\frac{r_u\times r_v}{||r_u\times r_v||}$. \\
+Special case when $z=g(x,y)$, $n=\frac{\langle -g_x, -g_y ,1\rangle}{\sqrt{1+g_x^2+g_y^2}}$, the $k$ component is positive, giving the upward orientation. The downward orientation is $-n$.\\
+\textbf{Positive Orientation for Closed Surface}: For a closed surface that is the boundary of a solid region $E$, the convention is that the positive orientation is the one for which the normal vectors point outward from $E$. Inward pointing normals give the negative orientation. \\
+\textbf{Surface Integral of Vector Field}: Flux of $F$ across $S=\iint_S F\cdot d\mathbf{S}=\iint_SF\cdot n\,dS$ \\
+\textbf{Formula for Surface Integral of Vector Field}: $\iint_SF\cdot d\mathbf{S}=\iint_DF\cdot (r_u\times r_v)dA$. Check that $S$ is traced out by $r(u,v)$ and the orientation $n$ is correct.\\
+Special case when $r(x,y)=\langle x,y,g(x,y)\rangle$, then $\iint_S F\cdot d\mathbf{S}=\iint_D(-P\frac{\partial g}{\partial x}-Q\frac{\partial g}{\partial y}+R) \,dA$. This assumes upward orientation of $S$. For downward orientation, multiply by -1.\\
+E.g. Evaluate $\iint_S\langle y,x,z\rangle d\mathbf{S}$ where $S$ is the boundary of the solid region $E$ enclosed by the paraboloid $z=1-x^2-y^2$ and the plane $z=0$, and $S$ has positive orientation. (Split into $S_1$ and $S_2$, compute the flux across each and sum)\\
+\rule{193pt}{0.2pt}
+\textbf{Divergence}: $\text{div }\mathbf{F}=\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}=\nabla\cdot\mathbf{F}$
+Divergence is positive $\to$ Net outflow\\
+Divergence is negative $\to$ Net inflow\\
+Divergence = Flux / Volume, i.e. flux density. It is a number.\\
+\textbf{Divergence / Gauss Theorem}\\
+Flux over $S=\iint_S\mathbf{F}\cdot d\mathbf{S}=\iiint_E\;\text{div }\mathbf{F}\;dV$. \\
+$E$ is piecewise smooth with positive (outward) orientation. \\
+Flux is the sum of divergence over the volume $V$. \\
+E.g. Find the flux of $F(x,y,z)=zi+yj+xk$ across the unit sphere $x^2+y^2+z^2=1$ with positive orientation.\\
+$\text{div }F(P)>0$: net outflow at $P$. $\text{div }F(P)<0$: net inflow at $P$. $\text{div }F(P)=0$: no net flow at $P$.\\
+\textbf{Curl}: $\text{curl }F=(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z})i+(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x})j+(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y})k=\nabla \times F$. Unlike Divergence, curl is a vector field. \\
+\textbf{Stoke's Theorem}: \\
+$\iint_S\text{curl }\mathbf{F}\cdot d\mathbf{S}=\int_C\mathbf{F}\cdot d\mathbf{r}=\iint_S\text{curl }\mathbf{F}\cdot(\mathbf{r}_x\times \mathbf{r}_y)d\mathbf{A}$\\
+Stoke's Theorem relates a surface integral over a surface $S$ to a line integral around the boundary curve of $S$ (a space curve)\\
+E.g. Evaluate $\int_CF\cdot dr$ where $C$ is the intersection of the plane $y+z=2$ and the cylinder $\dots$\\
+\end{multicols*}
+}
+
+\end{document}
+
