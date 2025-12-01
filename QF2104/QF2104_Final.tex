@@ -1,0 +1,229 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{geometry}
+\newgeometry{left=0.25cm, right=0.25cm, top=0.8cm, bottom=0.5cm} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\usepackage[hidelinks]{hyperref}
+\usepackage{newtxmath}
+\usepackage{titlesec}
+
+
+\begin{document}
+% \singlespacing
+% \singlespacing % 1.5 line spacing
+\singlespacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{\vspace{-0.8cm}\faGithub\;\href{https://github.com/michaelyql}{michaelyql}}
+
+% \setlength{\columnseprule}{0.1pt} % column separator
+
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+
+{\footnotesize
+\begin{multicols*}{3}
+
+\subsubsection*{\underline{Theory of Interest}}
+\textbf{Accumulation Function} Simple interest: $a(t)=(1+rt)$, Compound interest: $a(t)=(1+r)^t$. $r^{(p)}$ = Nominal yield compounded $p$ times a year, interest in one period = $\frac{r^{(p)}}{p}$, interest per year = $(1+\frac{r^{(p)}}{p})^p$\\
+\textbf{Effective Interest} On the interval $[t_1,t_2]$ = $\frac{a(t_2)-a(t_1)}{a(t_1)}$\\
+\textbf{Continuously Compounded Rate} $a(t)=e^{rt}$. $e^r>(1+\frac{r}{p})^p\geq 1+r$ for $r>0$ and $p\geq 1$ \\
+\textbf{Equivalent IR} Two rates are equivalent iff they yield the same accumulation amount over a year, $(1+\frac{r^{(p)}}{p})^p=(1+\frac{r^{(q)}}{q})^q$\\ 
+\textbf{Effective annual interest rate} $1+r_e=(1+\frac{r^{(p)}}{p})^p$. For any positive integer $p$, $r_e\equiv(1+\frac{r^{(p)}}{p})^p-1\geq r^{(p)}$, $a(t)=(1+r_e)^t$\\
+\textbf{Present Value} (discounting) For $C=\{(c_1,t_1),\dots,(c_n,t_n)\}$, $PV(C)=\sum_{i=1}^n\frac{c_i}{a(t_i)}$. Notation: $C=\{(c_1,0)\dots,(c_n,n-1)\}=(c_1,c_2,\dots,c_n)$\\
+\textbf{Principle of Equivalence} When IR and $a(t)$ are the same, two cash flows are equivalent iff they have the same present value.\\
+\textbf{Time Value} $TV_tC=PV(C)\times a(t)$, $PV(C)=\frac{TV_t(C)}{a(t)}$. For $0<t_1<t_2$, $TV_{t_2}(C)=\frac{a(t_2)}{a(t_1)}\times TV_{t_1}(C)$\\
+\textbf{Equation of Value} For a cash flow $C=\{(c_1,t_1),(c_2,t_2),\dots,(c_n,t_n)\}$, $PV(C)=\sum_{i=1}^n\frac{c_i}{(1+r)^{t_i}}=0$ \\
+\textbf{Law of One Price} $PV(\text{what you pay})=PV(\text{what you receive})$\\
+\textbf{Newton Raphson Method} To estimate non-negative root $r$ of $PV(C)=0$, a.k.a yield/\textbf{I}nternal \textbf{R}ate of \textbf{R}eturn\\
+$\bullet$ First use Intermediate Value Theoreom to pin down a small interval containing the root\\
+$\bullet$ Then pick an arbitrary point as the starting point $\alpha_0$\\
+$\bullet$ $\alpha_1=\alpha_0-\frac{f(\alpha_0)}{f'(\alpha_0)}$, $\alpha_{n+1}=\alpha_n-\frac{f(\alpha_n)}{f'(\alpha_n)}$\\
+\textbf{(Ex.) Find the IRR of $C=(-2,1,1,1)$}. Construct $PV(C)=0$. Let $x=1+r$, set $f(x)=0$, find $f'(x)$. Test values of $f(x)$ at $x=1,1.1,1.2\dots$, observing where it crosses the $y$-axis. Use IVT to establish a range and set $\alpha_0$ within the range.
+
+\subsubsection*{\underline{Financial Instruments/Term Structure}}
+\textbf{Certificate of Deposit} Time deposit, penalty for withdrawing early. Value after $t$ years = $P\times a(t)$, earnings = $P\times(a(t)-1)$. Interest rate earned for the $k^{th}$ year = $P\times(a(k)-a(k-1))$ (to calculate penalty)\\
+\textbf{Stock} Eg. \$10 dividends at EOY, grow 3\% per year. Mkt return is 15\%. Expected stock price = $\sum_{t=1}^\infty \frac{10\times(1+3\%)^{t-1}}{a(t)}$, $a(t)=1.15^t$\\ 
+\textbf{T-bills} Short term debt by Govt. Issued at discount to par, no coupon, mature at par. $P(1+\lambda\times M)=R=F$ where $M$ is years till maturity. Yield $\lambda=\frac{(F/P)-1}{M}$\\
+\textbf{Commercial Paper}  1-2 mths debt by company. Issued at discount to par, no coupon, mature at par. Return is difference between maturity value and purchase price. Earnings = $P_1-P_0$, rate of return = $\frac{{P_1-P_0}}{P_0}$, nominal rate of return = $\frac{P_1-P_0}{P_0}\times\frac{365}{t_2-t_1}$ \\
+\textbf{Bond Valuation} $P=\frac{R}{(1+\frac{\lambda}{m})^n}+\sum_{i=1}^n\frac{cF/m}{(1+\frac{\lambda}{m})^i}$\\
+$P$ = current price, $F$ = face value (used by coupon rate), $R$ = redemption value at maturity, $c$ = nominal coupon rate, $m$ = no. of coupon payments per year, $n$ = total no. of coupon payments, $\lambda$ = nominal yield\\
+Bond yield is IRR of the bond at price $P$.\\
+Assume $R=F$ unless otherwise stated. When $R=F$, $P=F+F\left(\frac{c-\lambda}{\lambda}\right)\left[1-\frac{1}{(1+\frac{\lambda}{m})^n}\right]$\\
+(i)$P>F$ iff $c>\lambda$ (premium), (ii)$P=F$ iff $c=\lambda$ (at par), (iii)$P<F$ iff $c<\lambda$ (at discount)\\
+\textbf{Price after kth payment} $P_{k+1}=P_k(1+\frac{\lambda}{m})-cF/m$\\
+\textbf{Zero Coupon Bond Price} $P=\frac{R}{(1+\lambda)^n}$\\
+\textbf{Perpetual Bond} Bond that never matures ($n\to\infty$) $P=\frac{cF}{\lambda}$\\
+\textbf{Taylor Series} Approximate value of $f$ near values of $a$. $f(x)=f(a)+f'(a)(x-a)+\frac{f''(a)}{2!}(x-a)^2+\dots+\frac{f^n(a)}{n!}(x-a)^n+\dots$\\
+\textbf{Price resulting from change in yield}\\
+$P(\lambda+\Delta\lambda)=P(\lambda)+P'(\lambda)\cdot\Delta\lambda+\frac{P''(\lambda)}{2}\cdot(\Delta\lambda)^2+\dots+\frac{P^n(\lambda)}{n!}\cdot(\Delta\lambda)^n+\dots$\\
+\textbf{Percentage change of bond price}\\
+$\frac{P(\lambda + \Delta\Lambda)-P(\lambda)}{P(\lambda)}=\frac{P'(\lambda)}{P(\lambda)}\cdot \Delta\lambda+\frac{1}{2}\frac{P''(\lambda)}{P(\lambda)}\cdot(\Delta\lambda)^2+\dots+\frac{1}{n!}\frac{P^n(\lambda)}{P(\lambda)}\cdot(\Delta\lambda)^2+\dots$\\
+\textbf{Modified Duration} $D_M=-\frac{P'(\lambda)}{P(\lambda)}$. Modified duration depends on type of yield.\\
+\textbf{Price Sensitivity Formula} $\frac{P(\lambda + \Delta\Lambda)-P(\lambda)}{P(\lambda)}\approx-D_M(\lambda)\cdot\Delta\lambda$. On the price-yield curve, $-D_MP$ is the slope of the tangent line at $\lambda$\\
+\textbf{Estimation of Price Change}\\
+New price $P(\lambda + \Delta\lambda)\approx P(\lambda)-(D_MP)\cdot\Delta\lambda$\\
+Change in bond price $\Delta P=P(\lambda+\Delta\lambda)-P(\lambda)\approx-(D_MP)\cdot\Delta\lambda$\\
+\textbf{Notation} For $C=\{(c_i,t_i):i=1,2,\dots,n\}$, $tC=\{(t_ic_i,t_i):i=1,2,\dots,n\}$\\
+For a bond with cash flow $C=\{(cF/M,i/m):i=1,2,\dots,n\}\cup\{(R,n/m)\}$, suppose $\lambda$ is nominal yield compounded $k$ times a year.\\
+\vspace{-10pt} 
+$$P(\lambda)=\frac{R}{(1+\lambda/k)^{kn/m}}+\sum_{i=1}^n\frac{cF/M}{(1+\lambda/k)^{ki/m}}=PV(C)$$
+$$
+P'(\lambda)=-\frac{\frac{nR}{m}}{(1+\lambda/k)^{kn/m+1}}-\sum_{i=1}^n\frac{(\frac{i}{m})(\frac{cF}{m})}{(1+\frac{\lambda}{k})^{\frac{ki}{m}+1}}$$
+$=\left(-\frac{1}{1+\lambda /k}\right)\cdot PV(tC)$
+$\Rightarrow D_M(\lambda)=-\frac{P'(\lambda)}{P(\lambda)}=\frac{1}{1+\lambda/k}\cdot\frac{PV(tC)}{PV(C)}$. \\
+When $k=1$, $D_M(\lambda)=\frac{1}{1+\lambda}\cdot\frac{PV(tC)}{PV(C)}$ (i.e. $\lambda$ is effective annual yield). \\
+If $\lambda$ is continuously compounded yield, $a(t)=\exp(\lambda t)$.
+\vspace{-5pt}
+$$P(\lambda)=\frac{R}{\exp(\lambda(n/m))}+\sum_{i=1}^n\frac{cF/m}{exp(\lambda(i/m))}=PV(C)$$
+\vspace{-10pt}
+$$P'(\lambda)=-\frac{nR/M}{\exp(\lambda(n/m))}-\sum_{i=1}^n\frac{cF/m}{\exp(\lambda(i/m))}=-PV(tC)$$
+$\Rightarrow D_M(\lambda)=-\frac{P'(\lambda)}{P(\lambda)}=\frac{PV(tC)}{PV(C)}$\\
+\textbf{(Macaulay) Duration}: $D(\lambda)$ is the modified duration w.r.t the bond's continuously compounded yield. $MacD=D=\frac{PV(tC)}{PV(C)}$\\
+If $\lambda$ is nominal yield compounded $k$ times per year, $D_M(\lambda)=\frac{1}{1+\lambda/k}D(\lambda)$. If $\lambda$ is effective annual yield, $D_M(\lambda)=\frac{1}{1+\lambda}D(\lambda)$. If $\lambda$ is continuously compounded yield, $D_M(\lambda)=D(\lambda)$. Note: Macaulay Duration does not depend on the type of yield.\\
+\textbf{Macaulay Duration for Bond} Let $\mu=\frac{\lambda}{m}$, $\gamma=\frac{c}{m}$. Then $D(\lambda)=(1+\frac{\lambda}{m})D_M=\frac{1+\mu}{m\mu}-\frac{1+\mu+n\cdot(\gamma-\mu)}{m\gamma[(1+\mu)^n-1]+m\mu}$. \\
+As $n\to\infty$, for a perpetual bond, $D=\frac{1+\mu}{m\mu}=\frac{1+\lambda/m}{\lambda}$. When bond is priced at par, $\mu=\gamma$, $D=\frac{1+\mu}{m\mu}\left(1-\frac{1}{(1+\mu)^n}\right)$\\
+\textbf{Generalization to Other Cash Flows} For $C=\{(c_i,t_i):i=1,2,\dots,n\}$. 
+\vspace{-5pt}
+$$P(\lambda)=\sum_{i=1}^n\frac{c_i}{a(t_i)}=\sum_{i=1}^n\frac{c_i}{(1+\frac{\lambda}{k})^{kt_i}}=PV(C)$$
+$P'(\lambda)=-\frac{1}{1+\lambda/k}\cdot PV(tC) \Rightarrow D_M(\lambda)=-\frac{P'(\lambda)}{P(\lambda)}=\frac{1}{1+\lambda/k}\cdot\frac{PV(tC)}{PV(C)}$. If $k=1$ i.e. $\lambda$ is effective annual interest rate, $D_M(\lambda)=\frac{1}{1+\lambda}\cdot\frac{PV(tC)}{PV(C)}$. If $\lambda$ is continuously compounded interest rate, $a(t)=\exp(\lambda t)$, $P(\lambda)=PV(C)$, $P'(\lambda)=-PV(C) \Rightarrow D_M(\lambda)=-\frac{P'(\lambda)}{P(\lambda)}=\frac{PV(tC)}{PV(C)}\equiv D(\lambda)$. If $\lambda$ is nominal yield compounded $k$ times a year, $D_M(\lambda)=\frac{1}{1+\lambda/k}D(\lambda)$\\
+\textbf{Macaulay Duration (Time Weighted Average)} $D=\frac{PV(tC)}{PV(C)}=\sum_{i=1}^nw_it_i$, where $w_i=\frac{PV(c_i)}{\sum_{i=1}^n PV(c_i)}$. If $c_i\geq 0$ for all $i$, then $t_1\leq D\leq t_n$. For a zero-coupon bond, $D=T$.\\
+\textbf{Convexity}  $C(\lambda)=\frac{P''(\lambda)}{P(\lambda)}$. 2nd order approximation of change in bond price for a change in yield. Consider the quadratic term in the Taylor series: $P(\lambda+\Delta\lambda)\approx P(\lambda)+P'(\lambda)\Delta\lambda+\frac{P''(\lambda)}{2}(\Delta\lambda)^2$. Note: $C$ depends on the type of interest rate.  \\
+\textbf{Percentage change in bond price} $\frac{P(\lambda+\Delta\lambda)-P(\lambda)}{P(\lambda)}\approx\frac{P'(\lambda)}{P(\lambda)}\Delta\lambda+\frac{1}{2}\frac{P''(\lambda)}{P(\lambda)})(\Delta\lambda)^2=-D_M\Delta\lambda+\frac{1}{2}C(\lambda)^2$. \\
+$\Delta P=P(\lambda+\Delta\lambda)-P(\lambda)\approx P[-D_M\Delta\lambda+\frac{1}{2}C(\Delta\lambda)^2]$\\
+If $\lambda$ is nominal IR compounded $k$ times a year, $P''(\lambda)=\frac{1}{(1+\lambda/k)^2}(PV(t^2C)+PV(tC)/k)$, \\
+$C(\lambda)=\frac{P''(\lambda)}{P(\lambda)}=\frac{1}{(1+\lambda/k)^2}\cdot\left(\frac{PV(t^2C)}{PV(C)}+\frac{1}{k}\cdot\frac{PV(tC)}{PV(C)}\right)$\\
+When $k=1$ i.e. $\lambda$ is effective annual IR, then $C(\lambda)=\frac{1}{(1+\lambda)^2}\cdot(\frac{PV(t^2C)+PV(tC)}{PV(C)})$\\
+If $\lambda$ is continuously compounded, $P(\lambda)=\sum_{i=1}^nc_i\exp(-t_i\lambda)=PV(C)$, $P'(\lambda)=-\sum_{i=1}^nc_it_i\exp(-t_i\lambda)=-PV(tC)$, $P''(\lambda)=\sum_{i=1}^nc_it_i^2\exp(-t_i\lambda)=PV(t^2C)$. $\Rightarrow C(\lambda)=\frac{PV(t^2C)}{PV(C)}$\\
+\textbf{Macaulay Convexity} $MacC=\frac{PV(t^2C)}{PV(C)}$. Macaulay convexity does not depend on the type of IR. It is the weighted sum of time squared. \\
+If $\lambda$ is nominal IR compounded $k$ times a year, $C(\lambda)=\frac{1}{(1+\lambda/k)^2}(MacC(\lambda)+D(\lambda)/k)$.\\
+If $\lambda$ is effective annual IR, $C(\lambda)=\frac{1}{(1+\lambda)^2}(MacC(\lambda)+D(\lambda))$. If $\lambda$ is continuously compounded IR, $C(\lambda)=MacC(\lambda)$.\\
+\textbf{Spot Rate} Annual interest rate starting today ($t=0$) until some time in the future, effectively the YTM of a ZCB maturing at $t$
+$$(1+s_t)^t=(1+s_j)^j(1+f_{j,t})^{t-j}$$
+$$(1+s_n)^n=(1+s_1)(1+f_{1,2})(1+f_{2,3})\dots (1+f_{n-1,n})$$
+Spot rate curve = spot rate against YTM\\
+$P=\frac{F}{(1+s_n)^n}\Rightarrow s_n=(\frac{F}{P})^{1/n}-1$\\
+If $\lambda$ is not known, use spot rate to find bond price.\\
+\textbf{Forward Rate}
+Interest rate starting at $t_1>0$ lasting until $t_2>t_1$, denoted $f_{t_1,t_2}$. Note: $f_{0,t}=s_t$. (Remember to subtract 1 from effective rate to get spot/forward rate)\\
+\textbf{Bootstrap Method} Suppose $s_1,\dots,s_{n-1}$ have already been determined. To estimate $s_n$, consider an $n$-period coupon paying bond with cash flow $(-P_n,cF,cF,\dots,cF+F)$. Then $P_n=\frac{cF}{(1+s_1)}+\frac{cF}{(1+s_2)^2}+\dots+\frac{cF}{(1+s_{n-1})^{n-1}}+\frac{cF+F}{(1+s_n)^n}$, so $s_n$ can be determined.
+
+\subsubsection*{\underline{Expected Utility Theory}}
+\textbf{Expected Utility} $EU(X+w_0)=\sum_{i=1}^np_iU(x_i+w_0)$ where $(x_1,\dots,x_n)$ are $n$ mutually exclusive payoffs with probabilities $(p_1,\dots,p_n)$. For continuous $X$, $EU(X+w_0)=\int_a^bf(x)U(x+w_0)dx$\\
+\textbf{Utility-Based Decision Making} Invest if $EU(X+w_0)>U(w_0)$, neutral if =, avoid if $<$. Between several risky prospects, just compare $EU(X_i+w_0)$ and take the highest\\
+\textbf{Risk attitude} Risk averse iff $U$ is strictly concave, neutral iff $U$ is linear, loving if $U$ is strictly convex\\
+\textbf{Concave (Strictly Concave)} $U(\alpha x+(1-\alpha)y)\geq(>)\;\alpha U(x)+(1-\alpha)U(y)$ \\
+\textbf{Convex (Strictly Convex)} $U(\alpha x+(1-\alpha)y)\leq(<)\;\alpha U(x)+(1-\alpha)U(y)$. \\
+Strictly convex if $U''>0$, linear if $U''=0$, strictly concave if $U''<0$\\
+\textbf{Jensen’s Inequality} If $U$ is strictly concave, $E(U(X))<U(E(X))$. Equality holds if $U$ is linear, sign flipped if $U$ is strictly convex\\
+\textbf{Fair Game} zero expected payoff. $W=X+w_0$, $E(W)=w_0$. Risk
+averse individuals will always avoid a fair game since $E(U(W))<U(E(W))=U(w_0)$\\
+\textbf{Certainty equivalent} the real number $c=CE(X;U)$ s.t. $U(c)=E(U(X+w_0))$. Invest if $c>w_0$, neutral if =, avoid if $<$\\
+\textbf{Risk premium} the real number $r=RP(X;U)$ s.t. $U(w_0-r)=E(U(w_0+X))$. $r=w_0-CE(X;U)$. Invest if $r<0$, neutral if =, avoid if $>$\\
+\textbf{Positive Affine Transformations} $CE(X;aX+b)=CE(X;U)$. $RP(X;U)$ is also constant under PAT\\
+\textbf{Absolute Risk Aversion (ARA)} $-\frac{U''(w)}{U'(w)}$ at wealth level $w$. ARA$>0$. It shows how an individual’s risk aversion changes with wealth. $U_{ARA}=V_{ARA}$ iff $U$ and $V$ are positive affine transformations
+of each other (they are \textit{equivalent})\\
+If $U_{ARA}(w)>V_{ARA}(w)$ for all $w$, $U$ is \textit{globally more risk averse} than $V$. Then there exists a strictly increasing and strictly concave function $g$ s.t. $U(w)=g(V(w))$\\
+\textbf{Portfolio Selection} $EU(W)=EU(w_0(1+\alpha R))$. When $R$ has two possible values $a$ and $b$, $E(U(W))=pU(w_0(1+\alpha a))+(1-p)U(w_0(1-\alpha b))$
+
+\subsubsection*{\underline{Mean Variance Analysis}}
+\textbf{Rate of Return of Asset} $r=\frac{P_1-P_0}{P_0}$, mean $\mu_i=E(r_i)$, risk = $\sigma_i=\sqrt{Var(r_i)}$\\
+\textbf{RoR of Portfolio} $r_p=\sum_{i=1}^n w_ir_i=\boldsymbol{w^Tr}$\\
+\textbf{Correlation} $\rho_{ij}=\frac{\sigma_{ij}}{\sigma_i \sigma_j}\leq 1$\\
+\textbf{Portfolio Mean} $\mu_p=E(r_p)=\sum_{i=1}^nw_i\mu_i=\boldsymbol{w^T\mu}$ where $\boldsymbol{\mu}=(\mu_1,\dots,\mu_n)^T$\\
+\textbf{Portfolio Variance} $\sigma_p^2=Var(r_p)=\sum_{i=1}^n\sum_{j=1}^nw_iw_j\sigma_{ij}=\boldsymbol{w^TCw}=\sum_{i=1}^nw_i^2\sigma_i^2+\sum_{i=1}^n\sum_{j\not=i}w_iw_j\sigma_{ij}$ \\
+\textbf{Portfolio of Two Assets} $\boldsymbol{w}=(\alpha,1-\alpha)^T$, mean $\mu_p=\alpha\mu_1+(1-\alpha)\mu_2\in[\mu_1,\,u_2]$, variance $\sigma_p^2=\alpha^2\sigma_1^2+(1-\alpha)^2\sigma_2^2+2\alpha(1-\alpha)\rho_{12}\sigma_1\sigma_2$\\
+\textbf{Global Minimum Portfolio Variance} Occurs when $\alpha=\alpha^*=\frac{\sigma_2(\sigma_2-\rho_{12}\sigma_1)}{\sigma_1^2+\sigma_2^2-2\rho_{12}\sigma_1\sigma_2}$, $(\sigma_p^2)^*=\frac{\sigma_1^2\sigma_2^2(1-\rho_{12}^2)}{\sigma_1^2+\sigma_2^2-2\rho_{12}\sigma_1\sigma_2}$, $(\mu_p)^*=\alpha^*\mu_1+(1-\alpha^*)\mu_2$. GMVP = $(\sigma_g,\mu_g)$\\
+\textbf{Portfolio Graph} $\sigma_p^2=A\mu_p^2+B\mu_p+C$ with $A>0$\\
+\textbf{(Ex.) Given equation of min-variance frontier, find GMVP}: $\sigma^2=f(\mu)=\dots$, solve $f'(\mu)=0$ or factorise into $x(\mu-y)^2$  \\
+\textbf{(Ex.) Find the range which an investor would prefer $p$ over $q$ if he wants to minimize risk}: Compare $\sigma_p^2$ against $\sigma_q^2$\\
+\textbf{(Ex.) Find $\alpha$ s.t. $\mu\geq k$}: Method 1: $\mu=\alpha\mu_1+(1-\alpha)\mu_2\geq k$, find range of $\alpha$, find GMVP and compare with $\alpha^*$. Method 2: substitute $\mu_p$ into equation of min-variance frontier, solve for GMVP\\
+\textbf{(Ex.) Find max $\mu$ s.t. $\sigma\leq k$}: Substitute $\sigma$ into the equation and choose the higher $\mu$
+
+\subsubsection*{\underline{Portfolio Theory}}
+\textbf{Lagrange Method} Given $f(w_1,\dots,w_n)$ subject to $g_1(w_1,\dots,w_n)=0$ and $g_2(w_1,\dots,w_n)=0$, define $L(w_1,\dots,w_n,\lambda_1,\lambda_2)=f(w_1,\dots,w_n)-\lambda_1g_1(w_1,\dots,w_n)-\lambda_2g_2(w_1,\dots,w_n)$. $f(w_1,\dots,w_n)$ attains local extremum at $w^*$ which is a solution to $\frac{\partial}{\partial w_i}L(w_1,\dots,w_n,\lambda_1,\lambda_2)$ for $i=1,\dots,n$, $g_1=0$ and $g_2=0$ \\
+\textbf{Find $\mathbf{w}$ that achieves $\mu$ with min variance} $L=\frac{1}{2}\sigma_p^2-\lambda_1\left(\sum_{i=1}^n w_i - 1\right)-\lambda_2\left(\sum_{i=1}^nw_i \mu_i-\mu\right)=\frac{1}{2}\boldsymbol{w^T Cw}-\lambda_1(\boldsymbol{w^T1}-1)-\lambda_2(\boldsymbol{w^T\mu} -\mu)\Longrightarrow \;\boldsymbol{Cw=}\lambda_1\mathbf{1}+\lambda_2\boldsymbol{\mu}$, $\mathbf{1\boldsymbol{^T}w}=1$, $\boldsymbol{\mu^Tw}=\mu$. Then $\begin{pmatrix}a & b\\ b & c\end{pmatrix}\begin{pmatrix}\lambda_1 \\ \lambda_2\end{pmatrix}=\begin{pmatrix}1 \\ \mu \end{pmatrix} $, $a=\boldsymbol{1^TC^{-1}1}$, $b=\boldsymbol{1^TC^{-1}\mu}$, $c=\boldsymbol{\mu^TC^{-1}\mu}$, $\lambda_1=\frac{c-b\mu}{ac-b^2}$, $\lambda_2=\frac{a\mu-b}{ac-b^2}$ $$\boldsymbol{w_\mu^*}=\frac{a(c-b\mu)}{ac-b^2}\frac{\boldsymbol{C^{-1}1}}{\boldsymbol{1^TC^{-1}1}}+\frac{b(a\mu-b)}{ac-b^2}\frac{\boldsymbol{C^{-1}\mu}}{\boldsymbol{1^TC^{-1}\mu}}$$ 
+Variance $\sigma_\mu^2=\boldsymbol{{w_\mu^{*}}^T Cw_\mu^*}=\frac{a\mu^2-2b\mu+c}{ac-b^2}$ \\
+\textbf{GMVP} $(\sigma_{g},\mu_{g})= (\sqrt{\frac{1}{a}}, \frac{b}{a})$, $\boldsymbol{w}_{GMV}=\frac{\boldsymbol{C^{-1}1}}{\boldsymbol{1^TC^{-1}1}}=\frac{\boldsymbol{C^{-1}1}}{a}$  \\
+\textbf{Min Variance Frontier} $\sigma^2=\frac{a(\mu-\frac{b}{a})^2+(c-\frac{b}{a})^2}{ac-b^2}$ or $a\sigma^2-\frac{a^2}{ac-b^2}(\mu-\frac{b}{a})^2=1$ \\
+\textbf{Efficient Frontier} The set of points $\mu_p\geq \mu_g=\frac{b}{a}$ (change to $\mu=f(\sigma)$) \\
+\textbf{Covariance of two rates} $Cov(r_q,r_p)=\boldsymbol{w_p^TCw_q}=Cov(r_p,r_q)$, $Cov(r_g,r_q)=\frac{1}{\boldsymbol{1^TC^{-1}1}}=\frac{1}{a}=\sigma_g^2$\\
+\textbf{Two Fund Theorem} $\boldsymbol{w_\mu^*}=\alpha\frac{\boldsymbol{C^{-1}1}}{\boldsymbol{1^TC^{-1}1}}+(1-\alpha) \frac{\boldsymbol{C^{-1}\mu}}{\boldsymbol{1^TC^{-1}\mu}}$ \\ 
+Any portfolio lying on the min-variance frontier is a weighted sum of \textbf{any two} distinct min-variance portfolios $\boldsymbol{w_1}$ and $\boldsymbol{w_2}$. If $\mu=\alpha\mu_1+(1-\alpha)\mu_2$, then $\boldsymbol{w}=\alpha\boldsymbol{w_1}+(1-\alpha)\boldsymbol{w_2}$ \\
+\textbf{Corollary} If $b>0$ then Fund 2 is efficient, and any portfolio with $\alpha<1$ is efficient.\\
+\textbf{(Ex.) Find weight vector with smallest variance out of all portfolios equally weighted in asset 2 and 3}: \\
+Let $\boldsymbol{w}=(1-2\alpha,\alpha,\alpha)^T$, then $\sigma^2=\boldsymbol{w^TCw}=f(\alpha)$. Solve for $f'(\alpha)=0$.\\
+\textbf{(Ex.) Check if $\boldsymbol{w}$ is on efficient frontier}: Given two other portfolios $\boldsymbol{w_{Fund1}}$ and $\boldsymbol{w_{Fund2}}$, check if there exists $\alpha$ s.t. $\boldsymbol{w}=\alpha\boldsymbol{w_{Fund1}}+(1-\alpha)\boldsymbol{w_{Fund2}}$\\
+\textbf{Portfolio with Risk-Free Asset} $(1-\boldsymbol{1^Tw}, w_1,\dots,w_n)^T$\\
+\textbf{Rate of Return} $r_p=(1-\boldsymbol{1^Tw})r_f+\boldsymbol{w^Tr}$ where $\boldsymbol{r}=(r_1,\dots,r_n)^T$, mean $\mu_p=(1-\boldsymbol{1^Tw})r_f+\boldsymbol{w^T\mu}$, variance $\sigma_p^2=Var((1-\boldsymbol{1^Tw})r_f+\boldsymbol{w^Tr})=Var(\boldsymbol{w^Tr})=\boldsymbol{w^TCw}$\\
+\textbf{Find portfolio in $n$ risky assets and 1 risk-free asset with min variance and $\mu_p=\mu$} Minimize $\boldsymbol{w^TCw}$ subject to $\mu_p=(1-\boldsymbol{w^T1})r_f+\boldsymbol{w^T\mu}=\mu$. $L=\frac{1}{2}\boldsymbol{w^TCw}-\lambda((1-\boldsymbol{w^T1})r_f+\boldsymbol{w^T\mu}-\mu)\Longrightarrow\;\boldsymbol{Cw}=\lambda(\boldsymbol{\mu}-r_f\boldsymbol{1})$. \\ Then $\mu-r_f=\boldsymbol{\mu^Tw}-r_f\boldsymbol{1^Tw}$, $\lambda=\frac{\mu-r_f}{(\boldsymbol{\mu^T}-r_f\boldsymbol{1^T})\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}$ 
+$$\boldsymbol{w}=\frac{(\mu-r_f)\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}{(\boldsymbol{\mu}-r_f\boldsymbol{1})^T\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}$$
+$(\boldsymbol{\mu}-r_f\boldsymbol{1})^T\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1}) = c-2br_f+ar_f^2$\\
+Variance $\sigma^2=\boldsymbol{w^TCw}=\frac{(\mu-r_f)^2}{(\boldsymbol{\mu}-r_f\boldsymbol{1})^T\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}=\frac{(\mu-r_f)^2}{c-2br_f+ar_f^2}$, $\sigma=\frac{|\mu-r_f|}{\sqrt{c-2br_f+ar_f^2}}$\\
+It is assumed $\mu_{GMV}=\frac{b}{a}>r_f$\\
+\textbf{Tangency Portfolio} The tangent point of the Capital Market Line (CML) with Min-Variance Frontier. It only invests in the $n$ risky assets, $\sum_{i=1}^nw_i=1$\\
+$$\boldsymbol{w_{tan}}=\frac{\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}{\boldsymbol{1^TC^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}$$
+$$\mu_{tan}=\frac{\boldsymbol{\mu^T C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}{\boldsymbol{1^T C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}=\frac{c-r_fb}{b-r_fa}$$
+$\sigma_{tan}^2=\frac{(\boldsymbol{\mu}-r_f\boldsymbol{1})^T\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1})}{(\boldsymbol{1^T}\boldsymbol{C^{-1}}(\boldsymbol{\mu}-r_f\boldsymbol{1}))^2}=\frac{c-2r_fb+ar_f^2}{(b-r_fa)^2}$\\
+If $\mu_{GMV}=\frac{b}{a}<r_f$, tangency portfolio is below GMVP (lies on inefficient part of min-variance frontier). \\
+If $\mu_{GMV}=\frac{b}{a}=r_f$, there is no tangency portfolio. \\
+\textbf{Equation of CML} $\mu_p=r_f+\frac{\sigma_p}{\sigma_{tan}}(\mu_{tan}-r_f)$ where $(\sigma_p, \mu_p)$ is any point on the efficient frontier\\
+\textbf{Sharpe Ratio} of portfolio $p$ in $(n+1)$ assets $SR_p=\frac{\mu_p-r_f}{\sigma_p}$ (risk-adjusted return/expected excess return per unit risk) Portfolios that lie on the CML have highest Sharpe ratio.\\
+\textbf{(Ex.) Given equation of min-variance frontier and CML, find $\mu_{tan}$ and $\sigma^2_{tan}$}: Substitute equation of CML into min-variance frontier, solve for either $\sigma$ or $\mu$\\
+\textbf{(Ex.) Find $k$ if invested $k\%$ into risk-free asset and $(1-k\%)$ in $\boldsymbol{w}_{tan}$}: \\
+$r_p=\frac{k}{100}r_f+(1-\frac{k}{100})r_{tan}$, $\mu_p=E(r_p)=\frac{k}{100}r_f+(1-\frac{k}{100})\mu_{tan}$\\
+\textbf{(Ex.) Given equation of min-variance frontier and $r_f$, find CML}: Implicit differentiation of $\sigma^2=A\mu^2+B\mu+c$, find $\frac{d\mu}{d\sigma}$ and equate with gradient of CML $\frac{\mu_{tan}-r_f}{\sigma_{tan}}$. 
+
+\subsubsection*{\underline{CAPM}}
+\textbf{Mkt Portfolio} Risky assets only $\boldsymbol{w}=(w_1,\dots,w_n)^T$, $w_i=n_ip_i/\sum n_ip_i$ i.e. $\boldsymbol{w}_{tan}$\\
+\textbf{Risk Premium} $\mu_p-r_f$ (expected return in excess of the risk-free rate) \\
+\textbf{CAPM Theorem} $\mu_i-r_f=\frac{\sigma_{im}}{\sigma_{m}^2}(\mu_{m}-r_f)$\\
+\textbf{Beta of Asset} $\beta_i=\frac{\sigma_{im}}{\sigma_{m}^2}$\\
+\textbf{Portfolio Beta} $\beta_p=\frac{\sigma_{pm}}{\sigma_{m}^2}=\frac{Cov((1-\boldsymbol{1^Tw})r_f+\sum w_ir_i, r_m)}{\sigma_m^2}=\frac{Cov(\sum w_ir_i, r_m)}{\sigma_m^2}=\frac{\sum w_iCov(r_i, r_m)}{\sigma_m^2}=\boldsymbol{w^T\beta}$ where $\boldsymbol{\beta}=(\beta_1,\dots,\beta_n)^T$\\
+$\boldsymbol{\beta}=\begin{pmatrix}
+    \beta_1\\ \vdots \\ \beta_n
+\end{pmatrix}=\begin{pmatrix}
+    \sigma_{1m}/\sigma_m^2\\ \vdots \\ \sigma_{nm}/\sigma_m^2
+\end{pmatrix}=\frac{1}{\sigma_m^2}\begin{pmatrix}
+    \sigma_{1m}\\ \vdots \\ \sigma_{nm}
+\end{pmatrix}=\frac{1}{\sigma_m^2}\begin{pmatrix}
+    \boldsymbol{e_1^TCw_m}\\ \vdots \\ \boldsymbol{e_n^TCw_m}
+\end{pmatrix}=\frac{1}{\sigma_m^2}\begin{pmatrix}
+    \boldsymbol{e_1}\\ \vdots \\ \boldsymbol{e_n^T}
+\end{pmatrix}\boldsymbol{Cw_m}=\frac{1}{\sigma_m^2}\boldsymbol{ICw_m}=\frac{1}{\sigma_m^2}\boldsymbol{Cw_m}$\\
+$\Longrightarrow \boldsymbol{1^TC^{-1}\beta}=\frac{1}{\sigma_m^2}\boldsymbol{1^Tw_m}=\frac{1}{\sigma_m^2}$\\
+$\Longrightarrow \boldsymbol{\beta^TC^{-1}\beta}=\frac{1}{\sigma_m^2}\boldsymbol{\beta^Tw_m}=\frac{1}{\sigma_m^2}\beta_m=\frac{1}{\sigma_m^2}=\boldsymbol{1^TC^{-1}\beta}$\\
+$\Longrightarrow \boldsymbol{w_m}=\frac{\boldsymbol{C^{-1}\beta}}{\boldsymbol{1^TC^{-1}\beta}}$\\
+\textbf{CAPM Theorem II} $\mu_p-r_f=\beta_p(\mu_{m}-r_f)$. Note that $\beta_m=1$. \\
+\textbf{Security Market Line} $\mu_i=r_f+\beta_i(\mu_{m}-r_f)$\\
+Mispricing occurs when risk premium does not fall on SML. If $\mu_i<$ SML, asset is overpriced. If $\mu_i>$ SML, underpriced\\
+\textbf{Alpha} Diff btw estimated return and the benchmark return is known as the \textit{alpha} of the return. Underpriced assets have positive alphas while overpriced assets have negative alphas\\
+\textbf{Systematic and Non-systematic risk} \\
+$r_p=r_f+\beta_p(r_m-r_f)+\epsilon_p$. $E(\epsilon_p)=0$, $Cov(\epsilon_p,r_m)=0$. $Var(r_p)=\beta_p^2\sigma_m^2+Var(\epsilon_p)$\\
+Total risk of any portfolio is a sum of two components: the systematic risk $\beta_p^2\sigma_m^2$ and non-systematic (idiosyncratic) risk $Var(\epsilon_p)$. Systematic risk cannot be diversified away but non-systematic risk is uncorrelated with the market and can be reduced through diversification \\
+\textbf{Portfolios on CML} A portfolio contains only systematic risk iff it is on the CML. $r_p=\alpha r_m+(1-\alpha)r_f$, $\sigma_p^2=\beta_p^2\sigma_m^2$. For a portfolio $A$ on the right of the CML, there is an efficient portfolio $E$ s.t. $\sigma_A^2>\sigma_E^2=\beta^2\sigma_m^2$ ($A$ carries non-systematic risk)\\
+\textbf{(Ex.) A portfolio invests 50\% into risk-free asset, $\alpha$ into $A$ and the rest into $B$, and $\beta_p=k$, find $\alpha$ and $\mu_p$}: $\beta_p=\boldsymbol{w^T\beta}$, solve for $\alpha$. Then $\mu_p=0.5r_f+\alpha\mu_A+(0.5-\alpha)\mu_B$. Note that $\beta_f=0$\\
+\textbf{(Ex.) Find the variance of $r_p=\frac{3}{5}r_A+\frac{2}{5}r_B$}: $\sigma_m^2=Var(r_p)=\frac{9}{25}\sigma_A^2+2\rho(\frac{3}{5})(\frac{2}{5})\sigma_A\sigma_B+\frac{4}{25}\sigma_B^2$\\
+\vspace{5pt}\\
+\textbf{Covariance Properties} $Cov(X,a)=0$, $Cov(X,X)=Var(X)$, $Cov(aX,bY)=abCov(X,Y)$, $Cov(a+X,b+Y)=Cov(X,Y)$, $Var(\sum a_iX_i)=\sum_{ij} a_ia_jCov(X_i,X_j)$\\
+$Cov(r_A,r_B)=\rho_{AB}\sigma_A\sigma_B$\\
+If two variables are uncorrelated, $Cov(X,Y)=0$\\
+\textbf{Bilinearity of Covariance} $Cov(X,aY+bZ)=aCov(X,Y)+bCov(X,Z)$\\
+\textbf{Variance Properties} $Var(aX+bY)=a^2Var(X)+b^2Var(Y)+2ab\cdot Cov(X,Y)$\\
+$Var(X+Y)=Var(X)+Var(Y)+2\cdot Cov(X,Y)$\\
+$Var(cX)=c^2Var(X)$, $Var(c+X)=Var(X)$, $Var(c)=0$
+
+\end{multicols*}
+}
+
+\end{document}
+
