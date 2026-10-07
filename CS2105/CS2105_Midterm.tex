@@ -1,0 +1,193 @@
+\documentclass[9pt]{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{geometry}
+\newgeometry{left=0.25cm, right=0.25cm, top=0.8cm, bottom=0.5cm} 
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fontawesome}
+\usepackage[hidelinks]{hyperref}
+\usepackage{newtxmath}
+\usepackage{titlesec}
+\usepackage{caption} % Required for \captionof
+\usepackage{listings}
+
+\lstset{basicstyle=\ttfamily}
+
+\begin{document}
+% \singlespacing
+% \singlespacing % 1.5 line spacing
+\singlespacing
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{\vspace{-0.8cm}\faGithub\;\href{https://github.com/michaelyql}{michaelyql}}
+
+% \setlength{\columnseprule}{0.1pt} % column separator
+
+\newcommand{\p}[1]{$\bullet$ #1 \\}
+\renewcommand{\c}[1]{\subsubsection*{\underline{#1}}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\codeblock}[1]{
+\fbox{\parbox{\linewidth}{\texttt{#1}}}\\
+}
+
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+
+\newcommand{\image}[1]{
+  \noindent
+  \begin{minipage}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{#1}
+  \end{minipage}
+}
+
+{\scriptsize
+\begin{multicols*}{3}
+
+% ---------------------------------------- 
+% ---------------------------------------- 
+\c{Basics}
+\p{\textbf{Network}: mesh of interconnected routers}
+\p{\textbf{Circuit switching}: end-to-end circuit. Shares link bandwidth. Commonly used in traditional telephone networks.}
+\p{\textbf{Packet switching}: breaks messages into smaller packets, transmits them onto links. Packets passed from one router to the next. \textit{Store-and-forward}: entire packet must arrive before it is retransmitted. Routers use algorithms and addressing to determine where to route packets.}
+\p{\textbf{Internet structure}: Hosts connect to Internet via access ISPs (Internet Service Providers). Access ISPs in turn must be interconnected. The Internet is a ``network-of-networks'', organized into \textit{autonomous systems} (AS), each owned by an organization}
+\image{networks.png}
+\image{isp.png}
+\p{\textbf{Organizations}: \textit{Network Information Centre (NIC)}: Administers IP address \& Internet Naming. \textit{Internet Society (ISOC)}: Provides leadership in Internet related standards, education, and policy around the world. \textit{Internet Architecture Board (IAB)}: Authority to issue and update technical standards regarding Internet protocols. \textit{Internet Engineering Task Force (IETF)}: Protocol engineering, development and standardization arm of the IAB. Internet standards are published as RFCs (Request For Comments)}
+\p{\textbf{Transmission delay}: time needed to push all bits of a packet onto a link. $d_{trans}=L/R$, where $L$ = packet length (in bits), $R$ = transmission rate/bandwidth (in bits/sec)}
+\p{\textbf{Propagation delay}: time taken for single bit to travel through physical medium from sender to receiver. $d_{prop}=d/s$, $d$ = length of physical link, $s$ = propagation speed in medium (typically speed of light $\approx  2\cdot 10^8$ m/s)}
+\p{\textbf{Processing delay}: check bit errors, determine output link. Typically $<$ milliseconds}
+\p{\textbf{Queueing delay}: Time waiting in queue for retransmission. Depends on congestion level of router. Queue/buffer of a router has finite capacity, packets arriving to full queue will be dropped}
+\p{\textbf{Packet delay}: Delay $d=d_{prop}+d_{trans}+d_{proc}+d_{queue}$ (propagation, transmission, processing, queueing}
+\p{\textbf{Throughput}: how many bits can be transmitted per unit time. Measured for end-to-end communication. Link capacity (bandwidth) is meant for a specific link}
+% ---------------------------------------- 
+% ---------------------------------------- 
+\c{Application Layer}
+\p{\textbf{Types of architecture}: client-server (server waits for incoming request, client initiates), peer-to-peer (direct end-to-end communication, no central server, self scalable)}
+\p{\textbf{Transport requirements}: Data integrity: 100\% rdt (file transfer, transactions) vs tolerate loss (e.g. streaming). Throughput: minimum bandwidth vs use whatever is available. Timing: low delay (e.g. online games). Security: encryption, authentication}
+\p{\textbf{HTTP (Hypertext Transfer Protocol)}: client-server, request-response model. Stateless (server does not retain session data, unless cookies/tokens/session ID is used.}
+\p{HTTP uses TCP: 1) Client initiates TCP connection. 2) server accepts TCP connection. 3) HTTP messages are exchanged. 4) connection closed}
+\p{Web page = base HTML file + referenced objects}
+\p{\textbf{RTT}: time for packet to travel from client to server and back}
+\p{\textbf{Non-Persistent} (HTTP/1.0): one object per connection. Response time per file = RTT (connect) + (RTT + file transmission time)}
+\p{\textbf{Persistent} (HTTP/1.1): multiple object sent over same connection. With pipelining: Little as one RTT for all referenced objects. Response time (for all objects) = RTT (connect) + (RTT + sum of file sizes in bits / transmission rate) }
+\p{\textbf{Request Format}: \code{(Request line)method URL version (CRLF) (header lines...) (CRLF)
+(empty line) (CRLF)
+(data/payload)}}
+\p{\textbf{Request methods}: HTTP/1.0 - \code{GET/POST/HEAD} (leave object out), HTTP/1.1 - \code{GET/POST/HEAD/PUT/DELETE}}
+\p{\textbf{Response message format}: Same as request format. 1) status line (version + status code), 2) header lines, 3) blank line, 4) data. Status code: 100-199 (information), 200-299 (success), 300-399 (redirect), 400-499 (client error), 500-599 (server error)}
+\p{\textbf{Cookies}: allows HTTP request to carry ``state''}
+\p{\textbf{DNS (Domain Name System)}: map from hostname (\code{www.example.org}) to IP}
+\p{\textbf{RR (Resource Record)}: the mapping itself. Stored in distributed database according to hierarchy. Format: \code{Name TTL Class Type RDATA} / \code{(name, value, type, TTL)} (course convention). CNAME record: alias (e.g. \code{blog.example.com}) $\to$ canonical hostname (e.g. \code{example.com}). A Record: hostname $\to$ IPv4. NS Record: hostname $\to$ nameserver. NS record cannot point to CNAME record.  AAAA: hostname $\to$ IPv6. MX: domain $\to$ mail server name}
+\p{\textbf{Nameserver}: stores all DNS records for a domain, like A, MX, CNAME etc. Most domains use multiple nameservers for reliability. Typically one main primary NS and several secondary, which store exact copies of the primary. When NS record updated, it takes awhile for the change to be replicated}
+\p{\textbf{Hierarchy}: there are 13 \textit{root name servers} A-M, each operated by different org. Root server returns list of \textit{Top-Level Domain} (TLD) servers e.g. \code{.com/.org/.net/.sg}. TLD servers return the \textit{authoritative name server} for the particular website}
+\p{\textbf{Local DNS server}: i.e. default name server. Each ISP has one. Not part of the hierarchy}
+\p{\textbf{Authoritative Name Server}: contains the actual DNS records}
+\p{\textbf{DNS Caching}: If local DNS server has cached query, 1 RTT. Otherwise walk the DNS hierarchy. Cached entries have TTL. If host changes IP address, may not be known Internet-wide until all TTLs expire}
+\p{\textbf{Iterative Query}: client$\rightarrow$local, local$\leftrightarrow$root, local$\leftrightarrow$TLD, local$\leftrightarrow$authoritative, local$\leftarrow$client (4 RTT)}
+\p{\textbf{Recursive Query}: client $\to$ root $\to$ TLD $\to$ authoritative (then back the same way)} 
+\p{\textbf{Port Numbers}: 16-bit integer. 0-1023 are reserved (well-known port numbers) assigned by IANA. 21: FTP, 22: SSH, 25: SMTP, 53: DNS, 80: HTTP, 443: HTTPS}
+\p{\textbf{TCP socket}: When contacted by client, server creates new socket. Server uses (client IP + port \#) to distinguish clients. When client creates its socket, client TCP establishes connection to server TCP}
+\p{\textbf{UDP socket}: Server uses one socket to serve all clients. No connection is established before sending data. Sender explicitly attaches destination IP address and port \# to each packet. Transmitted data may be lost or received out-of-order.}
+% ---------------------------------------- 
+% ---------------------------------------- 
+\c{Transport Layer}
+\p{Deals with \textit{logical} communication between \textit{processes}. Sends \textit{segments}}
+\p{Mux: Gather data from different sockets on a host. Demux: Send data to correct socket on a host}
+\p{\textbf{UDP (User Datagram Protocol)}: process-to-process delivery and error checking. Unreliable: segments can arrive out of order or not at all. Unregulated sending rate (no congestion control). Small header, no connection overhead}
+\p{\textbf{UDP Header} (always 8 bytes): src port (16), dest port (16), length (16), checksum (16). Checksum: 16-bit sum over header, payload, with carry bit wrap around, then take 1's compliment. Checksum is 0 during calculation}
+\p{\textbf{Unconnected UDP}: 
+\code{serverSocket = socket(AF\_INET, SOCK\_DGRAM); serverSocket.bind(('', serverPort)); \\ msg, clientAddr = serverSocket.recvfrom(2048); serverSocket.sendto(reply, clientAddr); serverSocket.close();\\
+clientSocket.sendto(msg.encode(), (serverName, serverPort))\\
+msg, serverAddr = clientSocket.recvfrom(2048)\\
+msg.decode() \# byte to string
+}}
+\p{DNS server/DHCP/game server use unconnected UDP. Suitable for one-to-many. If connected, socket is locked to a single peer and drops everyone else}
+\p{\textbf{Connected UDP}: \code{clientSocket.connect((serverName, serverPort));  clientSocket.send(msg.encode()); responseStr = clientSocket.recv(2048).decode()
+}}
+\p{\textbf{TCP (Transmission Control Protocol)}: has Reliable Data Transfer (\textit{rdt}), congestion control (throttle sender when network is overloaded), flow control (sender won't overwhelm receiver). Three-way handshake to establish connection}
+\image{tcp-handshake.png}
+\p{TCP socket (for (de)mux)) identified by 4-tuple (src ip, src port, dest ip, dest port)}
+\p{\textbf{TCP client/server}: \code{clientSocket = socket(AF\_INET, SOCK\_STREAM); clientSocket.connect((serverName, serverPort)); \# no need to include server name/port; clientSocket.send(message.encode()); msg = clientSocket.rcv(2048)\\
+\# tcp server\\
+socket/bind/listen/accept/send/rcv
+}}
+\p{TCP Header: 20 bytes, up to 60 (variable)}
+\image{tcp-header.png}
+\p{SYN, ACK bits used for 3 way handshake. FIN for 4 way teardown. RST (abort immediately). PSH (push data now, don't buffer). URG (urgent pointer points to byte after urgent data, seqnum + offset), rarely used}
+\p{Seqnum: byte number of first byte in a data segment. ACK number: seq\# of next byte expected by receiver. TCP ACKs until first missing byte (cumulative ACK)}
+\p{\textbf{Checksum}: calculation same as UDP}
+\p{\underline{rdt 1.0}: Assume channel is perfectly reliable}
+\p{\underline{rdt 2.0}: Bit error, detect using checksum. Server sends NACK. Stop-and-wait: Sender sends one packet at a time, then waits for response. Flaw: server may send corrupted ACK/NACK, client may retransmit correctly received packet}
+\p{\underline{rdt 2.1}: rdt 2.0 + seq num. Receiver discards duplicate packets}
+\p{\underline{rdt 2.2}: send ACK only. Include seq num of \textbf{last} packet received OK}
+\p{\underline{rdt 3.0}: Assumes underlying channel may flip bits, lose packets, have long delay, but \textbf{won't reorder packets}. To detect packet loss: sender waits for ACK, retransmits if not received by timeout (regardless whether due to packet loss or delay). Receiver discard duplicate using seqnum, and specify seqnum in ACK. If no ACK or receive ACK but for wrong packet $\to$ packet loss}
+\p{\textbf{Utilization}: $d_{trans}/(RTT+d_{trans})$, fraction of time sender is busy sending. Throughput = $L/(RTT+d_{trans})$}
+\p{\textbf{Stop-and-wait}: $U_{sender}=(L/R)\;/\;(RTT+L/R)$}
+\image{stop-and-wait.png}
+\p{\textbf{Pipelining}: $U_{sender}=(k\cdot L/R)\;/\;(RTT+L/R)$ where $k$ is window size}
+\image{pipeline.png}
+\p{\textbf{Go-Back-N (GBN)}: Up to $N$ unACK packets in pipeline. Receiver only sends cumulative ACK, out of order packets discarded. Sender sets timer for oldest unACKed packet. When timer expires, retransmit packet $n$ and subsequent packets in window}
+\image{gbn.png}
+\image{gbn2.png}
+\p{\textbf{Selective repeat (SR)}: Up to $N$ unACK packets. Receiver sends individual ACK for each packet, out of order packets ACKed and buffered. Sender maintains timer for each unACK packet. When timer expire, retransmit only that unACK packet}
+\image{SR.png}
+\p{\textbf{TCP ACK Generation} (RFC 2581)}
+\image{tcp-ackgen.png}
+\p{\textbf{TCP Timeout value}: too short timeout: premature timeout and unnecessary retransmissions. Too long timeout: slow reaction to segment loss. Timeout interval must be longer than RTT, but RTT varies. Thus TCP computes (and keeps updating) timeout interval based on \textit{estimated RTT}}
+\p{$EstimatedRTT = (1-\alpha)\cdot EstimatedRTT + \alpha\cdot SampleRTT$. Typical $\alpha$ 0.125}
+\p{Deviation $DevRTT = (1-\beta)\cdot DevRTT + \beta\cdot |SampleRTT-EstimatedRTT|$. Typical $\beta$ 0.25}
+\p{TimeoutInterval = EstimatedRTT + 4*DevRTT (safety margin)}
+\p{\textbf{TCP Fast retransmission}: Timeout period is often relatively long: long delay before resending lost packet. Fast retransmission: If sender receives 4 ACKs for the same segment, it supposes that segment is lost $\to$ resend segment (even before timer expires)}
+\image{fast-retrans.png}
+\p{\textbf{4 way teardown}: client FIN seq u, server ACK seq u+1, server FIN seq t, client ACK seq t+1}
+% ---------------------------------------- 
+% ---------------------------------------- 
+\c{Network Layer}
+\p{Provides \textit{logical} communication between \textit{hosts}. Sends \textit{IP datagrams}}
+\p{\textbf{Internet Protocol (IP)}: \textit{Best effort} delivery (no guarantees) - unreliable. }
+\p{\textbf{IP address}: 32 bit integer used to identify a host/router, in binary or dotted decimal. Comprises two parts: network (subnet) prefix + host ID}
+\p{\textbf{Subnet}: A network of ``directly'' interconnected hosts. Hosts in the same subnet have the same network prefix, and can physically reach each other without router. They connect to outside through a router}
+\p{\textbf{IP Address Allocation}: Organization buy from registry or rent from ISP's address space. ISP from \textit{ICANN (Internet Corporation for Assigned Names and Numbers)} - Allocates addresses, Manages DNS, Assigns domain names, resolves disputes}
+\p{\textbf{CIDR (Classless Inter-domain Routing)}: IP address assignment strategy. Format: \code{a.b.c.d/x}, x is number of subnet prefix bits}
+\p{\textbf{DHCP (Dynamic Host Configuration Protocol)}: App layer protocol to assign IP address and configuration to devices when they connect to a network. DORA: Discover (broadcast msg to find DHCP server), Offer (server replies with IP and settings), Request (ask to be assigned), Acknowledgment. DHCP server: dedicated computer managing pool of IP addresses. Lease time: temporary period allowed to use IP. DHCP uses UDP}
+\image{dhcp.png}
+\p{DHCP relay agent: a network device/layer 3 switch that forwards DHCP broadcast messages between clients and server located on different subnet. Packages broadcast msg into unicast msg, adds its own IP to \texttt{giaddr} (gateway IP addr) field so server knows which network pool to assign from. Eliminates need to install DHCP server on every network. Allows single DHCP server to manage multiple subnets. \texttt{giaddr} is 0.0.0.0 if client and server in same subnet}
+\p{DHCP runs on UDP. Server port: 67, client port 68}
+\p{\textbf{Special IP addresses}: \code{10.0.0.0/8}, \code{172.168.0.0/12}, \code{192.168.0.0/16} (Private addresses, can be used without any
+coordination with IANA or an Internet registry). Loopback: \code{127.0.0.0/8}, tests network software on the local device; \code{127.0.0.1} is standard localhost address. Broadcast (\code{255.255.255.255}): Sends packets to all devices simultaneously on a local subnet. Unspecified (\code{0.0.0.0}): Used as a placeholder or default route during network initialization}
+\p{\textbf{Subnet Mask}: determine which subnet an IP address belongs to. Zero out host bits. \# of usable Hosts = $2^n - 2$, $n$ is the number of host bits (-2 for network (first, all host bits 0) and broadcast address (last, all host bits 1)). Special rules apply for /31 (1 usable host, used for point-to-point links) and /32 (0 usable hosts, represents a single host)}
+\p{To create subnets of equal size, borrow from host bits smallest $k$ s.t. $2^k\geq $ subnet size}
+\p{\textbf{Longest Prefix Match}: match inbound packet with \textit{forwarding table} entry with longest prefix match}
+\p{\textbf{Routing}: The Internet is a ``network-of-networks''. A hierarchy of \textit{Autonomous Systems} (AS) e.g. ISPs each owns routers and links. Routing is done hierarchically. \textbf{Intra-AS}: Find good path between two routers within an AS. Commonly used protocols: \textit{RIP, OSPF}. Performance over policy. \textbf{Inter-AS}: \textit{BGP} (de-facto standard), dominated by policy}
+\p{\textbf{Routing algorithm types}: \textit{link-state}: all routers have complete knowledge of topology and link cost, periodically broadcast cost - use Dijkstra's. \textit{distance vector}: only know neighbours costs, exchange update with neighbours}
+\p{\textbf{Bellman Ford}: $d_x(y)=min_{v\in N(x)}\{c(x,v)+d_v(y)\}$}
+\p{\textbf{Count to Infinity problem for DV}: routers endlessly increment their cost metric to broken destination. Routers only share distance information with their neighbours. E.g. A-B-C, B-C link breaks, but B thinks A can still reach C, updates distance to C via A. Solutions: Split horizon, route poisoning (advertise infinite distance/unreachable), Hold-down timers (temporary refuse updates for suspect route)}
+\p{\textbf{RIP (Routing Information Protocol)}: implements the DV algorithm. Uses \textit{hop count} as the cost metric (insensitive to network congestion). Exchange routing table every 30 seconds over UDP port 520. Self-repair: if no update from a neighbour router for 3 minutes, assume neighbour has failed}
+\p{\textbf{NAT (Network Address Translation)}: all datagrams leaving local network have the same source NAT IP address. Within local network, hosts use private IP addresses. NAT routers must: 1) Replace (src IP, port) of every outgoing datagram to (NAT IP, new port \#), 2) Remember mapping in translation table, 3) replace incoming datagrams using mapping. Benefits: no need rent public IP range from ISP, just one public IP for NAT router. Hosts use private IP, can change freely, not addressable by outside (more secure). Can change ISP without affecting hosts. NAT may change src IP, dest IP, TTL, checksum of inbound/outbound IP datagrams}
+\p{\textbf{IP Header Format} (20 bytes, up to 60)}
+\image{ip-header.png}
+\p{\textbf{Fragmentation}: Identifier: original id packet, used to rebuild. Flags(3): reserved (always 0), DF (don't fragment, drop if can't forward (size $>$ link's MTU, send ICMP ``Fragmentation Needed''), MF (must fragment, 1 for more to follow, 0 for last fragment)}
+\p{\textbf{\# of fragments needed}: Fragment Offset is \textbf{measured in 8-byte units}, so every fragment's payload (except the last) \textbf{must be a multiple of 8}. 1) Compute actual payload size = IP datagram size - IP header. 2) Compute max payload per fragment = MTU - IP header, then round down to multiple of 8. 3) \# Fragments = ceil(payload size/max payload per fragment)}
+\p{\textbf{MTU (Maximum Transmission Unit)}: max size that can be sent over link in a single frame. It includes IP header size. Max payload per fragment = MTU - IP header size. (MTU is layer 2/3, MSS (Maximum Segment Size) is layer 4 TCP, payload size only. MSS = MTU - IP header - TCP header)}
+\p{A device can have multiple IPs: \code{lo} (loopback 127.0.0.1), \code{eth0} (ethernet), \code{wlan0} (wifi). \code{0.0.0.0} is a \textit{wildcard address}, socket bind to \code{0.0.0.0:<port>} means accept all traffic for any IP on that port. Wildcard can be used as fallback. Can have multiple sockets on a port. More specific \code{IP:port} beats wildcard. \code{SO\_REUSEADDR} / \code{SO\_REUSEPORT} needed for multiple sockets on same port, otherwise bind fails with ``address already in use''}
+\p{\textbf{Upper-Layer Protocol Number}: an 8-bit value in IP header that tells receiving system which upper-layer protocol should handle the data (1=ICMP, 6=TCP, 17=UDP, 41=IPv6, 89=OSFP)}
+\p{\textbf{Explicit Congestion Notification (ECN)}: two bits in IP header. Allows routers to notify end devices of network congestion before packets are actually dropped. 00=sender not ECN capable, router drops packet on overflow. 01/10=ECN-capable Transport (ECT). 11=Congestion Experienced (CE). Receiver sees CE flag, sends ECE flag in response. Sender sends CWR (Congestion Window Reduced) flag, throttles. Default=00, not set until explicitly negotiated}
+\p{\textbf{ICMP (Internet Control Message Protocol)}: Used by hosts and routers to communicate network-layer information to each other. Mostly for error reporting e.g. destination unreachable, but can be used for ping/echo request. Architecturally above IP (ICMP messages are carried as IP payload) }
+\p{Format: type(8), code(8), checksum(16), extended header(32), payload (Total 8 bytes). Error msg contains original IP \textbf{header} plus \textbf{first 8 bytes} of payload (TCP/UDP stores src/dest port here) for sender to identify process}
+\p{Type8Code0=Echo request. Type0Code0=Echo reply. Type4Code0=Source quench (congestion control, force host to reduce transmission rate). Type 3 = destination error, 11 = TTL expire, 12 = IP bad}
+\p{\textit{traceroute} is implemented using ICMP by sending UDP packets with increasing TTL until destination replies. Receives ICMP error message with TTL expiry, logs each intermediate router's and RTT}
+% ---------------------------------------- 
+% ----------------------------------------
+
+\end{multicols*}
+}
+
+\end{document}
